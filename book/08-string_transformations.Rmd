@@ -285,7 +285,7 @@ It's good to have a playground for experimenting with regexes and for that, the 
 "**CODE //** Opening up the *RegExplain* gadget is great for experimenting with regular expressions."
 )`
 ```{r open-regexplain, eval=FALSE}
-edr_regexplain_gadget()
+regexplain_gadget()
 ```
 
 By default, the function provides sample text to match on, but we can provide our own text string as well. *Figure \@ref(fig:regexplain-gadget)* provides a visual on how the gadget looks and it points out its main features.

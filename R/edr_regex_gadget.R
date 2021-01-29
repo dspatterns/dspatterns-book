@@ -5,7 +5,7 @@
 #' `"The quick brown fox jumps over the lazy dog"`.
 #'
 #' @export
-edr_regexplain_gadget <- function(text = NULL) {
+regexplain_gadget <- function(text = NULL) {
 
   if (is.null(text)) {
     text <- "The quick brown fox jumps over the lazy dog"

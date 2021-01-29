@@ -3,6 +3,6 @@
 export(code_hints)
 export(create_excel_file)
 export(dataset_to_csv)
-export(edr_regexplain_gadget)
+export(regexplain_gadget)
 importFrom(here,here)
 importFrom(readr,write_csv)
