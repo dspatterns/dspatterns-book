@@ -1,0 +1,54 @@
+p.caption {
+  color: #777;
+  margin-top: 10px;
+}
+p code {
+  white-space: inherit;
+}
+pre {
+  word-break: normal;
+  word-wrap: normal;
+}
+pre code {
+  white-space: inherit;
+}
+
+.book .book-header h1 {
+  opacity: 1;
+  text-align: left;
+}
+
+#header .title {
+  margin-bottom: 0em;
+}
+#header h4.author {
+  margin: 0;
+  color: #666;
+}
+#header h4.author em {
+  font-style: normal;
+}
+
+
+.showopt {
+  background-color: #004c93;
+  color: #FFFFFF;
+  width: 100px;
+  height: 20px;
+  text-align: center;
+  vertical-align: middle !important;
+  float: right;
+  font-family: sans-serif;
+  border-radius: 8px;
+}
+
+.showopt:hover {
+    background-color: #dfe4f2;
+    color: #004c93;
+}
+
+pre.plot {
+  background-color: white !important;
+}
+
+

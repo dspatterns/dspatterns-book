@@ -1,0 +1,562 @@
+# R Lists and Factors {#r_lists_and_factors}
+
+```{r setup, include=FALSE, echo=FALSE}
+library(edr)
+library(tidyverse)
+```
+
+This chapter covers
+
+- Working with lists: creating, modifying, and accessing data from them
+- Writing our own functions that either create list output, use a list as input, or both
+- Using factors successfully though inspection and transformation with base **R** functions and functions from the **forcats** package
+- Creating **ggplot** bar charts that make the best use of factor variables
+
+When working in **R** long enough, you'll encounter list objects again and again. You may bump into factors every now are again but try to side-step their use. However, these are very important and useful data structures and we ought to fully understand them. This chapter goes over lists, which we've seen before, in much more detail. We'll understand how to better create lists, how to access data from them, how to combine lists together, and how to go to and from lists and data frames. Factors will be introduced in the second part of this chapter. They shouldn't be something to be avoided as they are genuinely useful, especially in the context of plotting data with **ggplot**.
+
+We'll use a dataset called `german_cities` (available in the **edr** package) to work through examples that involve factors, eventually getting to nicer and nicer plots. The functions that we'll use throughout this chapter will be an even mix of base **R** functions and functions that are available in the *Tidyverse* packages **forcats** and **ggplot**.
+
+## Lists in **R**
+
+A list object in **R** is kind of like a container that can hold any type of **R** object, even other lists. The components of the list can have names, they can be unnamed (relying on numerical indices to distinguish between the components), or, we can have a mixture of named and unnamed components. They can be as simple as a vector, or, have numerous nested components. A good enough analogy for an **R** list is a computer's file system, where directories might hold elements (including more directories) and it's the files that are the addressable elements. A well-structured list is valuable as a complex data structure. Given that a function can only return a single object, and that a function may create complex data, a list adorned with different types of information can be returned and further used by other functions that require a little or a lot of that information.
+
+### Making Named Lists and Accessing Their Elements
+
+Just as we can create a tibble with **dplyr**'s `tibble()` function and a vector with `c()`, a list object can be produced by using the `list()` function. We saw an example of this earlier in *Chapter 7*. That was an example of a named list, where each element has a name (letters from `a` to `e`). Now, here's a question: why use a named list? The names can serve as easy-to-use, easy-to-understand identifiers for what to expect inside! For example, let's take a hypothetical list called `baseball_stats.` We might have names for elements called `"batting"`, `"pitching"`, and `"fielding"`. If we do, it's easy for the user handling that list to get batting statistics by simply using `baseball_stats$batting` in their code.
+
+Let's make a named list here with three wildly different elements: a numeric vector, a tibble, and a list.
+
+`r edr::code_hints(
+"**CODE //** Creating a three-element, named list object."
+)`
+```{r named-list-of-3-elements, paged.print=FALSE}
+a_list <- 
+  list(
+ a = c(1:5, 8:3, 2),
+ b = tibble(x = 1:3, y = rep(TRUE, 3)),
+ c = list(A = 1:3, B = LETTERS[20:26])
+  )
+
+a_list
+```
+
+Seeing this printed out produces a correspondingly large amount of output.
+
+Interestingly, the same rules that apply to tibbles also apply to list when it comes to accessing individual elements. We can use the `$` and `[[` operators to extract a specific element from the list object. The printed output provides clues on how to access the vectors of the list of element `c` (i.e., `$c$A` and `$c$B`). So, `a_list$c$A` gives us `[1] 1 2 3` in the console, `a_list$a[9:11]` results in `[1] 5 4 3`, and `a_list$b$y` yields `[1] TRUE TRUE TRUE`.
+
+If working with a more complicated list, a nicer way of examining the structure of it is by using the `str()` function:
+
+`r edr::code_hints(
+"**CODE //** Examining the structure of a list object with ~~str()~~."
+)`
+```{r structure-of-a-list}
+str(a_list)
+```
+
+This output is easier to parse than simply printing the list object. In just a few lines we can see the hierarchy of the list and, importantly, get the names of the individual elements. Should you need just the names of the list components, we can use the `names()` function.
+
+`r edr::code_hints(
+"**CODE //** Getting the names of the list components with ~~names()~~."
+)`
+```{r names-in-a-list}
+names(a_list)
+```
+
+It was noted that the `[[` operator can be used to obtain a slice of the data. Let's quickly compare the ways in which we can get the same data extracts from different uses of operators:
+- `a_list$c$A` or `a_list[["c"]][["A"]]` or `a_list[[3]][[1]]`
+- `a_list$a[9:11]` or `a_list[["a"]][9:11]` or `a_list$a[[1]][9:11]`
+- `a_list$b$y` or `a_list[["b"]][["y"]]` or `a_list[[2]][[2]]`
+
+The three different methods for writing these subsetting expressions are (1) `$` with element names, (2) `[[` with element names in quotes, and (3) `[[` with element indices. You may ask why there are so many methods for getting at the same result. Well, the inputs are different. With the `$` notation the name is required, and it is essentially hardcoded (we can't use a variable like we might with the `[[` notation. The use of the `$` is great for interactive analysis (less typing!) or situations where we don't need a variable to get the name of the element. The use of `[[` works for both names and indices, and, we can use variables to access the elements of a list (imagine some code that produces the variable with the right index and then using that variable in `[[` to get the intended list element).
+
+To help eliminate errors and reduce guesswork, the **RStudio** IDE provides autocomplete support for lists (and other objects) that works quite well with the `$` operator. Try creating the `a_list` object and typing `a_list$`, a contextual menu will appear with the available list elements at that juncture (use the up and down arrows to navigate and <ENTER> to select an element).
+
+Accessing elements inside of lists is really something you need to experiment with and practice. It's suggested that you try out the above statements and change the input statements until you get a feel for the behavior. For example, here is something that constantly trips people up (myself included): what is the difference between `a_list[1]` and `a_list[[1]]`? Let's try both incantations in the next two code listings.
+
+`r edr::code_hints(
+"**CODE //** Getting the first element of ~~a_list~~ with ~~[ ]~~."
+)`
+```{r a-list-element-single-brackets}
+a_list[1]
+```
+
+`r edr::code_hints(
+"**CODE //** Getting the first element of ~~a_list~~ with ~~[[ ]]~~."
+)`
+```{r a-list-element-double-brackets}
+a_list[[1]]
+```
+
+From both, we see similar output... what's the difference? The first statement, `a_list[1]`, gets the container for the vector whereas the second statement, `a_list[[1]]`, gets us the vector itself. We can sanity check this with `class(a_list[1])` and `class(a_list[[1]])`, which return `[1] "list"` (because it's the enclosing part of the vector) and `[1] "numeric"` (we are accessing the actual vector, which is numeric).
+
+### Working with Unnamed Lists
+
+Let's take a look at an unnamed list and see how things change without the use of names. Within the next code listing we'll create the `b_list` list object, which is similar to the `a_list` object introduced in the first code listing except that the top level of the list doesn't have the names `"a"`, `"b"`, or `"c"` (it has no names whatsoever).
+
+`r edr::code_hints(
+"**CODE //** Creating a three-element, unnamed list object."
+)`
+```{r unnamed-list-of-3-elements, paged.print=FALSE}
+b_list <- 
+  list(
+ c(1:5, 8:3, 2),
+ tibble(x = 1:3, y = rep(TRUE, 3)),
+ list(A = 1:3, B = LETTERS[20:26])
+  )
+
+b_list
+```
+
+The names are indeed gone, and, in their place, we get index values in double square brackets (`[[1]]`, `[[2]]`, and `[[3]]`). The output still indicates how to access elements of the unnamed list. To get the second (named!) character vector in the list of element `[[3]]`, we would use `b_list[[3]]$B`. To get the fourth element of that nested vector, it's `b_list[[3]]$B[4]`. Definitely take the time to practice accessing all of the elements of `a_list` and `b_list` until it becomes second nature. It's all worth doing because it helps build an intuition on how lists are structured and how to extract data.
+
+We ought to use the `str()` function often to get a sense of the overall structure of a list (especially one that's foisted upon us, perhaps as output from a function). So, let's do that for the `b_list` object:
+
+`r edr::code_hints(
+"**CODE //** Examining the structure of the ~~b_list~~ object with ~~str()~~."
+)`
+```{r structure-of-the-b-list}
+str(b_list)
+```
+
+Looks almost identical to the output from using `str(a_list)` except that the names that would normally appear before the leftmost colons are not there! Certainly, it would be nicer to have numbers there but instead we need to count through these top-level elements ourselves (easy for small lists, increasingly more difficult for those larger ones). There really aren't any names and, indeed, using `names(b_list)` gives us `NULL`.
+
+### Modifying Elements of Lists
+
+You got this fancy list object and you took the time to get it just right. You should be proud because list-making can be a bit more involved than creating vectors or tibbles. The time will come, however, when you need to modify one or more elements of the list. No problem, we'll now explore how to change a part of a list while keeping the other components untouched.
+
+Want to give that unnamed list some names? We can use the `names()` function to do that. Just ensure that the number of names provided is the same length as the list (check that with the `length()` function).
+
+`r edr::code_hints(
+"**CODE //** Giving the unnamed list (~~b_list~~) some names."
+)`
+```{r b-list-gets-names, paged.print=FALSE}
+names(b_list) <- c("a", "b", "c")
+
+b_list
+```
+
+The output of `b_list` is now exactly the same as printing out the `a_list` object.
+
+Perhaps we'd like to mutate the tibble inside the list, adding a character column named `z` with the elements `"a"`, `"b"`, and `"c"`. The key to making this work is having the right type of assignment: we need to assign into the list. This of course requires that we operate on the right subset of the list. For both, the answer is lies in using `b_list$b`.
+
+`r edr::code_hints(
+"**CODE //** Modifying the tibble component of ~~b_list~~ requires accessing the ~~b_list$b~~ component."
+)`
+```{r modifying-the-b-list-tibble, paged.print=FALSE}
+b_list$b <- 
+  b_list$b %>%
+  mutate(z = c("a", "b", "c"))
+
+b_list
+```
+
+Notice now that the `b_list` object has its tibble in the second element updated with the change, keeping the first and third elements unchanged.
+
+Setting values by element is possible for other data types as well (e.g., vectors, data frames, and tibbles). So long as you assign into the correct part of the data structure (preferably with the correct number of values), existing objects can be modified with great precision.
+
+### Transforming Lists
+
+The **R** list object is quite malleable in that it can be combined in numerous ways with other objects, transformed into entirely different data structures, and enable some pretty complex yet useful transformations. Let's walk through a few different list transformations of lists with examples, explanations, and possible use cases.
+
+#### The `c()` Function
+	
+It's possible to combine lists with the `c()` function. This might be useful in the context of a function where you have a list as the main input (i.e., the data object to be manipulated), and you want to add elements to that list (before returning that enhanced list). 
+
+We know that vectors can be combined together into a larger vector; lists are another data type that can undergo combining with `c()`. We can try creating the a_list object by combining three named lists, and we'll succeed if we use `c()`.
+
+`r edr::code_hints(
+"**CODE //** Combining three named lists into a larger list with ~~c()~~ (reproducing the ~~a_list~~ object)."
+)`
+```{r combining-lists-with-c, paged.print=FALSE}
+a_1 <- list(a = c(1:5, 8:3, 2))
+a_2 <- list(b = tibble(x = 1:3, y = rep(TRUE, 3)))
+a_3 <- list(c = list(A = 1:3, B = LETTERS[20:26]))
+
+a_list <- c(a_1, a_2, a_3)
+
+a_list
+```
+
+The output of this `a_list` is the same as the `a_list` object created in the first code listing.
+
+If we don't want a certain component of the list, assign `NULL` to it. It's like sending that component into an **R** oblivion. Let's get rid of the tibble in `a_list` with this type of assignment:
+
+`r edr::code_hints(
+"**CODE //** Removing the second element of the ~~a_list~~ object using ~~NULL~~."
+)`
+```{r removing-tibble-with-NULL, paged.print=FALSE}
+a_list$b <- NULL
+
+a_list
+```
+
+Yes, the second element has been removed. We could very well use numbers as well to perform the removal with `NULL.` Let's try that on `a_list` within the next code listing.
+
+`r edr::code_hints(
+"**CODE //** Removing the first element of the ~~a_list~~ object using ~~NULL~~ (this time with an index value)."
+)`
+```{r removing-element-1-with-NULL, paged.print=FALSE}
+a_list[1] <- NULL
+
+a_list
+```
+
+We are now left with a list-in-a-list that was once the third element in `a_list` (it's now the first and only top-level element).
+
+#### Transformations Between Data Frames and Lists
+
+Data frames and tibbles are lists. The `data.frame()` documentation page (accessed by using `?data.frame`) states: "a data frame is a list of variables of the same number of rows with unique row names, given class 'data.frame'  (with a few restrictions in place)". We can convince ourselves of this by using the base **R** `typeof()` function with data frames and tibbles. Invoked with empty versions of each, using `typeof(data.frame())` and `typeof(tibble())`, we get `"list"` returned in both cases (just as with `typeof(list())`).
+
+Let's create a list that can potentially become a data frame or tibble. The list will be named (these become the column names), each element of the list will be a single vector, and all vectors will have the same length.
+
+`r edr::code_hints(
+"**CODE //** A named list that is suitable for transformation to a data frame or tibble."
+)`
+```{r list-to-transform-to-table, paged.print=FALSE}
+list_df <-
+  list(
+    col_1 = 4:6,
+    col_2 = c("x", "y", "z")
+  )
+
+list_df
+```
+
+This is a list that conforms to the rules, let's use the base **R** `as.data.frame()` function to make a data frame from it. There's a catch though! We need to use `stringsAsFactors = FALSE` (just as we do with `data.frame()`) so that the character vector, `col_2`, isn't coerced to a factor.
+
+`r edr::code_hints(
+"**CODE //** Transforming the ~~list_df~~ list into a data frame with ~~as.data.frame()~~."
+)`
+```{r transform-as-data-frame, paged.print=FALSE}
+df_from_list <- as.data.frame(list_df, stringsAsFactors = FALSE)
+
+df_from_list
+```
+
+The way that the data frame is printed out makes it difficult to determine whether `col_2` is a character- or a factor-based column (try leaving out `stringsAsFactors = FALSE` in the above code, the resulting `df_from_list` object prints exactly the same). For this reason, among a few others, making a tibble with **dplyr**'s `as_tibble()` function is preferred since it would be obvious, when printed, what our column types are (plus, it doesn't create factor columns from character vectors in the first place). The next code listing is a variation on the last one, this time using **dplyr**'s `as_tibble()` function to transform the list into a tibble.
+
+`r edr::code_hints(
+"**CODE //** Transforming the ~~list_df~~ list into a tibble with ~~as_tibble()~~."
+)`
+```{r transform-as-tibble, paged.print=FALSE}
+tbl_from_list <- as_tibble(list_df)
+
+tbl_from_list
+```
+
+Finally, we can transform a tibble or data frame to a list with the `as.list()` function. This is useful when the contents of a table might be better served when structured as a list. One scenario is when the table contents serve as an adequate starting point for a list, where additional elements are to be added (e.g., vectors of different sizes, etc.). In the next code listing we'll see an example use of `as.list()` with the `tbl_from_list` tibble (though this works equally well with the `df_from_list` object).
+
+`r edr::code_hints(
+"**CODE //** Transforming the tibble into a list with ~~as.list()~~."
+)`
+```{r transform-tibble-to-list, paged.print=FALSE}
+list_from_tbl <- as.list(tbl_from_list)
+
+list_from_tbl
+```
+
+Experimenting with these examples of list transformations provides us with useful techniques, especially as we get to using lists in more complex ways within functions. In **R** functions, sometimes a list makes sense and, other times, a table (like a tibble or data frame) can be better. Moving between the two data structures is sometimes necessary and that's where these skills come into play.
+
+### Creating Functions that Involve Lists
+
+Lists are useful as both output and inputs for functions. While we can't return two objects at the same time from a function we can, however, do the next best thing: return a list that's structured with as much useful output as necessary. A list that serves as a primary input is a time-tested practice; we can use the list object as the main data object and transform it in interesting ways through functions written for transformation tasks.
+
+Let's make a function that takes a numeric vector returns a list object. **R** is great at doing statistical calculations so this new function will help us obtain descriptive statistics (mean, min, max, etc.) for a numeric vector, putting those values into a list. We'll create the function named `get_descriptive_stats()` in the following code listing and then immediately test it out using a numeric vector created with `c(2.3, 8.1, 5.5, 3.9, 6.0, 2.1, 8.5)`.
+
+`r edr::code_hints(
+"**CODE //** Example of a function (~~get_descriptive_stats()~~) that returns a list object."
+)`
+```{r get-descriptive-stats}
+get_descriptive_stats <- function(x, na.rm = TRUE) {
+  
+  list(
+    values = x,
+    mean = mean(x, na.rm = na.rm),
+    sd   = sd(x, na.rm = na.rm),
+    min  = min(x, na.rm = na.rm),
+    max  = max(x, na.rm = na.rm),
+    rank = rank(x)
+  )
+}
+
+stats <- get_descriptive_stats(c(2.3, 8.1, 5.5, 3.9, 6.0, 2.1, 8.5))
+
+stats
+```
+
+Again, what's nice about the list returned from `get_descriptive_stats()` is that you get a useful bundle of information in the stats object. If you should need the mean of the input values, you can then use `stats$mean`. The range, on the other hand, can be calculated with `stats$max – stats$min`.
+
+We can design functions that use a list object as input. As a very simple example, we can take the output from `get_descriptive_stats()` and augment it with additional data (let's use the 25th, 50th, and 75th percentiles). In the next code listing we define a new function called `add_percentiles()`, which expects a list that is returned by `get_descriptive_stats()`. As before, we'll use the function right away in the example and observe that the list output (`stats_extra`) has the extra components we wanted from the function.
+	
+`r edr::code_hints(
+"**CODE //** Example of a function (~~add_percentiles()~~) that takes a list object as input and returns an augmented version of the input list."
+)`
+```{r add-percentiles}
+add_percentiles <- function(stats_list, na.rm = TRUE) {
+  
+  x <- stats_list$values
+  
+  c(
+    stats_list,
+    list(
+      p25 = unname(stats::quantile(x, probs = 0.25, na.rm = na.rm)),
+      p50 = unname(stats::quantile(x, probs = 0.50, na.rm = na.rm)),
+      p75 = unname(stats::quantile(x, probs = 0.75, na.rm = na.rm))
+    )
+  )
+}
+
+stats_extra <- add_percentiles(stats_list = stats)
+
+stats_extra
+```
+
+The output looks good! Did you notice the use of the `c()` function within the body of `add_percentiles()`? It's definitely a great way to combine two lists together.
+
+## All About Factors
+
+Factors as an **R** data type are used to represent categorical data. They are vectors that contain levels: integers that describe the ordering of the factor's values. They are often misunderstood and are largely avoided on account of that. The reasons for their non-use may stem from their non-intuitive behavior in functions or the perception that non-factor-based solutions work just as well. But they can be useful, and this section will try to prove that.
+
+The *Tidyverse* package **forcats** will be used here for handling factor values. We have an interesting dataset available in the **edr** package called `german_cities.` It's a bit like the `us_cities` dataset we used in *Chapter 5* except it's smaller (only 79 rows) and has two factor columns (`name` and `state`). A dataset like this may be used by statisticians to analyze population trends, or, it might be used in combination with other domain-specific data (e.g., in advertising/marketing, scientific studies, etc.). Here is a printout of the `german_cities` tibble.
+
+`r edr::code_hints(
+"**CODE //** Printing out the ~~german_cities~~ dataset, which has two factor columns."
+)`
+```{r print-german-cities, paged.print=FALSE}
+german_cities
+```
+
+As with all datasets in the edr package, more information about them can be obtained in the help system. In this case, using `?german_cities` in the **R** console brings up the help page for this dataset.
+
+### Factors Basics
+
+The first weird thing about factors is that they look like character data in data frames but, when as vectors, don't really print out in the same way. We can experiment with this a bit by using data from the `german_cities` tibble. Let's pull values from the state column, make them unique, and see what we can see from printing `state_fct`:
+
+`r edr::code_hints(
+"**CODE //** Printing out the unique values from the ~~state~~ column of ~~german_cities~~ (obtained as a vector through ~~$~~ indexing)."
+)`
+```{r unique-state-fct}
+state_fct <- unique(german_cities$state)
+
+state_fct
+```
+
+Except for the last line, one would think (without checking) that `state_fct` is a character vector, but the mention of `Levels` is a dead giveaway that we are dealing with a factor vector.
+
+Using unique values for the vector is pretty instructive here since the 16 unique values have 16 factor levels. But what's a level in this world of factors? It's an integer value that determines the ordering of the strings. There are a number of base **R** functions that let us do diagnostics on factor. To see all the levels and, separately, the integer values associated with them, we can use the `levels()` and even the `as.integer()` functions (as shown in the next two code listings).
+
+`r edr::code_hints(
+"**CODE //** Getting all the levels for the ~~state_fct~~ factor using the ~~levels()~~ function."
+)`
+```{r state-fct-levels}
+levels(state_fct)
+```
+
+`r edr::code_hints(
+"**CODE //** Getting the integer values for the factor levels in ~~state_fct~~ with ~~as.integer()~~."
+)`
+```{r state-fct-as-integer}
+as.integer(state_fct)
+```
+
+When getting the levels through `levels()` we see that the state names are in alphabetical order. This is the default behavior of **R** when transforming character data to factors (i.e., during data import) and it's likely what has occurred during the creation of the `german_cities` dataset. So, in the output of the last code listing, `10` is `"Nordrhein-Westfalen"`, `2` is `"Bayern"`, and so on. It's the same order of cities as in the `state_fct` vector but the factors were based on the alphabetical ordering of the cities.
+
+`r edr::code_hints(
+"**CODE //** Understanding the frequency of factor levels with the **forcats** ~~fct_count()~~ function."
+)`
+```{r fct-count, paged.print=FALSE}
+fct_count(german_cities$state)
+```
+
+It's good to know this and be continually reminded of this behavior. This ordering of factor levels in this default manner is rarely what one really wants (and we'll see why soon enough).
+
+Let's take a subset of the data in `german_cities` so that, for the next few examples, we'll only work directly with a single factor variable. We can do this with **dplyr**'s `filter()` function:
+
+`r edr::code_hints(
+"**CODE //** Filtering the cities in ~~german_cities~~ to those in the state of Bayern."
+)`
+```{r german-cities-filter-bayern, paged.print=FALSE}
+german_cities_bayern <-
+  german_cities %>%
+  filter(state == "Bayern")
+
+german_cities
+```
+
+Now that the `german_cities` tibble has been filtered to only those cities in Bayern (of which there are eight in this dataset), let's sanity check our levels in the `name` column (which is, like `state`, a factor). We can use the base **R** `nlevels()` function to get the number of levels. While you might expect `nlevels(german_cities_bayern$name)` to return the number `8` (because we can clearly see just eight different city names) what's returned is, surprisingly, `79`. Turns out that the factor levels of a factor don't change even when the elements of such a vector do change. We can remedy this either with the base **R** function `droplevels()` or the **forcats** function `fct_drop()`. The upcoming code listing uses `fct_drop()` twice inside of `mutate()` to remove unneeded factor levels from the `name` and `state` columns.
+
+`r edr::code_hints(
+"**CODE //** Dropping unused factor levels in the ~~name~~ and ~~state~~ ~~\"factor\"~~ columns with ~~fct_drop()~~."
+)`
+```{r mutate-fct-drop}
+german_cities_bayern <- 
+  german_cities_bayern %>% 
+  mutate(
+    name = fct_drop(name),
+    state = fct_drop(state)
+  )
+
+c(nlevels(german_cities_bayern$name), nlevels(german_cities_bayern$state))
+```
+
+The factor levels are now cleaned up for the two factor variables `name` and `state.` Why do this? Well, factor levels are often used to create legends in **ggplot** so it's vitally important that they are in sync with the data (otherwise you'll get legends that don't reflect the plotted data). The **ggplot** package trusts that any factors provided are correct and doesn't attempt to reorder factor levels during plotting.
+
+### Plotting Data with Factor Variables
+
+Speaking of plots, let's make one! This time: a bar plot. The `geom_bar()` function from **ggplot** will be used to draw the layer with the bars. In this particular bar plot, let's have each city in Bayern constitute a bar and the value of the `pop_2015` variable will be the length of the bar. I've found it preferable to have this kind of data visualized as a horizontal bar plot (because the names are more readable that way). There are two details that will make this plot work for us: (1) for the plot aesthetics, map the categorical variable to `y` and map the numeric variable to `x`, and, (2) in `geom_bar()`, use `stat = "identity"` (this means the values provided really are the values that ought to be used). This code listing provides us with the code to give us a horizontal bar plot of populations for eight cities in the German state of Bayern:
+
+`r edr::code_hints(
+"**CODE //** Creating a barplot of the most populous German cities in the state of Bayern by using **ggplot** and its ~~geom_bar()~~ function."
+)`
+```{r barplot-bayern-1, fig.cap='(ref:barplot-bayern-1)'}
+ggplot(data = german_cities_bayern, aes(y = name, x = pop_2015)) +
+  geom_bar(stat = "identity")
+```
+(ref:barplot-bayern-1) Our first bar plot made with **ggplot**. We really need to fix the ordering of the bars.
+
+The resulting plot of *Figure \@ref(fig:barplot-bayern-1)* makes sense and is technically correct: the lengths of the bars do correspond to the city populations. However, it's also a bit disappointing as a visualization because the cities are arranged in reverse alphabetical order (moving from top to bottom), which is arbitrary with regard to population and doesn't give us an easy way to determine rank. This is where the usefulness of factors enters the picture. We can exploit factor levels to enforce the ordering of variables in **ggplot**. To do all this, we'll use a few functions from **forcats** to modify factor levels and serve our visualization needs.
+
+The `fct_reorder()` function works wonders when you want to have the order of factor levels correspond to the order of a different variable. With the bar plot of cities (*Figure \@ref(fig:barplot-bayern-1)*) it was lamentable that the order of the bars did nothing to communicate the rank of cities by their population. Now, we can do something about it with **forcats**' `fct_reorder()`. The following code listing uses an indexing assignment approach (in contrast to the `mutate()` approach used earlier) to reorder the levels of the name variable on the basis of the city population (the `pop_2015` variable).
+	
+`r edr::code_hints(
+"**CODE //** Using the ~~fct_reorder()~~ function to reorder the factor levels of the name variable to match the ordering of the ~~pop_2015~~ variable."
+)`
+```{r fct-reorder}
+german_cities_bayern$name <- 
+  fct_reorder(german_cities_bayern$name, german_cities_bayern$pop_2015)
+
+levels(german_cities_bayern$name)
+```
+
+We checked our work by using the `levels()` function for manual inspection of the levels. We now get an ordering that is no longer alphanumeric. This is success! We'll really see it, though, when the bar plot is regenerated. We can re-run the plotting code and it'll give us a radically improved plot (*Figure \@ref(fig:barplot-bayern-2)*).
+
+`r edr::code_hints(
+"**CODE //** Regenerating the barplot of the most populous German cities in the state of Bayern (this is version 2)."
+)`
+```{r barplot-bayern-2, fig.cap='(ref:barplot-bayern-2)'}
+ggplot(data = german_cities_bayern, aes(y = name, x = pop_2015)) +
+  geom_bar(stat = "identity")
+```
+(ref:barplot-bayern-2) An improvement on the bar plot of large cities in Bayern, Germany. Reordering factor levels in the name variable leads to a coherent ordering of cities by population.
+
+Having the bars arranged in this way really helps. We can tell, in an instant, that Ingolstadt has a greater population than Würzburg. What if you wanted the bars in the reverse order? In that case, the `fct_rev()` function is what's needed. Let's use the function, inspect the factor levels with `levels()`, and re-plot as before (*Figure \@ref(fig:barplot-bayern-3)*).
+
+`r edr::code_hints(
+"**CODE //** Reversing the order of factor levels in the ~~name~~ variable with the ~~fct_rev()~~ function."
+)`
+```{r fct-rev}
+german_cities_bayern$name <- fct_rev(german_cities_bayern$name)
+
+levels(german_cities_bayern$name)
+```
+
+`r edr::code_hints(
+"**CODE //** Regenerating the barplot of the most populous German cities in the state of Bayern (this is version 3)."
+)`
+```{r barplot-bayern-3, fig.cap='(ref:barplot-bayern-3)'}
+ggplot(data = german_cities_bayern, aes(y = name, x = pop_2015)) +
+  geom_bar(stat = "identity")
+```
+(ref:barplot-bayern-3) The reversed order of bars in this plot was accomplished by reversing the factor levels of the name variable with `fct_rev()`.
+
+Lastly, before moving on to more complex plots (all made possible by **forcats**), let's look at a few more functions for transforming factor levels. A great one is `fct_recode()`. If you ever wanted to change the values of the factor levels. Say, for instance, you didn't want the `ü` characters to appear in the city names of `"Fürth"`, `"Würzburg"`, and `"Nürnberg"` and would rather use `"Fuerth"`, `"Wuerzburg"`, and `"Nuernberg"`; then it's `fct_recode()` to the rescue:
+
+`r edr::code_hints(
+"**CODE //** Recoding factor levels in name with the ~~fct_recode()~~ function."
+)`
+```{r fct-recode}
+german_cities_bayern$name <- 
+  fct_recode(
+    german_cities_bayern$name,
+    "Fuerth" = "Fürth", "Wuerzburg" = "Würzburg",
+    "Nuernberg" = "Nürnberg", "Muenchen" = "Munich"
+    )
+
+levels(german_cities_bayern$name)
+```
+
+Again, we need to plot this data to really believe that this use of `fct_recode()` will change the plot labels (*Figure \@ref(fig:barplot-bayern-4)*).
+
+`r edr::code_hints(
+"**CODE //** Regenerating the barplot of the most populous German cities in the state of Bayern (this is version 4)."
+)`
+```{r barplot-bayern-4, fig.cap='(ref:barplot-bayern-4)'}
+ggplot(data = german_cities_bayern, aes(y = name, x = pop_2015)) +
+  geom_bar(stat = "identity")
+```
+(ref:barplot-bayern-4) Thanks to selectively recoding factor values with `fct_recode()`, some of the city names have been slightly altered. The rest of the plot remains unchanged.
+
+### Plotting Data with More Advanced Treatments of Factors
+
+Let's take the same dataset, `german_cities`, and get a bar plot that indicates how many cities are in each state. The use of `geom_bar()` is now different than what was used earlier. This time we will use the `stat = "count"` option but, since that's the default for `geom_bar()`, we'll just omit that altogether. Have a look at the **ggplot** code and the resulting plot in *Figure \@ref(fig:barplot-count)*.
+
+`r edr::code_hints(
+"**CODE //** Creating a bar plot that is based on counts of cities in each state, which is mapped to the ~~y~~ aesthetic."
+)`
+```{r barplot-count, fig.cap='(ref:barplot-count)'}
+german_cities %>%
+  ggplot(aes(y = state)) +
+  geom_bar()
+```
+(ref:barplot-count) A bar plot that shows the number of cities in the dataset that are part of each state. We need to order the bars, however, to make this a more effective visualization (it's hard to parse at present).
+
+The plot in *Figure \@ref(fig:barplot-count)* is, just like that of *Figure \@ref(fig:barplot-bayern-1)*, unsatisfactory as a visualization since the bars (corresponding to counts of cities in each state) are not ordered by their lengths. The **forcats** package offers a very useful function that assigns frequency values to factor levels: `fct_infreq()`. Let's use `fct_infreq()` in a `mutate()` statement along with `fct_rev()` as a way to reverse the levels, just as we've done before. In the next code listing the dataset is mutated with those factor adjustments and the table is then introduced to `ggplot()` via the `%>%`. The much-improved plot is shown in *Figure \@ref(fig:fct-infreq)*.
+
+`r edr::code_hints(
+"**CODE //** Improving on the city count bar plot through use of the ~~fct_infreq()~~ and ~~fct_rev()~~ functions."
+)`
+```{r fct-infreq, fig.cap='(ref:fct-infreq)'}
+german_cities %>%
+  mutate(state = state %>% fct_infreq() %>% fct_rev()) %>%
+  ggplot(aes(y = state)) +
+  geom_bar()
+```
+(ref:fct-infreq) An improved bar plot that made use of the `fct_infreq()` function (to assign levels according to frequency) and, following that, the `fct_rev()` function (to reverse the order of levels).
+
+The plot shown in *Figure \@ref(fig:fct-infreq)* is a great improvement over the previous one in *Figure \@ref(fig:barplot-count)*, proving yet again that factors, and the careful manipulation of them, are useful for controlling plot presentation.
+
+Regarding the reordering of factor levels, there are two other **forcats** functions you should know about. One is the `fct_inorder()` function. Using that on a factor will assign levels based on the order in which values first appear. This function could be handy should you have a table arranged just so, and you wanted to preserve the order of factor values in a plot.
+
+The other function worth mentioning is the `fct_inseq()`. What that does is transform a factor's levels to match the numeric values of the factor. This one's a little confusing so let's demonstrate its use. First, let's make a factor from scratch with the base **R** `factor()` function. We'll provide an integer vector, defined by `3:8`, to `factor()` and a corresponding character vector of integer values to levels (but it'll be in a jumbled up order). Then, we'll get the levels of the factor before and after using the `fct_inseq()` function.
+
+`r edr::code_hints(
+"**CODE //** Using the ~~fct_inseq()~~ function to reorder a factor's levels by its numeric values."
+)`
+```{r fct-inseq}
+fctr <- factor(3:8, levels = as.character(c(5, 4, 6, 3, 8, 7)))
+
+fctr %>% levels()
+
+fctr %>% fct_inseq() %>% levels()
+```
+
+From this code chunk we get two outputs, the first shows the levels as defined by the `factor()` statement, the second set of levels has been modified by `fct_inseq()` such that the order now matches the values of factor (the sequence of numbers from `3` to `8`). The `fct_inseq()` function could be very useful in situations where factor-based values are in terms of years, months, or some other numeric value where ordering numerically makes sense.
+
+Let's get back to our bar plot (which now looks great by the way, thanks to **forcats**). We might imagine a situation where the total number of categories is exceedingly large and so we'd want to show just a few categories while lumping the rest into an 'others' category. Amazingly there is a set of **forcats** functions for that, and the function names all begin with `fct_lump_`. All of these variations perform lumping by different criteria; we'll choose to use the `fct_lump_n()` function for our next example. It lumps all levels except for the n most frequent of them.
+
+The example shown in the next code listing synthesizes a number of `fct_*()` functions together to modify the levels of the state factor column in a `mutate()` statement. First, we do as before and obtain factor levels by frequency. Then, we use `fct_lump_n()` to get the five top states in terms of city count, lumping the rest into the `"Other"` level. Finally, we reverse the entire order of levels with `fct_rev()` so that the bars in the plot appear from largest to smallest (from top to bottom), with the `"Other"` level at the very bottom.
+
+`r edr::code_hints(
+"**CODE //** Further refinement of the city count bar plot by incorporating the ~~fct_lump_n()~~ function (just before reversing levels)."
+)`
+```{r fct-lump-n, fig.cap='(ref:fct-lump-n)'}
+german_cities %>%
+  mutate(state = state %>% fct_infreq() %>% fct_lump_n(5) %>% fct_rev()) %>%
+  ggplot(aes(y = state)) +
+  geom_bar()
+```
+(ref:fct-lump-n) This bar plot of states and the count of cities within them now has an 'Other' bar that represents the count of cities in all other states not in the highlighted five.
+
+While this exploration of factors, the functionality available in **forcats** for modifying them, and these bar plots is useful enough, there is so much more to explore. I strongly suggest looking at the website for **forcats**, which is at https://forcats.tidyverse.org/. There, you'll find a *Getting Started* article, a function *Reference* section, and, a *Cheetsheet* that succinctly shows how all the functions work and are tied together. Sure, factors can be a pain, but working toward understanding them better really does lead to better plots and that really makes it all worth the effort.
+
+## Summary
+
+- Creating a list object is done with the `list()` function; lists can be named, unnamed, or be partially named
+- We can use the `$` and `[[` operators to access list elements or to do assignment on elements of a list
+- The `str()` function can be used with a list object to concisely show us its structure; the `names()` function is also useful for list inspection: it gives us its names (or lack thereof)
+- We can combine lists with the `c()` function, remove list elements by carefully assigning `NULL` to those elements, transform lists to data frames or tibbles with `as.data.frame()` or `as_tibble()`, or, do the opposite with `as.list()`
+- Creating functions that return list objects is useful in circumstances where complex information is needed with a single function call (because we can't return multiple objects, but a list can hold disparate object types)
+- Using lists as an input for a function can be a good idea should we need a complex input or if we want to further modify the one or more components of that list
+- Factors are vectors that contain levels: integers that describe the ordering of the factor's values; we can inspect factors with a number of useful base **R** functions (`as.integer()`, `levels()`, `nlevels()`, etc.) and the `fct_count()` function from the **forcats** package
+- Should factors vectors get modified by changing the number of elements, the storage of factor levels is not changed (and we may have levels for nonexistent values): remedy this with `fct_drop()`
+- We can get fine control over plotting categorical data when using factor transformation functions from **forcats** just before using **ggplot**; these **forcats** functions were useful in this regard: `fct_reorder()`, `fct_rev()`, `fct_recode()`, `fct_infreq()`, `fct_inseq()`, and `fct_lump_n()`.

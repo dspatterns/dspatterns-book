@@ -1,0 +1,246 @@
+---
+title: "Chapter 8"
+output: html_document
+---
+
+```{r load_packages}
+library(tidyverse)
+library(edr)
+```
+
+### Listing 8.1. Assigning a character string to `one_word`.
+
+```{r one_word}
+one_word <- "hello"
+one_word
+```
+
+### Listing 8.2. Creating a character vector with three elements.
+
+```{r three_words}
+three_words <- c("one", "two", "three")
+```
+
+### Listing 8.3. Combining two character vectors with the `c()` function.
+
+```{r words_and_days}
+days <- c("monday", "tuesday", "wednesday")
+
+words_and_days <- c(three_words, days)
+
+words_and_days
+```
+
+### Listing 8.4. Combining a character vector with a numeric vector.
+
+```{r words_and_numbers}
+three_numbers <- c(1, 2, 3)
+
+words_and_numbers <- c(three_words, three_numbers)
+
+words_and_numbers
+```
+
+### Listing 8.5. How combining elements of different types results in coercion.
+
+```{r coercion_to_character}
+c(7, 1.2, TRUE, 6.4/2, FALSE, "hello")
+```
+
+### Listing 8.6. Creating a data frame with two columns.
+
+```{r data_frame_w_factors, paged.print=FALSE}
+data_frame <- data.frame(a = three_numbers, b = three_words)
+data_frame
+```
+
+### Listing 8.7. Using the `stringsAsFactors` option with `data.frame()`.
+
+```{r data_frame_no_factors, paged.print=FALSE}
+data_frame_2 <- 
+  data.frame(
+    a = three_numbers,
+    b = three_words,
+    stringsAsFactors = FALSE
+  )
+
+str(data_frame_2)
+```
+
+
+### Listing 8.8. Using the `formatC()` function to get very particular output character strings for three decimal numbers.
+
+```{r formatC_decimals_2dig}
+decimal_numbers <- c(3.825, 1.01, 15.7758)
+
+formatC(
+  decimal_numbers,
+  digits = 3,
+  format = "f",
+  decimal.mark = ".",
+  drop0trailing = FALSE
+)
+```
+
+### Listing 8.9. Using `formatC()` in a `mutate()` call to format sequential numeric values to index strings that are left-padded with zeros (to a specified width).
+
+```{r formatC_mutate, paged.print=FALSE}
+combined_tbl <-
+  dplyr::tibble(index = 1:1200, text = rep(LETTERS[1:12], 100)) %>%
+  dplyr::mutate(index = formatC(
+    index,
+    digits = 4,
+    format = "d",
+    flag = "0"
+  )) %>%
+  tidyr::unite(col = "combined", index, text) %>%
+  dplyr::arrange(desc(combined))
+
+combined_tbl
+```
+
+### Listing 8.10. Using the `toupper()` and `tolower()` functions to transform characters to upper case and lower case.
+
+```{r toupper_tolower}
+mixed_cases <- c("One", "two", "Three", "FOUR")
+
+c(
+  toupper(mixed_cases[1:2]),
+  tolower(mixed_cases[3:4])
+)
+```
+
+### Listing 8.11. Using `abbreviate()` to make unique abbreviations for longer strings.
+
+```{r abbreviate_terms}
+terms <- c("location", "site", "area", "arena", "locale", "site")
+
+abbreviate(terms, minlength = 3)
+```
+
+### Listing 8.12. Using `substr()` to truncate very long strings to a specific length.
+
+```{r substr_resto_reviews}
+resto_reviews_trunc <- resto_reviews %>% substr(1, 80)
+
+resto_reviews_trunc[1:5]
+```
+
+### Listing 8.13. Using `trimws()` to remove any leading and trailing whitespace in our truncated strings.
+
+```{r trimws_resto_reviews_trunc}
+resto_reviews_trunc <- resto_reviews_trunc %>% trimws()
+
+resto_reviews_trunc[1:5]
+```
+
+### Listing 8.14. Using `strtrim()` to truncate strings, much like `substr()`.
+
+```{r strtrim_resto_reviews}
+all.equal(resto_reviews %>% substr(1, 80), resto_reviews %>% strtrim(80))
+```
+
+### Listing 8.15. Opening up the RegExplain gadget for experimenting with regular expressions.
+
+```{r open_regexplain}
+# edr_regexplain_gadget()
+```
+
+### Listing 8.16. Using `str_match()` to determine the first match of the regex pattern on the text.
+
+```{r str_match}
+fox_dog <- "The quick brown fox jumps over the lazy dog."
+
+str_match(fox_dog, "....")
+```
+
+### Listing 8.17. Using `str_match_all()` to get all of the matches from the text.
+
+```{r str_match_all}
+str_match_all(fox_dog, ".o.")
+```
+
+### Listing 8.18. A regex example that uses character sets, character classes, and negation.
+
+```{r character_sets_classes}
+ihavefruit <- "Fruit? I've got a lime, 3 figs, and 5 plums."
+
+str_match_all(ihavefruit, "[\\d\\w][^A-Z]\\w\\w\\w\\w\\S")
+```
+
+### Listing 8.19. Using the `?` quantifier to denote an optional piece of text.
+
+```{r character_sets_classes}
+str_match_all(ihavefruit, "[\\d\\w]\\s\\w\\w\\w\\w?s?\\S")
+```
+
+### Listing 8.20. Using anchors to bind the search pattern to the start and/or end of the string.
+
+```{r anchors}
+str_match(ihavefruit, "^\\w*")
+str_match(ihavefruit, "\\w*\\.?$")
+str_match(ihavefruit, "^[[:print:]]*$")
+```
+
+### Listing 8.21. Using alternation (with `|`) inside of parentheses (which is a capturing group).
+
+```{r grouping_capturing_alternation}
+str_match(ihavefruit, "(figs?|plums?|limes?)")
+```
+
+### Listing 8.22. Backreferences are used to compose a new string in a particular order with the captured text.
+
+```{r str_replace_all}
+ihavefruit %>%
+  str_replace_all(
+    pattern = ".*(limes?).*(figs?).*(plums?).*",
+    replacement = "\\3 \\2 \\1"
+  ) %>%
+  str_replace_all(pattern = "s\\b", replacement = "") %>%
+  str_split(pattern = " ") %>%
+  unlist()
+```
+
+### Listing 8.23. Extracting words from a string and putting them into a vector with `str_extract_all()`.
+
+```{r str_extract_all}
+ihavefruit %>%
+  str_extract_all(pattern = "(limes?|figs?|plums?)") %>%
+  unlist()
+```
+
+### Listing 8.24. Improving the `pattern` with the word boundary metacharacter.
+
+```{r str_extract_all_word_boundary}
+ihavefruit_2 <- "Fruit? Yep, I've got a lime, 3 figs, and 5 plums. All covered in slime."
+
+ihavefruit %>%
+  str_extract_all(pattern = "(\\blimes?\\b|\\bfigs?\\b|\\bplums?\\b)") %>%
+  unlist()
+```
+
+### Listing 8.25. Using the `str_detect()` function to see whether there are any matches of our pattern in the `resto_reviews` vector.
+
+```{r str_detect}
+str_detect(string = resto_reviews, pattern = "yum\\w*?") %>% 
+  table()
+```
+
+### Listing 8.26. Using the logical vector from `str_detect()` to inspect those reviews that matched the regex.
+
+```{r str_detect_see_matches}
+matches <- str_detect(string = resto_reviews, pattern = "yum\\w*?")
+
+resto_reviews[matches]
+```
+
+### Listing 8.27. Getting all matches of dollar values and eventually resolving to a single numeric vector.
+
+```{r str_extract_all_str_remove}
+str_extract_all(string = resto_reviews, pattern = "\\$\\d*") %>%
+  unlist() %>%
+  str_remove("\\$") %>%
+  as.numeric()
+```
+
+

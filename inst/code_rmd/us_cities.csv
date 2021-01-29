@@ -1,0 +1,766 @@
+city,state_id,state_name,pop_urb,pop_mun
+Anchorage,AK,Alaska,253421,294356
+Auburn,AL,Alabama,89577,63973
+Birmingham,AL,Alabama,744189,210710
+Decatur,AL,Alabama,68816,54405
+Dothan,AL,Alabama,71620,68202
+Hoover,AL,Alabama,84920,84920
+Huntsville,AL,Alabama,309716,194585
+Mobile,AL,Alabama,318084,190265
+Montgomery,AL,Alabama,255908,199518
+Tuscaloosa,AL,Alabama,154204,100287
+Conway,AR,Arkansas,72894,65782
+Fayetteville,AR,Arkansas,341890,85257
+Fort Smith,AR,Arkansas,125562,88037
+Jonesboro,AR,Arkansas,73788,75866
+Little Rock,AR,Arkansas,442699,198606
+North Little Rock,AR,Arkansas,65911,65911
+Rogers,AR,Arkansas,66430,66430
+Springdale,AR,Arkansas,79599,79599
+Avondale,AZ,Arizona,217192,84025
+Buckeye,AZ,Arizona,68453,68453
+Casa Grande,AZ,Arizona,58632,55477
+Chandler,AZ,Arizona,253458,253458
+Flagstaff,AZ,Arizona,78628,71975
+Gilbert,AZ,Arizona,242354,242354
+Glendale,AZ,Arizona,246709,246709
+Goodyear,AZ,Arizona,79858,79858
+Lake Havasu City,AZ,Arizona,55341,54411
+Mesa,AZ,Arizona,496401,496401
+Peoria,AZ,Arizona,168181,168181
+Phoenix,AZ,Arizona,4081849,1626078
+Scottsdale,AZ,Arizona,249950,249950
+Surprise,AZ,Arizona,134085,134085
+Tempe,AZ,Arizona,185038,185038
+Tucson,AZ,Arizona,868391,535677
+Yuma,AZ,Arizona,138802,95502
+Alameda,CA,California,79177,79177
+Alhambra,CA,California,85396,85396
+Aliso Viejo,CA,California,51671,51671
+Anaheim,CA,California,352497,352497
+Antioch,CA,California,302885,111674
+Apple Valley,CA,California,73077,73077
+Arcadia,CA,California,58799,58799
+Bakersfield,CA,California,574362,380874
+Baldwin Park,CA,California,76402,76402
+Bellflower,CA,California,77772,77772
+Berkeley,CA,California,122324,122324
+Brentwood,CA,California,62433,62433
+Buena Park,CA,California,83015,83015
+Burbank,CA,California,104834,104834
+Camarillo,CA,California,74682,67845
+Carlsbad,CA,California,115330,115330
+Carson,CA,California,92735,92735
+Cathedral City,CA,California,54596,54596
+Cerritos,CA,California,51020,51020
+Chico,CA,California,106268,93293
+Chino,CA,California,89797,89797
+Chino Hills,CA,California,80374,80374
+Chula Vista,CA,California,270471,270471
+Citrus Heights,CA,California,87931,87931
+Clovis,CA,California,109691,109691
+Colton,CA,California,54828,54828
+Compton,CA,California,97612,97612
+Concord,CA,California,654770,129783
+Corona,CA,California,167836,167836
+Costa Mesa,CA,California,113825,113825
+Cupertino,CA,California,60777,60777
+Daly City,CA,California,107074,107074
+Davis,CA,California,76524,68986
+Delano,CA,California,54471,53138
+Diamond Bar,CA,California,56665,56665
+Downey,CA,California,113092,113092
+Dublin,CA,California,60939,60939
+Eastvale,CA,California,63211,63211
+El Cajon,CA,California,103894,103894
+El Monte,CA,California,116109,116109
+Elk Grove,CA,California,171844,171844
+Encinitas,CA,California,63184,63184
+Escondido,CA,California,151969,151969
+Fairfield,CA,California,147582,116266
+Folsom,CA,California,78038,78038
+Fontana,CA,California,211815,211815
+Fountain Valley,CA,California,56313,56313
+Fremont,CA,California,234962,234962
+Fresno,CA,California,698021,527438
+Fullerton,CA,California,140392,140392
+Garden Grove,CA,California,174226,174226
+Gardena,CA,California,60224,60224
+Gilroy,CA,California,116235,57664
+Glendale,CA,California,203054,203054
+Glendora,CA,California,52445,52445
+Hanford,CA,California,92066,56499
+Hawthorne,CA,California,87854,87854
+Hayward,CA,California,160500,160500
+Hemet,CA,California,176892,85160
+Hesperia,CA,California,94859,94859
+Highland,CA,California,55342,55342
+Huntington Beach,CA,California,201874,201874
+Huntington Park,CA,California,58822,58822
+Indio,CA,California,408097,89793
+Inglewood,CA,California,110598,110598
+Irvine,CA,California,277453,277453
+La Habra,CA,California,62466,62466
+La Mesa,CA,California,60021,60021
+Laguna Niguel,CA,California,66334,66334
+Lake Elsinore,CA,California,66411,66411
+Lake Forest,CA,California,84293,84293
+Lakewood,CA,California,80967,80967
+Lancaster,CA,California,349218,160316
+Livermore,CA,California,91030,90295
+Lodi,CA,California,72890,65884
+Long Beach,CA,California,469450,469450
+Los Angeles,CA,California,12815475,3999759
+Lynwood,CA,California,71099,71099
+Madera,CA,California,83636,65508
+Manteca,CA,California,98736,79268
+Menifee,CA,California,90595,90595
+Merced,CA,California,144117,83081
+Milpitas,CA,California,78106,78106
+Mission Viejo,CA,California,600474,96016
+Modesto,CA,California,381398,214221
+Montebello,CA,California,63192,63192
+Monterey Park,CA,California,61044,61044
+Moreno Valley,CA,California,207226,207226
+Mountain View,CA,California,81438,81438
+Murrieta,CA,California,483681,113326
+Napa,CA,California,87032,79774
+National City,CA,California,61363,61363
+Newport Beach,CA,California,86160,86160
+Norwalk,CA,California,106084,106084
+Novato,CA,California,55980,55980
+Oakland,CA,California,425195,425195
+Oceanside,CA,California,176193,176193
+Ontario,CA,California,175841,175841
+Orange,CA,California,140560,140560
+Oxnard,CA,California,389792,210037
+Palm Desert,CA,California,52932,52932
+Palmdale,CA,California,157519,157519
+Palo Alto,CA,California,67178,67178
+Paramount,CA,California,54909,54909
+Pasadena,CA,California,142647,142647
+Perris,CA,California,77879,77879
+Petaluma,CA,California,67316,60870
+Pico Rivera,CA,California,63522,63522
+Pittsburg,CA,California,72141,72141
+Placentia,CA,California,52157,52157
+Pleasanton,CA,California,83007,83007
+Pomona,CA,California,152939,152939
+Porterville,CA,California,76729,59145
+Poway,CA,California,50041,50041
+Rancho Cordova,CA,California,73563,73563
+Rancho Cucamonga,CA,California,177452,177452
+Redding,CA,California,120270,91794
+Redlands,CA,California,71554,71554
+Redondo Beach,CA,California,67908,67908
+Redwood City,CA,California,86685,86685
+Rialto,CA,California,103562,103562
+Richmond,CA,California,110040,110040
+Riverside,CA,California,2084749,327728
+Rocklin,CA,California,64838,64838
+Rosemead,CA,California,54554,54554
+Roseville,CA,California,135329,135329
+Sacramento,CA,California,1854698,501901
+Salinas,CA,California,193590,157596
+San Bernardino,CA,California,216995,216995
+San Clemente,CA,California,65267,65267
+San Diego,CA,California,3210314,1419516
+San Francisco,CA,California,3603761,884363
+San Jose,CA,California,1821899,1035317
+San Leandro,CA,California,90553,90553
+San Marcos,CA,California,96198,96198
+San Mateo,CA,California,104748,104748
+San Rafael,CA,California,59070,59070
+San Ramon,CA,California,75931,75931
+Santa Ana,CA,California,334136,334136
+Santa Barbara,CA,California,204034,92101
+Santa Clara,CA,California,127134,127134
+Santa Clarita,CA,California,309378,210888
+Santa Cruz,CA,California,177556,65021
+Santa Maria,CA,California,140219,107014
+Santa Monica,CA,California,92306,92306
+Santa Rosa,CA,California,321908,175269
+Santee,CA,California,58113,58113
+Simi Valley,CA,California,127864,126878
+South Gate,CA,California,95430,95430
+South San Francisco,CA,California,67429,67429
+Stockton,CA,California,394467,310496
+Sunnyvale,CA,California,153656,153656
+Temecula,CA,California,114327,114327
+Thousand Oaks,CA,California,218729,128995
+Torrance,CA,California,146758,146758
+Tracy,CA,California,95982,90889
+Tulare,CA,California,63855,63855
+Turlock,CA,California,107208,73556
+Tustin,CA,California,80498,80498
+Union City,CA,California,75343,75343
+Upland,CA,California,76999,76999
+Vacaville,CA,California,100801,100032
+Vallejo,CA,California,173844,122105
+Victorville,CA,California,346948,122441
+Visalia,CA,California,234573,133010
+Vista,CA,California,101568,101568
+Walnut Creek,CA,California,69773,69773
+Watsonville,CA,California,77700,54098
+West Covina,CA,California,107598,107598
+West Sacramento,CA,California,53512,53512
+Westminster,CA,California,91564,91564
+Whittier,CA,California,86838,86838
+Woodland,CA,California,60062,60012
+Yorba Linda,CA,California,68229,68229
+Yuba City,CA,California,120186,66860
+Yucaipa,CA,California,53683,53683
+Arvada,CO,Colorado,118807,118807
+Aurora,CO,Colorado,366623,366623
+Boulder,CO,Colorado,126054,107125
+Broomfield,CO,Colorado,68341,68341
+Castle Rock,CO,Colorado,62276,62276
+Centennial,CO,Colorado,110250,110250
+Colorado Springs,CO,Colorado,623946,464474
+Commerce City,CO,Colorado,55923,55923
+Denver,CO,Colorado,2787266,704621
+Fort Collins,CO,Colorado,303184,165080
+Grand Junction,CO,Colorado,136688,62475
+Greeley,CO,Colorado,133750,105448
+Lakewood,CO,Colorado,154958,154958
+Longmont,CO,Colorado,99398,94341
+Loveland,CO,Colorado,76701,76701
+Parker,CO,Colorado,54202,54202
+Pueblo,CO,Colorado,142351,111127
+Thornton,CO,Colorado,136978,136978
+Westminster,CO,Colorado,112812,112812
+Bridgeport,CT,Connecticut,938406,146579
+Bristol,CT,Connecticut,60223,60223
+City of Milford (balance),CT,Connecticut,52970,52970
+Danbury,CT,Connecticut,177177,85246
+Hartford,CT,Connecticut,914751,123400
+Meriden,CT,Connecticut,59927,59927
+New Britain,CT,Connecticut,72710,72710
+New Haven,CT,Connecticut,568144,131014
+Norwalk,CT,Connecticut,89005,89005
+Stamford,CT,Connecticut,130824,130824
+Waterbury,CT,Connecticut,191484,108629
+West Haven,CT,Connecticut,54843,54843
+Washington,DC,District of Columbia,5289420,693972
+Wilmington,DE,Delaware,71106,71106
+Apopka,FL,Florida,51564,51564
+Boca Raton,FL,Florida,98150,98150
+Bonita Springs,FL,Florida,396220,56088
+Boynton Beach,FL,Florida,77702,77702
+Bradenton,FL,Florida,56508,56508
+Cape Coral,FL,Florida,630134,183365
+Clearwater,FL,Florida,115513,115513
+Coconut Creek,FL,Florida,61010,61010
+Coral Gables,FL,Florida,51095,51095
+Coral Springs,FL,Florida,133037,133037
+Davie,FL,Florida,105149,105149
+Daytona Beach,FL,Florida,68055,68055
+Deerfield Beach,FL,Florida,80571,80571
+Delray Beach,FL,Florida,68749,68749
+Deltona,FL,Florida,194061,90746
+Doral,FL,Florida,61130,61130
+Fort Lauderdale,FL,Florida,180072,180072
+Fort Myers,FL,Florida,79943,79943
+Gainesville,FL,Florida,199695,132249
+Hialeah,FL,Florida,239673,239673
+Hollywood,FL,Florida,153627,153627
+Homestead,FL,Florida,69907,69907
+Jacksonville,FL,Florida,1156291,892062
+Jupiter,FL,Florida,64976,64976
+Kissimmee,FL,Florida,374231,71104
+Lakeland,FL,Florida,291281,108054
+Largo,FL,Florida,84754,84754
+Lauderhill,FL,Florida,71970,71970
+Margate,FL,Florida,58430,58430
+Melbourne,FL,Florida,82011,82011
+Miami,FL,Florida,6381966,463347
+Miami Beach,FL,Florida,92307,92307
+Miami Gardens,FL,Florida,113750,113750
+Miramar,FL,Florida,140328,140328
+North Miami,FL,Florida,62225,62225
+North Port,FL,Florida,195992,66300
+Ocala,FL,Florida,164712,59110
+Orlando,FL,Florida,1776841,280257
+Palm Bay,FL,Florida,489912,111657
+Palm Beach Gardens,FL,Florida,55036,55036
+Palm Coast,FL,Florida,401757,86516
+Pembroke Pines,FL,Florida,170712,170712
+Pensacola,FL,Florida,344400,52590
+Pinellas Park,FL,Florida,52854,52854
+Plantation,FL,Florida,93909,93909
+Pompano Beach,FL,Florida,110473,110473
+Port Orange,FL,Florida,63203,63203
+Port Saint Lucie,FL,Florida,432589,189344
+Saint Cloud,FL,Florida,51282,51282
+Saint Petersburg,FL,Florida,263255,263255
+Sanford,FL,Florida,59317,59317
+Sarasota,FL,Florida,706245,56994
+Sunrise,FL,Florida,94323,94323
+Tallahassee,FL,Florida,253030,191049
+Tamarac,FL,Florida,65669,65669
+Tampa,FL,Florida,2804240,385430
+Wellington,FL,Florida,64848,64848
+West Palm Beach,FL,Florida,110222,110222
+Weston,FL,Florida,70944,70944
+Albany,GA,Georgia,90515,73179
+Alpharetta,GA,Georgia,65799,65799
+Athens,GA,Georgia,140169,125691
+Atlanta,GA,Georgia,5228750,486290
+Augusta,GA,Georgia,389383,197166
+Brookhaven,GA,Georgia,53518,53518
+Columbus,GA,Georgia,259160,194058
+Johns Creek,GA,Georgia,84350,84350
+Marietta,GA,Georgia,61048,61048
+Roswell,GA,Georgia,94786,94786
+Sandy Springs,GA,Georgia,106739,106739
+Savannah,GA,Georgia,280082,146444
+Smyrna,GA,Georgia,56685,56685
+Stonecrest,GA,Georgia,54471,54471
+Valdosta,GA,Georgia,79294,56085
+Warner Robins,GA,Georgia,149617,74854
+Honolulu,HI,Hawaii,833671,350395
+Ames,IA,Iowa,68156,66498
+Ankeny,IA,Iowa,62416,62416
+Cedar Rapids,IA,Iowa,186160,132228
+Council Bluffs,IA,Iowa,62316,62316
+Davenport,IA,Iowa,287413,102320
+Des Moines,IA,Iowa,481222,217521
+Dubuque,IA,Iowa,68573,58276
+Iowa City,IA,Iowa,119091,75798
+Sioux City,IA,Iowa,106279,82514
+Waterloo,IA,Iowa,112060,67587
+West Des Moines,IA,Iowa,65608,65608
+Boise,ID,Idaho,385218,226570
+Caldwell,ID,Idaho,54660,54660
+Coeur d'Alene,ID,Idaho,112935,50665
+Idaho Falls,ID,Idaho,97548,61076
+Meridian,ID,Idaho,99926,99926
+Nampa,ID,Idaho,173863,93590
+Pocatello,ID,Idaho,71020,55193
+Arlington Heights,IL,Illinois,75634,75634
+Aurora,IL,Illinois,200965,200965
+Berwyn,IL,Illinois,55550,55550
+Bloomington,IL,Illinois,134892,77934
+Bolingbrook,IL,Illinois,75201,75201
+Champaign,IL,Illinois,156794,87432
+Chicago,IL,Illinois,8675982,2716450
+Cicero,IL,Illinois,82552,82552
+Decatur,IL,Illinois,88997,72174
+Des Plaines,IL,Illinois,58193,58193
+Elgin,IL,Illinois,112456,112456
+Evanston,IL,Illinois,74756,74756
+Hoffman Estates,IL,Illinois,51567,51567
+Joliet,IL,Illinois,148462,148462
+Mount Prospect,IL,Illinois,53930,53930
+Naperville,IL,Illinois,147682,147682
+Normal,IL,Illinois,54284,54284
+Oak Lawn,IL,Illinois,56087,56087
+Oak Park,IL,Illinois,52261,52261
+Orland Park,IL,Illinois,58765,58765
+Palatine,IL,Illinois,68644,68644
+Peoria,IL,Illinois,262010,112883
+Rockford,IL,Illinois,285562,147051
+Schaumburg,IL,Illinois,74184,74184
+Skokie,IL,Illinois,63978,63978
+Springfield,IL,Illinois,159394,114868
+Tinley Park,IL,Illinois,56668,56668
+Waukegan,IL,Illinois,87729,87729
+Wheaton,IL,Illinois,53373,53373
+Anderson,IN,Indiana,86481,55076
+Bloomington,IN,Indiana,114959,85071
+Carmel,IN,Indiana,92198,92198
+Elkhart,IN,Indiana,148131,52558
+Evansville,IN,Indiana,232285,118930
+Fishers,IN,Indiana,91832,91832
+Fort Wayne,IN,Indiana,328564,265904
+Gary,IN,Indiana,76008,76008
+Greenwood,IN,Indiana,57375,57375
+Hammond,IN,Indiana,76618,76618
+Indianapolis,IN,Indiana,1564699,863002
+Kokomo,IN,Indiana,79099,57836
+Lafayette,IN,Indiana,159293,72390
+Muncie,IN,Indiana,88688,68625
+Noblesville,IN,Indiana,61882,61882
+South Bend,IN,Indiana,281100,102245
+Terre Haute,IN,Indiana,92722,60774
+Kansas City,KS,Kansas,152938,152938
+Lawrence,KS,Kansas,97341,96892
+Lenexa,KS,Kansas,53553,53553
+Manhattan,KS,Kansas,57284,54832
+Olathe,KS,Kansas,137472,137472
+Overland Park,KS,Kansas,191278,191278
+Shawnee,KS,Kansas,65513,65513
+Topeka,KS,Kansas,148960,126587
+Wichita,KS,Kansas,483057,390591
+Bowling Green,KY,Kentucky,90448,67067
+Lexington,KY,Kentucky,315939,321959
+Louisville,KY,Kentucky,1011696,621349
+Owensboro,KY,Kentucky,73173,59404
+Baton Rouge,LA,Louisiana,583613,225374
+Bossier City,LA,Louisiana,68554,68554
+Kenner,LA,Louisiana,67451,67451
+Lafayette,LA,Louisiana,265746,126848
+Lake Charles,LA,Louisiana,153633,77117
+New Orleans,LA,Louisiana,1029123,393292
+Shreveport,LA,Louisiana,287432,192036
+Boston,MA,Massachusetts,4637537,685094
+Brockton,MA,Massachusetts,95672,95672
+Cambridge,MA,Massachusetts,113630,113630
+Chicopee,MA,Massachusetts,55515,55515
+Fall River,MA,Massachusetts,89420,89420
+Haverhill,MA,Massachusetts,63639,63639
+Lawrence,MA,Massachusetts,80162,80162
+Lowell,MA,Massachusetts,111346,111346
+Lynn,MA,Massachusetts,94063,94063
+Malden,MA,Massachusetts,61246,61246
+Medford,MA,Massachusetts,57797,57797
+Methuen,MA,Massachusetts,50259,50259
+New Bedford,MA,Massachusetts,149528,95120
+Newton,MA,Massachusetts,88994,88994
+Peabody,MA,Massachusetts,52987,52987
+Quincy,MA,Massachusetts,94166,94166
+Revere,MA,Massachusetts,53993,53993
+Somerville,MA,Massachusetts,81360,81360
+Springfield,MA,Massachusetts,628076,154758
+Taunton,MA,Massachusetts,57139,57139
+Waltham,MA,Massachusetts,62442,62442
+Worcester,MA,Massachusetts,498997,185677
+Baltimore,MD,Maryland,2170504,611648
+Bowie,MD,Maryland,58859,58859
+Frederick,MD,Maryland,154972,71408
+Gaithersburg,MD,Maryland,68710,68710
+Rockville,MD,Maryland,68401,68401
+Portland,ME,Maine,206023,66882
+Ann Arbor,MI,Michigan,326288,121477
+Battle Creek,MI,Michigan,76803,51286
+Dearborn,MI,Michigan,94491,94491
+Dearborn Heights,MI,Michigan,55758,55758
+Detroit,MI,Michigan,3522206,673104
+Farmington Hills,MI,Michigan,81050,81050
+Flint,MI,Michigan,335354,96448
+Grand Rapids,MI,Michigan,602694,198829
+Kalamazoo,MI,Michigan,214083,75807
+Kentwood,MI,Michigan,51747,51747
+Lansing,MI,Michigan,320928,116986
+Livonia,MI,Michigan,94105,94105
+Novi,MI,Michigan,59715,59715
+Pontiac,MI,Michigan,59792,59792
+Rochester Hills,MI,Michigan,74205,74205
+Royal Oak,MI,Michigan,59112,59112
+Saint Clair Shores,MI,Michigan,59635,59635
+Southfield,MI,Michigan,73208,73208
+Sterling Heights,MI,Michigan,132631,132631
+Taylor,MI,Michigan,61276,61276
+Troy,MI,Michigan,83813,83813
+Warren,MI,Michigan,135022,135022
+Westland,MI,Michigan,81747,81747
+Wyoming,MI,Michigan,75938,75938
+Apple Valley,MN,Minnesota,52435,52435
+Blaine,MN,Minnesota,64557,64557
+Bloomington,MN,Minnesota,85866,85866
+Brooklyn Park,MN,Minnesota,80581,80581
+Burnsville,MN,Minnesota,61439,61439
+Coon Rapids,MN,Minnesota,62656,62656
+Duluth,MN,Minnesota,120101,86066
+Eagan,MN,Minnesota,66627,66627
+Eden Prairie,MN,Minnesota,64400,64400
+Edina,MN,Minnesota,51958,51958
+Lakeville,MN,Minnesota,63748,63748
+Maple Grove,MN,Minnesota,71066,71066
+Minneapolis,MN,Minnesota,2926757,422331
+Minnetonka,MN,Minnesota,53085,53085
+Plymouth,MN,Minnesota,78395,78395
+Rochester,MN,Minnesota,116713,115733
+Saint Cloud,MN,Minnesota,114225,67984
+Saint Paul,MN,Minnesota,306621,306621
+Woodbury,MN,Minnesota,69756,69756
+Blue Springs,MO,Missouri,54945,54945
+Columbia,MO,Missouri,139945,121717
+Florissant,MO,Missouri,51443,51443
+Independence,MO,Missouri,117306,117306
+Joplin,MO,Missouri,86298,52288
+Kansas City,MO,Missouri,1615621,488943
+Lees Summit,MO,Missouri,90597,97290
+O'Fallon,MO,Missouri,87597,87597
+Saint Charles,MO,Missouri,70329,70329
+Saint Joseph,MO,Missouri,80818,76442
+Saint Louis,MO,Missouri,2078283,308626
+Saint Peters,MO,Missouri,57178,57178
+Springfield,MO,Missouri,287222,167376
+Gulfport,MS,Mississippi,221348,71822
+Jackson,MS,Mississippi,338185,166965
+Southaven,MS,Mississippi,54031,54031
+Billings,MT,Montana,120800,109642
+Great Falls,MT,Montana,65624,58876
+Missoula,MT,Montana,90218,73340
+Apex,NC,North Carolina,50451,50451
+Asheville,NC,North Carolina,309250,91902
+Burlington,NC,North Carolina,127374,53077
+Cary,NC,North Carolina,165904,165904
+Chapel Hill,NC,North Carolina,59862,59862
+Charlotte,NC,North Carolina,1467362,859035
+Concord,NC,North Carolina,250186,92067
+Durham,NC,North Carolina,407575,267743
+Fayetteville,NC,North Carolina,324700,209889
+Gastonia,NC,North Carolina,180974,76593
+Greensboro,NC,North Carolina,335588,290222
+Greenville,NC,North Carolina,128385,92156
+High Point,NC,North Carolina,177874,111513
+Huntersville,NC,North Carolina,56212,56212
+Jacksonville,NC,North Carolina,108872,72447
+Raleigh,NC,North Carolina,1018336,464758
+Rocky Mount,NC,North Carolina,64732,54523
+Wilmington,NC,North Carolina,245910,119045
+Winston-Salem,NC,North Carolina,416581,244605
+Bismarck,ND,North Dakota,97457,72865
+Fargo,ND,North Dakota,204820,122359
+Grand Forks,ND,North Dakota,66159,57056
+Bellevue,NE,Nebraska,53424,53424
+Grand Island,NE,Nebraska,53424,51390
+Lincoln,NE,Nebraska,285118,284736
+Omaha,NE,Nebraska,827786,466893
+Manchester,NH,New Hampshire,160742,111196
+Nashua,NH,New Hampshire,231262,88341
+Bayonne,NJ,New Jersey,67186,67186
+Camden,NJ,New Jersey,74532,74532
+Clifton,NJ,New Jersey,86607,86607
+East Orange,NJ,New Jersey,65378,65378
+Elizabeth,NJ,New Jersey,130215,130215
+Hoboken,NJ,New Jersey,55131,55131
+Jersey City,NJ,New Jersey,270753,270753
+New Brunswick,NJ,New Jersey,57073,57073
+Newark,NJ,New Jersey,285154,285154
+Passaic,NJ,New Jersey,71247,71247
+Paterson,NJ,New Jersey,148678,148678
+Perth Amboy,NJ,New Jersey,52823,52823
+Plainfield,NJ,New Jersey,51327,51327
+Trenton,NJ,New Jersey,296869,84964
+Union City,NJ,New Jersey,70387,70387
+Vineland,NJ,New Jersey,94734,60392
+West New York,NJ,New Jersey,54227,54227
+Albuquerque,NM,New Mexico,758523,558545
+Las Cruces,NM,New Mexico,133988,101712
+Rio Rancho,NM,New Mexico,96159,96159
+Santa Fe,NM,New Mexico,110078,83776
+Carson City,NV,Nevada,57525,54745
+Henderson,NV,Nevada,302539,302539
+Las Vegas,NV,Nevada,2073045,641676
+North Las Vegas,NV,Nevada,242975,242975
+Reno,NV,Nevada,433271,248853
+Sparks,NV,Nevada,100888,100888
+Albany,NY,New York,597270,98251
+Bronx,NY,New York,1455720,1455720
+Brooklyn,NY,New York,2629150,2629150
+Buffalo,NY,New York,926261,258612
+Hempstead,NY,New York,55806,55806
+Manhattan,NY,New York,1643734,1643734
+Mount Vernon,NY,New York,68703,68703
+New Rochelle,NY,New York,79946,79946
+New York,NY,New York,19354922,8622698
+Queens,NY,New York,2333054,2333054
+Rochester,NY,New York,711998,208046
+Schenectady,NY,New York,65625,65625
+Staten Island,NY,New York,476015,476015
+Syracuse,NY,New York,407259,143396
+Utica,NY,New York,114318,60635
+White Plains,NY,New York,59047,59047
+Yonkers,NY,New York,202019,202019
+Akron,OH,Ohio,565920,197846
+Canton,OH,Ohio,271184,70909
+Cincinnati,OH,Ohio,1648254,301301
+Cleveland,OH,Ohio,1730363,385525
+Columbus,OH,Ohio,1528314,879170
+Dayton,OH,Ohio,718169,140371
+Elyria,OH,Ohio,53883,53883
+Hamilton,OH,Ohio,62092,62092
+Kettering,OH,Ohio,55175,55175
+Lakewood,OH,Ohio,50249,50249
+Lorain,OH,Ohio,180239,63841
+Parma,OH,Ohio,79167,79167
+Springfield,OH,Ohio,83286,59208
+Toledo,OH,Ohio,488672,276491
+Youngstown,OH,Ohio,373728,64604
+Broken Arrow,OK,Oklahoma,108303,108303
+Edmond,OK,Oklahoma,91950,91950
+Enid,OK,Oklahoma,48325,50122
+Lawton,OK,Oklahoma,91383,93714
+Midwest City,OK,Oklahoma,57308,57308
+Moore,OK,Oklahoma,61523,61523
+Norman,OK,Oklahoma,115065,122843
+Oklahoma City,OK,Oklahoma,955998,643648
+Tulsa,OK,Oklahoma,672054,401800
+Albany,OR,Oregon,60795,53503
+Beaverton,OR,Oregon,97514,97514
+Bend,OR,Oregon,103349,94520
+Corvallis,OR,Oregon,66441,57961
+Eugene,OR,Oregon,267568,168916
+Gresham,OR,Oregon,111053,111053
+Hillsboro,OR,Oregon,106894,106894
+Medford,OR,Oregon,168219,81780
+Portland,OR,Oregon,2052796,647805
+Salem,OR,Oregon,259816,169798
+Springfield,OR,Oregon,62353,62353
+Tigard,OR,Oregon,53148,53148
+Allentown,PA,Pennsylvania,682899,121283
+Bethlehem,PA,Pennsylvania,75707,75707
+Erie,PA,Pennsylvania,188079,97369
+Lancaster,PA,Pennsylvania,404525,59708
+Philadelphia,PA,Pennsylvania,5637884,1580863
+Pittsburgh,PA,Pennsylvania,1715297,302407
+Reading,PA,Pennsylvania,267300,88423
+Scranton,PA,Pennsylvania,389022,77605
+Cranston,RI,Rhode Island,81202,81202
+Pawtucket,RI,Rhode Island,72001,72001
+Providence,RI,Rhode Island,1206642,180393
+Warwick,RI,Rhode Island,80871,80871
+Charleston,SC,South Carolina,616085,134875
+Columbia,SC,South Carolina,566166,133114
+Greenville,SC,South Carolina,467894,68219
+Mount Pleasant,SC,South Carolina,86668,86668
+North Charleston,SC,South Carolina,110861,110861
+Rock Hill,SC,South Carolina,115963,73068
+Summerville,SC,South Carolina,50388,50388
+Rapid City,SD,South Dakota,88979,74421
+Sioux Falls,SD,South Dakota,180204,176888
+Bartlett,TN,Tennessee,59102,59102
+Chattanooga,TN,Tennessee,407182,179139
+Clarksville,TN,Tennessee,182849,153205
+Collierville,TN,Tennessee,50286,50286
+Franklin,TN,Tennessee,78321,78321
+Hendersonville,TN,Tennessee,57517,57517
+Jackson,TN,Tennessee,73685,66847
+Johnson City,TN,Tennessee,126589,66391
+Kingsport,TN,Tennessee,118001,53374
+Knoxville,TN,Tennessee,585249,187347
+Memphis,TN,Tennessee,1068873,652236
+Murfreesboro,TN,Tennessee,167055,136372
+Nashville,TN,Tennessee,1076645,667560
+Abilene,TX,Texas,114964,121885
+Allen,TX,Texas,100685,100685
+Amarillo,TX,Texas,206072,199826
+Arlington,TX,Texas,396394,396394
+Austin,TX,Texas,1638716,950715
+Baytown,TX,Texas,76804,76804
+Beaumont,TX,Texas,148954,119114
+Brownsville,TX,Texas,227883,183299
+Bryan,TX,Texas,84021,84021
+Carrollton,TX,Texas,135710,135710
+Cedar Park,TX,Texas,75704,75704
+College Station,TX,Texas,207308,113564
+Conroe,TX,Texas,84378,84378
+Corpus Christi,TX,Texas,341435,325605
+Dallas,TX,Texas,5733259,1341075
+Denton,TX,Texas,440146,136268
+DeSoto,TX,Texas,53568,53568
+Edinburg,TX,Texas,90280,90280
+El Paso,TX,Texas,845674,683577
+Euless,TX,Texas,55174,55174
+Flower Mound,TX,Texas,76681,76681
+Fort Worth,TX,Texas,874168,874168
+Frisco,TX,Texas,177286,177286
+Galveston,TX,Texas,46561,50497
+Garland,TX,Texas,238002,238002
+Georgetown,TX,Texas,70685,70685
+Grand Prairie,TX,Texas,193837,193837
+Grapevine,TX,Texas,53982,53982
+Harlingen,TX,Texas,136968,65467
+Houston,TX,Texas,5446468,2312717
+Irving,TX,Texas,240373,240373
+Killeen,TX,Texas,247489,145482
+Laredo,TX,Texas,260244,260654
+League City,TX,Texas,104903,104903
+Lewisville,TX,Texas,106021,106021
+Longview,TX,Texas,100196,81522
+Lubbock,TX,Texas,262505,253888
+Mansfield,TX,Texas,68928,68928
+McAllen,TX,Texas,800904,142696
+McKinney,TX,Texas,235134,181330
+Mesquite,TX,Texas,143949,143949
+Midland,TX,Texas,144247,136089
+Mission,TX,Texas,84424,84424
+Missouri City,TX,Texas,74497,74497
+New Braunfels,TX,Texas,79152,79152
+North Richland Hills,TX,Texas,70441,70441
+Odessa,TX,Texas,147810,116861
+Pasadena,TX,Texas,153520,153520
+Pearland,TX,Texas,119940,119940
+Pflugerville,TX,Texas,63359,63359
+Pharr,TX,Texas,79487,79487
+Plano,TX,Texas,286143,286143
+Port Arthur,TX,Texas,157934,55498
+Richardson,TX,Texas,116783,116783
+Round Rock,TX,Texas,123678,123678
+Rowlett,TX,Texas,62868,62868
+San Angelo,TX,Texas,99890,100119
+San Antonio,TX,Texas,2002530,1511946
+San Marcos,TX,Texas,74212,63071
+Sugar Land,TX,Texas,88485,88485
+Temple,TX,Texas,101876,74503
+Tyler,TX,Texas,141116,104991
+Victoria,TX,Texas,68271,67106
+Waco,TX,Texas,188448,136436
+Wichita Falls,TX,Texas,99617,104747
+Layton,UT,Utah,76691,76691
+Lehi,UT,Utah,62712,62712
+Logan,UT,Utah,100774,51115
+Millcreek,UT,Utah,60192,60192
+Ogden,UT,Utah,573632,87031
+Orem,UT,Utah,97839,97839
+Provo,UT,Utah,503695,117335
+Saint George,UT,Utah,113906,84405
+Salt Lake City,UT,Utah,1098400,200544
+South Jordan,UT,Utah,70954,70954
+Taylorsville,UT,Utah,59992,59992
+West Jordan,UT,Utah,113905,113905
+West Valley City,UT,Utah,136170,136170
+Alexandria,VA,Virginia,160035,160035
+Chesapeake,VA,Virginia,240397,240397
+Hampton,VA,Virginia,134669,134669
+Harrisonburg,VA,Virginia,74023,54215
+Leesburg,VA,Virginia,54215,54215
+Lynchburg,VA,Virginia,125004,80995
+Newport News,VA,Virginia,179388,179388
+Norfolk,VA,Virginia,244703,244703
+Portsmouth,VA,Virginia,94572,94572
+Richmond,VA,Virginia,1059907,227032
+Roanoke,VA,Virginia,216177,99837
+Suffolk,VA,Virginia,90237,90237
+Virginia Beach,VA,Virginia,1480383,450435
+Auburn,WA,Washington,80776,80776
+Bellevue,WA,Washington,144444,144444
+Bellingham,WA,Washington,126015,89045
+Burien,WA,Washington,51671,51671
+Everett,WA,Washington,110079,110079
+Federal Way,WA,Washington,96690,96690
+Kennewick,WA,Washington,232915,81607
+Kent,WA,Washington,128458,128458
+Kirkland,WA,Washington,88630,88630
+Lakewood,WA,Washington,60296,60296
+Marysville,WA,Washington,166541,68864
+Olympia,WA,Washington,196078,51609
+Pasco,WA,Washington,73013,73013
+Redmond,WA,Washington,64291,64291
+Renton,WA,Washington,101379,101379
+Richland,WA,Washington,56243,56243
+Sammamish,WA,Washington,64548,64548
+Seattle,WA,Washington,3643765,724745
+Shoreline,WA,Washington,56189,56189
+Spokane,WA,Washington,403043,217108
+Spokane Valley,WA,Washington,97847,97847
+Tacoma,WA,Washington,213418,213418
+Vancouver,WA,Washington,175673,175673
+Yakima,WA,Washington,133233,93667
+Appleton,WI,Wisconsin,222222,74653
+Eau Claire,WI,Wisconsin,107068,68587
+Green Bay,WI,Wisconsin,208625,105116
+Janesville,WI,Wisconsin,70518,64359
+Kenosha,WI,Wisconsin,124888,99877
+La Crosse,WI,Wisconsin,101886,51834
+Madison,WI,Wisconsin,439553,255214
+Milwaukee,WI,Wisconsin,1377808,595351
+Oshkosh,WI,Wisconsin,75154,66665
+Racine,WI,Wisconsin,131467,77542
+Waukesha,WI,Wisconsin,72489,72489
+West Allis,WI,Wisconsin,59934,59934
+Casper,WY,Wyoming,67462,57814
+Cheyenne,WY,Wyoming,78728,63624

@@ -1,0 +1,7 @@
+bookdown::gitbook:
+  css: edr.css
+  config:
+    toc:
+      before: |
+        <li><strong><a href="./">EDR</a></strong></li>
+    sharing: no

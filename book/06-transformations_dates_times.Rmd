@@ -1,0 +1,405 @@
+# Transformations Involving Dates and Times {#transformations_dates_times}
+
+```{r setup, include=FALSE, echo=FALSE}
+library(edr)
+library(tidyverse)
+library(lubridate)
+```
+
+This chapter covers
+
+- Understanding the common pitfalls of handling data with dates and times
+- Using functions from the **lubridate** package to effectively work with date and time values
+- Plotting time series data in **ggplot**
+
+Working with dates and times (and both together as date-time values) is virtually unavoidable. Many event-based datasets will have a date/time element and there are many other examples of datasets with dates and/or times. Further to this, dates and times are often provided in less-than-desirable forms (not adhering to standards), so, we'll need to transform these data into more dependable formats. Once we gain some understanding of how dates and times can be used in tabular data, we are better situated to use the data and create data extracts, reports, and **ggplot** plots.
+
+The **edr** package provides the dataset `nycweather`, which will be used throughout this chapter to illustrate the ways we can work with dates and times in **R**. It is similar in spirit to the `winniweather` dataset that we used in Chapter 4 but is significantly larger (i.e., it has an entire year of weather data). Be sure to check out the help file for the dataset by using `help(nycweather)` in the console, it has information on all of the different variables.
+
+Our goal in this chapter is to generate an interesting time series plot of temperature data for New York City in 2010, one that shows the trend of daily low and high temperatures in a single view. To get there, we need to transform the dates in `nycweather` dataset to a form that **ggplot** understands, and, we'll revisit techniques in mutating and summarizing data with **dplyr** and tidying data with **tidyr**. Only then will we have our data transformed such that plotting it with **ggplot** is problem free.
+
+## Dates, Date-Times, and ISO 8601
+
+We have always dealt with dates and times in idiosyncratic ways. This is to say, they can and often are written in many different ways. It's always nice to have variety but the problem with all this is ambiguity. Inevitably, you'll find all sorts of date and time representations across the different datasets you'll encounter. The strategy then is then to adopt a standard format for your data analysis and attempt to convert any nonstandard dates/times to that standardized format. Want an example of an ambiguous date? Here's one: `05/09/2013`. Is the date actually May 9, 2013 or September 5, 2013? If we had to deal with such dates in our data, we could probably find ways to determine whether the date format is `MM/DD/YYYY` or `DD/MM/YYYY` and that would indeed be helpful. One thing we shouldn't do, however, is to create dates like that in our own output. It would make things harder for everyone, and there is indeed a better way.
+
+A format we should strive to use for all dates and times within **R** should adhere to the ISO 8601 standard (we'll call this ISO format for the rest of this chapter). The standard has date and time values ordered from the largest to the smallest time units. A date in ISO format is represented in the format `YYYY-MM-DD` (the year, the month, then the day), and so the date July 10, 2012 is written as `2012-07-10` in ISO format. It's important that the year always has 4 digits, and that the month and day components use 2 digits (with a leading zero as necessary). The standard allows for the omission of hyphens which means that `20120710` is acceptable (but the hyphens make for much easier reading).
+
+If we have a date and time (or date-time), it is written in the format `YYYY-MM-DD hh:mm`. The hours and minutes portion must have 2 digits each, the colon is optional (but recommended), and we must use 24-hour time. The date-time of July 10, 2012 at 6:04 PM becomes `2012-07-10 18:04` in ISO format. We can optionally incorporate seconds and decimal fractions of seconds as well, making the format look like: `YYYY-MM-DD hh:mm:ss[.ddd]`.
+
+ISO format also stipulates that a time-zone designator is to be included in a date-time (but not in a date). You'll probably find that date-times in tabular data formats such as CSV or **Excel** sheets don't include time zone information. However, it is good to be aware of valid time zone representations. The text immediately follows the time is the time zone offset value, which is the duration in hours and minutes either behind or ahead of UTC. If the date-time value `2012-07-10 18:04` is a recorded time in Sydney, Australia:
+
+- the time zone code is `AEST`
+- the offset from UTC is `+10:00` (10 hours ahead of local time in the UTC time zone)
+- the revised date-time value is written as `2012-07-10 18:04+10:00`
+
+Because inclusion of time zone information is not often needed to make data more meaningful (also: time zones are generally just confusing) we can often ignore this feature of ISO formatted date-times in most analysis we do in **R**. We'll find that date-time values in **R** will always have an associated time zone, but we can simply use the default time zone of UTC (00:00).
+
+## Using **lubridate** to Parse Date and Date-Time Strings
+
+The **lubridate** package provides hope for working with dates and times in **R**. Again, dates and times are hard for the variety of reasons outlined before but the functions available in **lubridate** can help us parse dates and date-times (transforming them into the analogous **R** date and date-time objects), extract information from those date/time-based **R** objects, work with time zones, and even easily perform time-based mathematical operations.
+
+Before getting to transformations of dates and times in tabular data, we'll start off by working with character-based dates and date-times and seeing how they are transformed to those pristine date/time-based **R** objects. In doing so, some of the most useful functions in **lubridate** will be demonstrated.
+
+We must remember to load the packages we need for this chapter! This will comprise three `library()` statements, one each for: tidyverse (which loads a lot of *Tidyverse* packages, including **dplyr** and **ggplot**), **lubridate** (not loaded by `library(tidyverse)`), and **edr** (to get access to our datasets).
+
+`r edr::code_hints(
+"**CODE //** Loading the **tidyverse**, **lubridate**, and **edr** packages."
+)`
+```{r load-packages, eval=FALSE}
+library(tidyverse)
+library(lubridate)
+library(edr)
+```
+
+### Parsing Dates and Getting **R** `Date` Values
+
+Let's begin with parsing some dates in the **R** console. The main date parsing functions from **lubridate** are:
+	
+- `ymd()`: parses dates in `YYYY/MM/DD` format (which is the ideal format, can't say that enough…)
+- `mdy()` and `dmy()`: parses dates written as `MM/DD/YYYY` and `DD/MM/YYYY`, which are common enough
+- `myd()`, `dym()`, and `ydm()`: these functions parse less common date formats like `MM/YYYY/DD`, `DD/YYYY/MM`, and `YYYY/DD/MM`
+
+For our examples, let's create some `character`-based dates. These dates embody the first three date formats.
+
+`r edr::code_hints(
+"**CODE //** Examples of typical date formats with different orderings of year, month, and day (all for the same date).",
+c(
+"#A ~~YYYY/MM/DD~~ (ISO 8601).",
+"#B ~~MM/DD/YYYY~~.",
+"#C ~~DD/MM/YYYY~~."
+))`
+```{r text-dates}
+ymd_chr <- "19950615"  #A
+mdy_chr <- "06/15/1995"  #B
+dmy_chr <- "15-06-1995"  #C
+```
+
+With these example dates, the delimiters have some variation: `/`, `-`, or no delimiter at all! We shouldn't worry though, **lubridate** can handle this. Now, let's attempt to parse each of these character-based dates with the appropriate date-parsing functions from **lubridate**.
+
+`r edr::code_hints(
+"**CODE //** Converting text-based dates to **R** ~~Date~~ objects.",
+c(
+"#A Parse each ~~character~~-based date value.",
+"#B Create a vector of ~~Date~~ objects.",
+"#C Print the vector to the console."
+))`
+```{r to-date-objects}
+date_1 <- ymd(ymd_chr)  #A
+date_2 <- mdy(mdy_chr)            
+date_3 <- dmy(dmy_chr)            
+
+dates <- c(date_1, date_2, date_3)  #B
+
+dates  #C
+```
+
+We see that in the resulting vector, the same date appears three times: `"1995-06-15"`. This makes sense because the date was the same in the `ymd_chr`, `mdy_chr`, and `dmy_chr` variables (just with wildly different formatting). Moreover, those `ymd()`, `mdy()`, and `dmy()` functions did the trick! It's can be somewhat unsettling that in the printed vector, the dates look like character values. Let's sanity check this by using **R**'s `class()` function.
+
+`r edr::code_hints(
+"**CODE //** Checking that we have a ~~Date~~ vector.",
+c(
+"#A Get the class of the dates vector with the ~~class()~~ function."
+))`
+```{r check-class-date}
+class(dates)  #A
+```
+
+This returns the class of the dates object which is here is `"Date"` and is thus perfect for our needs. All of these **lubridate** date-parsing functions return a `Date` object if parsing is successful.
+
+These specialized date-parsing functions are great for those dates that don't conform to ISO format. If you have dates to parse that are in ISO format, we can also use **lubridate**'s `as_date()` function. It is strikingly similar to the `ymd()` function but allows for customized parsing with its format argument should you need that extra power. Here's an `as_date()` example:
+
+`r edr::code_hints(
+"**CODE //** Creating a ~~Date~~ object from a date string in ISO format.",
+c(
+"#A Now using ~~as_date()~~ instead of ~~ymd()~~."
+))`
+```{r as-date-function}
+as_date("19950615")  #A
+```
+
+The result, in the console, is the Date object as a single-length vector that contains `"1995-06-15"`.
+
+### Parsing Date-Times and Getting `POSIXct` Values
+
+There is a plethora of specialized parsing functions in **lubridate** that deal with varying levels of detail in the time portion of date-times:
+
+- `ymd_hms()`, `ymd_hm()`, `ymd_h()`: parses date-times in the YYYY/MM/DD hh:mm:ss, YYYY/MM/DD hh:mm, and YYYY/MM/DD hh formats
+- `_hms`, `_hm`, and `_h` variants of `mdy()`, `dmy()`, and `ydm()`
+
+Let's modify those dates that were used previously by providing a time of 8:00 AM.
+
+`r edr::code_hints(
+"**CODE //** Typical date formats with an added time component.",
+c(
+"#A YYYY/MM/DD hh:mm (ISO 8601).",
+"#B MM/DD/YYYY hh:mm.",
+"#C DD/MM/YYYY hh:mm."
+))`
+```{r text-date-times}
+ymd_hm_chr <- "19950615 0800"  #A
+mdy_hm_chr <- "06/15/1995 08:00"  #B
+dmy_hm_chr <- "15-06-1995 08:00"  #C
+```
+
+These `character`-based date-times all have an hour and minute time resolution, so the appropriate date-time parsing functions would include those that end in `_hm`. In order of variable assignment the specific functions are `ymd_hm()`, `mdy_hm()`, and `dmy_hm()`. We'll use them next to give us a vector of the same three date-times.
+
+`r edr::code_hints(
+"**CODE //** Converting text-based date-times to **R** ~~POSIXct~~ objects.",
+c(
+"#A Parse each ~~character~~-based date-time.",
+"#B Create a vector of ~~POSIXct~~ objects.",
+"#C Print the vector to the console."
+))`
+```{r to-datetime-objects}
+datetime_1 <- ymd(ymd_hm_chr)  #A
+datetime_2 <- mdy(mdy_hm_chr)
+datetime_3 <- dmy(dmy_hm_chr)
+
+datetimes <- c(datetime_1, datetime_2, datetime_3)  #B
+
+datetimes  #C
+```
+
+Note that we get the default time zone of `"UTC"`. This is normally not a problem if we are dealing with dates and times from a single, known locale. Should a specific time zone be necessary for analysis, we can supply the time zone in the `tz` argument of any of **lubridate**'s parsing functions. Should you ever need them, proper names for time zones as input to `tz` can be found by using the `OlsenNames()` function.
+
+The date-time vector we produced is a vector with the `POSIXct` class. We can verify this by using the `class()` function again.
+
+`r edr::code_hints(
+"**CODE //** Checking that we have a ~~POSIXct~~ vector.",
+c(
+"#A Get the class of the datetimes vector with the ~~class()~~ function."
+))`
+```{r check-class-posixct}
+class(datetimes)  #A
+```
+
+This returned a vector of classes containing `POSIXct` (as expected) and `POSIXt` class names. The latter is a pseudo class we normally don't need to concern ourselves with.
+
+What exactly is `POSIXct` though? The name is derived from the name POSIX (The Portable Operating System Interface), which is a set of standards for UNIX-based systems. Dates stored in POSIX format are date-time values which allow for high accuracy (seconds or fractions of seconds). The ct part of `POSIXct` refers to ‘calendar time'; a `POSIXct` object stores a time as the number of seconds since 1970-01-01 00:00 UTC (any date-time prior to this is a negative number of seconds).
+
+## Transforming Dates and Times in Tabular Data
+
+Let's take a look at the `nycweather` dataset, which is provided in the edr package. Printing it to the console will give us an idea on what it contains.
+
+`r edr::code_hints(
+"**CODE //** The ~~nycweather~~ dataset."
+)`
+```{r print-nycweather, paged.print=FALSE}
+nycweather
+```
+
+One thing we might notice right way is that there is a time column, which is of the character type (since `<chr>` appears below the column name): 
+
+Let's attempt to make a time-series plot of temperature (`temp`) over time with **ggplot** with the `nycweather` dataset. It can be a task fraught with challenges along the way, however, we have the awesome power of **dplyr** and **lubridate** available to us. It can doubtless be done.
+
+### Creating a Reasonable Time Series Plot with **ggplot**
+
+Although the `nycweather` dataset has a column named time, the type of that column is neither `Date` nor `POSIXct`. This isn't going to work out well but it's instructive to see what **ggplot** outputs with the data as is, since this is a common type of mistake to make. The **ggplot** code up ahead uses `geom_point()` to make a scatterplot.
+
+`r edr::code_hints(
+"**CODE //** Plotting the dataset (as is) with **ggplot**.",
+c(
+"#A Use ~~geom_point()~~ to create a scatterplot."
+))`
+```{r plot-nycweather-asis, fig.cap='(ref:plot-nycweather-asis)'}
+ggplot(data = nycweather) +
+  geom_point(aes(x = time, y = temp))  #A
+```
+(ref:plot-nycweather-asis) A failed time-series plot using the nycweather dataset.
+
+There are a few problems with the plot shown in *Figure \@ref(fig:plot-nycweather-asis)*. The first is that the *x* axis is severely messed up (essentially an overprinting of all the character-based date-times). The second problem is that the plot took a very long time to produce (try it!). There are a lot of data points (around 13,000) and this high amount of data is usually not necessary for this type of plot. Finally, though it's not obvious but incredibly important nonetheless, the data are evenly spaced in the *x* direction. This occurs for any character-based inputs to `x` or `y` in **ggplot**. Essentially, the time values in their present form have no meaning to **ggplot**.
+
+Just to drive that last point home, let's take the beginning and end of the dataset (i.e., temperatures in early January and also the temperatures in late December) and plot again in the same way. If the time data is meaningful (it's not), we should expect to see a large gap in the data points, with only the extremities showing data points. The code for this experiment is provided next and the resulting plot is given as *Figure \@ref(fig:plot-nycweather-start-end)*.
+
+`r edr::code_hints(
+"**CODE //** Plotting the beginning and end of ~~nycweather~~.",
+c(
+"#A Take only the first and last 100 rows by combining the ~~head()~~ and ~~tail()~~ of nycweather.",
+"#B Use the same plotting code as before, this time using the ~~nycweather_start_end~~ object."
+))`
+```{r plot-nycweather-start-end, fig.cap='(ref:plot-nycweather-start-end)'}
+nycweather_start_end <-
+  dplyr::bind_rows(        
+    head(nycweather, 100),  #A
+    tail(nycweather, 100)  
+  ) 
+
+ggplot(data = nycweather_start_end) +
+  geom_point(aes(x = time, y = temp))  #B
+```
+(ref:plot-nycweather-start-end) A revised plot that takes the first and last 100 rows of ~~nycweather~~. Very evenly spaced.
+
+We can, without any doubt, see that the 200 data points of time are equally distributed horizontally across the plot. No gap in the middle. For sure, those character-based time values have no significance to **ggplot**. However, dates and date-times of the **R** `Date` and `POSIXct` types do have significance to **ggplot**, which will make the appropriate time-based axis (and hence map the positions of the data points correctly). So, let's make that transformation already! We needd to use the `mutate()` function along with **lubridate**'s `as_datetime()` function to transform the column of character-based date-times (all in ISO 8601 format) to `POSIXct` values.
+
+`r edr::code_hints(
+"**CODE //** Transforming character times to ~~POSIXct~~ date-times."
+)`
+```{r make-datetime-column, paged.print=FALSE}
+nycweather_a <- 
+  nycweather %>%
+  mutate(time = as_datetime(time))
+
+nycweather_a
+```
+
+Now the time column in `nycweather_a` is a `POSIXct` column. This is succinctly indicated by the `<dttm>` label. Let's test this modified table out with **ggplot** and determine whether a time series plot will respect the date-time values. To make this easier to read, the `nycweather_a` table will be downsampled using **dplyr**'s `sample_n()` function.
+
+`r edr::code_hints(
+"**CODE //** Using a sample of our dataset for quicker plotting.",
+c(
+"#A The size argument of ~~sample_n()~~ with a value of ~~1000~~ means we will get a random sample of 1000 rows from ~~nyc_weather_a~~.",
+"#B Using ~~!is.na(temp)~~ inside ~~filter()~~ means that we want only those rows where ~~temp~~ values don't have ~~NA~~ values."
+))`
+```{r downsample-for-plotting, paged.print=FALSE}
+nycweather_a_samp <-
+  nycweather_a %>%
+  sample_n(size = 1000) %>%  #A
+  filter(!is.na(temp))  #B
+
+nycweather_a_samp
+```
+
+The resulting table is now less than 1000 rows.
+
+The plot will use the same **ggplot** code, simply replacing the data value with `nycweather_a_samp`. We then get the plot shown in *Figure \@ref(fig:plot-with-sampled-data)*.
+
+`r edr::code_hints(
+"**CODE //** Plotting a sample of the revised dataset."
+)`
+```{r plot-with-sampled-data, fig.cap='(ref:plot-with-sampled-data)'}
+ggplot(data = nycweather_a_samp) +
+  geom_point(aes(x = time, y = temp))
+```
+(ref:plot-with-sampled-data) A plot of the data with a proper date-time given as the ~~x~~ aesthetic. The x axis now looks reasonable.
+
+The `nycweather` dataset has substantially more weather observations than hours in the measurement year (2010 has 8,760 hours whereas the dataset has 13,306 rows). For the purpose of thinning our data a bit, let's do some work to get a single observation per hour.
+
+We will again filter the rows to only keep the ones that have non-`NA` temp values with `filter(!is.na(temp))`. After that, we will add two extra columns with `mutate()`: `date` and `hour.` The **lubridate** package has several useful functions to help us get the date and hour of day from the date-time values stored in the time column. The `date()` function will transform a `POSIXct` date-time to a `Date` object. The `hour()` function will return the hour of day when given a date-time.
+
+Once we have those columns, we use `group_by(date, hour)` to create groups of rows for each unique hour of each day. Now, we can reduce each group of observations to a single row with **dplyr**'s `slice()` function (supplying a value of `1` to keep only one row from each group). Finally, we use **dplyr**'s `ungroup()` function to clear the grouped data designation for the table and avoid potential errors later on. Here's the entire sequence of operations:
+
+`r edr::code_hints(
+"**CODE //** Reducing our dataset to get one measurement per hour.",
+c(
+"#A Create the ~~date~~ column by applying the ~~date()~~ function on the ~~time~~ column.",
+"#B Create the ~~hour~~ column by applying the ~~hour()~~ function on time.",
+"#C Keep only one record per group with the ~~slice()~~ function (and the value of ~~1~~).",
+"#D Because we used ~~group_by()~~ just before ~~slice()~~ we still have grouped data; it's often good practice to ~~ungroup()~~ just to be safe (otherwise we might later unintentionally use another function that operates on the existing grouping)."
+))`
+```{r one-per-hour, paged.print=FALSE}
+nycweather_b <-
+  nycweather_a %>%
+  filter(!is.na(temp)) %>%
+  mutate(
+    date = date(time),  #A
+    hour = hour(time)  #B
+  ) %>%
+  group_by(date, hour) %>%
+  slice(1) %>%  #C
+  ungroup()  #D
+
+nycweather_b
+```
+
+The table now has 8,760 rows, one per hour of the year 2010.
+
+Let's plot this once again! This time we will plot the data as a line using **ggplot**'s `geom_line()`.
+
+`r edr::code_hints(
+"**CODE //** Plotting our hourly temperatures as a line."
+)`
+```{r plot-hourly-data-line, fig.cap='(ref:plot-hourly-data-line)'}
+ggplot(data = nycweather_b) +
+  geom_line(aes(x = time, y = temp))
+```
+(ref:plot-hourly-data-line) A plot of the hourly temperature data for 2010 using a single line rather than dots.
+
+### Further Transforming the Time Series Data to Make a New Plot
+
+We now have a new task: plot the daily minimum and maximum temperatures for NYC in 2010 as two lines. As a further requirement, the two different lines must be red and blue (for max and min temps). By the end of this exercise, we will have used four packages (**dplyr**, **lubridate**, **tidyr**, **ggplot**) in getting to the finalized plot!
+
+We will use the `nycweather_b` table as a starting point, which has the time-based columns of `time` (date-times), `date` (dates), and `hour` (the hour of day). Because we need daily values, let's `group_by()` the date and then `summarize()` with expressions that get the minimum and maximum temperatures per group (or day, really). Here is the code needed for this approach:
+
+`r edr::code_hints(
+"**CODE //** Summarizing our data to get daily minimum and maximum temperatures.",
+c(
+"#A Grouping by ~~date~~ will ensure that the summary is one of daily values.",
+"#B The daily summary of is ~~min()~~ and ~~max()~~ temperature values."
+))`
+```{r get-daily-min-max, paged.print=FALSE}
+nycweather_c <-
+  nycweather_b %>%
+  group_by(date) %>%  #A
+  summarize(  #B
+    min = min(temp),
+    max = max(temp)
+  ) 
+  
+nycweather_c
+```
+
+The resulting table is very compact! Only three columns and 365 rows.
+
+There is still an issue with the resultant table: it's not tidy. We need a single column for temperature values, and this is again (see *Chapter 4*) a job for **tidyr**'s `pivot_longer()` function. It can be hard to remember exactly how to formulate a `pivot_longer()` call. The best advice is to refer to its help page at `help(pivot_longer)`, or, have a look at this next code listing for a great example!
+
+`r edr::code_hints(
+"**CODE //** Tidying the table to get one temperature value per row.",
+c(
+"#A We provide the column names that contain values that should be placed in the new temp column. It\'s okay to use bare column names (i.e., no quotes) inside of ~~c()~~ here.",
+"#B The ~~names_to~~ argument is given the name of the new column that will contain the type values (~~\"min\"~~ and ~~\"max\"~~).",
+"#C The ~~values_to~~ argument is given the name of the new column that will contain the values: ~~\"temp\"~~."
+))`
+```{r tidy-table, paged.print=FALSE}
+nycweather_d <- 
+  nycweather_c %>%
+  pivot_longer(
+    cols = c(min, max),  #A
+    names_to = "type",  #B
+    values_to = "temp"  #C
+  ) %>%
+  arrange(date)
+
+nycweather_d
+```
+
+We now get a longer table (730 rows, 2 times the previous row count) after using the `pivot_longer()` function but this is ideal for the type of data we should feed to **ggplot**.
+
+Now that the data is in this tidy form, we can write some **ggplot**-based code to make the plot we need per our requirements. The important differences from the previous **ggplot** statements are the use of the color aesthetic (we are mapping the type variable to that), and, the use of `scale_color_manual()`. That last one is necessary for specifying the exact colors to each of the lines (otherwise **ggplot** would cycle through the default palette and assign those colors instead).
+
+`r edr::code_hints(
+"**CODE //** Plotting our daily minimum and maximum temperatures."
+)`
+```{r plot-daily-min-max-lines, fig.cap='(ref:plot-daily-min-max-lines)'}
+ggplot(data = nycweather_d) +
+  geom_line(aes(x = date, y = temp, color = type)) +
+  scale_color_manual(values = c("red", "blue")) +
+  scale_x_date(date_breaks = "2 months", date_minor_breaks = "1 month") + 
+  theme_minimal() +
+  theme(
+    legend.title = element_blank(),
+    legend.position = "top",
+    legend.justification = "left"
+  ) + 
+  labs(
+    title = "Daily Minimum and Maximum Temperatures",
+    subtitle = "2010 Data, Measured at JFK Airport",
+    x = "Date",
+    y = "Temperature (degrees C)"
+  )
+```
+(ref:plot-daily-min-max-lines) A plot of the daily minimum and maximum temperatures. The theme was changed to give us a more minimal look.
+
+We added a few extra **ggplot** statements to further prettify the plot. With `scale_x_date()`, it's possible and relatively painless to specify the date breaks (how often date labels appear) and the minor breaks (how often vertical guidelines appear, without any text labels). With a single use of `theme_minimal()` the look of the plot is radically altered to something that is... minimal. There are other `theme_...()` functions you might also try, like `theme_bw()`, `theme_light()`, `theme_dark()`, `theme_classic()`, and `theme_linedraw()`. We use `theme()` to make a few tweaks to the legend: removing its title, and positioning it to the top left. Finally, we used `labs()` to add informative `title` and `subtitle` elements, and, to modify the x- and y-axis labels.
+
+The finalized plot of *Figure \@ref(fig:plot-daily-min-max-lines)* is something that could be useful as a data product, like a figure in a report or a presentation. It clearly shows us the trend of daily minimum and maximum temperatures for New York in 2010. If the plot were seen in isolation, we wouldn't have to guess what the plot is showing us. The text in the title and subtitle explains what's being shown. The *y*-axis label tells us that the temperature units are in degrees Celsius. The manual coloring of the plot lines (red for high temperatures, blue for low temperatures) was a nice aesthetic choice that aligns with our expectations for representative colors.
+
+When should we be more focused on aesthetics? Well, with exploratory plots we likely don't need to spend time on making such plots aesthetically pleasing. In that mode, we are primarily trying to understand the data; we'd like to iterate from data transformation to plot quickly to develop insight into the data. For presentation-type plots, we absolutely should make the effort to ensure that their purpose is clear, all labels are precise, and that they align with what is being communicated.
+
+## Summary
+
+- The ISO-8601 standard for dates is `YYYY-MM-DD` and for date-times it is extended to `YYYY-MM-DD hh:mm:ss[.ddd]`; we use these standardized formats to avoid confusion
+- Text-based dates and date-times can be transformed into **R** `Date` or `POSIXct` objects, and this involves parsing with the correct **lubridate** functions (e.g., `ymd()`, `mdy()`, `dmy()`, `ymd_hms()`, etc.)
+- The **lubridate** parsing functions are in **dplyr** `mutate()` statements to transform character-based date/date-time columns to `Date`/`POSIXct` columns
+- Several **lubridate** functions can give us elements of dates and times (e.g., `month()`, `day()`, etc.) which can be used in a `mutate()` statement to generate columns useful for a `group_by()` statement (typically followed by `summarize()`)
+- Tidying a table with time series data with **tidyr**'s `pivot_longer()` function and having a column with **R** `Date` or `POSIXct` values gives us a dataset that can be most easily plotted in **ggplot**
+- We can change the theme (i.e., overall look) of a **ggplot** plot by using a `theme_*()` function like `theme_minimal()`, `theme_bw()`, or `theme_light()`

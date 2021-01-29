@@ -1,0 +1,313 @@
+---
+title: "Chapter 12"
+output: html_document
+---
+
+```{r load_packages}
+library(tidyverse)
+library(edr)
+library(DT)
+library(gt)
+```
+
+## 12.1. Making Presentation Tables
+
+### Listing 12.1. A simple **DT** table using the `pitchfork` dataset.
+
+```{r dt_pitchfork_1}
+pitchfork_1000 <- pitchfork %>% dplyr::slice_head(n = 1000)
+
+datatable(pitchfork_1000)
+```
+
+### Listing 12.2. Using dplyr's `mutate()` function to help us transform bare links into HTML links.
+
+```{r dt_pitchfork_links, paged.print=FALSE}
+pitchfork_1000 <- 
+  pitchfork_1000 %>%
+  mutate(link = paste0("<a href='", link ,"'>review</a>"))
+
+pitchfork_1000 %>% select(link)
+```
+
+### Listing 12.3. Making the column of links functional in a **DT** table by removing the `escape` condition from column `8`.
+
+```{r dt_pitchfork_2}
+pitchfork_1000 %>% datatable(escape = -8)
+```
+
+### Listing 12.4. Changing the table appearance of the **DT** table with the `style` and `class` parameters, and, by removing the column with row names.
+
+```{r dt_pitchfork_3}
+pitchfork_1000 %>%
+  datatable(
+    escape = -7,
+    style = "bootstrap4",
+    class = "table-bordered",
+    rownames = FALSE
+  )
+```
+
+### Listing 12.5. The column names of the **DT** table can be modified using the `colnames` argument.
+
+```{r dt_pitchfork_4}
+pitchfork_1000 %>%
+  datatable(
+    escape = -7,
+    style = "bootstrap4",
+    class = "table-bordered",
+    rownames = FALSE,
+    colnames = stringr::str_to_title(colnames(pitchfork_1000))
+  )
+```
+
+### Listing 12.6. Adding filtering functionality to the **DT** table (UI applied to the `top` of the table).
+
+```{r dt_pitchfork_5}
+pitchfork_1000 %>%
+  datatable(
+    escape = -7,
+    style = "bootstrap4",
+    class = "table-bordered",
+    rownames = FALSE,
+    colnames = stringr::str_to_title(colnames(pitchfork_1000)),
+    filter = "top"
+  )
+```
+
+### Listing 12.7. Adding useful buttons for exporting the table data to various files, copying the data, and printing.
+
+```{r dt_pitchfork_6}
+pitchfork_1000 %>%
+  datatable(
+    escape = -7,
+    style = "bootstrap4",
+    class = "table-bordered",
+    rownames = FALSE,
+    colnames = stringr::str_to_title(colnames(pitchfork_1000)),
+    filter = "top",
+    extensions = "Buttons",
+    options = list(
+      buttons = c("csv", "excel", "pdf", "copy", "print"),
+      dom = "Bfrtip"
+    )
+  )
+```
+
+
+### Listing 12.8
+
+```{r gt_exibble_1}
+gt_tbl_1 <- exibble %>% gt()
+
+gt_tbl_1
+```
+
+### Listing 12.9
+
+```{r gt_exibble_2}
+gt_tbl_2 <-
+  gt_tbl_1 %>%
+  tab_header(
+    title = "The exibble dataset",
+    subtitle = "(It's available in the gt package.)"
+  )
+
+gt_tbl_2
+```
+
+
+### Listing 12.10
+
+```{r gt_exibble_3}
+gt_tbl_3 <-
+  gt_tbl_2 %>%
+  tab_source_note("The gt package is available in CRAN.") %>%
+  tab_source_note("This example is provided by the edr book.")
+
+gt_tbl_3
+```
+
+
+### Listing 12.11
+
+```{r gt_exibble_4}
+gt_tbl_4 <-
+  gt_tbl_3 %>%
+  tab_footnote(
+    footnote = "This coconut contains a tape and half a necklace.",
+    locations = cells_body(columns = vars(char), rows = 3)
+  )
+
+gt_tbl_4
+```
+
+### Listing 12.12
+
+```{r gt_exibble_5}
+gt_tbl_5 <-
+  gt_tbl_4 %>%
+  tab_footnote(
+    footnote = "This column contains alphabetical fruit.",
+    locations = cells_column_labels(columns = vars(char))
+  )
+
+gt_tbl_5
+```
+
+### Listing 12.13. Making the `oceaniapops` table from the (much larger) `countrypops` table.
+
+```{r oceaniapops_countrypops, paged.print=FALSE}
+Australasia <- c("AU", "NZ")
+Melanesia <- c("NC", "PG", "SB", "VU")
+Micronesia <- c("FM", "GU", "KI", "MH", "MP", "NR", "PW")
+Polynesia <- c("PF", "WS", "TO", "TV")
+
+oceaniapops <- 
+  countrypops %>%
+  dplyr::filter(country_code_2 %in% c(
+    Australasia, Melanesia, Micronesia, Polynesia)
+  ) %>%
+  dplyr::filter(year %in% c(1995, 2005, 2015)) %>%
+  dplyr::mutate(region = case_when(
+    country_code_2 %in% Australasia ~ "Australasia",
+    country_code_2 %in% Melanesia ~ "Melanesia",
+    country_code_2 %in% Micronesia ~ "Micronesia",
+    country_code_2 %in% Polynesia ~ "Polynesia"
+  )) %>%
+  tidyr::pivot_wider(names_from = year, values_from = population) %>%
+  dplyr::arrange(region, desc(`2015`)) %>%
+  dplyr::select(-starts_with("country_code"))
+
+oceaniapops
+```
+
+
+### Listing 12.14. Making a very simple **gt** simple with the `oceaniapops` tibble.
+
+```{r gt_oceaniapops_0}
+oceaniapops %>% gt()
+```
+
+### Listing 12.15. Taking a different approach in making the **gt** table by defining a stub and row group labels.
+
+```{r gt_oceaniapops_1}
+oceaniapops_1 <- 
+  oceaniapops %>%
+  gt(
+    rowname_col = "country_name",
+    groupname_col = "region"
+  )
+
+oceaniapops_1
+```
+
+### Listing 12.16. Adding more structure to the **gt** table by placing the spanner label "Total Population" above the column labels.
+
+```{r gt_oceaniapops_2}
+oceaniapops_2 <- 
+  oceaniapops_1 %>%
+  tab_spanner(
+    label = "Total Population",
+    columns = vars(`1995`, `2005`, `2015`)
+  )
+
+oceaniapops_2
+```
+
+### Listing 12.17. We can make the population values much to easier to read with decimal separators by use of the `fmt_number()` function.
+
+```{r gt_oceaniapops_3}
+oceaniapops_3 <- 
+  oceaniapops_2 %>%
+  fmt_number(
+    columns = vars(`1995`, `2005`, `2015`),
+    decimals = 0
+  ) %>%
+  cols_align(align = "right")
+
+oceaniapops_3
+```
+
+### Listing 12.18. The column widths can be finely adjusted with `cols_width()`, and, a heading is always a good idea.
+
+```{r oceaniapops_4}
+oceaniapops_4 <- 
+  oceaniapops_3 %>%
+  cols_width(
+    1 ~ px(250),
+    everything() ~ px(125)
+  ) %>%
+  tab_header(
+    title = md("Populations of Countries in Oceania During **1995**, **2005**, and **2015**"),
+    subtitle = "Combined land area of 3,291,903 sq mi and a population of over 41 million."
+  )
+
+oceaniapops_4
+```
+
+### Listing 12.19. Footnotes and sources can be added to a **gt** with the `tab_footnote()` and `tab_source_note()` functions.
+
+```{r oceaniapops_5}
+oceaniapops_5 <- 
+  oceaniapops_4 %>%
+  tab_footnote(
+    footnote = "United States.",
+    locations = cells_stub(rows = starts_with(c("No", "Gu")))
+  ) %>%
+  tab_footnote(
+    footnote = "France.",
+    locations = cells_stub(rows = starts_with(c("New Cal", "French")))
+  ) %>%
+  tab_source_note(
+    source_note = md(
+      paste0(
+        "Population data obtained from [World Bank Open Data]",
+        "(https://data.worldbank.org/indicator/SP.POP.TOTL)."
+      )
+    )
+  )
+
+oceaniapops_5
+```
+
+### Listing 12.20. Text can be boldened with combination of the `tab_style()` and `cell_text()` functions; we can do this at multiple locations at once.
+
+```{r oceaniapops_6}
+oceaniapops_6 <- 
+  oceaniapops_5 %>%
+  tab_style(
+    style = cell_text(weight = "bold"),
+    locations = list(
+      cells_column_labels(columns = TRUE),
+      cells_column_spanners(spanners = TRUE),
+      cells_row_groups(groups = TRUE)
+    )
+  )
+
+oceaniapops_6
+```
+
+### Listing 12.21. Summary rows can be generated on a per-group basis (with `summary_rows()`), and, for all rows in the table (with `grand_summary_rows()`).
+
+```{r}
+oceaniapops_7 <- 
+  oceaniapops_6 %>%
+  summary_rows(
+    groups = TRUE,
+    columns = TRUE,
+    fns = list(TOTAL = ~ sum(., na.rm = FALSE)),
+    formatter = fmt_number,
+    decimals = 0
+  ) %>%
+  grand_summary_rows(
+    columns = TRUE,
+    fns = list(`GRAND TOTAL` = ~ sum(., na.rm = FALSE)),
+    formatter = fmt_number,
+    decimals = 0
+  ) %>%
+  tab_options(data_row.padding = px(4))
+  
+oceaniapops_7
+```
+

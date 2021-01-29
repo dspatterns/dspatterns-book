@@ -1,0 +1,18 @@
+---
+title: "Example"
+author: "edr"
+date: "06/07/2018"
+output: html_document
+---
+
+The `airquality` dataset contains a sample of air quality measurements in New York, May to September 1973. The data were obtained from the *New York State Department of Conservation* (ozone data) and the *National Weather Service* (meteorological data). The following is a summary of the dataset and a plot of **ozone** (in *ppb*) vs. maximum daily temperature (in degrees Fahrenheit).
+
+```{r}
+summary(airquality)
+```
+
+```{r}
+plot(x = airquality$Temp, y = airquality$Ozone)
+```
+
+For more information on this dataset, use `help(airquality)` in the R console.
