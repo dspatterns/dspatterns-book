@@ -2,7 +2,7 @@
 % Please edit documentation in R/dataset_to_csv.R
 \name{dataset_to_csv}
 \alias{dataset_to_csv}
-\title{Write an edr dataset to a CSV file}
+\title{Write a dataset in the \strong{dspatterns} package to a CSV file}
 \usage{
 dataset_to_csv(dataset, path = NULL)
 }
@@ -14,5 +14,5 @@ provided then the dataset will be written to the working directory. The
 resulting filename will be the name of the dataset with the \code{.csv} extension.}
 }
 \description{
-Write an edr dataset to a CSV file
+Write a dataset in the \strong{dspatterns} package to a CSV file
 }

@@ -1,11 +1,10 @@
-#' Write an edr dataset to a CSV file
+#' Write a dataset in the **dspatterns** package to a CSV file
 #'
 #' @param dataset The name of a dataset in the \pkg{edr} package.
 #' @param path The path to which the dataset will be written. If no `path` is
 #' provided then the dataset will be written to the working directory. The
 #' resulting filename will be the name of the dataset with the `.csv` extension.
-#' @importFrom readr write_csv
-#' @importFrom here here
+#'
 #' @export
 dataset_to_csv <- function(dataset,
                            path = NULL) {
