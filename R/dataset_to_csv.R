@@ -10,9 +10,9 @@
 dataset_to_csv <- function(dataset,
                            path = NULL) {
 
-  if (!(dataset %in% edr_datasets())) {
+  if (!(dataset %in% dspatterns_datasets())) {
     stop("The `dataset` must be one of those available in the `edr` package:\n",
-         paste0(" * `", edr_datasets(), "`\n"), call. = FALSE)
+         paste0(" * `", dspatterns_datasets(), "`\n"), call. = FALSE)
   }
 
   # Write the output file name

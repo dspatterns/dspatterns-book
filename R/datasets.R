@@ -244,8 +244,8 @@
 #' dplyr::glimpse(imdb)
 "imdb"
 
-#' Datasets in the edr package
-edr_datasets <- function() {
+# Datasets in the dspatterns package
+dspatterns_datasets <- function() {
   c(
     "sw",
     "dmd",
