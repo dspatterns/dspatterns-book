@@ -7,7 +7,7 @@
 dataset_to_csv(dataset, path = NULL)
 }
 \arguments{
-\item{dataset}{The name of a dataset in the \pkg{edr} package.}
+\item{dataset}{The name of a dataset in the \pkg{dspatterns} package.}
 
 \item{path}{The path to which the dataset will be written. If no \code{path} is
 provided then the dataset will be written to the working directory. The
