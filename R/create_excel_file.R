@@ -3,7 +3,6 @@
 #' @param path The path to which the Excel file will be written. If no `path` is
 #'   provided then the file will be written to the working directory. The
 #'   resulting filename will be `us_cities.xlsx`.
-#' @importFrom here here
 #'
 #' @export
 create_excel_file <- function(path = NULL) {
@@ -22,8 +21,9 @@ create_excel_file <- function(path = NULL) {
 
     # Write the file
     file.copy(
-      from = system.file("us_cities.xlsx", package = "edr"),
-      to = file_path_name)
+      from = system.file("us_cities.xlsx", package = "dspatterns"),
+      to = file_path_name
+    )
 
     path_desc <- paste0("`", file_path_name, "`")
 
@@ -31,8 +31,9 @@ create_excel_file <- function(path = NULL) {
 
     # Write the file
     file.copy(
-      from = system.file("us_cities.xlsx", package = "edr"),
-      to = file_name)
+      from = system.file("us_cities.xlsx", package = "dspatterns"),
+      to = file_name
+    )
 
     path_desc <- paste0("the working directory (`", here::here(), "`)")
   }
