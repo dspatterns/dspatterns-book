@@ -21,7 +21,7 @@ create_excel_file <- function(path = NULL) {
 
     # Write the file
     file.copy(
-      from = system.file("us_cities.xlsx", package = "dspatterns"),
+      from = dspatterns_file_path("us_cities.xlsx"),
       to = file_path_name
     )
 
@@ -31,7 +31,7 @@ create_excel_file <- function(path = NULL) {
 
     # Write the file
     file.copy(
-      from = system.file("us_cities.xlsx", package = "dspatterns"),
+      from = dspatterns_file_path("us_cities.xlsx"),
       to = file_name
     )
 
