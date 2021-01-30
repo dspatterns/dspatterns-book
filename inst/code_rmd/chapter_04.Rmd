@@ -3,9 +3,9 @@ title: "Chapter 4"
 output: html_document
 ---
 
-```{r load_tidyverse_edr}
+```{r load_tidyverse_dspatterns}
 library(tidyverse)
-library(edr)
+library(dspatterns)
 ```
 
 ## 4.2. Using **tidyr** to Tidy Our Tables

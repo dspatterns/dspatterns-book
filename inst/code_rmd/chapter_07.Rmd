@@ -5,7 +5,7 @@ output: html_document
 
 ```{r load_packages}
 library(tidyverse)
-library(edr)
+library(dspatterns)
 ```
 
 ## 7.1. Vectors in **R**
@@ -336,7 +336,7 @@ multiply_three <- function(x, y, z = 3) {
 
 ```{r get_sales_data_script}
 library(tidyverse)
-library(edr)
+library(dspatterns)
 
 date_str <- "2019-01-15"
 

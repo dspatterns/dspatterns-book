@@ -3,9 +3,9 @@ title: "Chapter 3"
 output: html_document
 ---
 
-```{r load_tidyverse_edr}
+```{r load_tidyverse_dspatterns}
 library(tidyverse)
-library(edr)
+library(dspatterns)
 ```
 
 ## 3.1. Using **ggplot** to Create Plots

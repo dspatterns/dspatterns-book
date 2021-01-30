@@ -3,9 +3,9 @@ title: "Chapter 2"
 output: html_document
 ---
 
-```{r load_tidyverse_edr}
+```{r load_tidyverse_dspatterns}
 library(tidyverse)
-library(edr)
+library(dspatterns)
 ```
 
 ## 2.1. Programming Basics and Package Installation
@@ -45,11 +45,11 @@ one_word
 
 ## 2.2. Using **dplyr** to Transform Data
 
-### Listing 2.5. Loading the **tidyverse** and **edr** packages.
+### Listing 2.5. Loading the **tidyverse** and **dspatterns** packages.
 
-```{r load_tidyverse_edr, eval=FALSE}
+```{r load_tidyverse_dspatterns, eval=FALSE}
 library(tidyverse)
-library(edr)
+library(dspatterns)
 ```
 
 ### Listing 2.6. The `sw` dataset can be printed to the console by using `sw`.

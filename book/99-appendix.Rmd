@@ -1,7 +1,7 @@
 # Appendix {-}
 
 ```{r setup, include=FALSE, echo=FALSE}
-library(edr)
+library(dspatterns)
 library(tidyverse)
 ```
 

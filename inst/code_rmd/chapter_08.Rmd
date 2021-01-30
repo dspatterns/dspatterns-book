@@ -5,7 +5,7 @@ output: html_document
 
 ```{r load_packages}
 library(tidyverse)
-library(edr)
+library(dspatterns)
 ```
 
 ### Listing 8.1. Assigning a character string to `one_word`.
@@ -66,7 +66,6 @@ data_frame_2 <-
 
 str(data_frame_2)
 ```
-
 
 ### Listing 8.8. Using the `formatC()` function to get very particular output character strings for three decimal numbers.
 
@@ -143,7 +142,7 @@ all.equal(resto_reviews %>% substr(1, 80), resto_reviews %>% strtrim(80))
 ### Listing 8.15. Opening up the RegExplain gadget for experimenting with regular expressions.
 
 ```{r open_regexplain}
-# edr_regexplain_gadget()
+# regexplain_gadget()
 ```
 
 ### Listing 8.16. Using `str_match()` to determine the first match of the regex pattern on the text.

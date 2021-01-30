@@ -1,7 +1,7 @@
 # More Plotting with **ggplot** - II {#more-plotting-with-ggplot-ii}
 
 ```{r setup, include=FALSE, echo=FALSE}
-library(edr)
+library(dspatterns)
 library(tidyverse)
 library(ggridges)
 ```
@@ -16,7 +16,7 @@ This chapter covers
 
 In the last chapter we focused on using **ggplot** to make line graphs and bar plots. That set the stage to having a closer look at customizing the plots until they were both aesthetically pleasing and presentation ready. In this chapter, we'll revisit scatter plots, histograms, box plots, and possibly some you hadn't heard of before. For those plots that **ggplot** just can't do, there are other packages available that extend **ggplot** for those tasks (and we'll use one called **ggridges** to make ridgeline plots). The examples in this chapter will expose you to new **ggplot** functions for customizing of plot elements such the axes and legends, and there will be more functions introduced for modifying the colors of plot objects.
 
-In the many examples that follow, we'll use datasets provided in the **edr** package. One of them was used before (`nycweather`) but the `imdb` and `pitchfork` datasets are new in this chapter and great fun to use! You can find out more about them within **R** by visiting their documentation pages (`help(imdb)` or `help(pitchfork)`).
+In the many examples that follow, we'll use datasets provided in the **dspatterns** package. One of them was used before (`nycweather`) but the `imdb` and `pitchfork` datasets are new in this chapter and great fun to use! You can find out more about them within **R** by visiting their documentation pages (`help(imdb)` or `help(pitchfork)`).
 
 ## Lollipop Plots and Cleveland Dot Plots
 
@@ -24,7 +24,7 @@ This section will introduce you to two hybrid plotting types: lollipop plots and
 
 We used the `nyc_weather` dataset previously and we'll use it again for all lollipop plots and Cleveland dot plots in this section. The dataset has 2010 weather data obtained at LaGuardia Airport, with metrics such as wind direction, wind speed, temperature, pressure, and relative humidity. A preview of `nyc_weather` is provided by using the **dplyr** `glimpse()` function:
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** A glimpse at the ~~nyc_weather~~ dataset."
 )`
 ```{r nycweather-dataset}
@@ -33,7 +33,7 @@ glimpse(nycweather)
 
 The first thing we'll do is create a summarized dataset based on `nycweather`. This will involve using functions from the **dplyr**, **tidyr**, and **forcats** packages (Listing 11.2). What we obtain from this is four values per month in 2010: (1) minimum temperature in month (`"min_temp"`), (2) maximum temperature in month (`"max_temp"`), (3) median of minimum daily temperatures in month (`"median_min_temp"`), and (4) median of maximum daily temperatures in month (`"median_max_temp"`). The ordering of factor levels for these value types are: `"min_temp"`, `"median_min_temp"`, `"median_max_temp"`, and `"max_temp"` (in order of lowest to highest temperature values).
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Transforming data in the ~~nycweather~~ dataset so that there are monthly summaries of high and low temperatures."
 )`
 ```{r nyc-highlow-temps, paged.print=FALSE}
@@ -68,7 +68,7 @@ nyc_highlow_temps
 
 Now that the `nyc_highlow_temps` table is ready to use, let's make a lollipop plot! This type of plot will use one of the value types in `nyc_highlow_temps`: `"max_temp"`. The combination of **ggplot** geoms to use involves the `geom_segment()` and `geom_point()` functions. Order is important here, if the statements are reversed then the line segments will partially overlap the points. The choice which columns are passed to the `x` and `y` aesthetics determines whether this will be a horizontal or a vertical lollipop plot. Let's opt for a plot of the horizontal variety and map `value` to `x` and `month` to `y` in `geom_point()`. There are four required aesthetics for `geom_segment()`: `x`, `xend`, `y`, and `yend.` Have a look at the code here for how the lollipop plot is generated and, Figure 11.1 for the result.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Creating a basic lollipop plot with data from ~~nyc_highlow_temps~~."
 )`
 ```{r lollipop-max, fig.cap='(ref:lollipop-max)'}
@@ -84,7 +84,7 @@ Our lollipop plot looks pretty good! Depending on whether you are personally tak
 
 Let's try making another lollipop plot, this time with positive and negative values that will have an effect on the color of the points. We start this off by creating the side column though a `mutate()` statement. We can either have `"negative"` or `"positive"` and those values are factor values. An extra aesthetic is now given to `geom_point()`'s `aes()` statement (`color = side`). We then manually set the colors of the points using `scale_color_manual()` with values of `"blue"` and then `"red"` (representing cold and warm temps). The code for this is available in Listing 11.4 and the lollipop plot itself is in *Figure \@ref(fig:lollipop-min)*.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Creating a more sophisticated lollipop plot using specific colors on the points (blue and red, for below and above zero degrees Celsius)."
 )`
 ```{r lollipop-min, fig.cap='(ref:lollipop-min)'}
@@ -104,7 +104,7 @@ nyc_highlow_temps %>%
   coord_cartesian(xlim = c(-10, 20)) +
   labs(
     title = "Monthly Low Temperatures in New York (2010)",
-    caption = "\nData source: the nycweather dataset from the edr package.",
+    caption = "\nData source: nycweather dataset from the dspatterns package.",
     x = "Temperature, ºC", y = NULL
   ) +
   theme_minimal() +
@@ -116,7 +116,7 @@ This lollipop plot indeed looks very nice. That extra bit of color helps us to q
 
 Now it's time to make a Cleveland dot plot. We'll actually make two: one with just the basics, and the second will be decked out with well-considered customizations. The big difference between this type of plot and the lollipop plot is the use of `geom_line()` instead of `geom_segment()`. We'll use the nyc_highlow_temps data without any filtering and apply some manual colors (via `scale_color_manual()`) to the four dots that each line encompasses. The following code listing has the code to make the plot of c.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Creating a basic Cleveland dot plot with ~~nyc_highlow_temps~~."
 )`
 ```{r cleveland-plot-1, fig.cap='(ref:cleveland-plot-1)'}
@@ -130,7 +130,7 @@ nyc_highlow_temps %>%
 
 We can see from the plot, this Cleveland dot plot, that all the dots are arranged properly on the horizontal lines. In other words, the plot looks technically correct and makes perfect sense (July was statistically the warmest month in New York in 2010). Of course, in our second iteration of this plot, things will look a lot better. We'll use better colors, a theme, a number of theme options, better scales and labels, the works. Is it all worth it? Take a look at the plot in *Figure \@ref(fig:cleveland-plot-final)*, I think you'll find the extra lines of **ggplot** code to be worthwhile.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** A Cleveland dot plot with more meaningful colors for the points, and, extra touches to make the plot look really nice."
 )`
 ```{r cleveland-plot-final, fig.cap='(ref:cleveland-plot-final)'}
@@ -153,7 +153,7 @@ nyc_highlow_temps %>%
   labs(
     title = "Monthly Low and High Temperatures in New York (2010)",
     subtitle = "Use daily extreme values and average of daily extremes by month.\n",
-    caption = "Data source: the nycweather dataset from the edr package.",
+    caption = "Data source: nycweather dataset from the dspatterns package.",
     x = NULL, y = NULL
   ) +
   theme_minimal() +
@@ -179,9 +179,9 @@ While these examples of lollipop plots and Cleveland dot plots are limited, ther
 
 Way back in *Chapter 3* we were introduced to the **ggplot** package and we worked with scatter plots. Lots of scatter plots (we really did nothing but scatter plots). I suppose they are good way to be introduced to plotting with **ggplot** and it was probably a good idea not to lose focus by introducing a smorgasbord of plot types all at once. Here now, in *Chapter 11*, we are revisiting the scatter plot because it is such an important plot type. Whenever you need to compare two numeric variables across multiple observations—and, connecting the data points with lines makes no intrinsic sense—a scatter plot is recommended. They are powerful because they can be used to observe relationships between variables. The points within a scatter plot not only allow us to report the values of individual observations but, taken as a whole, interesting patterns can emerge. Such relationships between the variables used can be described in quite a few ways (e.g., linear or nonlinear, strong or weak, positive or negative, etc.). Given the importance of these plots, let's do some more work with **ggplot**'s `geom_point()` function and learn some new ways to prepare and present scatter plots.
 
-At least we won't recycle a previously used dataset for this second look at scatter plots. The `imdb` dataset, part of the **edr** package, contains quite a few rows (2,607), all the more to scatter about. Each row represents a movie (`title`) with complete information on year of release (`year`), its IMDB rating (`score`), its budget, and its gross earnings (`gross`). Using `glimpse(imdb)` (as in Listing 11.7), we get a preview of the dataset.
+At least we won't recycle a previously used dataset for this second look at scatter plots. The `imdb` dataset, part of the **dspatterns** package, contains quite a few rows (2,607), all the more to scatter about. Each row represents a movie (`title`) with complete information on year of release (`year`), its IMDB rating (`score`), its budget, and its gross earnings (`gross`). Using `glimpse(imdb)` (as in Listing 11.7), we get a preview of the dataset.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** A glimpse at the ~~imdb~~ dataset."
 )`
 ```{r imdb-dataset}
@@ -190,7 +190,7 @@ glimpse(imdb)
 
 Let's make a scatter plot with the `imdb` data. There are a few metrics that can be compared but since space is limited, let's go with score on the *x* axis and gross on the *y* axis (and we'll take a selection of movies released between `2005` to `2015`). Do movies' earnings have much to do with their average rating on IMDB? We're about to find out in four lines of **ggplot** code:
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //**  A scatter plot with 2005-2015 data from the ~~imdb~~ dataset."
 )`
 ```{r imdb-plot-linear-y, fig.cap='(ref:imdb-plot-linear-y)'}
@@ -205,7 +205,7 @@ Our scatter plot in *Figure \@ref(fig:imdb-plot-linear-y)* shows us a few things
 
 In terms of plot quality, there's an awful lot of overplotting. Not only that, but many of the movies' gross earnings are in the same narrow region while some very high earners pushed the *y* axis upper limit far above this narrow band. A common strategy for alleviating this is to redefine a plot scale to suit the distribution of data. In this case, we'll transform the *y*-axis scale to a log scale. First, let's transform the data by applying the same filtering operation as before and by transforming the `year` variable to a factor (where the order of levels is descending by `year`). In doing this, we obtain the `imdb_filtered` dataset:
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Transforming the ~~imdb~~ dataset for the plot by filtering the years of movies and setting up the ~~year~~ variable as a factor."
 )`
 ```{r imdb-filtered, paged.print=FALSE}
@@ -219,7 +219,7 @@ imdb_filtered
 
 Let's take a slightly different approach in our second scatter plot. The year variable will be mapped to `geom_point()`'s color aesthetic. The colors of the data points will be subject to a gray color scale (recent movies are dark grey, the oldest are light gray). Finally, we'll use the `scale_y_log10()` function, which efficiently translates the *y*-axis scale to a *log10* scale.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** A scatter plot using the ~~imdb_filtered~~ data; uses gray points according to ~~year~~ of release and transforms *y* values to a *log* scale."
 )`
 ```{r imdb-plot-log-y, fig.cap='(ref:imdb-plot-log-y)'}
@@ -235,7 +235,7 @@ The data points in the scatter plot of *Figure \@ref(fig:imdb-plot-log-y)* now h
 
 It would be interesting to annotate the plot with two dividing lines. One would be the median of IMDB ratings, the other the median of gross earnings at the box office. This is, of course, a snap in **R** because statistics it can do well. We only need to use the base **R** `median()` function on a vector of gross values and a vector of score values. The following code listing demonstrates how this is done.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Getting the median earnings and median rating from ~~imdb_filtered~~ to generate dividing lines in the finalized plot."
 )`
 ```{r median-earnings-rating}
@@ -250,7 +250,7 @@ The median_earnings value is `28600343`, or $28,600,343 (commas are helpful). Ha
 
 Something else we'll do is add some jitter. What it does is slightly move all datapoints, reducing some of the overplotting. We can make that possible with the `position = "jitter"` option of `geom_point()`. The code for the finalized plot is presented next and the plot itself is in *Figure \@ref(fig:imdb-final-plot)*.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** The final plot of the filtered ~~imdb~~ dataset, with customized axes and annotated median value lines."
 )`
 ```{r imdb-final-plot, fig.cap='(ref:imdb-final-plot)'}
@@ -288,7 +288,7 @@ imdb_filtered %>%
   labs(
     title = "Comparison of Movies' Gross Earnings Compared to Their IMDB Ratings",
     subtitle = "Over approximately 150 films each year from the 2005-2015 period\n",
-    caption = "Data source: the imdb dataset from the edr package.",
+    caption = "Data source: imdb dataset from the dspatterns package.",
     x = "IMDB Rating", y = NULL
   ) +
   theme_bw() +
@@ -306,9 +306,9 @@ The scatter plot is of *Figure \@ref(fig:imdb-final-plot)* reveals that there is
 
 This section is all about plotting summarized distributions of data. We'll start with histograms, move on to boxplots, take a look at violin plots, explore density plots, and be wowed by ridgeline plots. 
 
-We have a very nice **edr** dataset for investigating all of these distribution-type plots: pitchfork. Pitchfork is a trusted source for album reviews and it's a website that's been around for quite a long time. The pitchfork dataset contains a lot of data on reviews from 2004 up to (and including) 2018. Using `glimpse(pitchfork)` we can get a preview of the dataset:
+We have a very nice **dspatterns** dataset for investigating all of these distribution-type plots: `pitchfork`. Pitchfork is a trusted source for album reviews and it's a website that's been around for quite a long time. The pitchfork dataset contains a lot of data on reviews from 2004 up to (and including) 2018. Using `glimpse(pitchfork)` we can get a preview of the dataset:
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** A glimpse at the ~~pitchfork~~ dataset."
 )`
 ```{r pitchfork-dataset}
@@ -319,7 +319,7 @@ glimpse(pitchfork)
 
 Histograms can be generated in **ggplot** with the suitably named `geom_histogram()` *geom* function. We only need to map values to either `x` (for a horizontal plot) or `y` (for a vertical plot). Let's get a histogram of all `pitchfork` album ratings (the `score` variable) ever:
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** A histogram showing the frequencies of binned scores (~~0~~-~~10~~) from the ~~pitchfork~~ dataset."
 )`
 ```{r pitchfork-histogram, fig.cap='(ref:pitchfork-histogram)'}
@@ -332,7 +332,7 @@ The histogram in *Figure \@ref(fig:pitchfork-histogram)* is pretty interesting! 
 
 When making a histogram with the defaults, **ggplot** issues a warning that reads `"stat_bin() using 'bins = 30'. Pick better value with 'binwidth'."`. Alright then! Let's pick our own value, and let's make it `1`:
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Setting a binwidth per the recommendation given by the **ggplot** package: using a value of ~~1~~ makes sense here."
 )`
 ```{r pitchfork-histogram-binwidth, fig.cap='(ref:pitchfork-histogram-binwidth)'}
@@ -345,7 +345,7 @@ The histogram in *Figure \@ref(fig:pitchfork-histogram-binwidth)* is now coarser
 
 Let's move on and ask a question: is the distribution of review scores different by the year of the review? One way to look into this is by using a faceted plot of histograms. We can add `facet_wrap(vars(year))` to our plotting code to get our facets:
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Customizing the *x* axis (to show labels for all ~~score~~ bins) and faceting by ~~year~~ gives some insight on how the ~~score~~ distribution changed with time."
 )`
 ```{r pitchfork-histogram-facets, fig.cap='(ref:pitchfork-histogram-facets)'}
@@ -362,7 +362,7 @@ From the facets of histograms shown in *Figure \@ref(fig:pitchfork-histogram-fac
 
 Histograms are nice, but how about box plots? Will they tell me more? Let's find out with `geom_boxplot()`. And let's turn that `year` variable into a factor; we need it for the `x` aesthetic. With four lines of **ggplot** code, we get the plot shown in *Figure \@ref(fig:pitchfork-boxplot)*.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Using the ~~year~~ as a categorical variable in a boxplot of Pitchfork album ratings can reveal how ratings tended to change over the years."
 )`
 ```{r pitchfork-boxplot, fig.cap='(ref:pitchfork-boxplot)'}
@@ -377,7 +377,7 @@ The box plot of *Figure \@ref(fig:pitchfork-boxplot)* gives us summary statistic
 
 Some people don't like that box plots hide the underlying data. This is a very valid argument because the summary statistics that constitute a box plot can potentially be the same for very different distributions of the data. So, let's split the difference and overlay our data points on the boxplot. To do this, add a `geom_point()` statement after `geom_boxplot()`. Some tips: remove the interfering boxplot outliers with `outlier.shape = NA` in `geom_boxplot()`, jitter the data points with `position = "jitter"` in `geom_point()`, use a small data point size and low `alpha` value if there are a lot of points (as there are in `pitchfork`). Listing 11.18 contains the code for this and *Figure \@ref(fig:pitchfork-boxplot-points)* provides the plot.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** A box plot with jittered data points can show us the quantity and distribution of ratings along with the summary statistics."
 )`
 ```{r pitchfork-boxplot-points, fig.cap='(ref:pitchfork-boxplot-points)'}
@@ -399,7 +399,7 @@ Violin plots are a way of comparing multiple data distributions. With ordinary d
 
 Let's use the pitchfork data with the `geom_violin()` *geom* function. We'll choose to draw the quantiles with `draw_quantiles = c(0.25, 0.50, 0.75)`, we'll skip the legend by using `show.legend = FALSE (Listing 11.19)`.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** A violin plot can be more interpretable than overlaid points on a box plot if the number of data points is overwhelming."
 )`
 ```{r pitchfork-violin-plot, fig.cap='(ref:pitchfork-violin-plot)'}
@@ -425,7 +425,7 @@ A density plot produces what's known as a kernel density curve: an estimate of t
 
 The `dmd` dataset will be used to in our explorations of density plots (Listing 11.20). There are 2,697 data points, each representing a single diamond. The variables in the dataset are evenly split between continuous (`carats`, `depth`, `price`) and discrete or categorical (`color`, `cut`, `clarity`).
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** A glimpse at the ~~dmd~~ dataset."
 )`
 ```{r dmd-dataset}
@@ -434,7 +434,7 @@ glimpse(dmd)
 
 Let's create a density plot in the simplest manner possible: using `geom_density()` and accepting all the defaults. The `carats` variable in `dmd` is mapped to the `x` aesthetic in the next code listing and the resulting density plot is shown as *Figure \@ref(fig:dmd-density-plot)*.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Creating a simple density plot, mapping ~~carats~~ from the ~~dmd~~ dataset to ~~x~~."
 )`
 ```{r dmd-density-plot, fig.cap='(ref:dmd-density-plot)'}
@@ -447,7 +447,7 @@ The plot of *Figure \@ref(fig:dmd-density-plot)* uses a default kernel bandwidth
 
 Again, the larger the bandwidth, the more smoothing there is. The bandwidth can be set with the `adjust` parameter, which has a default value of `1`. In the following code listing, several layers of `geom_density()` plots are made and the adjust value is progressively lowered (i.e., resulting in less smoothing, more inclination toward movement). It's operating on the same `dmd` dataset but the difference in the curves can be rather striking (*Figure \@ref(fig:dmd-density-bandwidths)*).
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** The ~~geom_density()~~ function has a default bandwidth but modifying it with the ~~adjust~~ parameter has a strong effect on the plotted density curve."
 )`
 ```{r dmd-density-bandwidths, fig.cap='(ref:dmd-density-bandwidths)'}
@@ -461,7 +461,7 @@ ggplot(dmd, aes(x = carats)) +
 
 Let's modify the `dmd` dataset a bit to incorporate the `dollars_carat` column, which takes the ratio of `price` (in U.S. Dollars) to carat weight. Then, the `color`, `cut`, and `clarity` columns will be converted to factors (Listing 11.23).
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** The ~~dmd~~ dataset is mutated to add a new column (~~dollars_carat~~) and to produce factors for better control of ordering facets."
 )`
 ```{r dmd-mutated, paged.print=FALSE}
@@ -479,7 +479,7 @@ dmd_mutated
 
 Let's try something a little more ambitious with our next density plot: faceting. The `dmd_mutated` dataset is introduced to `geom_density()`, mapping `dollars_carat` to `x` and `cut` to both `fill` and `color.` After that, we'll use `facet_grid()` to make a grid of facets. The rows will differ in `color`, and the columns will differ in `clarity`. As we've done before to make the plot presentable, we'll apply a theme, add titles, and clean up the plot axes. The code is below and the plot itself is available as *Figure \@ref(fig:dmd-density-facets)*.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** With ~~dmd_mutated~~, a set of faceted density plots (through ~~facet_grid()~~) is generated to compare distributions of diamond value by mass."
 )`
 ```{r dmd-density-facets, fig.cap='(ref:dmd-density-facets)'}
@@ -499,7 +499,7 @@ ggplot(dmd_mutated) +
   labs(
     title = "Distributions of USD/Carat Values for Diamonds",
     subtitle = "Uses 2,697 diamonds with varying color, cut, and clarity\n",
-    caption = "Data source: the dmd dataset from the edr package.",
+    caption = "Data source: dmd dataset from the dspatterns package.",
     x = NULL, y = NULL
   ) +
   theme_minimal() +
@@ -518,7 +518,7 @@ A ridgeline plot shows the distribution of a numeric value for several groups. D
 
 Using the imdb dataset as is, we can make a very nice ridgeline plot with the `geom_density_ridges()` and `theme_ridges()` functions from the **ggridges** package (Listing 11.25). The `geom_density_ridges()` function has a few parameters that can wildly change the appearance of the ridgelines, which are `scale`, `rel_min_height`, and `size.` I'd recommend using the values shown in the next code listing but do experiment with them so that your final plot is how you want it to appear. One final note: the use of `theme_ridges()` is highly recommended as it gives this type of plot its characteristic look.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** With the functions available in **ggridges**, it's possible to make a compact, ridgeline density plot of IMDB movie ratings over 15 years."
 )`
 ```{r imdb-ggridges, fig.cap='(ref:imdb-ggridges)'}
@@ -532,8 +532,8 @@ ggplot(imdb, aes(x = score, y = year, group = year)) +
   coord_cartesian(clip = "off", xlim = c(0, 10)) +
   labs(
     title = "Distributions of IMDB Movie Ratings by Year",
-    subtitle = "Over approximately 150 films each year from the 2000-2015 period\n",
-    caption = "Data source: the imdb dataset from the edr package.",
+    subtitle = "Over 150 films each year from the 2000-2015 period\n",
+    caption = "Data source: imdb dataset from the dspatterns package.",
     x = "IMDB Rating", y = NULL
   ) +
   theme_ridges() +
@@ -547,7 +547,7 @@ ggplot(imdb, aes(x = score, y = year, group = year)) +
 
 The IMDB ratings plot of *Figure \@ref(fig:imdb-ggridges)* allows us to easily compare the shapes of lot of density plots by up and down scanning. These types of plots are also a pleasure to look at. Because they are so great, let's make a companion ridgeline plot that uses the `pitchfork` dataset in the same manner. The code shown below is virtually the same as that of the previous code listing, save for differences in colors and labels.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** The comparable ridgeline density plot with 15 years of Pitchfork album reviews makes for a great companion piece to the IMDB plot."
 )`
 ```{r pitchfork-ggridges, fig.cap='(ref:pitchfork-ggridges)'}
@@ -563,8 +563,8 @@ pitchfork %>%
   coord_cartesian(clip = "off", xlim = c(0, 10)) +
   labs(
     title = "Distributions of Pitchfork Album Ratings by Year",
-    subtitle = "Over approximately 1,000 albums each year from the 2005-2015 period\n",
-    caption = "Data source: the pitchfork dataset from the edr package.",
+    subtitle = "Over 1,000 albums each year from the 2005-2015 period\n",
+    caption = "Data source: pitchfork dataset from the dspatterns package.",
     x = "Pitchfork Rating", y = NULL
   ) +
   theme_ridges() +
@@ -580,7 +580,7 @@ From the ridgeline plot of *Figure \@ref(fig:pitchfork-ggridges)*, it's quite ea
 
 For the last ridgeline plot, the `nycweather` dataset will be used. In this case, all of the temperature data is converted to degrees Fahrenheit (with a **dplyr** `mutate()` statement) and passed to the `geom_density_ridges_gradient()` function. The fill color uses the 'cividis' color scale that was used previously (through `scale_fill_viridis_c()`, option `"E"`). As in all the previous code listings with ridgeline plots, the `theme_ridges()` function is used.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** The ~~nycweather~~ dataset is a natural fit for a ridgeline plot, where temperature distibutions are compared by month in 2010."
 )`
 ```{r nycweather-ggridges, fig.cap='(ref:nycweather-ggridges)'}
@@ -600,7 +600,7 @@ nycweather %>%
   labs(
     title = "Distributions of Air Temperatures in New York City by Month",
     subtitle = "Uses nearly 13,000 temperature observations from 2010\n",
-    caption = "Data source: the nycweather dataset from the edr package.",
+    caption = "Data source: nycweather dataset from the dspatterns package.",
     x = "Temperature, ºF", y = NULL
   ) +
   theme_ridges() +

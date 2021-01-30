@@ -6,7 +6,7 @@ output: html_document
 ```{r load_packages}
 library(tidyverse)
 library(ggridges)
-library(edr)
+library(dspatterns)
 ```
 
 ## 11.1. Lollipop Plots and Cleveland Dot Plots
@@ -78,7 +78,7 @@ nyc_highlow_temps %>%
   coord_cartesian(xlim = c(-10, 20)) +
   labs(
     title = "Monthly Low Temperatures in New York (2010)",
-    caption = "\nData source: the nycweather dataset from the edr package.",
+    caption = "\nData source: nycweather dataset from the dspatterns package.",
     x = "Temperature, ºC", y = NULL
   ) +
   theme_minimal() +
@@ -117,7 +117,7 @@ nyc_highlow_temps %>%
   labs(
     title = "Monthly Low and High Temperatures in New York (2010)",
     subtitle = "Using daily extreme values and average of daily extremes by month.\n",
-    caption = "Data source: the nycweather dataset from the edr package.",
+    caption = "Data source: nycweather dataset from the dspatterns package.",
     x = NULL, y = NULL
   ) +
   theme_minimal() +
@@ -216,8 +216,8 @@ imdb_filtered %>%
   ) +
   labs(
     title = "Comparison of Movies' Gross Earnings Compared to Their IMDB Ratings",
-    subtitle = "Over approximately 150 films each year from the 2005-2015 period\n",
-    caption = "Data source: the imdb dataset from the edr package.",
+    subtitle = "Over 150 films each year from the 2005-2015 period\n",
+    caption = "Data source: imdb dataset from the dspatterns package.",
     x = "IMDB Rating", y = NULL
   ) +
   theme_bw() +
@@ -349,7 +349,7 @@ ggplot(dmd_mutated) +
   labs(
     title = "Distributions of USD/Carat Values for Diamonds",
     subtitle = "Uses 2,697 diamonds with varying color, cut, and clarity\n",
-    caption = "Data source: the dmd dataset from the edr package.",
+    caption = "Data source: dmd dataset from the dspatterns package.",
     x = NULL, y = NULL
   ) +
   theme_minimal() +
@@ -372,8 +372,8 @@ ggplot(imdb, aes(x = score, y = year, group = year)) +
   coord_cartesian(clip = "off", xlim = c(0, 10)) +
   labs(
     title = "Distributions of IMDB Movie Ratings by Year",
-    subtitle = "Over approximately 150 films each year from the 2000-2015 period\n",
-    caption = "Data source: the imdb dataset from the edr package.",
+    subtitle = "Over 150 films each year from the 2000-2015 period\n",
+    caption = "Data source: imdb dataset from the dspatterns package.",
     x = "IMDB Rating", y = NULL
   ) +
   theme_ridges() +
@@ -399,8 +399,8 @@ pitchfork %>%
   coord_cartesian(clip = "off", xlim = c(0, 10)) +
   labs(
     title = "Distributions of Pitchfork Album Ratings by Year",
-    subtitle = "Over approximately 1,000 albums each year from the 2005-2015 period\n",
-    caption = "Data source: the pitchfork dataset from the edr package.",
+    subtitle = "Over 1,000 albums each year from the 2005-2015 period\n",
+    caption = "Data source: pitchfork dataset from the dspatterns package.",
     x = "Pitchfork Rating", y = NULL
   ) +
   theme_ridges() +
@@ -430,7 +430,7 @@ nycweather %>%
   labs(
     title = "Distributions of Air Temperatures in New York City by Month",
     subtitle = "Uses nearly 13,000 temperature observations from 2010\n",
-    caption = "Data source: the nycweather dataset from the edr package.",
+    caption = "Data source: nycweather dataset from the dspatterns package.",
     x = "Temperature, ºF", y = NULL
   ) +
   theme_ridges() +

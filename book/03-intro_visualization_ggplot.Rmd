@@ -1,7 +1,7 @@
 # Introductory Data Visualization with **ggplot** {#intro_visualization_ggplot}
 
 ```{r setup, include=FALSE, echo=FALSE}
-library(edr)
+library(dspatterns)
 library(tidyverse)
 ```
 
@@ -16,7 +16,7 @@ This chapter covers
 
 In the previous chapter, it was proposed that data visualization is a useful process for generating insights. It is often necessary to transform data before it's ready for plotting, and, the **dplyr** functions we just learned about make those transformations possible. Now, we will learn about how to create beautiful and informative plots with **ggplot** (actually called **ggplot2** but cited throughout this book more simply as **ggplot**). While **ggplot** provides functionality to create a wide selection of plot types, we will begin by focusing on a single type of plot: the scatterplot.
 
-This book's package, **edr**, provides the input data we'll need to build our example plots. From that package the `dmd` dataset will be used (it's a simplified version of the `diamonds` dataset that is available in the **ggplot** package). Whenever we load in the **edr** package using `library(edr)`, the dmd table will be available; you can verify this by executing `dmd` in the **R** console. This particular dataset has nearly 2,700 rows, one for each diamond and its attributes, and the following 6 variables:
+This book's package, **dspatterns**, provides the input data we'll need to build our example plots. From that package the `dmd` dataset will be used (it's a simplified version of the `diamonds` dataset that is available in the **ggplot** package). Whenever we load in the **dspatterns** package using `library(dspatterns)`, the dmd table will be available; you can verify this by executing `dmd` in the **R** console. This particular dataset has nearly 2,700 rows, one for each diamond and its attributes, and the following 6 variables:
 
 - `carats`: the weight of the diamond in carats, where each carat is 0.2 grams
 - `depth`: a depth percentage of the diamond that takes into account the diamond's length, width, and depth distances
@@ -35,7 +35,7 @@ Through a number of simple examples with the `dmd` dataset, we'll develop an und
 
 Let's describe a simple scatterplot with the `dmd` variables carats (the weight of the diamond) and price (the price in US dollars). The very first instruction we'll provide is a `ggplot()` function call. This requires data (we'll use the `dmd` table as data), and, it also has an argument called mapping. We'll map carats to the *x* axis and price to the *y* axis, and this will be wrapped up inside the `aes()` object (`aes` stands for aesthetics). This last part implies that the axes to which data values are bound are aesthetic properties, and that's really how the *Grammar of Graphics* sees it (along with other aesthetic properties like the shape and color of marks). After running the code chunk, we'll get the plot shown as *Figure \@ref(fig:gg-empty)*.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Making our first **ggplot**.",
 c(
 "#A This **ggplot** statement adds data and defines the ~~x~~ and ~~y~~ aesthetics. However, there is no layer that actually visualizes the data."
@@ -47,7 +47,7 @@ ggplot(data = dmd, mapping = aes(x = carats, y = price))  #A
 
 We might be surprised that what we see in *Figure \@ref(fig:gg-empty)* is essentially an empty plot. What we do have however are the plot axes (with values and labels), and you might notice that the ranges of the axis values encompass the extent of data (it's hard to know without seeing the data but this is indeed the case). To actually get the `price` vs. `carats` data points onto the plot, we have to add a *geom*—this stands for geometry—and, in this case, we will use `geom_point()`. This *geom* provides a method for plotting the data. Let's take a look at the new code and the resulting plot (*Figure \@ref(fig:dmd-carats-price)*).
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Using ~~geom_point()~~ adds a layer of points.",
 c(
 "#A Same line as in the previous code; need to add a linking ~~+~~ sign.",
@@ -69,7 +69,7 @@ Let's unpack what's happening in the previous code listing just a bit more. The 
 
 In looking at the relationship between diamond price (`price`) against the weight in carats (`carats`) in the above, it's easy to see a positive correlation between the two variables. When doing data exploration, we may also want to compare other pairs of variables to see what our data tells us. Since these types of plots only take two lines of code to generate, we can and should try to do enough exploration so that we get a better intuition on the data. So, let's try this again, but this time we'll use the numerical `depth` variable (a geometric measure of the diamond) in place of `carats`, giving us the plot in *Figure \@ref(fig:dmd-carats-depth)*.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Using a different *y* value.",
 c(
 "#A This time, ~~y~~ is set to the ~~depth~~ variable."
@@ -84,7 +84,7 @@ While the variables in *Figure \@ref(fig:dmd-carats-depth)* do not show any corr
 
 One of the great things about **ggplot** is that we have a quite a few aesthetic properties we could map to variables. Let's return to the price vs. carats comparison and map a shape aesthetic to a different variable in `dmd`: `clarity`. The `clarity` variable is discrete (or categorical), providing a one of three character-based values that qualitatively state how clear the diamond is *Figure \@ref(fig:dmd-shape-for-clarity)*.
  
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Using the ~~shape~~ aesthetic.",
 c(
 "#A We add the ~~shape~~ aesthetic, mapping it to the ~~clarity~~ variable."
@@ -102,7 +102,7 @@ Because we defined an additional aesthetic property by putting `shape = clarity`
 
 We have plenty of options for modifying this plot. The large number of data points in the plot shows a fairly high degree of overplotting, and so it's harder to see where the data points are most concentrated. A common way to solve this visualization problem is to add transparency to the data points. We do this in **ggplot** by setting the alpha value in `geom_point()` to a relatively low value in the `0` to `1` scale. In our new code we will use `alpha = 0.25` but if overplotting is more severe, lower values will often yield better results (*Figure \@ref(fig:dmd-carats-price-alpha)*).
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Using the alpha argument in ~~geom_point()~~.",
 c(
 "#A Supplying an ~~alpha~~ value of ~~0.25~~ (in the range of ~~0~~–~~1~~) makes the points relatively transparent."
@@ -115,7 +115,7 @@ ggplot(dmd, mapping = aes(x = carats, y = price, shape = clarity)) +
 
 What if we simply wanted all the points to be of a specified color instead of the default opaque black? In this case, if we wanted to use `gray50` as a color (it's a medium gray), we would need to add `color = "gray50"` inside of `geom_point()` and we also need to remove the `color` aesthetic (`color = clarity`) in the initial mapping. This results in uniformly gray data points in the output plot (*Figure \@ref(fig:dmd-all-gray50-points)*).
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Setting a fixed color inside of ~~geom_point()~~.",
 c(
 "#A The ~~\"gray50\"~~ color is halfway between white and black; and, the higher the number, the lighter the gray."
@@ -139,7 +139,7 @@ The only way to get a feel for what's available in terms of the visual aesthetic
 
 Let's start off with the example given in the next code listing, where `price` vs. `carats` is plotted (*Figure \@ref(fig:dmd-aesthetics-1)*). Here we are using the `color` aesthetic for `cut` and the `shape` aesthetic for `clarity`. These aesthetics are defined at the mapping argument of `geom_point()` (enclosed within `aes()`). The point geom needs data and the aesthetics `x` and `y` but it inherits those from the preceding `ggplot()` statement.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Using ~~color~~ and ~~shape~~ aesthetics.",
 c(
 "#A A total of four aesthetics are used here: ~~x~~, ~~y~~, ~~color~~, and ~~shape~~."
@@ -154,7 +154,7 @@ There are two legends in *Figure \@ref(fig:dmd-aesthetics-1)* (both at the right
 
 In the next code listing we will experiment with the `alpha` aesthetic, setting a low, fixed value for it.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Using the ~~size~~ aesthetic and a fixed ~~alpha~~.",
 c(
 "#A The small value for ~~alpha~~ (~~0.05~~) makes non-overlapping data points barely visible."
@@ -169,7 +169,7 @@ ggplot(dmd, aes(x = carats, y = price)) +
 
 Next, let's use nothing but fixed values for the `color`, `fill`, and `shape` aesthetics.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Supplying fixed values for ~~color~~, ~~fill~~, and ~~shape~~.",
 c(
 "#A The points\\' ~~color~~, ~~fill~~, and ~~shape~~ aesthetics are set manually."
@@ -190,7 +190,7 @@ Note: For the `fill` aesthetic, a hexadecimal color name is provided (`#AAAFEF`)
 
 Most of the aesthetics in previous examples were applied to categorical variables. Now let's have another look at the result of applying an aesthetic to a continuous variable: `depth`.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Applying the ~~color~~ aesthetic to the ~~depth~~ variable.",
 c(
 "#A Because the ~~depth~~ variable is numeric and continuous, we get a gradient of blue tones mapped to data points."
@@ -211,7 +211,7 @@ Facets are a way of splitting a single plot into multiple subplots. The splittin
 
 The diamonds described in the `dmd` dataset have discrete variables that are useful for faceting: `color`, `cut`, and `clarity`. What if we could make our plot of `price` vs. `carats` for each of the three cases of clarity (e.g., diamonds with Fair clarity in the first plot, and similarly diamonds with Great and The Best clarity in the second and third plots)? What if these plots could all appear together as a combined graphic? That there is faceting. So let's take the much earlier code used to create `dmd_carats_price` and apply the `facet_wrap()` function to facet by clarity, giving us *Figure \@ref(fig:dmd-facet-clarity)*.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Using an additional statement with ~~facet_wrap()~~ gives us a faceted plot.",
 c(
 "#A The ~~facet_wrap()~~ function requires one or more variable names wrapped in ~~vars()~~."
@@ -233,7 +233,7 @@ In the facets argument of `facet_wrap()`, we needed to wrap the variables we are
 
 We can choose to provide multiple variables to `vars()` and **ggplot** will handle the faceting of interactions between those variables. Let's extend the example that produced *Figure \@ref(fig:dmd-facet-clarity)* and incorporate the `cut` variable, which contains the same discrete values as `clarity` (*Figure \@ref(fig:dmd-facet-cut-clarity)*).
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Faceting by two variables: ~~cut~~ and ~~clarity~~.",
 c(
 "#A The ~~vars()~~ function inside ~~facet_wrap()~~ needs variables to be separated by commas."
@@ -249,7 +249,7 @@ The panel strips now show values for the `cut` and the `clarity` faceting variab
 
 The default appearance of the labels in the strips can make it difficult to distinguish the variables. In the next code listing we will use a nice option, which is `labeller = label_both` inside `facet_wrap()`. This will format the panel strip labels to include both the variable name and value for each panel (*Figure \@ref(fig:dmd-facet-cut-clarity-labeller)*).
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Using the ~~labeller~~ function ~~label_both~~ to create informative labels for facets.",
 c(
 "#A The ~~label_both~~ function supplied to the labeller argument doesn\\'t need parentheses."
@@ -263,7 +263,7 @@ ggplot(dmd, aes(x = carats, y = price)) +
 
 The `facet_wrap()` way of faceting is to make a set of panels with a layout that is from left to right, top to bottom. By default, **ggplot** chooses the optimal layout depending on the number of panels but we can modify this by using the `ncol` and `nrow` arguments of `facet_wrap()`. *Figure \@ref(fig:dmd-facet-cut-clarity-wide)* provides an example where we make a wide layout by using `nrow = 1`. 
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** We can specify the total number of rows of plot panels with the ~~nrow~~ argument.",
 c(
 "#A The ~~nrow~~ argument must be placed inside ~~facet_wrap()~~; the use of ~~ncol~~ (number of columns) is optional."
@@ -283,7 +283,7 @@ Only one row of panels is generated. Be careful when there is a very large numbe
 
 When faceting by two variables, the use of `facet_grid()` might result in a better appearance of panels. As the name of the function implies, panels are placed into a strict grid. The faceting variables provide the *x* and *y* positions of the panels. Let's rework the plot to the grid layout to demonstrate this. The changes to make are to use `facet_grid()` instead of `facet_wrap()` and, within that, use the `rows` and `cols` arguments (both with `vars()`) to tell **ggplot** which faceting variables should run across rows or columns (*Figure \@ref(fig:dmd-facet-cut-clarity-grid)*).
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Using ~~facet_grid()~~ provides a slightly different visualization of the faceted plot panels.",
 c(
 "#A Instead of the optional ~~nrow~~ and ~~ncol~~ arguments of ~~facet_wrap()~~, we have the required arguments of ~~rows~~ and ~~cols~~ (each requires variables placed inside ~~vars()~~)."
@@ -306,7 +306,7 @@ Through most of the **ggplot** examples we've worked through up to this point, d
 
 Most label customization can be done using the `labs()` function, so, let's make a plot with labels of our own choosing (*Figure \@ref(fig:plot-new-labs)*). The general construction is to add several `[aesthetic name] = "[label name]"` name-value pairs, separated by commas, inside `labs()`.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** The ~~labs()~~ function gives us the opportunity to provide our own labels for different plot elements.",
 c(
 "#A All of the label text needs to be put in quotes."
@@ -324,7 +324,7 @@ ggplot(dmd, mapping = aes(x = carats, y = price)) +
 
 Let's further augment our plot with a title and a caption. These elements are very useful for communicating what the plot is showing and for providing extra details which can be important for the intended audience. The text elements of `title` and `subtitle` can be used to add a descriptive title and subtitle above the plot. Should we need to further describe aspects of the plot, a `caption` (which appears below the plot) can be used. *Figure \@ref(fig:plot-labs-titles)* provides an example that shows all of these textual elements.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** We can specify the plot\'s ~~title~~, ~~subtitle~~, and ~~caption~~ inside ~~labs()~~ as well.",
 c(
 "#A,#B,#C These label elements adorn the top and bottom of the plot.",
@@ -355,7 +355,7 @@ The placement of legends is a common customization. While the default placement 
 
 Let's start with a basic plot on which to base future examples by including the `theme(legend.position = "right")` statement. The resulting plot is shown as *Figure \@ref(fig:plot-legend-right)*.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Using the ~~legend.position~~ argument of ~~theme()~~ to put the legend to the right of the plot.",
 c(
 "#A The ~~theme()~~ function has a lot of options. The ~~legend.position~~ option allows us to place the legend in one of four different areas."
@@ -372,7 +372,7 @@ The plotting code in the previous listing includes the `theme(legend.position = 
 
 The legend can be put in other locations. The plotting code can be revised to place the legend at the `"bottom"` of the plot.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Using the ~~legend.position~~ argument of ~~theme()~~ to put the legend below the plot.",
 c(
 "#A Setting the legend position to the bottom creates a horizontal layout, which presents well if the legend doesn\'t have too many items."
@@ -389,7 +389,7 @@ By using `"bottom"` instead of `"right"` for `legend.position`, we see that the 
 
 Using the `legend.justification` argument in `theme()` we can have the legend vertically justified to the `"top"` of the plot.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Use the ~~legend.justification~~ argument of ~~theme()~~ to justify the legend toward the top of the visualization.",
 c(
 "#A Here, the legend position is to the right (that\'s the default position). We can justify the legend to the top of the visualization with ~~legend.justification~~."
@@ -406,7 +406,7 @@ Other values can be used, like `"bottom"`, `"left"`, and `"right"`. We can also 
 
 But what if we don't want the legend at all? This is sometimes the case and it's not very obvious how we might hide our legend. The thing to do here is to use `theme(legend.position = "none")`. Then, the legend disappears as we can see in *Figure \@ref(fig:plot-no-legend)*.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Using the ~~legend.position~~ argument of ~~theme()~~ to remove the legend entirely.",
 c(
 "#A There are instances where we don\'t want or need the legend. To do that, we set ~~legend.position~~ to ~~\"none\"~~."
@@ -429,7 +429,7 @@ Suppose we would like to have a new measure that provides the value of a diamond
 
 Now that we have the `cpc` variable, taken as a better measure of the worth of a diamond based on its qualities, we can divide the entire set of diamonds into two price classes: those with higher `cpc` than the median `cpc` value, and those that are lower. We won't describe in detail how to get the median `cpc` value, so we'll accept that it is around $3,460 per carat. Within our second `mutate()` statement, we will use `ifelse()` to get a new price_class variable. The next listing provides the code that takes the dataset and applies both `mutate()` statements to `dmd` and assigns the result to `dmd_mod`.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Modifying ~~dmd~~ to obtain two new columns: ~~cpc~~ and ~~price_class~~.",
 c(
 "#A This ~~mutate()~~ statement creates the ~~cpc~~ column...",
@@ -448,7 +448,7 @@ We haven't yet used `mutate()` with `ifelse()` so let's examine this more closel
 
 For our third and final `mutate()`, we will suppose that diamonds with cut and clarity labeled as The Best should be high-quality diamonds, and thus fetch higher prices. Another `ifelse()` is to be used within the `mutate()` statement, creating a new variable called `quality`. The following listing augments the earlier code with a third `mutate()`.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** A third and final ~~mutate()~~ statement to add the ~~quality~~ column to our modified dataset (~~dmd_mod~~).",
 c(
 "#A The third ~~mutate()~~ statement (that creates the quality column) is pretty long so it\\'s broken across a few lines for better readability"
@@ -471,7 +471,7 @@ In the code listing, we are using `ifelse()` within the third `mutate()` stateme
 
 Once we have modified `dmd` and assigned the results to a new object called `dmd_mod`, we can make a different type of plot that uses the newly-created variables of `price_class` and `quality`. Faceting will be done on the `price` vs. `carats` plot, using the new variables in the `facet_wrap()` statement to create a 2-by-2 plot that compares data points by two quality categories and two price categories (*Figure \@ref(fig:dmd-modified-dplyr-ggplot)*).
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Modifying ~~dmd~~ to add three new columns, and, plotting ~~dmd_mod~~ with the new variables.",
 c(
 "#A This **ggplot** code uses the new variables when faceting (~~price_class~~ and ~~quality~~).",

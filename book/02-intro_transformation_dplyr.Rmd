@@ -1,7 +1,7 @@
 # Introductory Data Transformation with **dplyr** {#intro_transformation_dplyr}
 
 ```{r setup, include=FALSE, echo=FALSE}
-library(edr)
+library(dspatterns)
 library(tidyverse)
 ```
 
@@ -16,18 +16,18 @@ This chapter covers
 - creating new table columns (or modifying existing ones) with `mutate()` and carefully crafted expressions
 - summarizing tabular data with the combination of `group_by()` and `summarize()`
 
-We will start off by getting our bearings with assignment of variables in **R**. Later in the book, we'll certainly get the opportunity to learn more programming fundamentals, however assignment is one of those topics that should be addressed right away. Then, the installation of packages will be covered. This will give us the chance to install the packages that are required for the book: **tidyverse**, **edr**, and **devtools**.
+We will start off by getting our bearings with assignment of variables in **R**. Later in the book, we'll certainly get the opportunity to learn more programming fundamentals, however assignment is one of those topics that should be addressed right away. Then, the installation of packages will be covered. This will give us the chance to install the packages that are required for the book: **tidyverse**, **dspatterns**, and **devtools**.
 
 The rest of the chapter is devoted to learning a skill that is very important: transforming tabular data. Of all the skills you will learn in this book, the value of this one cannot be understated. A bit more than the usual amount of time will and should be spent on this.
 
-The **edr** package will give us the dataset needed for the examples in this chapter: `sw`. This dataset is a modified version of the `starwars` dataset that is available in the **dplyr** package. Whenever we load in the **edr** package using `library(edr)`, the `sw` table will be available for use. This particular dataset has 87 rows, one for each Star Wars character, and the following 8 variables (or columns):
+The **dspatterns** package will give us the dataset needed for the examples in this chapter: `sw`. This dataset is a modified version of the `starwars` dataset that is available in the **dplyr** package. Whenever we load in the **dspatterns** package using `library(dspatterns)`, the `sw` table will be available for use. This particular dataset has 87 rows, one for each Star Wars character, and the following 8 variables (or columns):
 
 - `name`: the name of the character
 - `height`, `mass`: the character's height and weight (in centimeters and kilograms)
 - `hair_color`: a description of the character's hair color, where available
 - `gender`, `homeworld`, `species`: the character's gender, homeworld (i.e., a planet name), and species
 
-We will learn how to install packages like **tidyverse**, **edr**, and devtools in *Section 2.1.2*. Once you've gotten the hang on that (and those packages are installed), more information on the `sw` dataset can be obtained by executing `?sw` in the **RStudio** console (a help page will appear).
+We will learn how to install packages like **tidyverse**, **dspatterns**, and devtools in *Section 2.1.2*. Once you've gotten the hang on that (and those packages are installed), more information on the `sw` dataset can be obtained by executing `?sw` in the **RStudio** console (a help page will appear).
 
 ## Programming Basics and Package Installation
 
@@ -41,7 +41,7 @@ We assign values to variables (that we name ourselves) by using the leftward arr
 
 We can assign the single number `5` to the variable called `a_number`. Executing the line with just the variable name prints the value `5` in the console (the assignment line itself will show nothing in the console).
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Assigning a single number to ~~a_number~~.",
 c(
 "#A This is the assignment of the number ~~5~~ to the variable called ~~a_number~~.",
@@ -56,7 +56,7 @@ Inside of the code listing, the console output is shown. Whenever you see `#>` i
 
 Multiple values (of the same type, like numbers or character strings) can be put together (with the `c()` function) as a vector and assigned to a single variable. An example of this is shown in the following code listing.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Assigning a vector of three numbers to ~~three_numbers~~.",
 c(
 "#A Assignment of a vector of numeric values (using ~~c()~~, to *combine*). The name ~~three_numbers~~ is just a name that was made up; it could easily have been called ~~foo~~."
@@ -70,7 +70,7 @@ Shown again, just above, is the console output. We are getting back the values w
 
 Character strings can be assigned to variables. In the next example, the single string `"hello"` is assigned to `one_word`.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Assigning a character string to ~~one_word~~.",
 c(
 "#A We need quotes to distinguish character strings from variables. While you can use single quotes, I recommend adopting double quotes as used here."
@@ -90,7 +90,7 @@ knitr::include_graphics("figures/chapter_02/02-01-figure-environment-tab.png")
 
 We can overwrite any variable currently assigned. This is done by assigning a value to any variable name that was previously assigned. In the next example, we'll overwrite the `one_word` variable with `"hi"` and inspect the variable by printing it.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Replacing the ~~one_word~~ variable with a different value.",
 c(
 "#A Assigning any value to an already assigned variable. Here, **R** will simply overwrite the previous value in ~~one_word~~, and, **R** won't inform you that ~~one_word~~ was previously assigned."
@@ -112,7 +112,7 @@ To actually load the packages in your **R** session, we need to use the `library
 
 We can install packages from **GitHub** by using the `install_github()` function from the **devtools** package. Let's first install devtools from CRAN with `install.packages("devtools")`.
 
-Next, let's install the **GitHub** package that is essential for this book, edr, by using library(devtools) and then `install_github("rich-iannone/edr")` in the **R** console. This package contains datasets, functions, and useful source files pertaining to this lesson and the lessons ahead.
+Next, let's install the **GitHub** package that is essential for this book, **dspatterns**, by using `library(devtools)` and then `install_github("dspatterns/dspatterns")` in the **R** console. This package contains datasets, functions, and useful source files pertaining to this lesson and the lessons ahead.
 
 The reason that `library(devtools)` was used right before the `install_github()` statement is because this ensures that the `install_github()` function is loaded and available in the session before calling it in the next line.
 
@@ -146,15 +146,15 @@ Eventually we'll see that we can chain together multiple simple steps to achieve
 
 Through the rest of this chapter, let's work with **dplyr** in the context of an **R Markdown** document. In Listing 2.5, we'll create a new **R Markdown** document and include this **R** code chunk just after the YAML header.
 
-`r edr::code_hints(
-"**CODE //** Loading the **tidyverse** and **edr** packages.",
+`r dspatterns::code_hints(
+"**CODE //** Loading the **tidyverse** and **dspatterns** packages.",
 c(
 "#A Loading the **tidyverse** package like this actually auto-loads all core **tidyverse** packages (this is almost everything we'll need for the entire book!.",
-"#B The **edr** package is this book's namesake package. It has the datasets we need for all of the examples."
+"#B The **dspatterns** package is this book's namesake package. It has the datasets we need for all of the examples."
 ))`
-```{r load-tidyverse-edr, eval=FALSE}
+```{r load-tidyverse-dspatterns, eval=FALSE}
 library(tidyverse)  #A
-library(edr)  #B
+library(dspatterns)  #B
 ```
 
 The following is the console output which, in an **R Markdown** document, appears just below the code chunk (as chunk output).
@@ -177,12 +177,12 @@ We'll continue the practice of writing new **R** code chunks and running them in
 
 ### The `sw` Dataset and the Elements of a Table
 
-The dataset with the name `sw` is provided by the **edr** package. That is, once **edr** is loaded in the session with `library(edr)`, the `sw` dataset will be available. **R** considers datasets to be important components of packages since they are valuable for testing out a package's functions. It may seem odd, but we can treat `sw` like a variable that doesn't have to be explicitly assigned by the user. In the followung code listing, we see that just by entering `sw` in the console, its output is provided.
+The dataset with the name `sw` is provided by the **dspatterns** package. That is, once **dspatterns** is loaded in the session with `library(dspatterns)`, the `sw` dataset will be available. **R** considers datasets to be important components of packages since they are valuable for testing out a package's functions. It may seem odd, but we can treat `sw` like a variable that doesn't have to be explicitly assigned by the user. In the followung code listing, we see that just by entering `sw` in the console, its output is provided.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** The ~~sw~~ dataset can be printed to the console by using ~~sw~~.",
 c(
-"#A So long as we have the **edr** package loaded in (with ~~library(edr)~~), we have access to the ~~sw~~ dataset. Executing ~~sw~~ (a *tibble*) prints it and shows us some of its values."
+"#A So long as we have the **dspatterns** package loaded in (with ~~library(dspatterns)~~), we have access to the ~~sw~~ dataset. Executing ~~sw~~ (a *tibble*) prints it and shows us some of its values."
 ))`
 ```{r sw-tibble-print}
 sw  #A
@@ -206,7 +206,7 @@ You may have noticed a few of the values in the printed dataset show as `NA`. Th
 
 The `filter()` function allows you to generate a subset of rows with a filtering expression. Let's filter the `sw` dataset in the same **R Markdown** document that we started earlier and get back only those rows where the species is `"Droid"`. The expression to use is `species == "Droid"`. The first argument is the name of the data to transform: `sw`.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** The ~~filter()~~ function, and filtering by a single value in the ~~species~~ column of the ~~sw~~ dataset.",
 c(
 "#A The first value given to ~~filter()~~ is the data, which is ~~sw~~; the filtering expression comes next."
@@ -227,7 +227,7 @@ Filtering expressions are often performed by using comparison operators. The mai
 
 Let's look at an example using a greater than (`>`) comparison operator. To get a filtered table with all characters with a height more than 220 centimeters, we need to use `height > 220`.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Filtering to only keep rows where the ~~height~~ column has values greater than 220.")`
 ```{r sw-filter-height-gt-220, paged.print=FALSE}
 filter(sw, height > 220)
@@ -242,7 +242,7 @@ There are also logical operators and they can be used to link together filtering
 
 The following code filters all Star Wars characters in the `sw` table to those that either have height above `210` or a mass above `120`.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Filtering characters by either ~~height~~ above ~~210~~, or, ~~mass~~ above ~~120~~.")`
 ```{r sw-height-mass, paged.print=FALSE}
 filter(sw, height > 210 | mass > 120)
@@ -252,7 +252,7 @@ We get back 10 rows (out of 87) with the filtering expression used here. Note th
 
 The next code listing provides another common filtering scenario, where we get just the `"Droid"` and `"Human"` species. This subset table can be gotten with at least two different `filter()` statements. Here is an example that uses two expressions with an *OR* (`|`) operator.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Get all Droid and Human characters (method 1 with a ~~[expr | expr]~~ construction).",
 c(
 "#A This is our second use of the OR operator (~~|~~), which can be confusing until you think of it in terms of 'include either this or that'."
@@ -265,7 +265,7 @@ The tibble that's printed shows that, at least in the first 6 rows, each charact
 
 Next, in Listing 2.11, we provide the better way to get the same result, which is to look for occurrences in a set (defined with the help of c()). So, instead of using species twice in our statement, we can use the %in% operator in a single expression.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Get all Droid and Human characters (method 2 with ~~[colname %>% c(...)]~~ construction).",
 c(
 "#A This statement gets us exactly the same output as before. It might be an easier statement to write out and to reason about. We can think of it as 'the column must contain any of this set of values to be kept'."
@@ -280,7 +280,7 @@ We get the same output as before. The `%in%` operator checks for membership in a
 
 Sometimes, you'll want to sort your data. The `arrange()` function makes this possible and it works just like `filter()` except that instead of selecting rows, it changes their order. It takes the table and a set of column names to order by. If more than one column name is given, each additional column will be used to break ties (if there are still remaining ties, then the original ordering is preserved). Let's arrange the `sw` dataset by the `height` of its characters.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Arranging characters by increasing ~~height~~.",
 c(
 "#A Like the ~~filter()~~ function (and really, this applies to all of **dplyr**'s main functions), the first value to give to ~~arrange()~~ is the data: ~~sw~~."
@@ -293,7 +293,7 @@ We can see from this snippet of data (6 of 77 rows) that `height` is increasing 
 
 Arranging rows by multiple columns can be a common task and the next example arranges by two different character-based (`<chr>`) columns: `hair_color` and then `gender`.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Arranging characters by ~~hair_color~~ and then by ~~gender~~.",
 c(
 "#A We can keep adding column names, separated by commas, to further specify the priority of ordering."
@@ -306,7 +306,7 @@ The sorting is alphabetical and first ordering on `hair_color` and then ordering
 
 We can change the order of any variables to descending with `desc()`. Let's modify the previous example so that `hair_color` is sorted in reverse and gender is still ascending in order.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Arranging by descending ~~hair_color~~, then by ascending ~~gender~~.",
 c(
 "#A Arranging a column in descending order requires a modifier, and we use the ~~desc()~~ helper function to indicate that those columns that should be sorted in that way."
@@ -325,7 +325,7 @@ It's not unheard of to be working with datasets having dozens, hundreds, or even
 
 Let's run through a few examples so we can get the general idea. The first example shows how we can get just 3 columns (`name`, `gender`, `species`) from the 8 available. 
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Selecting the ~~name~~, ~~gender~~, and ~~species~~ columns.",
 c(
 "#A With ~~select()~~ we first supply the data (~~sw~~), and then the columns we want to keep. We separate each name with a comma."
@@ -338,7 +338,7 @@ Indeed, we find columns remain in the transformed table. Also note that the orde
 
 Because the order of variables matters, we can create a slightly different output table with the same columns. In the next code listing we will see that the order of the variables provided will result in same ordering of variables in the output table: `gender`, `species`, and then `name`.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Selecting the ~~gender~~, ~~species~~, and ~~names~~ columns (in that order).",
 c(
 "#A We are keeping the same columns, but they appear (left to right) in the order we specify: ~~gender~~, ~~species~~, ~~name~~."
@@ -357,7 +357,7 @@ There are a handful of helper functions you can use within `select()`:
 
 There aren't any variables in `sw` that share a common beginning but there are more than a few with common endings. Let's get the `name` column first and then any columns that end with the letter `"s"`.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Selecting the ~~name~~ column and any additional columns ending with ~~\"s\"~~.",
 c(
 "#A We want to keep the ~~name~~ column (appearing first, at the left) and then all columns with those names ending in the letter ~~\"s\"~~ (in the order they originally appear)."
@@ -370,7 +370,7 @@ As we expect, we get the column called `name` first then all of the columns endi
 
 Noting that there are a few columns in `sw` that contain the underscore (`"_"`) character, let's try using the `contains()` helper function for quickly selecting those column names (along with `name`).
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Selecting the ~~name~~ column and any additional columns containing an underscore.",
 c(
 "#A The ~~name~~ column comes first. Any column names containing an underscore character will follow (in their original order)."
@@ -383,7 +383,7 @@ Aside from the `name` column, we see the columns with underscores populating the
 
 If ever we want to put a few columns near the start and keep other columns in the same order then the `everything()` select helper function is useful for this.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Selecting three specific columns and then ~~everything()~~ else after that.",
 c(
 "#A Three columns are selected directly by their names, then, all remaining columns come after those in their original order (captured by ~~everything()~~)."
@@ -400,7 +400,7 @@ These select helper functions are very useful. They save us having to carefully 
 
 We can create new columns of data with `mutate()`. It adds the new variables at the end of the table, so, let's prepare a narrower version of `sw` by using `select()`.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Create the ~~sw_small~~ table containing just three columns.",
 c(
 "#A We ~~select()~~ three columns from ~~sw~~ and assign the resulting table to ~~sw_small~~.",
@@ -414,7 +414,7 @@ sw_small  #B
 
 Now, let's take the new `sw_small` table and create a new column called `bmi` and calculate the body mass index for all characters in the next code listing. The mathematical expression uses column names to generate a row-wise calculation result. Here we use the right-hand side (RHS) expression: `mass / (height / 100)^2`. On the left-hand side (LHS) of the expression is the new column `bmi`.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Add the ~~bmi~~ column to ~~sw_small~~ using the ~~mutate()~~ function.",
 c(
 "#A The ~~mutate()~~ function takes data first (~~sw_small~~) and then an expression that creates the new column ~~bmi~~. The expression uses values from the ~~mass~~ and ~~height~~ columns and places the results in the ~~bmi~~ column."
@@ -427,7 +427,7 @@ We can see that the column `bmi` is now available to the right of the original c
 
 It turns out that the `mutate()` function is very powerful. We can have multiple mutations in a single call of `mutate()`. What's even more interesting (and useful) is that a variable created in an expression is immediately available for use in a following expression (in the same `mutate()` call).
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Add the ~~bmi~~ column as before and then create ~~bmi_rnd~~.",
 c(
 "#A This ~~mutate()~~ statement is a bit longer than the last so let's split it over a few lines.",
@@ -451,7 +451,7 @@ To get summary statistics across a set of groups we can use `group_by()` in conj
 
 Let's group by `species` and get the mean of the `mass` variable for each group. First, we'll make grouped data in a separate object and then we can generate a summary of the average mass for each species.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Grouping by the ~~species~~ variable and summarizing to get the mean ~~mass~~.",
 c(
 "#A We are using our original dataset, ~~sw~~, and grouping it by the ~~species~~ column. That's assigned to the ~~by_species~~ object.",
@@ -467,7 +467,7 @@ Notice that we get two columns back: one is from the `species` group and one is 
 
 The pattern will hold that we get all grouping columns and all summary columns back. Another observation here is that some values for `avg_mass` appear as `NA`. This occurs if any `NA` values are introduced to `mean()`, the result will invariably be `NA` (the behavior holds true for the other aggregation functions as well). To circumvent this, we can exclude `NA` values in the calculation of the mean by using the `na.rm = TRUE` option within `mean()`. Let's now revise that `summarize()` statement.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** A slight modification to the summary expression to deal with missing (~~NA~~) values.",
 c(
 "#A By augmenting the ~~mean()~~ expression used inside ~~summarize()~~ some of the ~~NA~~ values are replaced with non-~~NA~~ (i.e., ~~numeric~~) values."
@@ -480,7 +480,7 @@ Now we see that all values in the `avg_mass` column are non-`NA`, however, there
 
 Let's create a summary containing two grouping columns (`species` and `gender`) and two summary columns (`avg_mass` and `avg_height`) to further demonstrate what can be done with the `group_by()`/`summarize()` combination.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Grouping by two columns and obtaining a summary with two new columns.",
 c(
 "#A Grouping by two columns: ~~species~~ and ~~gender~~; each unique combination is a separate group.",
@@ -502,7 +502,7 @@ This yields four columns as we may have expected. The `summarize()` function has
 
 Imagine that we want to get a ranking of average BMI values for the human characters across the different home worlds. Using what you know about **dplyr**, you might write code like this
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Bringing it all together with multiple **dplyr** functions and assigning each step to a different object.",
 c(
 "#A A ~~filter()~~ statement, assigning the output table to ~~humans~~ (a sensible, short name).",
@@ -539,7 +539,7 @@ This output is fine but the code is more than a little frustrating to write beca
 
 There is another way! It involves using the pipe operator (`%>%`). In the next code listing, we can take a similar set of statements as above and rewrite them in a much more succinct manner (and the final table is exactly the same as before). 
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Bringing it all together with multiple **dplyr** functions: this time using the pipe operator.",
 c(
 "#A Just one name to think about for the assignment!",
@@ -564,7 +564,7 @@ The `%>%` operator, the pipe, makes the code easier to both write and read later
 
 Listing 2.28. Using pseudocode to demonstrate the readability of the code in the previous listing.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Using pseudocode to demonstrate the readability of the code in the previous listing.",
 c(
 "#A This is really the previous code listing written out in prose. It\'s sometimes helpful to see it written out in this way so we can better understand what we did at a higher level."
@@ -604,7 +604,7 @@ We can create tibbles in a few different ways but let's focus on tibble construc
 
 Let's have a look at a few examples of tibble-making first with `tibble()`, which takes in named vectors as arguments. In the following example, we use two equal-length vectors (called `a` and `b`).
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Using ~~tibble()~~ with equal-length vectors to make a tibble.",
 c(
 "#A This will become column ~~a~~.",
@@ -621,7 +621,7 @@ As can be seen, the type of each column is based on the type of the vector. The 
 
 Let's make another tibble in a similar manner, but with a single value for `a` (the value `3` will be repeated down its column).
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Using ~~tibble()~~ with two vectors: one of length 1 and the other of length 4.",
 c(
 "#A Only one value for ~~a~~! That's okay, it will be repeated.",
@@ -640,7 +640,7 @@ The key is to provide either *n*-length (*n* here signifies the total number of 
 
 We can also pass in `NA` (missing) values by including `NA`s in the appropriate vector. In the next example, we incorporate `NA` values in the two *n*-length vectors.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //**  Using ~~tibble()~~ with two vectors that contain ~~NA~~ values.",
 c(
 "#A We intentionally placed an ~~NA~~ value among other values in column ~~a~~.",
@@ -657,7 +657,7 @@ The resulting tibble here shows that those `NA` values in the `numeric` and `cha
 
 In the next code listing, an `NA` value is used in a vector of length 1. What will happen? Will the `NA` values be repeated down in the column? Let's have a look.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //**  Using a single-length vector with an ~~NA~~ value in ~~tibble()~~.",
 c(
 "#A Using a single ~~NA~~ (and nothing else) gives us a certain type of ~~NA~~: a ~~logical~~ ~~NA~~ (yes, there are different types)."
@@ -675,7 +675,7 @@ Yes. The `NA` is repeated down the `a` column. We can see that column `a`'s type
 
 Using just `NA` in a column does result in repeated `NA`s, however, the column is classified as a logical column (which is meant for `TRUE` or `FALSE` values, likely not was intended). If we want this column to be a `character` column, we should use a specific type of `NA`: `NA_character_`. (There are other missing value constants for other types: `NA_real_`, `NA_integer_`, and `NA_complex_`.) Let's replace `a = NA` with `a = NA_character_`:
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Using a single-length vector with an ~~NA_character_~~ value in ~~tibble()~~.",
 c(
 "#A We are now being specific about the type of ~~NA~~s we want (the ~~character~~ version)."
@@ -693,7 +693,7 @@ And we get a column type of `<chr>` for `a`, which is what we wanted.
 
 We can use the `tribble()` function as an alternative constructor for tibble objects. This next example with `tribble()` reproduces a tibble generated in a previous code listing:
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Creating a tibble using the ~~tribble()~~ function.",
 c(
 "#A As ~~tribble()~~ is very close in spelling to ~~tibble()~~, be a little careful here.",
@@ -764,7 +764,7 @@ The resulting tibble appears just as we laid out the values. As can be seen in t
 
 ## Possible Answers
 
-1. One or more `library()` statements should ideally come first to load in package functions. For this lesson, the statements could be `library(tidyverse)` and `library(edr)` (to use datasets and functions particular to this book).
+1. One or more `library()` statements should ideally come first to load in package functions. For this lesson, the statements could be `library(tidyverse)` and `library(dspatterns)` (to use datasets and functions particular to this book).
 
 2. The `=` symbol is an assignment operator, whereas `==` is a comparison operator. Like the name implies, `=` is used for assignment (e.g., inside function calls where you'd like to use the argument name and the bound value) and `==` is used for comparisons (e.g., in expressions that the `filter()` function uses as a filtering condition).
 

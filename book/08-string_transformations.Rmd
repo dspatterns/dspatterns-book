@@ -1,7 +1,7 @@
 # String Transformations {#string_transformations}
 
 ```{r setup, include=FALSE, echo=FALSE}
-library(edr)
+library(dspatterns)
 library(tidyverse)
 library(stringr)
 ```
@@ -17,7 +17,7 @@ This chapter covers
 - Writing and using regular expressions to use as patterns for more advanced string-based applications
 - Using regex patterns with functions from the **stringr** package to work with strings and character vectors
 
-Text is set of characters, strung together, giving us the term *string*. Working with strings is something you might do in **R** over and over again. Because text may be very unstructured, working with it can be quite challenging. We need to understand the tools available for dealing with strings in base **R** and in the Tidyverse because strings play a big role in many data cleaning and preparation tasks. We'll use small and large examples of text in our lessons here. The **edr** package provides a dataset for this chapter called `resto_reviews`. It's not a tibble this time but rather a character vector containing reviews for a restaurant. We will occasionally use it to practice with a collection of string-based **R** functions. Some of these functions will be base **R** functions and others will come from the **stringr** package from the Tidyverse.
+Text is set of characters, strung together, giving us the term *string*. Working with strings is something you might do in **R** over and over again. Because text may be very unstructured, working with it can be quite challenging. We need to understand the tools available for dealing with strings in base **R** and in the *Tidyverse* because strings play a big role in many data cleaning and preparation tasks. We'll use small and large examples of text in our lessons here. The **dspatterns** package provides a dataset for this chapter called `resto_reviews`. It's not a tibble this time but rather a character vector containing reviews for a restaurant. We will occasionally use it to practice with a collection of string-based **R** functions. Some of these functions will be base **R** functions and others will come from the **stringr** package from the Tidyverse.
 
 ## How Strings and Character Vectors Work in **R**
 
@@ -27,7 +27,7 @@ The characters that compose a string can include letters, numbers, and even symb
 
 In one of our very first code listings in this book (in *Chapter 2*), we assigned a character string to an object. We did this by surrounding the text within double quotes (`" "`).
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Assigning a character string to ~~one_word~~.",
 c(
 "#A We need quotes to distinguish character strings from variables."
@@ -41,7 +41,7 @@ We could just as easily have used single quotes (`' '`) around the string. The o
 
 The `c()` function helps us create vectors, and we can use it to generate character vectors from scratch (just as we've done several times before). Let's make a character vector that we can use for further experimentation.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Creating a character vector with three elements."
 )`
 ```{r three-words}
@@ -50,7 +50,7 @@ three_words <- c("one", "two", "three")
 
 The `three_words` character vector can be combined with other vectors using `c()`. Combining with another character vector results in a larger character vector where the ordering of vector elements is preserved:
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Combining two character vectors with the ~~c()~ function."
 )`
 ```{r words-and-days}
@@ -65,7 +65,7 @@ The output vector is still a character vector since we combined vectors of the s
 
 This result isn't too surprising. We know by now that vectors in **R** have to contain elements of the same type. But what would happen if a character vector were to be combined with a numeric vector? Let's find out by combining three_words with a vector of three numbers.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Combining a character vector with a numeric vector."
 )`
 ```{r words-and-numbers}
@@ -80,7 +80,7 @@ The result is that the combined vector is of the character type. It's apparent w
 
 The numbers are in quotes, and, we can further verify that this is a character vector by using the `is.character(words_and_numbers)` in the console. It will return `TRUE` here. The rule is that if there is even a single character element in a vector (no matter where it appears in that vector), all other elements in the vector will be transformed into character elements. This concept of automatically transforming the types of objects is called coercion. Let's create a vector with several different data types, including a character element:
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** How combining elements of different types results in coercion."
 )`
 ```{r coercion-to-character}
@@ -95,7 +95,7 @@ The thing to note here is that there are no warnings for coercion, so, we need t
 
 The `stringsAsFactors` issue with data frames is as real today as it was many years ago. It's a point of confusion and frustration that just won't go away. We really need to get the facts straight on this one. Basically it's this: when creating a data frame with `data.frame()`, any character vectors used as inputs will be converted to factors. Furthermore, when printing a data frame, it really appears as though the character values are character values. Let's generate a data frame with two input vectors, where one is `numeric` and the other is `character`:
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Creating a data frame with two columns."
 )`
 ```{r data-frame-w-factors, paged.print=FALSE}
@@ -106,7 +106,7 @@ data_frame
 
 The `b` column certainly looks like a `character`-based column but using `class()` function with column `b` (as in `class(data_frame$b)`) returns `"factor"`. The way to avoid this automatic conversion is to use the `stringsAsFactors` option, setting that to `FALSE`. The upcoming code listing shows how to create a data frame that preserves character columns, inspecting the object with the `str()` function.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Using the ~~stringsAsFactors~~ option with ~~data.frame()~~."
 )`
 ```{r data-frame-no-factors, paged.print=FALSE}
@@ -142,7 +142,7 @@ The base **R** function `formatC()` is often used to format numeric values to st
 
 You might have some decimal numbers in a numeric vector and there is the requirement for those to be formatted in the exact same way (three decimal digits, must have a period for the decimal mark, etc.). The `formatC()` function can handle this, have a look at this example:
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Using the ~~formatC()~~ function to get very particular output character strings for three decimal numbers.",
 c(
 "#A The values have varying numbers of decimal digits (3, 2, and 4 digits).",
@@ -167,7 +167,7 @@ The output values, now in a character vector, show values formatted to two decim
 
 Should we have index numbers in a table, it may sometimes be preferable to pad those values with leading zeros. Why? Those index numbers may eventually find themselves combined with other strings and a common index-value width may be helpful when sorting. Let's look at an example where (1) index values reside in a tibble column (called `index`) alongside a `character`-based column, (2) the `index` values undergo transformation to fixed-width index strings, and (3) the `index` strings are combined with the `character`-based values in the `text` column.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Using ~~formatC()~~ in a ~~mutate()~~ call to format sequential numeric values to index strings that are left-padded with zeros (to a specified width).",
 c(
 "#A The ~~tibble()~~ statement generates a 1200 row tibble object.",
@@ -198,7 +198,7 @@ The combined index string has a numeric component that still sorts properly (try
 ### Simple String Transformations with base **R** Functions
 
 There are some useful base **R** functions that help us to transform character values in vectors. Should we need to have strings all in upper case or lower case letters, the `toupper()` and `tolower()` functions will make that possible. 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Using the ~~toupper()~~ and ~~tolower()~~ functions to transform characters to upper case and lower case."
 )`
 ```{r toupper-tolower}
@@ -214,7 +214,7 @@ Why would you ever want to make these transformations? Well, `tolower()` is usef
 
 Sometimes, text strings are too long for a given purpose (e.g., for displaying in a visualization with a limited amount of space) and, especially if these strings represent states, conditions, or something categorical, they can be amenable to abbreviating. We can abbreviate strings in a character vector with the `abbreviate()` function:
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Using ~~abbreviate()~~ to make unique abbreviations for longer strings.",
 c(
 "#A This is the character vector with terms to abbreviate; notice that some of these are pretty close in spelling (and there's a duplicated entry in there as well).",
@@ -228,9 +228,9 @@ abbreviate(terms, minlength = 3)  #B
 
 We get a named vector as output from `abbreviate()`, which makes it easy to compare the original strings with the abbreviated forms. These are unique abbreviations, and we didn't have to invent them. This is useful for those cases where you need short categorical names (say, for **ggplot**). 
 
-Sometimes, text strings are too long for a given purpose (e.g., for displaying in a visualization with a limited amount of space) but are still viable in a shortened form. We can truncate strings in a character vector with the `substr()` function. Shortening strings like this can be a worthwhile strategy for giving a hint of the content without having to display all of it. The **edr** package has a dataset called `resto_reviews.` This is a character vector with very long strings (each element of the vector is an actual review of a restaurant). Given that these reviews are so long, let's truncate them to the first 80 characters with `substr()`. The next code listing shows how this is possible.
+Sometimes, text strings are too long for a given purpose (e.g., for displaying in a visualization with a limited amount of space) but are still viable in a shortened form. We can truncate strings in a character vector with the `substr()` function. Shortening strings like this can be a worthwhile strategy for giving a hint of the content without having to display all of it. The **dspatterns** package has a dataset called `resto_reviews.` This is a character vector with very long strings (each element of the vector is an actual review of a restaurant). Given that these reviews are so long, let's truncate them to the first 80 characters with `substr()`. The next code listing shows how this is possible.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Using ~~substr()~~ to truncate very long strings to a specific length.",
 c(
 "#A The values supplied to ~~substr()~~ are ~~1~~ and ~~80~~, representing the range of characters to retain.",
@@ -244,7 +244,7 @@ resto_reviews_trunc[1:5]  #B
 
 The first five elements of the `resto_reviews_trunc` character vector are printed and we can see right away that the strings are all of the same length. Some of the truncated strings above end with a space character (elements 2 and 4). We can remove, or trim, that whitespace with the `trimws()` function. Simply pipe the `resto_reviews_trunc` vector to `trimws()` and all of the new strings won't have any trailing whitespace (this also eliminates leading whitespace).
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Using ~~trimws()~~ to remove any leading and trailing whitespace in our truncated strings.",
 c(
 "#A The character vector of truncated strings is piped to ~~trimws()~~; the default options (trimming whitespace on the *left* and *right* and the function's definition of whitespace) are usually always adequate for this type of string operation.",
@@ -260,7 +260,7 @@ The result here seems subtle but for shorter strings (that perhaps need to be pa
 
 Finally, there is the `strtrim()` function. It operates quite a bit like the `substr()` function, with a few subtle differences. Whereas `substr()` has the `start` and `stop` arguments for defining the positions of the starting and ending character for all elements of a vector, `strtrim()` just has the `width` argument. That argument is analogous to stop in `substr()` except that `width` can be a numeric vector of character widths that apply to each element. Conceivably, we could supply a vector of width values that's the same length as the character vector and expect the truncations to correspond to those widths. In the next code listing, we won't do anything with the `width` argument of `strtrim()` other than supply the value of `80` and compare the output to that of `substr()` using the `all.equal()` function.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Using ~~strtrim()~~ to truncate strings, much like ~~substr()~~.",
 c(
 "#A Every output element of the ~~substr()~~ expression is compared to that of the ~~strtrim()~~ expression with ~~all.equal()~~. If they all match (and they do here), the result is ~~TRUE~~."
@@ -279,9 +279,9 @@ Think of a search you might do in a word processor. The search facility allows y
 
 How does this relate to **R**? Once we begin to understand the language behind making regular expression patterns, we'll use those patterns in **R** functions to do things with text. The *Tidyverse* **stringr** package has quite a few functions that have a pattern argument where a regular expression is expected. Those functions that use regex patterns allow us to get information about a body of text (e.g., `str_count()`, `str_detect()`, `str_starts()`, `str_ends()`, `str_which()`), extract parts of text (e.g., `str_extract()`, `str_extract_all()`), or transform a piece of text (`str_subset()`, `str_replace()`, `str_replace_all()`).
 
-It's good to have a playground for experimenting with regexes and for that, the *RegExplain* gadget for **RStudio** (developed by Garrick Aden-Buie) is really good. It allows us to quickly experiment with our regex patterns. It's included as part of the **edr** package for convenience; all we need to do is run `edr_regexplain_gadget()` in the **R** console:
+It's good to have a playground for experimenting with regexes and for that, the *RegExplain* gadget for **RStudio** (developed by Garrick Aden-Buie) is really good. It allows us to quickly experiment with our regex patterns. It's included as part of the **dspatterns** package for convenience; all we need to do is run `regexplain_gadget()` in the **R** console:
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Opening up the *RegExplain* gadget is great for experimenting with regular expressions."
 )`
 ```{r open-regexplain, eval=FALSE}
@@ -328,7 +328,7 @@ The first pattern in *Figure \@ref(fig:regex-examples-3)* isn't too surprising c
 
 To test these matches in **R**, we can use either the `str_match()` or `str_match_all()` functions from the **stringr** package. The `str_match()` function returns us the first match of the pattern from the input string. Its variant `str_match_all()` returns all matches from the input text. The following provides an example of how this works in practice.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Using ~~str_match()~~ to determine the first match of the regex pattern on the text.",
 c(
 "#A This is the text string.",
@@ -344,7 +344,7 @@ The returned match value represents the first four characters of the text suppli
 
 Let's try a different pattern and see all of the possible matches in the text with the `str_match_all()` function:
 	
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Using ~~str_match_all()~~ to get all of the matches from the text.",
 c(
 "#A The ~~str_match_all()~~ function will return all matches of ~~\".o.\"~~ from the ~~fox_dog~~ string."
@@ -393,7 +393,7 @@ As can be seen, these character classes work equally well both inside and outsid
 
 Now is a good time to try out all of these new things. Using the following code listing as a basis for more experimenting, we can get a better feel for how character classes work.
 	
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** A regex example that uses character sets, character classes, and negation.",
 c(
 "#A This is the text string.",
@@ -436,7 +436,7 @@ Since it is tedious to incessantly repeat characters, character sets, and charac
 
 The question mark (`?`) makes the preceding token in the regex pattern optional. For example, the pattern `"favou?r"` will match both the words `"favour"` and `"favor"`. The question mark is called a quantifier. The question mark can be applied to multiple tokens as well, we just need to wrap those in parentheses. An example of a regex pattern that uses this is `"Dec(ember)? 12(th)?"`. It'll match four common occurrences of that date: `"December 12th"`, `"December 12"`, `"Dec 12th"`, and `"Dec 12"`. The upcoming code listing provides another concrete example that uses the `?` token with the `ihavefruit` string.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Using the ~~?~~ quantifier to denote an optional piece of text.",
 c(
 "#A This regex pattern gets the fruit names whether they are three or four letters long, and, whether they have singular or plural forms."
@@ -478,7 +478,7 @@ Unlike specific characters we were matching to before, anchors don't represent a
 
 Let's take a look at three `str_match()` statements that all use the `ihavefruit` string along with regex patterns using `^`, `$`, or both:
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Using anchors to bind the search pattern to the start and/or end of the string.",
 c(
 "#A This regex is anchored to the start of the string with ~~^~~. After the boundary, it wants to match as many word characters as possible.",
@@ -499,7 +499,7 @@ By grouping part of a regular expression inside parentheses, several things are 
 
 All of this probably doesn't mean much of anything right now, so, let's see it in action with examples. First up, some statements with alternation in parentheses:
 	
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Using alternation inside of parentheses (which is a capturing group).",
 c(
 "#A This regex is entirely in parentheses and it'll match on the first instance of ~~figs?~~, ~~plums?~~, or ~~limes?~~ (recall that the ~~?~~ makes the preceding token optional). Because it's all in parentheses, this is a capturing group (by default)."
@@ -512,7 +512,7 @@ The output shows us a character matrix with two columns. The first is the match 
 
 The next example involves using the capturing groups in a backreference. It's a bit complicated but it shows a useful application of backreferences with the `str_replace_all()` function.
 	
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Backreferences are used to compose a new string in a particular order with the captured text.",
 c(
 "#A The ~~str_replace_all()~~ function requires both a regex pattern and a replacement string. Here we are using capturing groups for each of the fruits, then, we are composing a new string with the backreferences (in a reverse order).",
@@ -533,7 +533,7 @@ ihavefruit %>%
 
 This example showed us how to selectively obtain certain words from a string and generate a vector. Incidentally, there is also another **stringr** function that will do this much better: `str_extract_all()`. The following code listing provides an example of this.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Extracting words from a string and putting them into a vector with ~~str_extract_all()~~.",
 c(
 "#A The ~~str_extract_all()~~ function just needs a regex pattern and dutifully extract each match from the string and put it into a list.",
@@ -547,7 +547,7 @@ ihavefruit %>%
 
 This is a pretty good example of alternation but, if we really wanted to be sure that these words are matched exactly on whole words then word boundaries, with `\\b`, can be used.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Improving the pattern with the word boundary metacharacter.",
 c(
 "#A The use of the word boundary metacharacters ensures that we don't unintentionally match on fragments of words."
@@ -568,7 +568,7 @@ Given this crash course in regular expression was pretty intense, it may be just
 
 Sometimes you want to know if a particular pattern exists in one or more strings. For that, we can use `str_detect()`, which gives us a logical vector the same length as the input character vector. Let's find out if the pattern `"yum\\w*?"` exists in `resto_reviews`:
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Using the ~~str_detect()~~ function to see whether there are any matches of our pattern in the ~~resto_reviews~~ vector.",
 c(
 "#A The ~~str_detect()~~ function, like all <code>str_*()</code> functions in the **stringr** package, always takes the vector of strings as the first argument.",
@@ -583,7 +583,7 @@ Given that the resulting table output shows two `TRUE` values, the pattern was f
 
 Given that this pattern did match something, we now want to know what those strings were. This can be accomplished in two steps. First, assign the logical vector returned by the use of `str_detect()`. Then, use that vector of `TRUE`/`FALSE` values to subset the `resto_reviews` character vector with square bracket operators:
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Using the logical vector from ~~str_detect()~~ to inspect those reviews that matched the regex.",
 c(
 "#A The output of the ~~str_detect()~~ statement is, this time, saved to an object called ~~matches~~.",
@@ -599,7 +599,7 @@ With the two reviews that matched our pattern, the word 'yummy' is seen twice. A
 
 Suppose you wanted to extract all mentions of pricing from the `resto_reviews` dataset. One approach is too look for all price mentions with dollar signs affixed (i.e., $12 rather than twelve dollars). Further to this, the task involves getting all of these matches and eventually working the results into a numeric vector, which may be used for getting some basic descriptive statistics like the mean or min/max values. This can be accomplished by using the `str_extract_all()` and the `str_remove()` functions (along with some base **R** functions):
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Getting all matches of dollar values and eventually resolving to a single numeric vector.",
 c(
 "#A The pattern ~~\\\\$\\\\d*~~ will match on text like ~~$10~~, ~~$5~~; the resulting object is a list containing all of the matches for each of the vector elements.",

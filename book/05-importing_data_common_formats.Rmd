@@ -1,7 +1,7 @@
 # Importing Data From Common Formats {#importing_data_common_formats}
 
 ```{r setup, include=FALSE, echo=FALSE}
-library(edr)
+library(dspatterns)
 library(tidyverse)
 library(readxl)
 ```
@@ -13,11 +13,11 @@ This chapter covers
 - Using the `read_csv()` function from the **readr** package
 - Reading **Excel** data into **R**
 
-Previously, we had used datasets available in the **edr** package to get the data we needed. This is all fine and well for the purpose of learning to use data transformation and visualization functions. However, real world data won't often be found in **R** packages. You may encounter useful data in text files, **Excel** files, or on the web in myriad forms. While there are hundreds of ways data can be structured and stored, there are a few formats that are quite common and so the focus of this chapter will be on the methods for importing these common formats into **R** (as tibbles). These formats are CSV and **Excel** files.
+Previously, we had used datasets available in the **dspatterns** package to get the data we needed. This is all fine and well for the purpose of learning to use data transformation and visualization functions. However, real world data won't often be found in **R** packages. You may encounter useful data in text files, **Excel** files, or on the web in myriad forms. While there are hundreds of ways data can be structured and stored, there are a few formats that are quite common and so the focus of this chapter will be on the methods for importing these common formats into **R** (as tibbles). These formats are CSV and **Excel** files.
 
 Because we are going to manage files in this chapter, we'll quickly learn about managing them in our file system by making a project in **RStudio**. The idea here is that we'd use a dedicated directory as the 'home base' for a named project, which the benefit of isolating each project and its files from other projects (and their associated files).
 
-The **edr** package for its part will offer some custom functions to make the examples flow a bit better. We need some CSV and **Excel** files to import, so, a few functions from **edr** will be available for spawning these files in our project directory.
+The **dspatterns** package for its part will offer some custom functions to make the examples flow a bit better. We need some CSV and **Excel** files to import, so, a few functions from **dspatterns** will be available for spawning these files in our project directory.
 
 ## Managing Projects and Files
 
@@ -51,11 +51,11 @@ After finishing this flow, we are placed into the `chapter5` project (the projec
 
 ### Writing a Sample CSV File to the Project Directory
 
-To make things easy for us, the **edr** package has a function that writes any **edr**-based dataset to a CSV file: `dataset_to_csv()`. Remember that we need to load the **edr** package first, and this can be done by executing `library(edr)` in the **RStudio** console. The datasets you'll end up importing will be varied and will serve different purposes. Occasionally, you'll need a dataset that has data associated with your main subject of study. For examples in this chapter we will be experimenting with variations of a dataset called `us_cities` that has populations for cities in United States. Why would you need such a dataset in the real world? Well, suppose you are conducting a study that looks at sales by city. You might have a dataset with a listing of such sales but, sadly, you don't have the populations of these cities (which may help explain the sales figures). By obtaining an associated dataset on city populations, we can potentially combine the city populations with a summary of total sales by city. Before joining such datasets together, we first need to fully understand how to read in datasets from files.
+To make things easy for us, the **dspatterns** package has a function that writes any **dspatterns**-based dataset to a CSV file: `dataset_to_csv()`. Remember that we need to load the **dspatterns** package first, and this can be done by executing `library(dspatterns)` in the **RStudio** console. The datasets you'll end up importing will be varied and will serve different purposes. Occasionally, you'll need a dataset that has data associated with your main subject of study. For examples in this chapter we will be experimenting with variations of a dataset called `us_cities` that has populations for cities in United States. Why would you need such a dataset in the real world? Well, suppose you are conducting a study that looks at sales by city. You might have a dataset with a listing of such sales but, sadly, you don't have the populations of these cities (which may help explain the sales figures). By obtaining an associated dataset on city populations, we can potentially combine the city populations with a summary of total sales by city. Before joining such datasets together, we first need to fully understand how to read in datasets from files.
 
-The `us_cities` dataset inside the **edr** package can be written as a CSV file like this:
+The `us_cities` dataset inside the **dspatterns** package can be written as a CSV file like this:
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Writing ~~us_cities.csv~~ to the project directory with ~~dataset_to_csv()~~."
 )`
 ```{r datset-to-csv, eval=FALSE}
@@ -87,16 +87,16 @@ While such variations in CSV formatting can't really be avoided, the *Tidyverse*
 
 Now that we have a sample CSV file on disk, let's read in that file into a tibble object. We can do this using the `read_csv()` function from the readr package. This package is available in the *Tidyverse* so we need to first execute `library(tidyverse)` before using that function. As before, we will illustrate our upcoming examples as **R Markdown** code chunks, so, the next listing will look familiar to us.
 
-`r edr::code_hints(
-"**CODE //** Loading the **tidyverse** and **edr** packages.")`
-```{r load-tidyverse-edr, eval=FALSE}
+`r dspatterns::code_hints(
+"**CODE //** Loading the **tidyverse** and **dspatterns** packages.")`
+```{r load-tidyverse-dspatterns, eval=FALSE}
 library(tidyverse)
-library(edr)
+library(dspatterns)
 ```
 
 When using `read_csv()` the file name must of course be specified but since the file is in the project directory, we don't need to provide path information. Let's assign the resulting table to the `city_table` variable.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Using the ~~read_csv()~~ function to read the us_cities.csv to a tibble object.",
 c(
 "#A This use of ~~read_csv()~~ provides only the minimal amount of required information: the file to read in."
@@ -124,7 +124,7 @@ So, the CSV was successfully read into the `city_table` variable as a tibble. We
 
 For the first three `character`-based columns of `us_cities.csv` (`city`, `state_id`, `state_name`) we would use three `c`'s and for the integer values in the last two columns, two `i`'s are needed. This makes the string for `col_types` become `"cccii"`. The next code listing rewrites the code in the previous listing, providing the `col_types` to the `read_csv()` function call and getting us the a tibble with our desired column types.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Using the ~~read_csv()~~ with ~~us_cities.csv~~, specifying the exact column types in ~~col_types~~.",
 c(
 "#A Using compact representation of column types as ~~\"cccii\"~~ provides more information to ~~read_csv()~~ so that we get our desired column types."
@@ -147,11 +147,11 @@ Here an unusual one: some CSVs contain comment lines within them. This is nonsta
 
 **Excel** is a spreadsheet application that's made by **Microsoft**. It's quite popular and so there is a wealth of data stored in the .xls and .xlsx file formats within organizations and available as public data. It is widely used across many different fields because it's an easily accessible tool for organizing, analyzing, and storing data.
 
-The **edr** package will again provide us the **Excel** files we need for the examples, eliminating the need to download **Excel** files from the Internet. We will use the **readxl** package, available in the *Tidyverse*, to import data tables within **Excel** files for all of our examples. But before we do that, we will need to consider the ways in which we can best prepare **Excel** files for import. The reason for this is that there are so many ways to add data to **Excel** files, and we'd want to ensure that the data is in the tidiest form possible before importing (remembering that tidy tools expect tidy data). We'll have a look at the ideal representation of data inside **Excel** as it relates to importing that data to R, and, propose some strategies for cleaning up **Excel** files are problematic.
+The **dspatterns** package will again provide us the **Excel** files we need for the examples, eliminating the need to download **Excel** files from the Internet. We will use the **readxl** package, available in the *Tidyverse*, to import data tables within **Excel** files for all of our examples. But before we do that, we will need to consider the ways in which we can best prepare **Excel** files for import. The reason for this is that there are so many ways to add data to **Excel** files, and we'd want to ensure that the data is in the tidiest form possible before importing (remembering that tidy tools expect tidy data). We'll have a look at the ideal representation of data inside **Excel** as it relates to importing that data to R, and, propose some strategies for cleaning up **Excel** files are problematic.
 
 ### Writing an example **Excel** file to the project directory
 
-The **edr** package has a few functions that produce example **Excel** files. As always, ensure that `library(edr)` is executed in the RStudio console if this is a new **R** session. We will use the `create_excel_file()` function to write an example **Excel** file to the working directory. The **Excel** document that the function creates has two sheets (and these are sometimes called tabs). The first sheet (called `us_cities`) contains all of the data from the `us_cities` dataset in the cleanest manner possible (*Figure \@ref(fig:us-cities)*). There are several qualities in this sheet that make it the data easy to import into **R**:
+The **dspatterns** package has a few functions that produce example **Excel** files. As always, ensure that `library(dspatterns)` is executed in the RStudio console if this is a new **R** session. We will use the `create_excel_file()` function to write an example **Excel** file to the working directory. The **Excel** document that the function creates has two sheets (and these are sometimes called tabs). The first sheet (called `us_cities`) contains all of the data from the `us_cities` dataset in the cleanest manner possible (*Figure \@ref(fig:us-cities)*). There are several qualities in this sheet that make it the data easy to import into **R**:
 
 - There is only a single data table
 - The data has a single header row for column names in the first row of the sheet
@@ -166,14 +166,14 @@ The second sheet (called `us_cities_messy`) contains the `us_cities` data, howev
 
 Ensuring that we are within an **RStudio** *Project*, let's use `create_excel_file()` to generate the example **Excel** file.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Using the ~~create_excel_file()~~ function to write us_cities.xlsx to the project directory."
 )`
 ```{r create-excel-file, eval=FALSE}
 create_excel_file()
 ```
 
-This function doesn't require any options. It will just write the **Excel** file that's stored in the **edr** package to the working directory. You'll get a helpful message in the console that describes what happened:
+This function doesn't require any options. It will just write the **Excel** file that's stored in the **dspatterns** package to the working directory. You'll get a helpful message in the console that describes what happened:
 
 ```
 #> The Excel file `us_cities.xlsx` was written to the working directory (`/Users/rich/Documents/R_projects/chapter5`)
@@ -187,7 +187,7 @@ Now that we have a sample **Excel** file on disk, let's read the first sheet of 
 
 When using `read_excel()` the file name needs to be specified just as in the case of `read_csv()`. As before, we don't need to add directory info since the file is available in the project directory. Because **Excel** workbooks can have multiple sheets, there is the sheet argument for specifying which one to use for importing. We can either specify the sheet name, or, provides its index (starting from `1`). The default is to read the first sheet in the specified **Excel** file, and that's just what we'll do first. Let's assign the resulting table to the `city_table` variable.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Using the ~~read_excel()~~ function to read the first sheet from the ~~us_cities.xlsx~~ file to a tibble object.",
 c(
 "#A This use of ~~read_excel()~~ provides only the minimal amount of required information: the file to read in. By default, the first sheet of the workbook will be read."
@@ -200,7 +200,7 @@ city_table_x
 
 ```{r read-excel-internal, echo=FALSE, paged.print=FALSE}
 city_table_x <- 
-  read_excel(path = system.file("us_cities.xlsx", package = "edr"))
+  read_excel(path = system.file("us_cities.xlsx", package = "dspatterns"))
 
 city_table_x
 ```
@@ -224,7 +224,7 @@ Since we have three character-based columns and two numeric columns, the `read_e
 
 So that was the first sheet of the **Excel** workbook. The second sheet contains pretty much the same data (based on the `us_cities` dataset) but it won't fare as well during import. We only need to glance at the tibble output to see that there are some major problems.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Using the ~~read_excel()~~ function to read in the second sheet from the ~~us_cities.xlsx~~ **Excel** file.",
 c(
 "#A This ~~read_excel()~~ call specifies the sheet as ~~2~~ (it's the second sheet)."
@@ -238,7 +238,7 @@ city_table_x_m
 ```{r read-excel-messy-internal, echo=FALSE, paged.print=FALSE}
 city_table_x_m <- 
   read_excel(
-    path = system.file("us_cities.xlsx", package = "edr"),
+    path = system.file("us_cities.xlsx", package = "dspatterns"),
     sheet = 2
   )
 
@@ -261,7 +261,7 @@ A final thing to do is to define those `"N/A"` values seen in the **Excel** shee
 
 Given all of these considerations, here is the finalized function call:
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Using the ~~read_excel()~~ function with the ~~us_cities_messy~~ sheet, take 2.",
 c(
 "#A This skips the first two rows, which are clearly not tabular data.",
@@ -284,7 +284,7 @@ city_table_x_m
 ```{r read-excel-messy-options-internal, echo=FALSE, paged.print=FALSE}
 city_table_x_m <- 
   read_excel(
-    path = system.file("us_cities.xlsx", package = "edr"),
+    path = system.file("us_cities.xlsx", package = "dspatterns"),
     sheet = 2,
     skip = 2,
     col_types = c(rep("text", 3), rep("numeric", 2), rep("skip", 2)),
@@ -298,7 +298,7 @@ Upon printing `city_table_x_m` to the console, we can see that we now have a usa
 
 If the column names of the `city_table_x_m` table are not satisfactory, we can use **dplyr**'s `rename()` function to modify some of them.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Using **dplyr**'s ~~rename()~~ function to change column names.",
 c(
 "#A The ~~rename()~~ function is from the **dplyr** package. The syntax is to have the replacement name first, making it equal to the existing column name (none of these names are in quotes).",

@@ -1,7 +1,7 @@
 # Making Presentation Tables {#making-presentation-tables}
 
 ```{r setup, include=FALSE, echo=FALSE}
-library(edr)
+library(dspatterns)
 library(tidyverse)
 library(DT)
 library(gt)
@@ -21,11 +21,11 @@ You might wonder, why look at two different **R** packages for making presentati
 
 ## Making Presentation Tables with **DT**
 
-Sometimes you'll want to present a table with lots of rows. This non-summarized data is perhaps more interesting than summarized data because it provides an essential resource and aggregating would possibly make no sense. The **DT** package doesn't ship with any datasets, but we do have the `pitchfork` dataset (accessible from the **edr** package) and it's a lot of fun to peruse. As a reminder of what's in that dataset each record is a review of an album, where the `artist`, `album`, `year` columns identify the album, the `score` is the reviewer's rating (from `0` to `10`), and the `link` column provides links to the review pages.
+Sometimes you'll want to present a table with lots of rows. This non-summarized data is perhaps more interesting than summarized data because it provides an essential resource and aggregating would possibly make no sense. The **DT** package doesn't ship with any datasets, but we do have the `pitchfork` dataset (accessible from the **dspatterns** package) and it's a lot of fun to peruse. As a reminder of what's in that dataset each record is a review of an album, where the `artist`, `album`, `year` columns identify the album, the `score` is the reviewer's rating (from `0` to `10`), and the `link` column provides links to the review pages.
 
 The function in **DT** that is used to generate the table is called `datatable()`. The following code shows just how easy it is to generate a table:
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Making a **DT** table from 1000 rows of ~~pitchfork~~ data."
 )`
 ```{r dt-pitchfork-simple}
@@ -50,7 +50,7 @@ While the default look is reasonable and good, there are all sorts of customizat
 
 First up, taking those links in the link column and making them clickable and navigable. We ultimately want to be taken to the relevant review page on the Pitchfork website. To do this we first need to understand how to an HTML link. It takes the form `<a href="url">link text</a>`. That bit of information (and so much more related to the web) can be found at the [*MDN web docs* site](https://developer.mozilla.org/). To generate the links as HTML links, we can use **dplyr**'s `mutate()` function on the `pitchfork_1000` tibble with some `paste0()` (Listing 12.2).
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Creating usable links with the ~~<a>~~ HTML tag in the ~~link~~ column."
 )`
 ```{r dt-pitchfork-links, paged.print=FALSE}
@@ -64,7 +64,7 @@ pitchfork_1000 %>% select(link)
 
 Another thing that needs to be considered is that **DT** automatically escapes certain characters in every bit of text in the table. This effectively means that characters that have special meaning in HTML are replaced with HTML entities. For example, the characters `<`, `>`, and `&` are replaced with the HTML entities `&lt;`, `&gt;`, and `&amp;`. This *HTML sanitization* is done as a security measure but can be circumvented here by using the `escape` argument of `datatable()`. It can sound like we shouldn't do this, but, it's okay here because we are providing our own trusted HTML strings. In Listing 12.3, we use the transformed `pitchfork_1000` table to generate a **DT** table, where column `8` (`link`) is set to be not escaped (hence the negative sign).
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Making the column of links functional in a **DT** table by removing the escape condition from column ~~8~~."
 )`
 ```{r dt-pitchfork-2, eval=FALSE}
@@ -86,7 +86,7 @@ knitr::include_graphics("figures/chapter_12/12-04-figure-dt_pitchfork_2b.png")
 
 Let's make more modifications to our **DT** table. We can freshen up the look of it with some keywords in the `style` and `class` arguments of `datatable()`. We'll elect to use `style = "bootstrap4"`, which utilizes a fairly current vintage of the Bootstrap framework. On top of that, let's set `class = "table-bordered"`. This will give the table consistent horizontal and vertical lines. Oh, and we don't need those row numbers in the first column. They can be gotten rid of by using `rownames = FALSE`. In the following code listing, there is one final change to make: the index of the column to escape (`link`) is now column `7` instead of `8` (because of the dropped column with row names). A screenshot of the output HTML table is presented as Figure 12.5.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Changing the table appearance of the **DT** table with the ~~style~~ and ~~class~~ parameters, and, by removing the column with row names."
 )`
 ```{r dt-pitchfork-3, eval=FALSE}
@@ -106,7 +106,7 @@ knitr::include_graphics("figures/chapter_12/12-05-figure-dt_pitchfork_3.png")
 
 A thing that's often changed when going from data tables to presentation tables is the column names. It can be better to have them in title case. Quite conveniently, the **stringr** package has the function `str_to_title()` that competently transforms strings to title case. In Listing 12.5, we'll use that function to generate a vector of modified column names for the `colnames` argument of `datatable()`. Because of this, the column label `"artist"` is now `"Artist"`, `"album"` becomes `"Album"`, etc., and this looks quite a bit better (and fits the usual convention for columns labels in presentation tables). The top portion of the revised presentation table is shown as Figure 12.6.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** The column names of the **DT** table can be modified using the ~~colnames~~ argument."
 )`
 ```{r dt-pitchfork-4, eval=FALSE}
@@ -127,7 +127,7 @@ knitr::include_graphics("figures/chapter_12/12-06-figure-dt_pitchfork_4.png")
 
 The last two modifications to the **DT** table involve adding UI elements. Given that there is a substantial number of rows, having controls to filter the table down to perhaps a handful based on per-column criteria is desirable. We can add intelligent filtering controls that adapt their UI to the type of data in each column. This is done by using the `filter` argument of `datatable()` and specifying a location. There are two options, and we'll elect to use `"top"` in Listing 12.6 instead of `"bottom"`. Figure 12.7 shows the top of the HTML output table, with interactive controls below each column label.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Adding filtering functionality to the **DT** table (UI applied to the top of the table)."
 )`
 ```{r dt-pitchfork-5, eval=FALSE}
@@ -149,7 +149,7 @@ knitr::include_graphics("figures/chapter_12/12-07-figure-dt_pitchfork_5.png")
 
 And now, our last modification will be made. This one can come in handy when viewers of your table want to have some or all of the data in the table for their own, separate analysis. It involves the addition of buttons that allow for downloading of the data, copying of the data (to the system clipboard), or printing (sounds archaic but, to be fair, this could be printing to PDF). Activating these buttons requires a carefully written incantation within `datatable()` that uses the extensions and options arguments. It's given in Listing 12.7 and a full screenshot of the finalized HTML table is shown in Figure 12.8.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Adding useful buttons for exporting the table data to various files, copying the data, and printing."
 )`
 ```{r dt-pitchfork-6, eval=FALSE}
@@ -182,7 +182,7 @@ When you need a smaller, non-interactive HTML table that has a ton of possibilit
 
 The package ships with a number of datasets and for our first set of examples, we'll use the `exibble` dataset. This tibble contains only eight rows with numeric, character, and factor columns. It's great for experimentation because it's small enough to see the whole thing when rendered to HTML. Let's see how `exibble` looks by feeding it to **gt**'s `gt()` function (Listing 12.8 and Figure 12.9)
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** The ~~exibble~~ table as a **gt** table."
 )`
 ```{r gt-exibble-1, eval=FALSE}
@@ -231,7 +231,7 @@ The way that we add parts like the table header and footnotes in the table foote
 
 A table header is easy to add so let's see how the previous table looks with a title and a subtitle. We can add this part using the `tab_header()` function. The arguments are simply `title` and `subtitle` (Listing 12.9, Figure 12.11).
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Adding a table header with the ~~tab_header()~~ function."
 )`
 ```{r gt-exibble-2, eval=FALSE}
@@ -252,14 +252,14 @@ knitr::include_graphics("figures/chapter_12/12-11-figure-gt_exibble_2.png")
 
 Let's add a source note to the footer part of the **gt** table based on `exibble`. A source note is useful for citing the data included in the table. Several can be added to the footer and the key to that is using multiple calls of `tab_source_note()`. They will be inserted in the order provided (Listing 12.10, Figure 12.12).
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Adding table source notes with multiple calls of the ~~tab_source_note()~~ function."
 )`
 ```{r gt-exibble-3, eval=FALSE}
 gt_tbl_3 <-
   gt_tbl_2 %>%
   tab_source_note("The gt package is available in CRAN.") %>%
-  tab_source_note("This example is provided by the edr book.")
+  tab_source_note("This example is provided by the dspatterns book.")
 
 gt_tbl_3
 ```
@@ -275,7 +275,7 @@ Footnotes are added with the `tab_footnote()` function. The helper function `cel
 
 What follows is a simple example of how a footnote can be added to a table cell. Let's add a footnote to the cell with the word `"coconut"`. We don't have any row names in this table (we'll see how those can be generated in a later example); however, we can easily see that the target cell in row `3` of the `char` column. Listing 12.11 provides a way that we might create a footnote for that table cell (Figure 12.13 shows the resulting table).
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Adding a footnote for a specific cell with the ~~tab_footnote()~~ function."
 )`
 ```{r gt-exibble-4, eval=FALSE}
@@ -296,7 +296,7 @@ knitr::include_graphics("figures/chapter_12/12-13-figure-gt_exibble_4.png")
 
 Footnotes can be associated with text in different parts of the table. There is a family of functions of the form `cells_*()` that are termed location helper functions. They are used in the `locations` argument of `tab_footnote()` (and also `tab_style()`). Should we want to add a footnote that explains the `char` column label, we can make a similar call to `tab_footnote()` and use `cells_column_labels()` to target that column label (Listing 12.12, Figure 12.14).
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Adding a footnote for a specific column label with the ~~tab_footnote()~~ and ~~cells_columns_labels()~~ functions."
 )`
 ```{r gt-exibble-5, eval=FALSE}
@@ -341,7 +341,7 @@ The **gt** package comes with a variety of interesting datasets and, for the nex
 
 Alright! The first two parts involve (1) knowing which countries are located in Oceania, and (2) knowing the regions of Oceania and which countries belong to each of those. The **dplyr** and **tidyr** code of Listing 12.13 transforms the large `countrypops` table into the 17 row, 5 column `oceaniapops` table (just the right size for readable presentation table). This can be considered a preprocessing exercise and it's a very common first step in a **gt** workflow.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Making the ~~oceaniapops~~ table from the (much larger) ~~countrypops~~ table."
 )`
 ```{r oceaniapops-countrypops, paged.print=FALSE}
@@ -371,7 +371,7 @@ oceaniapops
 
 Now that we have the `oceaniapops` data table, we might go ahead and pass that to the `gt()` function as we did before with the `exibble` dataset (Listing 12.14, Figure 12.15).
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Making a very simple **gt** table with the ~~oceaniapops~~ tibble."
 )`
 ```{r gt-oceaniapops-0, eval=FALSE}
@@ -385,7 +385,7 @@ knitr::include_graphics("figures/chapter_12/12-15-figure-gt_oceaniapops_0.png")
 
 While the presentation of the table in Figure 12.15 looks adequate, there are ways to make it look better. We can use the `rowname_col` and `groupname_col` arguments of the `gt()` function to generate row labels (in a stub) and to generate row group labels (that span across the table in header rows). Let's try that out in Listing 12.15 and see the resulting presentation table in Figure 12.16.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Taking a different approach in making the **gt** table by defining a stub and row group labels."
 )`
 ```{r gt-oceaniapops-1, eval=FALSE}
@@ -408,7 +408,7 @@ As can be seen in the improved **gt** table that is `oceaniapops_1` (Figure 12.1
 
 For the third requirement, we've already obtained the three columns that contain population data for `1995`, `2005`, and `2015.` With regard to the presentation, a further requirement is that a spanner column label be placed over those column labels. We can do this with the `tab_spanner()` function. The whole point of this function is to make it extremely easy to place a spanner column label above the columns of your choosing. Listing 12.16 has an example of this, where the label `"Total Population"` is placed above the three column labels representing the years.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Adding more structure to the **gt** table by placing the spanner column label ~~\"Total Population\"~~ above the three column labels."
 )`
 ```{r gt-oceaniapops-2, eval=FALSE}
@@ -431,7 +431,7 @@ In Figure 12.17, we see that the addition of the spanner column label provides m
 
 Columns of data can be formatted with the `fmt_*()` family of **gt** functions. To do formatting of numbers, we need to use the `fmt_number()` function. Our requirement is to format numbers so that they should have commas. These are technically called digit group separators and they will appear as commas by default (changeable with the `sep_mark` or `locale` arguments of `fmt_number()`). The arguments of `fmt_number()` that we need to pay attention to are use_seps, which is `TRUE` by default, and decimals which we need to set to `0`. Important note: the columns are represented by numbers so we need to enclose them with back ticks when including them all in `vars()`. Listing 12.17 provides the necessary **gt** code to do the numeric formatting of the population values. To make the values even more readable, we should right align them. That's done with the `cols_align()` function (by default, it targets all values in all columns except for the stub).
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** We can make the population values much to easier to read with decimal separators by use of the ~~fmt_number()~~ function."
 )`
 ```{r gt-oceaniapops-3, eval=FALSE}
@@ -455,7 +455,7 @@ The `fmt_number()` function has a lot of options for formatting numbers exactly 
 
 While the updated presentation table of Figure 12.18 looks great, you may find at times that the columns are too close together. This can be remedied with the `cols_width()` function. It allows for the precise definition of column widths. It uses a formula-based interface where column names in `vars()` or selection helpers go on the left of the `~`, and pixel values (best wrapped in `px()`) go on the right-hand side. The stub? It can be accessed with the number `1`. In Listing 12.18, the stub column is sized to `250` pixels and all other columns are `125` pixels wide. In addition to sizing the columns, a header is added to the table (with a title and a subtitle). Using the `md()` function, we can even supply Markdown text to either of the title or subtitle.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** The column widths can be finely adjusted with ~~cols_width()~~, and, a heading is always a good idea."
 )`
 ```{r gt-oceaniapops-4, eval=FALSE}
@@ -480,7 +480,7 @@ knitr::include_graphics("figures/chapter_12/12-19-figure-gt_oceaniapops_4.png")
 
 We've shown examples of adding footnotes before (with the `exibble` dataset). In the code example shown in Listing 12.19, there is a more advanced used of locations (with the `cells_stub()` location helper function). Here, the `md()` function is again used to add Markdown text for some extra styling opportunities. With the `md()` function, we can do great things like add Markdown links (as was done with the source note that provides a link to the data on the Web). Figure 12.20 shows the result of this code on footer of the table.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Footnotes and source notes can be added to a **gt** with the ~~tab_footnote()~~ and ~~tab_source_note()~~ functions."
 )`
 ```{r gt-oceaniapops-5, eval=FALSE}
@@ -513,7 +513,7 @@ knitr::include_graphics("figures/chapter_12/12-20-figure-gt_oceaniapops_5.png")
 
 The `tab_style()` function is quite powerful, in that it can be used to radically change the look of a table. You can: add background colors to cell, modify text styles, add cell borders, and much more. Here is an example (in Listing 12.20) where multiple pieces of text are emboldened by using the `cell_text()` helper function (there are also the `cell_fill()` and `cell_borders()` stylizing helper functions). Notable in this code example is the use of multiple locations (wrapped up in a list) that serve as targets for the style application.
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Text can be emboldened with combination of the ~~tab_style()~~ and ~~cell_text()~~ functions; we can do this at multiple locations at once."
 )`
 ```{r gt-oceaniapops-6, eval=FALSE}
@@ -542,7 +542,7 @@ This sort of table can be further enhanced with summary rows. There are two func
 
 When we choose to use either of these functions, we have to supply a list of aggregation functions to the `fns` argument. We choose how to format the values in the resulting summary cells by use of a formatter function (e.g, `fmt_number`, etc.) and any relevant options. It's a bit difficult to remember all of these things so examples here are very instructive and helpful (Listing 12.21).
 
-`r edr::code_hints(
+`r dspatterns::code_hints(
 "**CODE //** Summary rows can be generated on a per-group basis (with ~~summary_rows()~~), and, for all rows in the table (with ~~grand_summary_rows()~~)."
 )`
 ```{r gt-oceaniapops-7, eval=FALSE}

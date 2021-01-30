@@ -5,7 +5,7 @@ output: html_document
 
 ```{r load_packages}
 library(tidyverse)
-library(edr)
+library(dspatterns)
 library(DT)
 library(gt)
 ```
@@ -123,7 +123,7 @@ gt_tbl_2
 gt_tbl_3 <-
   gt_tbl_2 %>%
   tab_source_note("The gt package is available in CRAN.") %>%
-  tab_source_note("This example is provided by the edr book.")
+  tab_source_note("This example is provided by the dspatterns book.")
 
 gt_tbl_3
 ```

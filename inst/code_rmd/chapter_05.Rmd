@@ -3,15 +3,15 @@ title: "Chapter 5"
 output: html_document
 ---
 
-```{r load_tidyverse_edr_readxl}
+```{r load_packages}
 library(tidyverse)
-library(edr)
+library(dspatterns)
 library(readxl)
 ```
 
 ## 5.2. Using **readr** to Import Data from CSV Files
 
-### Listing 5.1. Using the `dataset_to_csv()` function (exclusive to the `edr` package and its datasets) to write `us_cities.csv` to the project directory.
+### Listing 5.1. Using the `dataset_to_csv()` function (exclusive to the **dspatterns** package and its datasets) to write `us_cities.csv` to the project directory.
 
 ```{r}
 # dataset_to_csv(dataset = "us_cities")

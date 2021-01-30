@@ -6,7 +6,7 @@ output: html_document
 ```{r load_packages}
 library(tidyverse)
 library(ggridges)
-library(edr)
+library(dspatterns)
 ```
 
 ## 10.1. Making Line Graphs
@@ -168,7 +168,7 @@ ggplot(rainfall, aes(x = year, y = r_vancouver)) +
   geom_area(color = "blue", fill = "lightblue", alpha = 0.4) +
   labs(
     title = "Annual Total Precipitation for the City of Vancouver",
-    caption = "Data source: the rainfall dataset from the edr package.",
+    caption = "Data source: rainfall dataset from the dspatterns package.",
     x = NULL, y = "Precipitation, mm"
   ) +
   theme_bw() +
@@ -248,7 +248,7 @@ ggplot(rainfall_recent_tidy, aes(x = city, y = precip, fill = year)) +
   labs(
     title = "Annual Rainfall Totals",
     subtitle = "Comparison of seven cities for 2017, 2018, and 2019",
-    caption = "Data source: the rainfall dataset from the edr package.",
+    caption = "Data source: rainfall dataset from the dspatterns package.",
     x = NULL, y = "Precipitation, mm"
   ) +
   theme_minimal() +
@@ -361,7 +361,7 @@ german_cities_totals %>%
   labs(
     title = "Comparison of Most Populous German Cities Across All States ",
     subtitle = "The largest city in each state is provided at right.\n",
-    caption = "Data source: the german_cities dataset from the edr package.",
+    caption = "Data source: german_cities dataset from the dspatterns package.",
     x = NULL, y = NULL
   ) +
   theme_minimal() +

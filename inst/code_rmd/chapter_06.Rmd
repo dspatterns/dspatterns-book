@@ -5,12 +5,12 @@ output: html_document
 
 ## 6.2. Using **lubridate** to Parse Date and Date-Time Strings
 
-### Listing 6.1. Loading the **tidyverse**, **lubridate**, and **edr** packages
+### Listing 6.1. Loading the **tidyverse**, **lubridate**, and **dspatterns** packages
 
-```{r load_tidyverse_lubridate_edr}
+```{r load_tidyverse_lubridate_dspatterns}
 library(tidyverse)
 library(lubridate)
-library(edr)
+library(dspatterns)
 ```
 
 ### Listing 6.2. Examples of typical date formats with different orderings of year, month, and day (all for the same date)
