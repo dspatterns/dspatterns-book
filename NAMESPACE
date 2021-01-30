@@ -3,4 +3,5 @@
 export(code_hints)
 export(create_excel_file)
 export(dataset_to_csv)
+export(dsp_code_rmd)
 export(regexplain_gadget)
