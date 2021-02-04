@@ -15,6 +15,7 @@ This chapter covers
 - performing several column-selection operations with **dplyr**'s `select()` function
 - creating new table columns (or modifying existing ones) with `mutate()` and carefully crafted expressions
 - summarizing tabular data with the combination of `group_by()` and `summarize()`
+- creating a table for reporting in **R Markdown**
 
 We will start off by getting our bearings with assignment of variables in **R**. Later in the book, we'll certainly get the opportunity to learn more programming fundamentals, however assignment is one of those topics that should be addressed right away. Then, the installation of packages will be covered. This will give us the chance to install the packages that are required for the book: **tidyverse**, **dspatterns**, and **devtools**.
 
