@@ -86,7 +86,7 @@ The console output shown above consists of all values in `one_word`: `#> [1] "he
 A good way to check that the variables were actually defined is to look at the *Environment* tab in the top-right pane of **RStudio** (*Figure \@ref(fig:environment-tab)*). The names of the variables will appear here as they are assigned, and, you also get an indication of the value attached to the variable.
 
 ```{r environment-tab, echo = FALSE, fig.cap='(ref:environment-tab)'}
-knitr::include_graphics("figures/chapter_02/03-01-figure-environment-tab.png")
+knitr::include_graphics("figures/chapter_03/03-01-figure-environment-tab.png")
 ```
 (ref:environment-tab) The *Environment* tab in **RStudio** is a great way to quickly see which variables have been assigned and what their values are.
 
