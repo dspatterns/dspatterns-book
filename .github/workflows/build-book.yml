@@ -22,9 +22,13 @@ jobs:
 
       - name: Install R packages
         run: |
+         install.packages("remotes")
          install.packages("tidyverse")
+         install.packages("bookdown")
          install.packages("gt")
          install.packages("DT")
+         install.packages("ggridges")
+         remotes::install_github("dspatterns/dspatterns")
         shell: Rscript {0}
 
       - name: Build site
