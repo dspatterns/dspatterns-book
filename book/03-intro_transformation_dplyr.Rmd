@@ -8,7 +8,6 @@ library(tidyverse)
 This chapter covers
 
 - learning the basics of assigning values to variables
-- installing and loading packages from **CRAN** and **GitHub**
 - accessing datasets and understanding the basic elements of a table
 - using the **dplyr** `filter()` function, with expressions that filter a table to only the rows you need
 - reordering rows with the **dplyr** `arrange()` function
@@ -103,24 +102,6 @@ one_word
 ```
 
 The return value in the console is now `"hi"`, or, `#> [1] "hi"`. The *Environment* tab in **RStudio** will show us this change after executing the first statement in the previous code listing. The execution, or printing, of just the variable `one_word` further confirms this in the console.
-
-### Installing and Loading Packages in R
-
-**R** packages contain functions and datasets that extend the usefulness of **R**. It's very common to want to install and use numerous packages to address different problems. Packages can be installed from both **CRAN** and **GitHub**, so, there are two methods for installing from both places. **CRAN** packages are often considered to be 'stable' versions and these can be installed using `install.packages()`.
-
-We need to install the **tidyverse** package, which installs all of the *Tidyverse* packages (plus numerous other packages that are dependencies), and we can use `install.packages("tidyverse")` in the **R** console. This installs the **tidyverse** meta-package and all of the *Tidyverse* packages like **dplyr**, **ggplot2**, **readr**, and more.
-
-To actually load the packages in your **R** session, we need to use the `library()` function for each package. Each `library()` call typically goes on its own line at the top of an **R** script or **R Markdown** document. We'll be reminded of `library()` quite often throughout this book.
-
-We can install packages from **GitHub** by using the `install_github()` function from the **devtools** package. Let's first install devtools from CRAN with `install.packages("devtools")`.
-
-Next, let's install the **GitHub** package that is essential for this book, **dspatterns**, by using `library(devtools)` and then `install_github("dspatterns/dspatterns")` in the **R** console. This package contains datasets, functions, and useful source files pertaining to this lesson and the lessons ahead.
-
-The reason that `library(devtools)` was used right before the `install_github()` statement is because this ensures that the `install_github()` function is loaded and available in the session before calling it in the next line.
-
-an aside (info)
-Do you have an older installation of **R** and/or **RStudio** and having some trouble installing packages? I recommend getting a newer version of both **R** and **RStudio** and trying again. Package installation is usually a snap but older versions of **R** can sometimes pose this sort of problem.
-/aside
 
 ## Using **dplyr** to Transform Data
 
@@ -589,6 +570,84 @@ c(
 
 This pseudocode should roughly map to what we should be thinking when writing out **dplyr** statements. With a bit of practice, the process of transforming tabular data starts to become natural and the idea of a grammar of data manipulation begins to make more sense.
 
+
+## Getting Back to Diamonds and Combining Data Transformation with Plotting
+
+Your data may not have exactly what you'd like to plot. It's a reality that's all too common but we can do something about since we learned the basics of **dplyr**. We will make some transformations to the `dmd` table to make a plot we otherwise couldn't before. Before showing the actual transformation statements, let's have a look at the plan and rationale for the work. 
+
+Suppose we would like to have a new measure that provides the value of a diamond by weight. This is a simple calculation that divides the price of a diamond by its number of carats (`price` / `carats`). The new cost per carat variable (`cpc`) can be easily added to the `dmd` table by using **dplyr**'s `mutate()` function by taking `dmd` and piping it to `mutate()`: `dmd %>% mutate(cpc = price / carats)`.
+
+Now that we have the `cpc` variable, taken as a better measure of the worth of a diamond based on its qualities, we can divide the entire set of diamonds into two price classes: those with higher `cpc` than the median `cpc` value, and those that are lower. We won't describe in detail how to get the median `cpc` value, so we'll accept that it is around $3,460 per carat. Within our second `mutate()` statement, we will use `ifelse()` to get a new `price_class` variable. The next code listing takes the `dmd` dataset and applies both `mutate()` statements to `dmd` and assigns the result to `dmd_mod`.
+
+`r dspatterns::code_hints(
+"**CODE //** Modifying ~~dmd~~ to obtain two new columns: ~~cpc~~ and ~~price_class~~.",
+c(
+"#A This ~~mutate()~~ statement creates the ~~cpc~~ column...",
+"#B ...while this ~~mutate()~~ call makes the ~~price_class~~ column."
+))`
+```{r dmd-modified-dplyr-1}
+dmd_mod <- 
+  dmd %>%
+  mutate(cpc = price / carats) %>%  #A
+  mutate(price_class = ifelse(  #B
+    cpc >= 3460, "Above Median", "Below Median")
+  )
+```
+
+We haven't yet used `mutate()` with `ifelse()` so let's examine this more closely. The `ifelse()` statement used here checks every row of the table for whether `cpc` is greater than or equal to `3460`. For each row where that statement is true, the value in the new `price_class` column will be given `"Above Median"`. If not true, then the value will be `"Below Median"`.
+
+For our third and final `mutate()`, we will suppose that diamonds with cut and clarity labeled as The Best should be high-quality diamonds, and thus fetch higher prices. Another `ifelse()` is to be used within the `mutate()` statement, creating a new variable called `quality`. The following listing augments the earlier code with a third `mutate()`.
+
+`r dspatterns::code_hints(
+"**CODE //** A third and final ~~mutate()~~ statement to add the ~~quality~~ column to our modified dataset (~~dmd_mod~~).",
+c(
+"#A The third ~~mutate()~~ statement (that creates the quality column) is pretty long so it\\'s broken across a few lines for better readability"
+))`
+```{r dmd-modified-dplyr-2}
+dmd_mod <- 
+  dmd %>%
+  mutate(cpc = price / carats) %>%
+  mutate(price_class = ifelse(
+    cpc >= 3460, "Above Median", "Below Median")
+  ) %>%
+  mutate(quality = ifelse(  #A
+    cut == "The Best" & clarity == "The Best",
+    "Top Drawer", "The Rest"
+    )
+  )
+```
+
+In the code listing, we are using `ifelse()` within the third `mutate()` statement to check for the dual condition of both `cut` and `clarity` being equal to `"The Best"`. Those diamonds for which the statement is true will have a `quality` label that is `"Top Drawer"`. Otherwise, all other diamonds will get a label of `"The Rest"`.
+
+Once we have modified `dmd` and assigned the results to a new object called `dmd_mod`, we can make a different type of plot that uses the newly-created variables of `price_class` and `quality`. Faceting will be done on the `price` vs. `carats` plot, using the new variables in the `facet_wrap()` statement to create a 2-by-2 plot that compares data points by two quality categories and two price categories (*Figure \@ref(fig:dmd-modified-dplyr-ggplot)*).
+
+`r dspatterns::code_hints(
+"**CODE //** Modifying ~~dmd~~ to add three new columns, and, plotting ~~dmd_mod~~ with the new variables.",
+c(
+"#A This **ggplot** code uses the new variables when faceting (~~price_class~~ and ~~quality~~).",
+"#B "
+))`
+```{r dmd-modified-dplyr-ggplot, fig.cap='(ref:dmd-modified-dplyr-ggplot)'}
+dmd_mod <-  #A
+  dmd %>%
+  mutate(cpc = price / carats) %>%
+  mutate(price_class = ifelse(cpc >= 3460, "Above Median", "Below Median")) %>%
+  mutate(quality = ifelse(
+    cut == "The Best" & clarity == "The Best", "Top Drawer", "The Rest")
+  )
+
+ggplot(dmd_mod, aes(x = carats, y = price)) +  #B
+  geom_point() +
+  facet_wrap(
+    facets = vars(price_class, quality),
+    labeller = label_both
+  ) +
+  labs(x = "Carats", y = "Price")
+```
+(ref:dmd-modified-dplyr-ggplot) Modifying data with **dplyr**; plotting it with **ggplot**.
+
+Moving between data transformation activities and plotting with **ggplot** like this is often valuable for better expressing the data you have to an audience, or, for exploring the data and getting insightful views that were otherwise hidden. Getting to a stage where you can rapidly translate your analysis/visualization needs to raw **dplyr** & **ggplot** code is worth the effort and understandably takes some practice. 
+
 ## Creating Our Own Tabular Data
 
 The tables we often work with are called tibbles. **R** has a table type called a data frame and a tibble is a special implementation of a data frame that prints its data differently and behaves in a more consistent manner than data frames.
@@ -717,9 +776,9 @@ The resulting tibble appears just as we laid out the values. As can be seen in t
 ## Summary
 
 - We learned how to assign values to variables using the `<-` operator
-- Installing packages from **CRAN** can be done with the `install.packages()` function whereas packages on **GitHub** can be installed with the `install_github()` function
 - Transforming a dataset can be done with these five **dplyr** functions: `filter()`, `arrange()`, `select()`, `mutate()`, and `summarize()` (with `group_by()`)
 - The pipe operator (`%>%`) (which was used with the **dplyr** functions) improved the composition and readability of our **R** statements
+- Transforming data with **dplyr** and visualizing data with **ggplot** is often something that's done hand in hand
 - We can use the `tibble()` and `tribble()` functions to create our own data tables 
 
 ## Exercises
@@ -766,7 +825,7 @@ The resulting tibble appears just as we laid out the values. As can be seen in t
 
 ## Possible Answers
 
-1. One or more `library()` statements should ideally come first to load in package functions. For this lesson, the statements could be `library(tidyverse)` and `library(dspatterns)` (to use datasets and functions particular to this book).
+1. One or more `library()` statements should ideally come first to load in package functions. For this lesson, the statements could be `library(tidyverse)` and `library(dspatterns)` (to use the datasets and functions suitable for the book content).
 
 2. The `=` symbol is an assignment operator, whereas `==` is a comparison operator. Like the name implies, `=` is used for assignment (e.g., inside function calls where you'd like to use the argument name and the bound value) and `==` is used for comparisons (e.g., in expressions that the `filter()` function uses as a filtering condition).
 

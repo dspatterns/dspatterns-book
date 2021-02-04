@@ -4,6 +4,7 @@ This chapter covers
 
 - Getting a feel for what **R** is and what its ecosystem is like
 - Installing the **R** language and **RStudio Desktop** application
+- Installing and loading packages from **CRAN** and **GitHub**
 - Acquainting ourselves with the **RStudio** and learning some keyboard shortcuts
 - Introducing **R Markdown** as a way to run **R** code
 - Understanding our learning path for this book
@@ -25,9 +26,10 @@ Throughout the upcoming lessons, we'll learn how to use **R** to gather, transfo
 	
 **RStudio** has a customizable, four-pane workspace. It has a collection of useful features that help with **R** coding such as syntax highlighting, autocomplete, file and project management, and much more.
 
-```{r rstudio-desktop-env, echo = FALSE, fig.cap = "The **RStudio Desktop** environment with an **R Markdown** file in focus in top-left (the source pane) and the **R** console occupying the bottom-left."}
+```{r rstudio-desktop-env, echo = FALSE, fig.cap = '(ref:rstudio-desktop-env)'}
 knitr::include_graphics("figures/chapter_01/01-01-figure-rstudio-desktop-env.png")
 ```
+(ref:rstudio-desktop-env) The **RStudio Desktop** environment with an **R Markdown** file in focus in top-left (the source pane) and the **R** console occupying the bottom-left.
 
 The diagram shown in *Figure \@ref(fig:rstudio-desktop-env)* provides a reference to a cross section of the buttons available in the initial view. The most important takeaways from this first look at **RStudio** are:
 
@@ -60,15 +62,17 @@ There are many advantages of taking this approach for virtually all data analysi
 
 You may or may not be familiar with **Markdown**, which is a big part of this format. **Markdown** is a text markup language that translates really well to **HTML**. It was created by John Gruber as a very simple way for anybody (i.e., non-programmers) to write in an easy-to-read format that could be converted directly into **HTML**. It was inspired by the informal text markup that people would often use in email messages, and, owing to this familiarity, it feels quite natural to write. *Figure \@ref(fig:markdown-reference)* has a quick reference of **Markdown** and what it looks like when rendered to **HTML**.
 
-```{r markdown-reference, echo = FALSE, fig.cap = "A simple reference for Markdown. The text on the left will become the HTML on the right after an **R Markdown** document is *knitted*."}
+```{r markdown-reference, echo = FALSE, fig.cap = '(ref:markdown-reference)'}
 knitr::include_graphics("figures/chapter_01/01-02-figure-markdown-reference.png")
 ```
+(ref:markdown-reference) A simple reference for Markdown. The text on the left will become the HTML on the right after an **R Markdown** document is *knitted*.
 
-  All of the lessons in this book will incorporate **R Markdown** because it really is a great approach for running all **R** code in data analysis and visualization contexts. The prose portion of **R Markdown** (i.e., *not* the **R** code) is the default text entry type. The **R** code is run inside code chunks, which are marked off areas (with three backticks: ```) in the document. The schematic in *Figure \@ref(fig:rmarkdown-annotation)* shows what an **R** code chunk looks like and what controls are available in **R Markdown**.
+All of the lessons in this book will incorporate **R Markdown** because it really is a great approach for running all **R** code in data analysis and visualization contexts. The prose portion of **R Markdown** (i.e., *not* the **R** code) is the default text entry type. The **R** code is run inside code chunks, which are marked off areas (with three backticks: ```) in the document. The schematic in *Figure \@ref(fig:rmarkdown-annotation)* shows what an **R** code chunk looks like and what controls are available in **R Markdown**.
 
-```{r rmarkdown-annotation, echo = FALSE, fig.cap = "A simple reference for Markdown. The text on the left will become the HTML on the right after an **R Markdown** document is *knitted*."}
+```{r rmarkdown-annotation, echo = FALSE, fig.cap='(ref:rmarkdown-annotation)'}
 knitr::include_graphics("figures/chapter_01/01-03-figure-rmarkdown-annotation.png")
 ```
+(ref:rmarkdown-annotation) A simple reference for Markdown. The text on the left will become the HTML on the right after an **R Markdown** document is *knitted*.
 
 Aside from reproducibility, the finished **R Markdown** document can be rendered to a self-contained HTML file, to a Word document, to a various presentation types including Powerpoint, or to a PDF file. There are lots of ways to customize what the rendered document will look like (e.g., hiding code for non-technical audiences, adding HTML display elements, etc.), so, the analysis can double as a deliverable report. This will undoubtedly save you time. If ever the input data should change, the report could be run again and updated, usually with minimal (if any) modification. That's one of the features of reproducible reporting.
   
@@ -144,9 +148,10 @@ Inside the IDE, this just looks like plaintext with some highlighting applied wh
 
 That will produce an HTML document with the same name as the **R Markdown** document (in the directory where the .Rmd file was saved) and the process opens a preview window with the HTML report (*Figure \@ref(fig:rmarkdown-html-output)*).
 
-```{r rmarkdown-html-output, echo = FALSE, fig.cap = "The rendered HTML document based on the **R Markdown** document. The preview window provides a way to easily look over the output initiated by a *Knit*."}
+```{r rmarkdown-html-output, echo = FALSE, fig.cap = '(ref:rmarkdown-html-output)'}
 knitr::include_graphics("figures/chapter_01/01-04-figure-rmarkdown-html-output.png")
 ```
+(ref:rmarkdown-html-output) The rendered HTML document based on the **R Markdown** document. The preview window provides a way to easily look over the output initiated by a *Knit*.
 
 It's here where you can see that the Markdown elements become things like bold and italicized text. That rendered text appears above and below the code and the outputs, just as it was in the **R Markdown** document. It's also here where its more apparent that **R Markdown** is indeed useful for working with data and also for creating reports.
 
@@ -160,13 +165,32 @@ The *Tidyverse* (<https://www.tidyverse.org>) is a collection of **R** packages 
 
 The skills we need to learn are closely tied to the packages that provide us with the toolsets for the task at hand. The diagram presented as *Figure \@ref(fig:workflow)* outlines the basic data analysis and reporting workflow. It is annotated with the packages that we'll learn and use in different chapters of this book.
 
-```{r workflow, echo = FALSE, fig.cap = "A typical workflow in a data analysis task or project. We begin by importing and tidying the data, enter into a cycle of transformation, visualization, and modeling, then we conclude by reporting our findings. All the while, we use our **R** programming skills along with functions from various packages."}
+```{r workflow, echo = FALSE, fig.cap='(ref:workflow)'}
 knitr::include_graphics("figures/chapter_01/01-05-figure-workflow.png")
 ```
+(ref:workflow) A typical workflow in a data analysis task or project. We begin by importing and tidying the data, enter into a cycle of transformation, visualization, and modeling, then we conclude by reporting our findings. All the while, we use our **R** programming skills along with functions from various packages.
 
 Throughout this book, we'll use *Tidyverse* packages and several other packages to perform a range of data-related tasks. These include data collection, data transformation, and data visualization. We will learn when it's appropriate to write our code inside **R Markdown**, **R** scripts, or in the **R** console. As **R Markdown** is a great medium for data exploration and for communication so we will be predominantly working in that format. Taken all together, the combination of **R** programming, **R** packages, and **R Markdown** makes for a very powerful and effective toolset for working with the data you'll encounter in the real world.
 
-The lessons from each of the chapters are available in a **GitHub** repository (<https://github.com/dspatterns/dspatterns>). That public repository also contains the source code for an **R** package called **dspatterns** that we'll need to install before experimenting with the **R** code presented throughout the book. Aside from the **R Markdown** files available in the repo's `/rmd` folder, the package gives us access to the datasets and specialized functions that we'll see and use in the upcoming lessons. Given that installing the **tidyverse** and **dspatterns** packages is central to running the code in this book, that whole process will be one of the first skills taught in *Chapter 2*.
+The lessons from each of the chapters are available in a **GitHub** repository (<https://github.com/dspatterns/dspatterns>). That public repository also contains the source code for an **R** package called **dspatterns** that we'll need to install before experimenting with the **R** code presented throughout the book. Aside from the **R Markdown** files available in the repo's `/rmd` folder, the package gives us access to the datasets and specialized functions that we'll see and use in the upcoming lessons.
+
+### Installing and Loading Packages in **R**
+
+Given that packages are central to learning in this book, we should learn how to install them and then load them up. It's very common to want to install and use different packages to address different problems. **R** Packages are usually installed from either **CRAN** or **GitHub**, so, there are two methods for installing packages since they can come from both locations. What's the difference? **CRAN** packages are often considered to be 'stable' versions and these can be installed using `install.packages()`. Packages from **GitHub** are considered to be the in-development versions, and these packages can be obtained with the `devtools::install_github()` function.
+
+We need to install the **tidyverse** package, which installs all of the *Tidyverse* packages (plus numerous other packages that are dependencies), and we can use `install.packages("tidyverse")` in the **R** console. This installs the **tidyverse** meta-package and all of the *Tidyverse* packages like **dplyr**, **ggplot2**, **readr**, and more.
+
+To actually load the packages in your **R** session, we need to use the `library()` function for each package. Each `library()` call typically goes on its own line at the top of an **R** script or **R Markdown** document. We'll be reminded of `library()` quite often throughout this book.
+
+We can install packages from **GitHub** by using the `install_github()` function from the **devtools** package. Let's first install devtools from CRAN with `install.packages("devtools")`.
+
+Next, let's install the **GitHub** package that is essential for this book, **dspatterns**, by using `library(devtools)` and then `install_github("dspatterns/dspatterns")` in the **R** console. This package contains datasets, functions, and useful source files pertaining to this lesson and the lessons ahead.
+
+The reason that `library(devtools)` was used right before the `install_github()` statement is because this ensures that the `install_github()` function is loaded and available in the session before calling it in the next line.
+
+an aside (info)
+Do you have an older installation of **R** and/or **RStudio** and having some trouble installing packages? Try getting a newer version of both **R** and **RStudio** and then attempt installation after that. Package installation is usually a snap but older versions of **R** can sometimes pose this sort of problem.
+/aside
 
 ## Where to go for Help
 
@@ -188,4 +212,5 @@ It's hard to get a sense of how **R** can help you do before you get down to usi
 - We will use **RStudio** to work with **R** throughout this book
 - **R Markdown** is a way to run **R** code and create a report from a combination of prose and code
 - Our learning path is largely centered around **R** packages (mainly from the *Tidyverse* collection), which are focused collections of functions for doing a particular type of work
+- Installing packages from **CRAN** can be done with the `install.packages()` function whereas packages on **GitHub** can be installed with the `install_github()` function
 - The best places to go for help when you inevitably get stuck with an **R** problem are *Stack Overflow* (via a search engine), *Twitter*, and *RStudio Community*
