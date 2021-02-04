@@ -29,4 +29,4 @@ We sincerely hope that you find the lessons give you the skills to become produc
 
 *A Data Science Pattern Language: Designing Projects with R* is written by [Alison Hill](https://github.com/apreshill) and [Richard Iannone](https://github.com/rich-iannone). The book's development can be followed at the [**dspatterns/dspatterns** repository on **GitHub**](https://github.com/dspatterns/dspatterns). There are [*Issues*](https://github.com/dspatterns/dspatterns/issues) and [*Discussions*](https://github.com/dspatterns/dspatterns/discussions) sections in the repo so feel free to create an *Issue* or more casually share ideas about how to improve the book material.
 
-This book was built by the [**bookdown**](https://bookdown.org) **R** package.
+This book was built by the wonderful [**bookdown**](https://bookdown.org) **R** package.
