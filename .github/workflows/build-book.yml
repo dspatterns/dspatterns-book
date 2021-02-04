@@ -1,0 +1,45 @@
+on:
+  push:
+    branches:
+      - main
+
+name: Build book
+
+jobs:
+  build:
+    runs-on: macOS-latest
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Setup R
+        uses: r-lib/actions/setup-r@master
+
+      - name: Setup pandoc
+        uses: r-lib/actions/setup-pandoc@master
+
+      - name: Install R packages
+        run: |
+         install.packages("tidyverse")
+         install.packages("gt")
+         install.packages("DT")
+        shell: Rscript {0}
+
+      - name: Build site
+        run: |
+         bookdown::render_book("book/index.Rmd", quiet = TRUE)
+        shell: Rscript {0}
+
+      - name: Install npm
+        uses: actions/setup-node@v1
+
+      - name: Deploy to Netlify
+        # NETLIFY_AUTH_TOKEN and NETLIFY_SITE_ID added in the repo's secrets
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        run: |
+          npm install netlify-cli -g
+          netlify deploy --prod --dir _book
