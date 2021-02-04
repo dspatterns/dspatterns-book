@@ -1,3 +1,5 @@
+book_filename: "dspatterns"
 delete_merged_file: true
-new_session: yes
 before_chapter_script: "_common.R"
+
+new_session: yes
