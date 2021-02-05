@@ -1,7 +1,7 @@
 bookdown::gitbook:
-  css: edr.css
+  css: dspatterns.css
   config:
     toc:
       before: |
-        <li><strong><a href="./">EDR</a></strong></li>
+        <li><strong><a href="./">dspatterns</a></strong></li>
     sharing: no
