@@ -31,21 +31,24 @@ Aside from the organizational aspect, which by itself is compelling, there are a
 
 If you don't have a dedicated directory on your computer for **R** projects, make one now! First choose where this directory should go. A good recommendation is inside the user `Documents` folder. Have a look at *Figure \@ref(fig:r-folder-mac)*, it shows a few of my top-level folders for **R** projects (they are inside those directories that begin with `R_`).
 
-```{r r-folder-mac, echo = FALSE, fig.cap = "Where I put several folders for **R** projects on my computer. They all begin with `R_` (just to make it very obvious to myself)."}
-knitr::include_graphics("figures/chapter_05/05-01-figure-r-folder-mac.png")
+```{r r-folder-mac, echo = FALSE, fig.cap = '(ref:r-folder-mac)'}
+knitr::include_graphics("figures/chapter_08/08-01-figure-r-folder-mac.png")
 ```
+(ref:r-folder-mac) Where I put several folders for **R** projects on my computer. They all begin with `R_` (just to make it very obvious to myself).
 
 Let's create an **RStudio** *Project*. For this example, I'm going to call it `chapter5` (feel free to come up with a name that is more sensible to you). In **RStudio**, you can either navigate to *File > New Project...* in the application menu, or, the top-right drop-down menu can be clicked to reveal the *New Project...* item (*Figure \@ref(fig:rstudio-project-menu)*).
 
-```{r rstudio-project-menu, echo = FALSE, fig.cap = "The *Project* dropdown menu in **RStudio**. Allows for creating a new project and easily switching between projects."}
-knitr::include_graphics("figures/chapter_05/05-02-figure-rstudio-project-menu.png")
+```{r rstudio-project-menu, echo = FALSE, fig.cap = '(ref:rstudio-project-menu)'}
+knitr::include_graphics("figures/chapter_08/08-02-figure-rstudio-project-menu.png")
 ```
+(ref:rstudio-project-menu) The *Project* dropdown menu in **RStudio**. Allows for creating a new project and easily switching between projects.
 
 After this, we get to specify the *Project* through a short series of dialog boxes (*Figure \@ref(fig:new-project-flow)*). The project will be created in a *New Directory* and the type will be simply *New Project*. The final dialog box asks us to specify the directory name (it's also the project name!) and the subdirectory name. For these, I'll use `chapter5` as promised, and, I'll make this a subdirectory of `R_projects` (which is, itself, inside my `Documents` folder).
 
-```{r new-project-flow, echo = FALSE, fig.cap = "Creating a new **RStudio** *Project* with a *New Directory*. We are calling this one `chapter5` because this really is Chapter 5."}
-knitr::include_graphics("figures/chapter_05/05-03-figure-new-project-flow.png")
+```{r new-project-flow, echo = FALSE, fig.cap = '(ref:new-project-flow)'}
+knitr::include_graphics("figures/chapter_08/08-03-figure-new-project-flow.png")
 ```
+(ref:new-project-flow) Creating a new **RStudio** *Project* with a *New Directory*. We are calling this one `chapter5` because this really is Chapter 5.
 
 After finishing this flow, we are placed into the `chapter5` project (the project name will be visible as part of the top-right *Projects* dropdown menu). The new directory/project only contains the automatically generated `chapter5.Rproj` file which defines the *Project Settings*. We are now well set up to begin working with files!
 
@@ -158,9 +161,10 @@ The **dspatterns** package has a few functions that produce example **Excel** fi
 - All data rows follow the header (from row 2) and there are no gaps (i.e., empty rows)
 - All tabular data encompasses a rectangular region (i.e., there should be no cells with entries elsewhere 
 
-```{r us-cities, echo = FALSE, fig.cap = "The `us_cities` sheet in the example **Excel** file is a paragon of clean data as an input for the `read_excel()` function. This will make your life easier."}
-knitr::include_graphics("figures/chapter_05/05-04-figure-us-cities.png")
+```{r us-cities, echo = FALSE, fig.cap = '(ref:us-cities)'}
+knitr::include_graphics("figures/chapter_08/08-04-figure-us-cities.png")
 ```
+(ref:us-cities) The `us_cities` sheet in the example **Excel** file is a paragon of clean data as an input for the `read_excel()` function. This will make your life easier.
 
 The second sheet (called `us_cities_messy`) contains the `us_cities` data, however, there is additional data strewn about in different cells. We can look to the first sheet as the idealized example of data stored in an **Excel** file. It won't provide us with any data import problems, and it's something to strive for when managing data in **Excel** files. The second is a more real-world example of an **Excel** sheet you'll often encounter. Perhaps a colleague provided this file as a source of data for a project, perhaps it's your own file, it really doesn't matter. What does matter is that the data must be cleaned/reorganized before importing it into **R**.
 
@@ -249,9 +253,10 @@ From this code, we get a message about new names. What's happening is that the f
 
 Upon looking at the **Excel** file (*Figure \@ref(fig:us-cities-messy)* provides an annotated guide to its problems) we can see why the import result is the way that it is. This is all fixable though, so long as we know what the particular problems are. However, we really need to have a close look at the sheet in **Excel** proper.
 
-```{r us-cities-messy, echo = FALSE, fig.cap = "The `us_cities_messy` sheet in the example **Excel** file has a number of issues that require a much more sophisticated use of the `read_excel()` function."}
-knitr::include_graphics("figures/chapter_05/05-05-figure-us-cities-messy.png")
+```{r us-cities-messy, echo = FALSE, fig.cap = '(ref:us-cities-messy)'}
+knitr::include_graphics("figures/chapter_08/08-05-figure-us-cities-messy.png")
 ```
+(ref:us-cities-messy) The `us_cities_messy` sheet in the example **Excel** file has a number of issues that require a much more sophisticated use of the `read_excel()` function.
 
 The first big problem is that the table (which is comprised of the header row and the records) begins on the third row. Everything else above that is not the table and should be discarded. The `read_excel()` function has the `skip` argument (just as `read_csv()` does) to skip rows at the top of the sheet. We will use `skip = 2`, and this first problem will be solved.
 

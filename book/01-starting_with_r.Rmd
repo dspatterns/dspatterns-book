@@ -214,3 +214,6 @@ It's hard to get a sense of how **R** can help you do before you get down to usi
 - Our learning path is largely centered around **R** packages (mainly from the *Tidyverse* collection), which are focused collections of functions for doing a particular type of work
 - Installing packages from **CRAN** can be done with the `install.packages()` function whereas packages on **GitHub** can be installed with the `install_github()` function
 - The best places to go for help when you inevitably get stuck with an **R** problem are *Stack Overflow* (via a search engine), *Twitter*, and *RStudio Community*
+
+## Project
+

@@ -290,9 +290,10 @@ regexplain_gadget()
 
 By default, the function provides sample text to match on, but we can provide our own text string as well. *Figure \@ref(fig:regexplain-gadget)* provides a visual on how the gadget looks and it points out its main features.
 
-```{r regexplain-gadget, echo=FALSE, fig.cap="The *RegExplain* Gadget as it appears in the **RStudio** Viewer. By interactively typing our regex into the field labeled `RegEx`, we can see what it matches on in the large text field below."}
-knitr::include_graphics("figures/chapter_08/08-01-figure-regexplain_gadget.png")
+```{r regexplain-gadget, echo=FALSE, fig.cap='(ref:regexplain-gadget)'}
+knitr::include_graphics("figures/chapter_11/11-01-figure-regexplain_gadget.png")
 ```
+(ref:regexplain-gadget) The *RegExplain* Gadget as it appears in the **RStudio** Viewer. By interactively typing our regex into the field labeled `RegEx`, we can see what it matches on in the large text field below.
 
 When you first look at regular expression (or regex) patterns, they appear a bit daunting because of all the tokens that go into them (letters, numerals, and punctuation) are used in a terse manner. And it's indeed true that it does take some time (and much practice) to get the hang of constructing these patterns. However, it's a skill that will eventually pay off, allowing us to do really powerful things with text.
 
@@ -300,17 +301,19 @@ When you first look at regular expression (or regex) patterns, they appear a bit
 
 Let's start by doing some simple matching on `"The quick brown fox jumps over the lazy dog."` and learn how the regex engine is parsing that string with our supplied patterns. Using the regex pattern `"quick"`, will match the word `quick` in the text. This makes sense, in that this is how matching traditionally works. Single letters will also result in a match and, usually, multiple matches. Using the pattern `"o"` (the lowercase letter `O`) results in all four `o` characters being matched in the sentence. There are two instances of the word `the` in our example string. They're not quite the same though. The first instance has a capital `T` and the second has a lowercase `t`. By default, regex engines are case sensitive (and this can be changed, take a closer look at *Figure \@ref(fig:regexplain-gadget)*). That means that the pattern of the will only match on the second instance of that word. *Figure \@ref(fig:regex-examples-1)* shows how matches are made with simple regex patterns.
 
-```{r regex-examples-1, echo=FALSE, fig.cap="Matching a simple regex pattern to the text and getting the first match."}
-knitr::include_graphics("figures/chapter_08/08-02-figure-regex_examples_1.png")
+```{r regex-examples-1, echo=FALSE, fig.cap='(ref:regex-examples-1)'}
+knitr::include_graphics("figures/chapter_11/11-02-figure-regex_examples_1.png")
 ```
+(ref:regex-examples-1) Matching a simple regex pattern to the text and getting the first match.
 
 To understand this all a bit more clearly, we can try to think like a parser. With the pattern `"quick"`, we move letter-by-letter, left-to-right through the text, looking for a `q` since that's the first element of the regex pattern. Once that first `q` is located from the scan, we (as the pretend parser) lock onto that and check if the next token in the pattern matches the next character in the text. This phase of searching and comparing will continue until which point there either is a break in this matching process, or, there is a full match. In the first case, we abort this mode of comparison and move on with our letter-by-letter scan as if nothing happened before. In the second case of the full match, we declare that there is a match and then report exactly where the match occurred.
 
 The dot character (otherwise known as a period, or `.`) is a special token in regex patterns. It matches every character, and that includes spaces as well. Let's look at a few ways we can use the dot with the regex patterns `"...."`, `"....s"`, and `"o."` (*Figure \@ref(fig:regex-examples-2)*).
 
-```{r regex-examples-2, echo=FALSE, fig.cap="Using regex patterns with the dot, which unconditionally matches every character. In every case here, the first match is shown."}
-knitr::include_graphics("figures/chapter_08/08-03-figure-regex_examples_2.png")
+```{r regex-examples-2, echo=FALSE, fig.cap='(ref:regex-examples-2)'}
+knitr::include_graphics("figures/chapter_11/11-03-figure-regex_examples_2.png")
 ```
+(ref:regex-examples-2) Using regex patterns with the dot, which unconditionally matches every character. In every case here, the first match is shown.
 
 We can see from *Figure \@ref(fig:regex-examples-2)* that the dot acts as a wildcard, matching every character. Four dots as the pattern, `"...."`, matches the first word (`"The"`) and the following space character. The pattern `"....s"` needs four of any character and then an `s` character (this matches `"jumps"`). Finally, the pattern `"o."` will make its first match on any first appearance of an `o` and any character. In the example sentence, this matches the `ow` in `"brown"`.
 
@@ -320,9 +323,10 @@ Characters that Need Escaping: It's not just the dot that needs escaping in regu
 
 The examples in *Figure \@ref(fig:regex-examples-3)* can show us the difference between using the patterns `".."`, `".\\."`, and `"\\.\\."` with our sample sentence.
 
-```{r regex-examples-3, echo=FALSE, fig.cap="Using regex patterns with the escaped form of the dot results in matches involving the period character."}
-knitr::include_graphics("figures/chapter_08/08-04-figure-regex_examples_3.png")
+```{r regex-examples-3, echo=FALSE, fig.cap='(ref:regex-examples-3)'}
+knitr::include_graphics("figures/chapter_11/11-04-figure-regex_examples_3.png")
 ```
+(ref:regex-examples-3) Using regex patterns with the escaped form of the dot results in matches involving the period character.
 
 The first pattern in *Figure \@ref(fig:regex-examples-3)* isn't too surprising considering what we now know about the dot character's supreme matching abilities. The second pattern, `".\\.,"` uses the dot (matching all) followed by its escaped form (matching a period); this will match the last two characters in the sentence (that ends with a period). The last pattern, `"\\.\\.,"` just serves to remind us that matching on two literal period characters won't result in a match at all since there's only one period in the entire sentence (a trick question! but educational nonetheless).
 
@@ -359,9 +363,10 @@ Turns out there are four matches from the `".o."` pattern. They are provided in 
 
 We can match on specific characters using a character set. The allowed characters are put inside square brackets. As an example, suppose we want to match on the word `"license"` and its alternative spelling of `"licence"` in a large body of text. We could use the regex `"licen[cs]e"`, which accepts either the letter `c` or `s` as the second-to-last letter in the word. It's important to understand here that everything in the square brackets only counts for a single character match. This may be easier to understand with a few examples using some sample text (*Figure \@ref(fig:regex-examples-4)*).
 
-```{r regex-examples-4, echo=FALSE, fig.cap="Using regex patterns with character sets to match similar words. The pattern in the first example will match two words (even though only the first match is shown)."}
-knitr::include_graphics("figures/chapter_08/08-05-figure-regex_examples_4.png")
+```{r regex-examples-4, echo=FALSE, fig.cap='(ref:regex-examples-4)'}
+knitr::include_graphics("figures/chapter_11/11-05-figure-regex_examples_4.png")
 ```
+(ref:regex-examples-4) Using regex patterns with character sets to match similar words. The pattern in the first example will match two words (even though only the first match is shown).
 
 Each of the regex patterns in *Figure \@ref(fig:regex-examples-4)* are depicted with the character sets matching on a single character. The `b[ae]tter` pattern will match `"better"` and `"batter"`. Throughout these examples, we've been sticking to just showing the first match and, here, `"better"` is that first match. How about the regex `"b[oa]t?"` It will match the text `"bot"` and `"bat"`. The first of those isn't present but the second one is (in the word `"batter"`).
 
@@ -385,9 +390,10 @@ While character classes are quite useful when defining a regular expression, the
 
 Figure *Figure \@ref(fig:regex-examples-5)* presents a number of regex examples that all use a short phrase concerning quantities of fruit. It combines a number of new things we learned about character classes.
 
-```{r regex-examples-5, echo=FALSE, fig.cap="Using regex patterns with character classes to match on classes of characters."}
-knitr::include_graphics("figures/chapter_08/08-06-figure-regex_examples_5.png")
+```{r regex-examples-5, echo=FALSE, fig.cap='(ref:regex-examples-5)'}
+knitr::include_graphics("figures/chapter_11/11-06-figure-regex_examples_5.png")
 ```
+(ref:regex-examples-5) Using regex patterns with character classes to match on classes of characters.
 
 As can be seen, these character classes work equally well both inside and outside of the square bracket notation that defines character sets. Negation of character classes like `\\w` can either be constructed by using `[^\\w]` or by using the capitalized form (which are `\\W`, `\\D`, and `\\S` for word characters, digits, and space characters).
 
@@ -463,9 +469,10 @@ Repetition with the `*` and `+` will find the longest match possible. In other w
 
 *Figure \@ref(fig:regex-examples-6)* provides a few examples of how repetition with `*`, `*?`, and `{n}` is used with the 'A bit of butter makes better batter' phrase.
 
-```{r regex-examples-6, echo=FALSE, fig.cap="The difference between `*` and `*?` during repetition means the difference between greedy and lazy matching. Repetition with `\\w{5}` is exact, matching 5 word characters."}
-knitr::include_graphics("figures/chapter_08/08-07-figure-regex_examples_6.png")
+```{r regex-examples-6, echo=FALSE, fig.cap='(ref:regex-examples-6)'}
+knitr::include_graphics("figures/chapter_11/11-07-figure-regex_examples_6.png")
 ```
+(ref:regex-examples-6) The difference between `*` and `*?` during repetition means the difference between greedy and lazy matching. Repetition with `\\w{5}` is exact, matching 5 word characters.
 
 Repetition is a very useful feature because we don't have to repeat regex tokens and we furthermore have fine control over how much repetition is required in a matching expression.
 

@@ -99,7 +99,7 @@ y * 2  #A
 From this output, we see that indeed each resulting value is the original value multiplied by two. The math operations used to produce each value can be represented in this vector schematic:
 
 ```{r multiplying-by-a-single-number, echo = FALSE, fig.cap = ""}
-knitr::include_graphics("figures/chapter_07/07-01-figure-multiplying_by_a_single_number.png")
+knitr::include_graphics("figures/chapter_10/10-01-figure-multiplying_by_a_single_number.png")
 ```
 
 That was an example of performing a mathematical operation across vectors of different sizes. The `y` vector has a length of `7`, and the unnamed vector with the single value of `2` has a length of `1`.
@@ -118,7 +118,7 @@ y * y  #A
 Using the vector schematic to represent the individual operations, both vectors (indeed, with the same vector values) are lined up perfectly because they are of the same length. So, the first element in each vector is multiplied, then the second element of each, and so on. The vector schematic for this makes it clearer:
 
 ```{r multiplying-by-two-of-same-length, echo = FALSE, fig.cap = ""}
-knitr::include_graphics("figures/chapter_07/07-02-figure-multiplying_by_two_of_same_length.png")
+knitr::include_graphics("figures/chapter_10/10-02-figure-multiplying_by_two_of_same_length.png")
 ```
 
 What would happen if we were to multiply vectors of different lengths, say, lengths `4` and `2`? Let's try that and see what happens:
@@ -140,7 +140,7 @@ vec_1 * vec_2  #C
 When given two vectors of the same length, **R** simply performs the specified arithmetic operation element-by-element. If the vectors are of different lengths, **R** recycles the shorter vector until it is the same length as the longer vector. Here is the vector schematic:
 
 ```{r multiplying-by-different-lengths, echo = FALSE, fig.cap = ""}
-knitr::include_graphics("figures/chapter_07/07-03-figure-multiplying_by_different_lengths.png")
+knitr::include_graphics("figures/chapter_10/10-03-figure-multiplying_by_different_lengths.png")
 ```
 
 If the length of the shorter vector does not divide evenly into the length of the longer vector, **R** will still do its recycling, but it will also provide us with warning to inform us that this non-clean recycling is happening.
@@ -659,17 +659,19 @@ strsplit(strings, split = "_")  #B
 
 With so many functions available within base **R** and from the **R** package ecosystem, we might never think to write our own functions. There is one compelling reason to take the dive and write functions: we won't have to repeat ourselves unnecessarily. Say you have an analysis to perform on six similar datasets (perhaps this involves getting summary data from six different years of data). A one-page script that separately processes each of datasets can certainly get the job done, however, each of these scripts may only differ by the names of the input data files. That strategy can result in a lot of redundant typing! And, with that, quite a lot of potential for error. Take a look at *Figure \@ref(fig:reason-why-to-write-functions)* for visual depictions of the two approaches. In many circumstances it's possible to create a general function that essentially performs what the script would do. This translates to much less repetition and way fewer headaches.
 
-```{r reason-why-to-write-functions, echo = FALSE, fig.cap = "Two approaches to an analysis involving repetitive data. The first doesn't use a generalized function but have to produce a similar analysis script for each dataset. The second approach uses a single function within an **R Markdown** document so that the results can be rendered to a document that can be shared."}
-knitr::include_graphics("figures/chapter_07/07-04-figure-reason_why_to_write_functions.png")
+```{r reason-why-to-write-functions, echo = FALSE, fig.cap = '(ref:reason-why-to-write-functions)'}
+knitr::include_graphics("figures/chapter_10/10-04-figure-reason_why_to_write_functions.png")
 ```
+(ref:reason-why-to-write-functions) Two approaches to an analysis involving repetitive data. The first doesn't use a generalized function but have to produce a similar analysis script for each dataset. The second approach uses a single function within an **R Markdown** document so that the results can be rendered to a document that can be shared.
 
 ### Creating our First **R** Functions
 
 Writing our own **R** functions is worth the time investment. Where do we start? *Figure \@ref(fig:parts-of-a-function)* can be helpful here. It provides a schematic for the main parts of a function and some finer details as well. The main parts of an **R** function are the name, the arguments, and the body. This figure probably won't make too much sense until we get right to making and testing our new function. So, come back to it later to reinforce what will be learned in this section. I just thought I'd leave it here.
 
-```{r parts-of-a-function, echo = FALSE, fig.cap = "The main parts of an **R** function are the name, the arguments, and the body. The statements typically involve values provided by the arguments."}
-knitr::include_graphics("figures/chapter_07/07-05-figure-parts_of_a_function.png")
+```{r parts-of-a-function, echo = FALSE, fig.cap = '(ref:parts-of-a-function)'}
+knitr::include_graphics("figures/chapter_10/10-05-figure-parts_of_a_function.png")
 ```
+(ref:parts-of-a-function) The main parts of an **R** function are the name, the arguments, and the body. The statements typically involve values provided by the arguments.
 
 Let's start by writing a function that simply adds two numbers together. First, we need a name. Let's call it `add_2_numbers.` It's descriptive (indicating what the function might do), is written all in lowercase, and it sticks to a convention called snake case where spaces (which are not allowed in function names) are preserved and written as underscore characters. As for the numbers to add, we'll use the argument names `x` and `y` to stand for the two numbers that should be supplied when using the function. The argument names will become variables in the function body, and the only statement will be `x + y`. Given that the sum of `x` and `y` are what we want from the function (i.e., it's the answer) we will provide an instruction to return that sum with a `return()` statement. Now that the function is essentially planned out, here's how it might be written:
 
