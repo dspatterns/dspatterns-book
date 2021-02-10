@@ -1,10 +1,10 @@
 on:
   push:
     branches:
-      - previews
+      - main
   pull_request:
     branches:
-      - previews
+      - main
   schedule:
     # run every day at 11 PM
     - cron: '0 23 * * *'
