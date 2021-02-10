@@ -1,7 +1,13 @@
 on:
   push:
     branches:
-      - main
+      - master
+  pull_request:
+    branches:
+      - master
+  schedule:
+    # run every day at 11 PM
+    - cron: '0 23 * * *'
 
 name: Build book
 
