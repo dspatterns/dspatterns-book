@@ -2,13 +2,23 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
+  schedule:
+    # run every day at 11 PM
+    - cron: '0 23 * * *'
 
-name: Build book
+name: build-book
 
 jobs:
   build:
     runs-on: macOS-latest
     env:
+      # NETLIFY_AUTH_TOKEN and NETLIFY_SITE_ID added in the repo's secrets
+      NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+      NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+      isExtPR: ${{ github.event.pull_request.head.repo.fork == true }}
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: Checkout repo
@@ -37,14 +47,19 @@ jobs:
          bookdown::render_book("index.Rmd", quiet = TRUE)
         shell: Rscript {0}
 
-      - name: Install npm
-        uses: actions/setup-node@v1
-
       - name: Deploy to Netlify
-        # NETLIFY_AUTH_TOKEN and NETLIFY_SITE_ID added in the repo's secrets
-        env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
-          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
-        run: |
-          npm install netlify-cli -g
-          netlify deploy --prod --dir book/_book
+        if: contains(env.isExtPR, 'false')
+        id: netlify-deploy
+        uses: nwtgck/actions-netlify@v1.1
+        with:
+          publish-dir: 'book/_book'
+          production-branch: main
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          deploy-message:
+            'Deploy from GHA: ${{ github.event.pull_request.title || github.event.head_commit.message }} (${{ github.sha }})'
+          # these all default to 'true'
+          enable-pull-request-comment: false
+          enable-commit-comment: false
+          # enable-commit-status: true
+          # overwrites-pull-request-comment: true
+        timeout-minutes: 1
