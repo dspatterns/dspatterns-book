@@ -5,6 +5,76 @@ library(dspatterns)
 library(tidyverse)
 ```
 
+
+```{css echo=FALSE}
+.ggtab {
+  display: flex;
+  flex-wrap: wrap;
+  outline: #B6B4FA solid 1px;
+  padding: 5px;
+  margin-bottom: 20px;
+}
+
+.ggtab label {
+  order: 1; 
+  display: block;
+  padding: 1rem 2rem;
+  cursor: pointer;
+  background: white;
+  font-weight: bold;
+  transition: background ease 0.2s;
+}
+
+.ggtab [class^="tab"] {
+  order: 99; 
+  flex-grow: 1;
+  width: 100%;
+  display: none;
+  padding: 1rem;
+  background: white;
+}
+
+.ggtab input[type="radio"] {
+  display: none;
+}
+
+.ggtab input[type="radio"]:checked + label {
+  background: #E3E3FD;
+}
+
+.ggtab input[type="radio"]:checked + label + [class^="tab"] {
+  display: block;
+}
+```
+
+
+`r dspatterns::code_hints(
+"**CODE //** Making our first **ggplot**.",
+c(
+"#A This **ggplot** statement adds data and defines the ~~x~~ and ~~y~~ aesthetics. However, there is no layer that actually visualizes the data."
+))`
+<div class="ggtab">
+
+<input type="radio" name="tab" id="gg-empty-c" checked="checked">
+<label for="gg-empty-c">Code</label>
+<div class="tab">
+```{r gg-empty-c, echo=TRUE, fig.show='hide'}
+ggplot(data = dmd, mapping = aes(x = carats, y = price))  #A
+```
+</div>
+
+<input type="radio" name="tab" id="gg-empty-p">
+<label for="gg-empty-p">Plot</label>
+<div class="tab">
+```{r gg-empty-p, echo=FALSE, fig.cap='(ref:gg-empty-p)'}
+ggplot(data = dmd, mapping = aes(x = carats, y = price))  #A
+```
+(ref:gg-empty-p) Our first **ggplot** plot is... empty.
+</div>
+
+</div>
+
+
 This chapter covers
 
 - What the **ggplot** **R** package is and how it can be used to create plots from tabular data
@@ -514,3 +584,9 @@ In this example code, there are still labels defined for the nonexistent legend 
 19. What we get if we run the plotting code is rows of panels that incorporate combinations of `color` and `cut` values in the strip titles, and, columns of `clarity` facets. Additionally, we can see that some of the subplots are empty because the data doesn't have all combinations of `color`, `cut`, and `clarity.`
 
 20. The error message we get from this plotting code reads `Error: A continuous variable can not be mapped to shape`. Because the `depth` variable encompasses a range of values, it is considered to be continuous. Since we have limited numbers of shapes and its inherently difficult to map shapes on continuous scale, **ggplot** cannot construct a plot. One option is to map `depth` to a different visual aesthetic like `color` or `size.` Another option is to use **dplyr** to first modify the dataset by generating a categorical variable based on `depth.`
+
+
+
+
+
+
