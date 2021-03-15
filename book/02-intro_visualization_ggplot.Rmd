@@ -212,18 +212,35 @@ ggplot(
 
 Because we defined an additional aesthetic property by putting `shape = clarity` inside the `aes()` function, **ggplot**: (1) automatically maps data-point shapes to the different discrete values in the `clarity` column, (2) applies those shapes to each of the data points, and (3) draws a legend to describe the shape mappings for `clarity`. Here, we can see that the data points belonging to `"The Best"` `clarity` (square shape) generally yield the highest prices at a given weight compared to the other two descriptors (notice that the points labeled as `"Fair"` are further to the right).
 
-We have plenty of options for modifying this plot. The large number of data points in the plot shows a fairly high degree of overplotting, and so it's harder to see where the data points are most concentrated. A common way to solve this visualization problem is to add transparency to the data points. We do this in **ggplot** by setting the alpha value in `geom_point()` to a relatively low value in the `0` to `1` scale. In our new code we will use `alpha = 0.25` but if overplotting is more severe, lower values will often yield better results (*Figure \@ref(fig:dmd-carats-price-alpha)*).
+We have plenty of options for modifying this plot. The large number of data points in the plot shows a fairly high degree of overplotting, and so it's harder to see where the data points are most concentrated. A common way to solve this visualization problem is to add transparency to the data points. We do this in **ggplot** by setting the alpha value in `geom_point()` to a relatively low value in the `0` to `1` scale. In our new code we will use `alpha = 0.25` but if overplotting is more severe, lower values will often yield better results (*Figure \@ref(fig:dmd-carats-price-alpha-p)*).
 
 `r dspatterns::code_hints(
 "**CODE //** Using the alpha argument in ~~geom_point()~~.",
 c(
 "#A Supplying an ~~alpha~~ value of ~~0.25~~ (in the range of ~~0~~–~~1~~) makes the points relatively transparent."
 ))`
-```{r dmd-carats-price-alpha, fig.cap='(ref:dmd-carats-price-alpha)'}
+<div class="ggtab">
+
+<input type="radio" name="dmd-carats-price-alpha-tab" id="dmd-carats-price-alpha-c" checked="checked">
+<label for="dmd-carats-price-alpha-c">Code</label>
+<div class="tab">
+```{r dmd-carats-price-alpha-c, echo=TRUE, fig.show='hide'}
 ggplot(dmd, mapping = aes(x = carats, y = price, shape = clarity)) +
   geom_point(alpha = 0.25)  #A
 ```
-(ref:dmd-carats-price-alpha) The use of transparency (or, `alpha`) can alleviate the problems associated with a high degree of overplotting.
+</div>
+
+<input type="radio" name="dmd-carats-price-alpha-tab" id="dmd-carats-price-alpha-p">
+<label for="dmd-carats-price-alpha-p">Plot</label>
+<div class="tab">
+```{r dmd-carats-price-alpha-p, echo=FALSE, fig.cap='(ref:dmd-carats-price-alpha-p)'}
+ggplot(dmd, mapping = aes(x = carats, y = price, shape = clarity)) +
+  geom_point(alpha = 0.25)  #A
+```
+(ref:dmd-carats-price-alpha-p) The use of transparency (or, `alpha`) can alleviate the problems associated with a high degree of overplotting.
+</div>
+
+</div>
 
 What if we simply wanted all the points to be of a specified color instead of the default opaque black? In this case, if we wanted to use `gray50` as a color (it's a medium gray), we would need to add `color = "gray50"` inside of `geom_point()` and we also need to remove the `color` aesthetic (`color = clarity`) in the initial mapping. This results in uniformly gray data points in the output plot (*Figure \@ref(fig:dmd-all-gray50-points)*).
 
