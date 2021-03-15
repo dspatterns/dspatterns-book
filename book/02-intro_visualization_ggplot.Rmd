@@ -47,34 +47,6 @@ library(tidyverse)
 }
 ```
 
-
-`r dspatterns::code_hints(
-"**CODE //** Making our first **ggplot**.",
-c(
-"#A This **ggplot** statement adds data and defines the ~~x~~ and ~~y~~ aesthetics. However, there is no layer that actually visualizes the data."
-))`
-<div class="ggtab">
-
-<input type="radio" name="tab" id="gg-empty-c" checked="checked">
-<label for="gg-empty-c">Code</label>
-<div class="tab">
-```{r gg-empty-c, echo=TRUE, fig.show='hide'}
-ggplot(data = dmd, mapping = aes(x = carats, y = price))  #A
-```
-</div>
-
-<input type="radio" name="tab" id="gg-empty-p">
-<label for="gg-empty-p">Plot</label>
-<div class="tab">
-```{r gg-empty-p, echo=FALSE, fig.cap='(ref:gg-empty-p)'}
-ggplot(data = dmd, mapping = aes(x = carats, y = price))  #A
-```
-(ref:gg-empty-p) Our first **ggplot** plot is... empty.
-</div>
-
-</div>
-
-
 This chapter covers
 
 - What the **ggplot** **R** package is and how it can be used to create plots from tabular data
@@ -103,70 +75,140 @@ Through a number of simple examples with the `dmd` dataset, we'll develop an und
 
 ### Making Simple **ggplot** Scatterplots
 
-Let's describe a simple scatterplot with the `dmd` variables carats (the weight of the diamond) and price (the price in US dollars). The very first instruction we'll provide is a `ggplot()` function call. This requires data (we'll use the `dmd` table as data), and, it also has an argument called mapping. We'll map carats to the *x* axis and price to the *y* axis, and this will be wrapped up inside the `aes()` object (`aes` stands for aesthetics). This last part implies that the axes to which data values are bound are aesthetic properties, and that's really how the *Grammar of Graphics* sees it (along with other aesthetic properties like the shape and color of marks). After running the code chunk, we'll get the plot shown as *Figure \@ref(fig:gg-empty)*.
+Let's describe a simple scatterplot with the `dmd` variables carats (the weight of the diamond) and price (the price in US dollars). The very first instruction we'll provide is a `ggplot()` function call. This requires data (we'll use the `dmd` table as data), and, it also has an argument called mapping. We'll map carats to the *x* axis and price to the *y* axis, and this will be wrapped up inside the `aes()` object (`aes` stands for aesthetics). This last part implies that the axes to which data values are bound are aesthetic properties, and that's really how the *Grammar of Graphics* sees it (along with other aesthetic properties like the shape and color of marks). After running the code chunk, we'll get the plot shown as *Figure \@ref(fig:gg-empty-p)*.
 
 `r dspatterns::code_hints(
 "**CODE //** Making our first **ggplot**.",
 c(
 "#A This **ggplot** statement adds data and defines the ~~x~~ and ~~y~~ aesthetics. However, there is no layer that actually visualizes the data."
 ))`
-```{r gg-empty, fig.cap='(ref:gg-empty)'}
+<div class="ggtab">
+
+<input type="radio" name="gg-empty-tab" id="gg-empty-c" checked="checked">
+<label for="gg-empty-c">Code</label>
+<div class="tab">
+```{r gg-empty-c, echo=TRUE, fig.show='hide'}
 ggplot(data = dmd, mapping = aes(x = carats, y = price))  #A
 ```
-(ref:gg-empty) Our first **ggplot** plot is... empty.
+</div>
 
-We might be surprised that what we see in *Figure \@ref(fig:gg-empty)* is essentially an empty plot. What we do have however are the plot axes (with values and labels), and you might notice that the ranges of the axis values encompass the extent of data (it's hard to know without seeing the data but this is indeed the case). To actually get the `price` vs. `carats` data points onto the plot, we have to add a *geom*—this stands for geometry—and, in this case, we will use `geom_point()`. This *geom* provides a method for plotting the data. Let's take a look at the new code and the resulting plot (*Figure \@ref(fig:dmd-carats-price)*).
+<input type="radio" name="gg-empty-tab" id="gg-empty-p">
+<label for="gg-empty-p">Plot</label>
+<div class="tab">
+```{r gg-empty-p, echo=FALSE, fig.cap='(ref:gg-empty-p)'}
+ggplot(data = dmd, mapping = aes(x = carats, y = price))  #A
+```
+(ref:gg-empty-p) Our first **ggplot** plot is... empty.
+</div>
+
+</div>
+
+We might be surprised that what we see in *Figure \@ref(fig:gg-empty-p)* is essentially an empty plot. What we do have however are the plot axes (with values and labels), and you might notice that the ranges of the axis values encompass the extent of data (it's hard to know without seeing the data but this is indeed the case). To actually get the `price` vs. `carats` data points onto the plot, we have to add a *geom*—this stands for geometry—and, in this case, we will use `geom_point()`. This *geom* provides a method for plotting the data. Let's take a look at the new code and the resulting plot (*Figure \@ref(fig:dmd-carats-price-p)*).
 
 `r dspatterns::code_hints(
 "**CODE //** Using ~~geom_point()~~ adds a layer of points.",
 c(
-"#A Same line as in the previous code; need to add a linking ~~+~~ sign.",
+"#A Same line as in the previous code; need to add a linking ~~~~ sign.",
 "#B The ~~geom_point()~~ function makes all the difference here. It creates a layer of data points."
 ))`
-```{r dmd-carats-price, fig.cap='(ref:dmd-carats-price)'}
+<div class="ggtab">
+
+<input type="radio" name="dmd-carats-price-tab" id="dmd-carats-price-c" checked="checked">
+<label for="dmd-carats-price-c">Code</label>
+<div class="tab">
+```{r dmd-carats-price-c, echo=TRUE, fig.show='hide'}
 ggplot(data = dmd, mapping = aes(x = carats, y = price)) +  #A
   geom_point()  #B
 ```
-(ref:dmd-carats-price) Our first **ggplot** plot... with data!
+</div>
+
+<input type="radio" name="dmd-carats-price-tab" id="dmd-carats-price-p">
+<label for="dmd-carats-price-p">Plot</label>
+<div class="tab">
+```{r dmd-carats-price-p, echo=FALSE, fig.cap='(ref:dmd-carats-price-p)'}
+ggplot(data = dmd, mapping = aes(x = carats, y = price)) +  #A
+  geom_point()  #B
+```
+(ref:dmd-carats-price-p) Our first **ggplot** plot... with data!
+</div>
+
+</div>
 
 The plot indeed now has data points thanks to the use of `geom_point()`! There are a lot of *geom* functions in **ggplot** and all have the form `geom_...()` (e.g., `geom_bar()`, `geom_boxplot()`, `geom_text()`, etc.). Each *geom* essentially adds a layer to the plot. 
 
 .callout
-Note: In the plotting code for *Figures \@ref(fig:gg-empty) and \@ref(fig:dmd-carats-price)*, notice that the two statements are joined by a `+`. This is different than the pipe operator (`%>%`) that was used to join together, or pipe, the **dplyr** statements in the last lesson. This is sometimes a point of confusion so always try to remember that **ggplot** exclusively uses `+` whereas every other package of the *Tidyverse* (and beyond) uses `%>%`.
+Note: In the plotting code for *Figures \@ref(fig:gg-empty-p) and \@ref(fig:dmd-carats-price-p)*, notice that the two statements are joined by a `+`. This is different than the pipe operator (`%>%`) that was used to join together, or pipe, the **dplyr** statements in the last lesson. This is sometimes a point of confusion so always try to remember that **ggplot** exclusively uses `+` whereas every other package of the *Tidyverse* (and beyond) uses `%>%`.
 .callout
 
 Let's unpack what's happening in the previous code listing just a bit more. The first line with `ggplot()` allows you to set default values that are passed down to later statements. So, `geom_point()` is receiving the data of `dmd` and also the aesthetics defined in the `aes()` object. We'll see in later examples that any values provided after the `ggplot()` statement will take precedence over the defaults (to convince ourselves fully, we'll need to go through those examples).
 
-In looking at the relationship between diamond price (`price`) against the weight in carats (`carats`) in the above, it's easy to see a positive correlation between the two variables. When doing data exploration, we may also want to compare other pairs of variables to see what our data tells us. Since these types of plots only take two lines of code to generate, we can and should try to do enough exploration so that we get a better intuition on the data. So, let's try this again, but this time we'll use the numerical `depth` variable (a geometric measure of the diamond) in place of `carats`, giving us the plot in *Figure \@ref(fig:dmd-carats-depth)*.
+In looking at the relationship between diamond price (`price`) against the weight in carats (`carats`) in the above, it's easy to see a positive correlation between the two variables. When doing data exploration, we may also want to compare other pairs of variables to see what our data tells us. Since these types of plots only take two lines of code to generate, we can and should try to do enough exploration so that we get a better intuition on the data. So, let's try this again, but this time we'll use the numerical `depth` variable (a geometric measure of the diamond) in place of `carats`, giving us the plot in *Figure \@ref(fig:dmd-carats-depth-p)*.
 
 `r dspatterns::code_hints(
 "**CODE //** Using a different *y* value.",
 c(
 "#A This time, ~~y~~ is set to the ~~depth~~ variable."
 ))`
-```{r dmd-carats-depth, fig.cap='(ref:dmd-carats-depth)'}
+<div class="ggtab">
+
+<input type="radio" name="dmd-carats-depth-tab" id="dmd-carats-depth-c" checked="checked">
+<label for="dmd-carats-depth-c">Code</label>
+<div class="tab">
+```{r dmd-carats-depth-c, echo=TRUE, fig.show='hide'}
 ggplot(data = dmd, mapping = aes(x = carats, y = depth)) +  #A
   geom_point()
 ```
-(ref:dmd-carats-depth) Experimenting with different variables for `x` and `y` results in a different plot. It's not very informative but that's okay, we are learning.
+</div>
 
-While the variables in *Figure \@ref(fig:dmd-carats-depth)* do not show any correlation to each other, we can see that the `depth` measure is generally in the range of `55` to `70`. This plot may not be of much importance, but the process of exploration will provide us with different viewpoints on our data. This feeling of discovery as we make many exploratory plots can be rewarding, and the speed at which we could make the plots incites more exploration into the data.
+<input type="radio" name="dmd-carats-depth-tab" id="dmd-carats-depth-p">
+<label for="dmd-carats-depth-p">Plot</label>
+<div class="tab">
+```{r dmd-carats-depth-p, echo=FALSE, fig.cap='(ref:dmd-carats-depth-p)'}
+ggplot(data = dmd, mapping = aes(x = carats, y = depth)) +  #A
+  geom_point()
+```
+(ref:dmd-carats-depth-p) Experimenting with different variables for `x` and `y` results in a different plot. It's not very informative but that's okay, we are learning..
+</div>
 
-One of the great things about **ggplot** is that we have a quite a few aesthetic properties we could map to variables. Let's return to the price vs. carats comparison and map a shape aesthetic to a different variable in `dmd`: `clarity`. The `clarity` variable is discrete (or categorical), providing a one of three character-based values that qualitatively state how clear the diamond is *Figure \@ref(fig:dmd-shape-for-clarity)*.
- 
+</div>
+
+While the variables in *Figure \@ref(fig:dmd-carats-depth-p)* do not show any correlation to each other, we can see that the `depth` measure is generally in the range of `55` to `70`. This plot may not be of much importance, but the process of exploration will provide us with different viewpoints on our data. This feeling of discovery as we make many exploratory plots can be rewarding, and the speed at which we could make the plots incites more exploration into the data.
+
+One of the great things about **ggplot** is that we have a quite a few aesthetic properties we could map to variables. Let's return to the price vs. carats comparison and map a shape aesthetic to a different variable in `dmd`: `clarity`. The `clarity` variable is discrete (or categorical), providing a one of three character-based values that qualitatively state how clear the diamond is *Figure \@ref(fig:dmd-shape-for-clarity-p)*.
+
 `r dspatterns::code_hints(
 "**CODE //** Using the ~~shape~~ aesthetic.",
 c(
 "#A We add the ~~shape~~ aesthetic, mapping it to the ~~clarity~~ variable."
 ))`
-```{r dmd-shape-for-clarity, fig.cap='(ref:dmd-shape-for-clarity)'}
+<div class="ggtab">
+
+<input type="radio" name="dmd-shape-for-clarity-tab" id="dmd-shape-for-clarity-c" checked="checked">
+<label for="dmd-shape-for-clarity-c">Code</label>
+<div class="tab">
+```{r dmd-shape-for-clarity-c, echo=TRUE, fig.show='hide'}
 ggplot(
   dmd,
   mapping = aes(x = carats, y = price, shape = clarity)  #A
 ) +
   geom_point()
 ```
-(ref:dmd-shape-for-clarity) Mapping an aesthetic other than `x` and `y` can show us how groupings of data interrelate.
+</div>
+
+<input type="radio" name="dmd-shape-for-clarity-tab" id="dmd-shape-for-clarity-p">
+<label for="dmd-shape-for-clarity-p">Plot</label>
+<div class="tab">
+```{r dmd-shape-for-clarity-p, echo=FALSE, fig.cap='(ref:dmd-shape-for-clarity-p)'}
+ggplot(
+  dmd,
+  mapping = aes(x = carats, y = price, shape = clarity)  #A
+) +
+  geom_point()
+```
+(ref:dmd-shape-for-clarity-p) Mapping an aesthetic other than `x` and `y` can show us how groupings of data interrelate.
+</div>
+
+</div>
 
 Because we defined an additional aesthetic property by putting `shape = clarity` inside the `aes()` function, **ggplot**: (1) automatically maps data-point shapes to the different discrete values in the `clarity` column, (2) applies those shapes to each of the data points, and (3) draws a legend to describe the shape mappings for `clarity`. Here, we can see that the data points belonging to `"The Best"` `clarity` (square shape) generally yield the highest prices at a given weight compared to the other two descriptors (notice that the points labeled as `"Fair"` are further to the right).
 
