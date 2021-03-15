@@ -92,7 +92,8 @@ code_hints <- function(title = "CODE",
           "margin-bottom: 6px;",
           "text-indent: 6px;",
           "cursor: pointer;",
-          "font-size: 10px;"
+          "font-size: 10px;",
+          "display: list-item;"
         ),
         htmltools::HTML(hints)
       ),
