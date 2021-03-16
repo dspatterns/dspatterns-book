@@ -100,7 +100,6 @@ ggplot(data = dmd, mapping = aes(x = carats, y = price))  #A
 ```
 (ref:gg-empty-p) Our first **ggplot** plot is... empty.
 </div>
-
 </div>
 
 We might be surprised that what we see in *Figure \@ref(fig:gg-empty-p)* is essentially an empty plot. What we do have however are the plot axes (with values and labels), and you might notice that the ranges of the axis values encompass the extent of data (it's hard to know without seeing the data but this is indeed the case). To actually get the `price` vs. `carats` data points onto the plot, we have to add a *geom*—this stands for geometry—and, in this case, we will use `geom_point()`. This *geom* provides a method for plotting the data. Let's take a look at the new code and the resulting plot (*Figure \@ref(fig:dmd-carats-price-p)*).
@@ -131,7 +130,6 @@ ggplot(data = dmd, mapping = aes(x = carats, y = price)) +  #A
 ```
 (ref:dmd-carats-price-p) Our first **ggplot** plot... with data!
 </div>
-
 </div>
 
 The plot indeed now has data points thanks to the use of `geom_point()`! There are a lot of *geom* functions in **ggplot** and all have the form `geom_...()` (e.g., `geom_bar()`, `geom_boxplot()`, `geom_text()`, etc.). Each *geom* essentially adds a layer to the plot. 
@@ -169,7 +167,6 @@ ggplot(data = dmd, mapping = aes(x = carats, y = depth)) +  #A
 ```
 (ref:dmd-carats-depth-p) Experimenting with different variables for `x` and `y` results in a different plot. It's not very informative but that's okay, we are learning..
 </div>
-
 </div>
 
 While the variables in *Figure \@ref(fig:dmd-carats-depth-p)* do not show any correlation to each other, we can see that the `depth` measure is generally in the range of `55` to `70`. This plot may not be of much importance, but the process of exploration will provide us with different viewpoints on our data. This feeling of discovery as we make many exploratory plots can be rewarding, and the speed at which we could make the plots incites more exploration into the data.
@@ -207,7 +204,6 @@ ggplot(
 ```
 (ref:dmd-shape-for-clarity-p) Mapping an aesthetic other than `x` and `y` can show us how groupings of data interrelate.
 </div>
-
 </div>
 
 Because we defined an additional aesthetic property by putting `shape = clarity` inside the `aes()` function, **ggplot**: (1) automatically maps data-point shapes to the different discrete values in the `clarity` column, (2) applies those shapes to each of the data points, and (3) draws a legend to describe the shape mappings for `clarity`. Here, we can see that the data points belonging to `"The Best"` `clarity` (square shape) generally yield the highest prices at a given weight compared to the other two descriptors (notice that the points labeled as `"Fair"` are further to the right).
@@ -239,21 +235,36 @@ ggplot(dmd, mapping = aes(x = carats, y = price, shape = clarity)) +
 ```
 (ref:dmd-carats-price-alpha-p) The use of transparency (or, `alpha`) can alleviate the problems associated with a high degree of overplotting.
 </div>
-
 </div>
 
-What if we simply wanted all the points to be of a specified color instead of the default opaque black? In this case, if we wanted to use `gray50` as a color (it's a medium gray), we would need to add `color = "gray50"` inside of `geom_point()` and we also need to remove the `color` aesthetic (`color = clarity`) in the initial mapping. This results in uniformly gray data points in the output plot (*Figure \@ref(fig:dmd-all-gray50-points)*).
+What if we simply wanted all the points to be of a specified color instead of the default opaque black? In this case, if we wanted to use `gray50` as a color (it's a medium gray), we would need to add `color = "gray50"` inside of `geom_point()` and we also need to remove the `color` aesthetic (`color = clarity`) in the initial mapping. This results in uniformly gray data points in the output plot (*Figure \@ref(fig:dmd-all-gray50-points-p)*).
 
 `r dspatterns::code_hints(
 "**CODE //** Setting a fixed color inside of ~~geom_point()~~.",
 c(
 "#A The ~~\"gray50\"~~ color is halfway between white and black; and, the higher the number, the lighter the gray."
 ))`
-```{r dmd-all-gray50-points, fig.cap='(ref:dmd-all-gray50-points)'}
+<div class="ggtab">
+
+<input type="radio" name="dmd-all-gray50-points-tab" id="dmd-all-gray50-points-c" checked="checked">
+<label for="dmd-all-gray50-points-c">Code</label>
+<div class="tab">
+```{r dmd-all-gray50-points-c, echo=TRUE, fig.show='hide'}
 ggplot(dmd, mapping = aes(x = carats, y = price)) +
   geom_point(color = "gray50")  #A
 ```
-(ref:dmd-all-gray50-points) Setting all points to a specific color is possible and sometimes desirable.
+</div>
+
+<input type="radio" name="dmd-all-gray50-points-tab" id="dmd-all-gray50-points-p">
+<label for="dmd-all-gray50-points-p">Plot</label>
+<div class="tab">
+```{r dmd-all-gray50-points-p, echo=FALSE, fig.cap='(ref:dmd-all-gray50-points-p)'}
+ggplot(dmd, mapping = aes(x = carats, y = price)) +
+  geom_point(color = "gray50")  #A
+```
+(ref:dmd-all-gray50-points-p) Setting all points to a specific color is possible and sometimes desirable.
+</div>
+</div>
 
 The point *geom* can be used with quite a few aesthetics, these are:
 
@@ -266,20 +277,36 @@ The point *geom* can be used with quite a few aesthetics, these are:
 
 The only way to get a feel for what's available in terms of the visual aesthetics is a series of examples that outline the plethora of options for each visual aesthetic. We'll cycle through some options for the color-related aesthetics (`color`, `fill`, and `alpha`) and the differentiation-related aesthetics (`shape` and `size`).
 
-Let's start off with the example given in the next code listing, where `price` vs. `carats` is plotted (*Figure \@ref(fig:dmd-aesthetics-1)*). Here we are using the `color` aesthetic for `cut` and the `shape` aesthetic for `clarity`. These aesthetics are defined at the mapping argument of `geom_point()` (enclosed within `aes()`). The point geom needs data and the aesthetics `x` and `y` but it inherits those from the preceding `ggplot()` statement.
+Let's start off with the example given in the next code listing, where `price` vs. `carats` is plotted (*Figure \@ref(fig:dmd-aesthetics-1-p)*). Here we are using the `color` aesthetic for `cut` and the `shape` aesthetic for `clarity`. These aesthetics are defined at the mapping argument of `geom_point()` (enclosed within `aes()`). The point geom needs data and the aesthetics `x` and `y` but it inherits those from the preceding `ggplot()` statement.
 
 `r dspatterns::code_hints(
 "**CODE //** Using ~~color~~ and ~~shape~~ aesthetics.",
 c(
 "#A A total of four aesthetics are used here: ~~x~~, ~~y~~, ~~color~~, and ~~shape~~."
 ))`
-```{r dmd-aesthetics-1, fig.cap='(ref:dmd-aesthetics-1)'}
+<div class="ggtab">
+
+<input type="radio" name="dmd-aesthetics-1-tab" id="dmd-aesthetics-1-c" checked="checked">
+<label for="dmd-aesthetics-1-c">Code</label>
+<div class="tab">
+```{r dmd-aesthetics-1-c, echo=TRUE, fig.show='hide'}
 ggplot(dmd, aes(x = carats, y = price)) +  #A
   geom_point(mapping = aes(color = cut, shape = clarity))
 ```
-(ref:dmd-aesthetics-1) Defining two visual aesthetics that give us data points with different colors and shapes.
+</div>
 
-There are two legends in *Figure \@ref(fig:dmd-aesthetics-1)* (both at the right), since we defined two aesthetics aside from `x` and `y`. We will see later that we can modify the legend position and the legend titles as well.
+<input type="radio" name="dmd-aesthetics-1-tab" id="dmd-aesthetics-1-p">
+<label for="dmd-aesthetics-1-p">Plot</label>
+<div class="tab">
+```{r dmd-aesthetics-1-p, echo=FALSE, fig.cap='(ref:dmd-aesthetics-1-p)'}
+ggplot(dmd, aes(x = carats, y = price)) +  #A
+  geom_point(mapping = aes(color = cut, shape = clarity))
+```
+(ref:dmd-aesthetics-1-p) Defining two visual aesthetics that give us data points with different colors and shapes.
+</div>
+</div>
+
+There are two legends in *Figure \@ref(fig:dmd-aesthetics-1-p)* (both at the right), since we defined two aesthetics aside from `x` and `y`. We will see later that we can modify the legend position and the legend titles as well.
 
 In the next code listing we will experiment with the `alpha` aesthetic, setting a low, fixed value for it.
 
@@ -288,13 +315,29 @@ In the next code listing we will experiment with the `alpha` aesthetic, setting 
 c(
 "#A The small value for ~~alpha~~ (~~0.05~~) makes non-overlapping data points barely visible."
 ))`
-```{r dmd-aesthetics-2, fig.cap='(ref:dmd-aesthetics-2)'}
+<div class="ggtab">
+
+<input type="radio" name="dmd-aesthetics-2-tab" id="dmd-aesthetics-2-c" checked="checked">
+<label for="dmd-aesthetics-2-c">Code</label>
+<div class="tab">
+```{r dmd-aesthetics-2-c, echo=TRUE, fig.show='hide'}
 ggplot(dmd, aes(x = carats, y = price)) +
   geom_point(mapping = aes(size = depth), alpha = 0.05)  #A
 ```
-(ref:dmd-aesthetics-2) Using a combination of the `size` aesthetic and a fixed `alpha` value.
+</div>
 
-*Figure \@ref(fig:dmd-aesthetics-2)* shows the same data as previous but uses the `size` aesthetic (mapping to `depth`) instead of `color` and `shape` (so, we're going back to the default dot shape). All points indiscriminately get an `alpha` value of `0.05` (`0` is fully transparent, `1` is entirely opaque). Because the `alpha` aesthetic is given outside of the `aes()` object, we have no mapping to a data variable and that's why a numerical value is used.
+<input type="radio" name="dmd-aesthetics-2-tab" id="dmd-aesthetics-2-p">
+<label for="dmd-aesthetics-2-p">Plot</label>
+<div class="tab">
+```{r dmd-aesthetics-2-p, echo=FALSE, fig.cap='(ref:dmd-aesthetics-2-p)'}
+ggplot(dmd, aes(x = carats, y = price)) +
+  geom_point(mapping = aes(size = depth), alpha = 0.05)  #A
+```
+(ref:dmd-aesthetics-2-p) Using a combination of the `size` aesthetic and a fixed `alpha` value.
+</div>
+</div>
+
+*Figure \@ref(fig:dmd-aesthetics-2-p)* shows the same data as previous but uses the `size` aesthetic (mapping to `depth`) instead of `color` and `shape` (so, we're going back to the default dot shape). All points indiscriminately get an `alpha` value of `0.05` (`0` is fully transparent, `1` is entirely opaque). Because the `alpha` aesthetic is given outside of the `aes()` object, we have no mapping to a data variable and that's why a numerical value is used.
 
 Next, let's use nothing but fixed values for the `color`, `fill`, and `shape` aesthetics.
 
@@ -303,13 +346,29 @@ Next, let's use nothing but fixed values for the `color`, `fill`, and `shape` ae
 c(
 "#A The points\\' ~~color~~, ~~fill~~, and ~~shape~~ aesthetics are set manually."
 ))`
-```{r dmd-aesthetics-3, fig.cap='(ref:dmd-aesthetics-3)'}
+<div class="ggtab">
+
+<input type="radio" name="dmd-aesthetics-3-tab" id="dmd-aesthetics-3-c" checked="checked">
+<label for="dmd-aesthetics-3-c">Code</label>
+<div class="tab">
+```{r dmd-aesthetics-3-c, echo=TRUE, fig.show='hide'}
 ggplot(dmd, aes(x = carats, y = price)) +
   geom_point(color = "gray50", fill = "#AAAFEF", shape = 23)  #A
 ```
-(ref:dmd-aesthetics-3) The use of fixed values for the `color`, `fill`, and `shape` aesthetics.
+</div>
 
-In *Figure \@ref(fig:dmd-aesthetics-3)*, we see the effect of no aesthetics being provided in `aes()` other than the mandatory `x` and `y`. We are going manual here and setting fixed `color`, `fill`, and `shape` values. Note that due to the lack of visual aesthetic mappings, there is no legend.
+<input type="radio" name="dmd-aesthetics-3-tab" id="dmd-aesthetics-3-p">
+<label for="dmd-aesthetics-3-p">Plot</label>
+<div class="tab">
+```{r dmd-aesthetics-3-p, echo=FALSE, fig.cap='(ref:dmd-aesthetics-3-p)'}
+ggplot(dmd, aes(x = carats, y = price)) +
+  geom_point(color = "gray50", fill = "#AAAFEF", shape = 23)  #A
+```
+(ref:dmd-aesthetics-3-p) The use of fixed values for the `color`, `fill`, and `shape` aesthetics.
+</div>
+</div>
+
+In *Figure \@ref(fig:dmd-aesthetics-3-p)*, we see the effect of no aesthetics being provided in `aes()` other than the mandatory `x` and `y`. We are going manual here and setting fixed `color`, `fill`, and `shape` values. Note that due to the lack of visual aesthetic mappings, there is no legend.
 
 Shapes are always provided as a number; shape `23` happens be one that accepts both a `color` and a `fill` aesthetic—this is less common among **ggplot** shape types. Given that we often need to know what colors and shapes are available, please refer to *Appendix 1* where reference diagrams show all of the **ggplot** shapes and named colors.
 
@@ -324,13 +383,29 @@ Most of the aesthetics in previous examples were applied to categorical variable
 c(
 "#A Because the ~~depth~~ variable is numeric and continuous, we get a gradient of blue tones mapped to data points."
 ))`
-```{r dmd-aesthetics-4, fig.cap='(ref:dmd-aesthetics-4)'}
+<div class="ggtab">
+
+<input type="radio" name="dmd-aesthetics-4-tab" id="dmd-aesthetics-4-c" checked="checked">
+<label for="dmd-aesthetics-4-c">Code</label>
+<div class="tab">
+```{r dmd-aesthetics-4-c, echo=TRUE, fig.show='hide'}
 ggplot(dmd, aes(x = carats, y = price)) +
   geom_point(mapping = aes(color = depth, shape = clarity))  #A
 ```
-(ref:dmd-aesthetics-4) Using the `color` aesthetic on a continuous variable results in the data points mapped to a gradient of colors.
+</div>
 
-In *Figure \@ref(fig:dmd-aesthetics-4)*, we get the resulting plot from the four aesthetic mappings of `x`, `y`, `color` and `shape`. The `shape` of the data points is mapped to the discrete `clarity` variable and the `color` of the data points is mapped to the continuous `depth` variable (where brighter blues indicate higher values). As with *Figure \@ref(fig:dmd-aesthetics-1)* we get two legends here because there are two visual aesthetics mapped to data.
+<input type="radio" name="dmd-aesthetics-4-tab" id="dmd-aesthetics-4-p">
+<label for="dmd-aesthetics-4-p">Plot</label>
+<div class="tab">
+```{r dmd-aesthetics-4-p, echo=FALSE, fig.cap='(ref:dmd-aesthetics-4-p)'}
+ggplot(dmd, aes(x = carats, y = price)) +
+  geom_point(mapping = aes(color = depth, shape = clarity))  #A
+```
+(ref:dmd-aesthetics-4-p) Using the `color` aesthetic on a continuous variable results in the data points mapped to a gradient of colors.
+</div>
+</div>
+
+In *Figure \@ref(fig:dmd-aesthetics-4-p)*, we get the resulting plot from the four aesthetic mappings of `x`, `y`, `color` and `shape`. The `shape` of the data points is mapped to the discrete `clarity` variable and the `color` of the data points is mapped to the continuous `depth` variable (where brighter blues indicate higher values). As with *Figure \@ref(fig:dmd-aesthetics-1-p)* we get two legends here because there are two visual aesthetics mapped to data.
 
 ## Facets and the Art of Faceting in **ggplot**
 
@@ -338,19 +413,36 @@ Facets are a way of splitting a single plot into multiple subplots. The splittin
 
 ### Faceting by One Variable
 
-The diamonds described in the `dmd` dataset have discrete variables that are useful for faceting: `color`, `cut`, and `clarity`. What if we could make our plot of `price` vs. `carats` for each of the three cases of clarity (e.g., diamonds with Fair clarity in the first plot, and similarly diamonds with Great and The Best clarity in the second and third plots)? What if these plots could all appear together as a combined graphic? That there is faceting. So let's take the much earlier code used to create `dmd_carats_price` and apply the `facet_wrap()` function to facet by clarity, giving us *Figure \@ref(fig:dmd-facet-clarity)*.
+The diamonds described in the `dmd` dataset have discrete variables that are useful for faceting: `color`, `cut`, and `clarity`. What if we could make our plot of `price` vs. `carats` for each of the three cases of clarity (e.g., diamonds with Fair clarity in the first plot, and similarly diamonds with Great and The Best clarity in the second and third plots)? What if these plots could all appear together as a combined graphic? That there is faceting. So let's take the much earlier code used to create `dmd_carats_price` and apply the `facet_wrap()` function to facet by clarity, giving us *Figure \@ref(fig:dmd-facet-clarity-p)*.
 
 `r dspatterns::code_hints(
 "**CODE //** Using an additional statement with ~~facet_wrap()~~ gives us a faceted plot.",
 c(
 "#A The ~~facet_wrap()~~ function requires one or more variable names wrapped in ~~vars()~~."
 ))`
-```{r dmd-facet-clarity, fig.cap='(ref:dmd-facet-clarity)'}
+<div class="ggtab">
+
+<input type="radio" name="dmd-facet-clarity-tab" id="dmd-facet-clarity-c" checked="checked">
+<label for="dmd-facet-clarity-c">Code</label>
+<div class="tab">
+```{r dmd-facet-clarity-c, echo=TRUE, fig.show='hide'}
 ggplot(dmd, aes(x = carats, y = price)) +
   geom_point() +
   facet_wrap(facets = vars(clarity))  #A
 ```
-(ref:dmd-facet-clarity) Faceting by a single categorical variable.
+</div>
+
+<input type="radio" name="dmd-facet-clarity-tab" id="dmd-facet-clarity-p">
+<label for="dmd-facet-clarity-p">Plot</label>
+<div class="tab">
+```{r dmd-facet-clarity-p, echo=FALSE, fig.cap='(ref:dmd-facet-clarity-p)'}
+ggplot(dmd, aes(x = carats, y = price)) +
+  geom_point() +
+  facet_wrap(facets = vars(clarity))  #A
+```
+(ref:dmd-facet-clarity-p) Faceting by a single categorical variable.
+</div>
+</div>
 
 We can see a clear difference in pricing for similarly weighted diamonds between the `"Fair"` and `"The Best"` plots (labels are shown in the panel strips), and less of a difference in the pricing between the `"Great"` and `"The Best"` facets of `clarity.` Faceting makes these types of comparisons relatively easy.
 
@@ -360,44 +452,83 @@ In the facets argument of `facet_wrap()`, we needed to wrap the variables we are
 
 ### Faceting by Two Variables
 
-We can choose to provide multiple variables to `vars()` and **ggplot** will handle the faceting of interactions between those variables. Let's extend the example that produced *Figure \@ref(fig:dmd-facet-clarity)* and incorporate the `cut` variable, which contains the same discrete values as `clarity` (*Figure \@ref(fig:dmd-facet-cut-clarity)*).
+We can choose to provide multiple variables to `vars()` and **ggplot** will handle the faceting of interactions between those variables. Let's extend the example that produced *Figure \@ref(fig:dmd-facet-clarity-p)* and incorporate the `cut` variable, which contains the same discrete values as `clarity` (*Figure \@ref(fig:dmd-facet-cut-clarity-p)*).
 
 `r dspatterns::code_hints(
 "**CODE //** Faceting by two variables: ~~cut~~ and ~~clarity~~.",
 c(
 "#A The ~~vars()~~ function inside ~~facet_wrap()~~ needs variables to be separated by commas."
 ))`
-```{r dmd-facet-cut-clarity, fig.cap='(ref:dmd-facet-cut-clarity)'}
+<div class="ggtab">
+
+<input type="radio" name="dmd-facet-cut-clarity-tab" id="dmd-facet-cut-clarity-c" checked="checked">
+<label for="dmd-facet-cut-clarity-c">Code</label>
+<div class="tab">
+```{r dmd-facet-cut-clarity-c, echo=TRUE, fig.show='hide'}
 ggplot(dmd, aes(x = carats, y = price)) +
   geom_point() +
   facet_wrap(facets = vars(cut, clarity))  #A
 ```
-(ref:dmd-facet-cut-clarity) Faceting by two categorical variables with `facet_wrap()`.
+</div>
+
+<input type="radio" name="dmd-facet-cut-clarity-tab" id="dmd-facet-cut-clarity-p">
+<label for="dmd-facet-cut-clarity-p">Plot</label>
+<div class="tab">
+```{r dmd-facet-cut-clarity-p, echo=FALSE, fig.cap='(ref:dmd-facet-cut-clarity-p)'}
+ggplot(dmd, aes(x = carats, y = price)) +
+  geom_point() +
+  facet_wrap(facets = vars(cut, clarity))  #A
+```
+(ref:dmd-facet-cut-clarity-p) Faceting by two categorical variables with `facet_wrap()`.
+</div>
+</div>
 
 The panel strips now show values for the `cut` and the `clarity` faceting variables. If we had instead used `vars(clarity, cut)`, the ordering of panels would be different. In the above plot, the top-left panel shows the lowest-quality combination of `clarity` and `cut` and the panel at bottom-right provides a plot of the rarefied set of diamonds with the best `clarity` and `cut`.
 
-The default appearance of the labels in the strips can make it difficult to distinguish the variables. In the next code listing we will use a nice option, which is `labeller = label_both` inside `facet_wrap()`. This will format the panel strip labels to include both the variable name and value for each panel (*Figure \@ref(fig:dmd-facet-cut-clarity-labeller)*).
+The default appearance of the labels in the strips can make it difficult to distinguish the variables. In the next code listing we will use a nice option, which is `labeller = label_both` inside `facet_wrap()`. This will format the panel strip labels to include both the variable name and value for each panel (*Figure \@ref(fig:dmd-facet-cut-clarity-labeller-p)*).
 
 `r dspatterns::code_hints(
 "**CODE //** Using the ~~labeller~~ function ~~label_both~~ to create informative labels for facets.",
 c(
 "#A The ~~label_both~~ function supplied to the labeller argument doesn\\'t need parentheses."
 ))`
-```{r dmd-facet-cut-clarity-labeller, fig.cap='(ref:dmd-facet-cut-clarity-labeller)'}
+<div class="ggtab">
+
+<input type="radio" name="dmd-facet-cut-clarity-labeller-tab" id="dmd-facet-cut-clarity-labeller-c" checked="checked">
+<label for="dmd-facet-cut-clarity-labeller-c">Code</label>
+<div class="tab">
+```{r dmd-facet-cut-clarity-labeller-c, echo=TRUE, fig.show='hide'}
 ggplot(dmd, aes(x = carats, y = price)) +
   geom_point() +
   facet_wrap(facets = vars(cut, clarity), labeller = label_both)  #A
 ```
-(ref:dmd-facet-cut-clarity-labeller) Faceting by two categorical variables and making clearer which variables the labels belong to (by way of `labeller = label_both`).
+</div>
 
-The `facet_wrap()` way of faceting is to make a set of panels with a layout that is from left to right, top to bottom. By default, **ggplot** chooses the optimal layout depending on the number of panels but we can modify this by using the `ncol` and `nrow` arguments of `facet_wrap()`. *Figure \@ref(fig:dmd-facet-cut-clarity-wide)* provides an example where we make a wide layout by using `nrow = 1`. 
+<input type="radio" name="dmd-facet-cut-clarity-labeller-tab" id="dmd-facet-cut-clarity-labeller-p">
+<label for="dmd-facet-cut-clarity-labeller-p">Plot</label>
+<div class="tab">
+```{r dmd-facet-cut-clarity-labeller-p, echo=FALSE, fig.cap='(ref:dmd-facet-cut-clarity-labeller-p)'}
+ggplot(dmd, aes(x = carats, y = price)) +
+  geom_point() +
+  facet_wrap(facets = vars(cut, clarity), labeller = label_both)  #A
+```
+(ref:dmd-facet-cut-clarity-labeller-p) Faceting by two categorical variables and making clearer which variables the labels belong to (by way of `labeller = label_both`).
+</div>
+</div>
+
+The `facet_wrap()` way of faceting is to make a set of panels with a layout that is from left to right, top to bottom. By default, **ggplot** chooses the optimal layout depending on the number of panels but we can modify this by using the `ncol` and `nrow` arguments of `facet_wrap()`. *Figure \@ref(fig:dmd-facet-cut-clarity-wide-p)* provides an example where we make a wide layout by using `nrow = 1`. 
 
 `r dspatterns::code_hints(
 "**CODE //** We can specify the total number of rows of plot panels with the ~~nrow~~ argument.",
 c(
 "#A The ~~nrow~~ argument must be placed inside ~~facet_wrap()~~; the use of ~~ncol~~ (number of columns) is optional."
 ))`
-```{r dmd-facet-cut-clarity-wide, fig.cap='(ref:dmd-facet-cut-clarity-wide)'}
+<div class="ggtab">
+
+<input type="radio" name="dmd-facet-cut-clarity-wide-tab" id="dmd-facet-cut-clarity-wide-c" checked="checked">
+<label for="dmd-facet-cut-clarity-wide-c">Code</label>
+<div class="tab">
+```{r dmd-facet-cut-clarity-wide-c, echo=TRUE, fig.show='hide'}
 ggplot(dmd, aes(x = carats, y = price)) +
   geom_point() +
   facet_wrap(
@@ -406,18 +537,39 @@ ggplot(dmd, aes(x = carats, y = price)) +
     labeller = label_both
   )
 ```
-(ref:dmd-facet-cut-clarity-wide) We can influence the layout of panels by setting a value for `nrow` (we can optionally set a value for `ncol` as well).
+</div>
+
+<input type="radio" name="dmd-facet-cut-clarity-wide-tab" id="dmd-facet-cut-clarity-wide-p">
+<label for="dmd-facet-cut-clarity-wide-p">Plot</label>
+<div class="tab">
+```{r dmd-facet-cut-clarity-wide-p, echo=FALSE, fig.cap='(ref:dmd-facet-cut-clarity-wide-p)'}
+ggplot(dmd, aes(x = carats, y = price)) +
+  geom_point() +
+  facet_wrap(
+    facets = vars(cut, clarity),
+    nrow = 1,  #A
+    labeller = label_both
+  )
+```
+(ref:dmd-facet-cut-clarity-wide-p) We can influence the layout of panels by setting a value for `nrow` (we can optionally set a value for `ncol` as well).
+</div>
+</div>
 
 Only one row of panels is generated. Be careful when there is a very large number of panels, as labels on the *x* axis may collide with one another. We can specify the number of columns (`ncol`) or the number of rows (`nrow`) in final layout. Interestingly, we can choose to supply a value to one or both of these arguments.
 
-When faceting by two variables, the use of `facet_grid()` might result in a better appearance of panels. As the name of the function implies, panels are placed into a strict grid. The faceting variables provide the *x* and *y* positions of the panels. Let's rework the plot to the grid layout to demonstrate this. The changes to make are to use `facet_grid()` instead of `facet_wrap()` and, within that, use the `rows` and `cols` arguments (both with `vars()`) to tell **ggplot** which faceting variables should run across rows or columns (*Figure \@ref(fig:dmd-facet-cut-clarity-grid)*).
+When faceting by two variables, the use of `facet_grid()` might result in a better appearance of panels. As the name of the function implies, panels are placed into a strict grid. The faceting variables provide the *x* and *y* positions of the panels. Let's rework the plot to the grid layout to demonstrate this. The changes to make are to use `facet_grid()` instead of `facet_wrap()` and, within that, use the `rows` and `cols` arguments (both with `vars()`) to tell **ggplot** which faceting variables should run across rows or columns (*Figure \@ref(fig:dmd-facet-cut-clarity-grid-p)*).
 
 `r dspatterns::code_hints(
 "**CODE //** Using ~~facet_grid()~~ provides a slightly different visualization of the faceted plot panels.",
 c(
 "#A Instead of the optional ~~nrow~~ and ~~ncol~~ arguments of ~~facet_wrap()~~, we have the required arguments of ~~rows~~ and ~~cols~~ (each requires variables placed inside ~~vars()~~)."
 ))`
-```{r dmd-facet-cut-clarity-grid, fig.cap='(ref:dmd-facet-cut-clarity-grid)'}
+<div class="ggtab">
+
+<input type="radio" name="dmd-facet-cut-clarity-grid-tab" id="dmd-facet-cut-clarity-grid-c" checked="checked">
+<label for="dmd-facet-cut-clarity-grid-c">Code</label>
+<div class="tab">
+```{r dmd-facet-cut-clarity-grid-c, echo=TRUE, fig.show='hide'}
 ggplot(dmd, aes(x = carats, y = price)) +
   geom_point(alpha = 0.2) +
   facet_grid(
@@ -425,7 +577,22 @@ ggplot(dmd, aes(x = carats, y = price)) +
     labeller = label_both
   )
 ```
-(ref:dmd-facet-cut-clarity-grid) Faceting by two categorical variables with `facet_grid()`.
+</div>
+
+<input type="radio" name="dmd-facet-cut-clarity-grid-tab" id="dmd-facet-cut-clarity-grid-p">
+<label for="dmd-facet-cut-clarity-grid-p">Plot</label>
+<div class="tab">
+```{r dmd-facet-cut-clarity-grid-p, echo=FALSE, fig.cap='(ref:dmd-facet-cut-clarity-grid-p)'}
+ggplot(dmd, aes(x = carats, y = price)) +
+  geom_point(alpha = 0.2) +
+  facet_grid(
+    rows = vars(cut), cols = vars(clarity),  #A
+    labeller = label_both
+  )
+```
+(ref:dmd-facet-cut-clarity-grid-p) Faceting by two categorical variables with `facet_grid()`.
+</div>
+</div>
 
 This arrangement makes is slightly easier to see that the rows of plots represent different values of `cut`. The choice in whether to use `facet_grid()` over `facet_wrap()` is often a matter of taste or practicality. When faceting by a single variable, `facet_wrap()` might be the best way. If there are two faceting variables, try both `facet_wrap()` and `facet_grid()` and then make a call on which approach to faceting works best for that case. Until you develop a better feel for how these faceting options work, don't be afraid to experiment with both functions.
 
@@ -433,14 +600,19 @@ This arrangement makes is slightly easier to see that the rows of plots represen
 
 Through most of the **ggplot** examples we've worked through up to this point, default text was applied to plot elements such as the axis labels and the legend titles. While this is certainly convenient and sufficient for most exploratory plots, we may want to customize the text elements for the purpose of presentation and more effective communication.
 
-Most label customization can be done using the `labs()` function, so, let's make a plot with labels of our own choosing (*Figure \@ref(fig:plot-new-labs)*). The general construction is to add several `[aesthetic name] = "[label name]"` name-value pairs, separated by commas, inside `labs()`.
+Most label customization can be done using the `labs()` function, so, let's make a plot with labels of our own choosing (*Figure \@ref(fig:plot-new-labs-p)*). The general construction is to add several `[aesthetic name] = "[label name]"` name-value pairs, separated by commas, inside `labs()`.
 
 `r dspatterns::code_hints(
 "**CODE //** The ~~labs()~~ function gives us the opportunity to provide our own labels for different plot elements.",
 c(
 "#A All of the label text needs to be put in quotes."
 ))`
-```{r plot-new-labs, fig.cap='(ref:plot-new-labs)'}
+<div class="ggtab">
+
+<input type="radio" name="plot-new-labs-tab" id="plot-new-labs-c" checked="checked">
+<label for="plot-new-labs-c">Code</label>
+<div class="tab">
+```{r plot-new-labs-c, echo=TRUE, fig.show='hide'}
 ggplot(dmd, mapping = aes(x = carats, y = price)) +
   geom_point(mapping = aes(shape = clarity)) +
   labs(
@@ -449,9 +621,25 @@ ggplot(dmd, mapping = aes(x = carats, y = price)) +
     shape = "Diamond Clarity" 
   )
 ```
-(ref:plot-new-labs) Replacement of default labels in the plot axis and legend titles with `labs()`.
+</div>
 
-Let's further augment our plot with a title and a caption. These elements are very useful for communicating what the plot is showing and for providing extra details which can be important for the intended audience. The text elements of `title` and `subtitle` can be used to add a descriptive title and subtitle above the plot. Should we need to further describe aspects of the plot, a `caption` (which appears below the plot) can be used. *Figure \@ref(fig:plot-labs-titles)* provides an example that shows all of these textual elements.
+<input type="radio" name="plot-new-labs-tab" id="plot-new-labs-p">
+<label for="plot-new-labs-p">Plot</label>
+<div class="tab">
+```{r plot-new-labs-p, echo=FALSE, fig.cap='(ref:plot-new-labs-p)'}
+ggplot(dmd, mapping = aes(x = carats, y = price)) +
+  geom_point(mapping = aes(shape = clarity)) +
+  labs(
+    x = "Weight of the Diamond (carats)",  #A
+    y = "Price (USD)", 
+    shape = "Diamond Clarity" 
+  )
+```
+(ref:plot-new-labs-p) Replacement of default labels in the plot axis and legend titles with `labs()`.
+</div>
+</div>
+
+Let's further augment our plot with a title and a caption. These elements are very useful for communicating what the plot is showing and for providing extra details which can be important for the intended audience. The text elements of `title` and `subtitle` can be used to add a descriptive title and subtitle above the plot. Should we need to further describe aspects of the plot, a `caption` (which appears below the plot) can be used. *Figure \@ref(fig:plot-labs-titles-p)* provides an example that shows all of these textual elements.
 
 `r dspatterns::code_hints(
 "**CODE //** We can specify the plot\'s ~~title~~, ~~subtitle~~, and ~~caption~~ inside ~~labs()~~ as well.",
@@ -460,7 +648,12 @@ c(
 "#D,#E These are the axis labels.",
 "#F This label is for the legend. It refers to the shape aesthetic used in ~~geom_point()~~."
 ))`
-```{r plot-labs-titles, fig.cap='(ref:plot-labs-titles)'}
+<div class="ggtab">
+
+<input type="radio" name="plot-labs-titles-tab" id="plot-labs-titles-c" checked="checked">
+<label for="plot-labs-titles-c">Code</label>
+<div class="tab">
+```{r plot-labs-titles-c, echo=TRUE, fig.show='hide'}
 ggplot(dmd, mapping = aes(x = carats, y = price)) +
   geom_point(mapping = aes(shape = clarity)) +
   labs(
@@ -472,30 +665,67 @@ ggplot(dmd, mapping = aes(x = carats, y = price)) +
     shape = "Diamond Clarity"  #F
   )
 ```
-(ref:plot-labs-titles) Replacement of default labels and the addition of a `title`, `subtitle`, and a `caption`. All with `labs()`.
+</div>
+
+<input type="radio" name="plot-labs-titles-tab" id="plot-labs-titles-p">
+<label for="plot-labs-titles-p">Plot</label>
+<div class="tab">
+```{r plot-labs-titles-p, echo=FALSE, fig.cap='(ref:plot-labs-titles-p)'}
+ggplot(dmd, mapping = aes(x = carats, y = price)) +
+  geom_point(mapping = aes(shape = clarity)) +
+  labs(
+    title = "The Relationship Between Diamond Weight on Price",  #A
+    subtitle = "Quality of diamond clarity is indicated by shape",  #B
+    caption = "Data taken from the `dmd` dataset",  #C
+    x = "Weight of the Diamond (carats)",  #D
+    y = "Price (USD)",  #E
+    shape = "Diamond Clarity"  #F
+  )
+```
+(ref:plot-labs-titles-p) Replacement of default labels and the addition of a `title`, `subtitle`, and a `caption`. All with `labs()`.
+</div>
+</div>
 
 Adding linebreaks to long labels: Should we need to add line breaks because a label is too long for a single line, one or more linebreak characters (`\n`) can be inserted into the label text (e.g., `color = "Diamond\nCut"`).
 
-The plot in *Figure \@ref(fig:plot-labs-titles)* is very presentable and wouldn't be out of place in a presentation or a report. The usage of the `title`, `subtitle`, and `caption` elements is entirely up to you. Experiment with using them in different situations and develop your own style!
+The plot in *Figure \@ref(fig:plot-labs-titles-p)* is very presentable and wouldn't be out of place in a presentation or a report. The usage of the `title`, `subtitle`, and `caption` elements is entirely up to you. Experiment with using them in different situations and develop your own style!
 
 ## Modifying the Location of Legends
 
 The placement of legends is a common customization. While the default placement on the right is reasonable, you might find that placing legends below the plot can be more aesthetically pleasing. The customization of legend placement is done with the `theme()` function. This function actually allows one to modify virtually any component in the plot, and it has a huge number of arguments. While we won't go into depth on setting themes or getting a handle on theme customization until later in the book, we'll simply use the `theme()` function with the `legend.position` and `legend.justification` arguments to provide a few handy methods related to legend placement.
 
-Let's start with a basic plot on which to base future examples by including the `theme(legend.position = "right")` statement. The resulting plot is shown as *Figure \@ref(fig:plot-legend-right)*.
+Let's start with a basic plot on which to base future examples by including the `theme(legend.position = "right")` statement. The resulting plot is shown as *Figure \@ref(fig:plot-legend-right-p)*.
 
 `r dspatterns::code_hints(
 "**CODE //** Using the ~~legend.position~~ argument of ~~theme()~~ to put the legend to the right of the plot.",
 c(
 "#A The ~~theme()~~ function has a lot of options. The ~~legend.position~~ option allows us to place the legend in one of four different areas."
 ))`
-```{r plot-legend-right, fig.cap='(ref:plot-legend-right)'}
+<div class="ggtab">
+
+<input type="radio" name="plot-legend-right-tab" id="plot-legend-right-c" checked="checked">
+<label for="plot-legend-right-c">Code</label>
+<div class="tab">
+```{r plot-legend-right-c, echo=TRUE, fig.show='hide'}
 ggplot(dmd, aes(x = carats, y = price)) +
   geom_point(aes(shape = clarity)) +
   labs(shape = "Clarity") +
   theme(legend.position = "right")  #A
 ```
-(ref:plot-legend-right) Putting the legend to the right (this is the default placement).
+</div>
+
+<input type="radio" name="plot-legend-right-tab" id="plot-legend-right-p">
+<label for="plot-legend-right-p">Plot</label>
+<div class="tab">
+```{r plot-legend-right-p, echo=FALSE, fig.cap='(ref:plot-legend-right-p)'}
+ggplot(dmd, aes(x = carats, y = price)) +
+  geom_point(aes(shape = clarity)) +
+  labs(shape = "Clarity") +
+  theme(legend.position = "right")  #A
+```
+(ref:plot-legend-right-p) Putting the legend to the right (this is the default placement).
+</div>
+</div>
 
 The plotting code in the previous listing includes the `theme(legend.position = "right")` statement, however, it doesn't really need this statement since `legend.position = "right"` is the default (we see this throughout the plots we made). Nonetheless, this example provides a useful template for understanding how this argument works within `theme()`.
 
@@ -506,13 +736,31 @@ The legend can be put in other locations. The plotting code can be revised to pl
 c(
 "#A Setting the legend position to the bottom creates a horizontal layout, which presents well if the legend doesn\'t have too many items."
 ))`
-```{r plot-legend-bottom, fig.cap='(ref:plot-legend-bottom)'}
+<div class="ggtab">
+
+<input type="radio" name="plot-legend-bottom-tab" id="plot-legend-bottom-c" checked="checked">
+<label for="plot-legend-bottom-c">Code</label>
+<div class="tab">
+```{r plot-legend-bottom-c, echo=TRUE, fig.show='hide'}
 ggplot(dmd, aes(x = carats, y = price)) +
   geom_point(aes(shape = clarity)) +
   labs(shape = "Clarity") +
   theme(legend.position = "bottom")  #A
 ```
-(ref:plot-legend-bottom) Putting the legend at the bottom.
+</div>
+
+<input type="radio" name="plot-legend-bottom-tab" id="plot-legend-bottom-p">
+<label for="plot-legend-bottom-p">Plot</label>
+<div class="tab">
+```{r plot-legend-bottom-p, echo=FALSE, fig.cap='(ref:plot-legend-bottom-p)'}
+ggplot(dmd, aes(x = carats, y = price)) +
+  geom_point(aes(shape = clarity)) +
+  labs(shape = "Clarity") +
+  theme(legend.position = "bottom")  #A
+```
+(ref:plot-legend-bottom-p) Putting the legend at the bottom.
+</div>
+</div>
 
 By using `"bottom"` instead of `"right"` for `legend.position`, we see that the legend is at the bottom. We can also use the values `"top"` and `"left"` to place the legend at the top or to the left.
 
@@ -523,30 +771,66 @@ Using the `legend.justification` argument in `theme()` we can have the legend ve
 c(
 "#A Here, the legend position is to the right (that\'s the default position). We can justify the legend to the top of the visualization with ~~legend.justification~~."
 ))`
-```{r plot-legend-just-top, fig.cap='(ref:plot-legend-just-top)'}
+<div class="ggtab">
+
+<input type="radio" name="plot-legend-just-top-tab" id="plot-legend-just-top-c" checked="checked">
+<label for="plot-legend-just-top-c">Code</label>
+<div class="tab">
+```{r plot-legend-just-top-c, echo=TRUE, fig.show='hide'}
 ggplot(dmd, aes(x = carats, y = price)) +
   geom_point(aes(shape = clarity)) +
   labs(shape = "Clarity") +
   theme(legend.justification = "top")  #A
 ```
-(ref:plot-legend-just-top) Default legend position to the right but justified to the top.
+</div>
+
+<input type="radio" name="plot-legend-just-top-tab" id="plot-legend-just-top-p">
+<label for="plot-legend-just-top-p">Plot</label>
+<div class="tab">
+```{r plot-legend-just-top-p, echo=FALSE, fig.cap='(ref:plot-legend-just-top-p)'}
+ggplot(dmd, aes(x = carats, y = price)) +
+  geom_point(aes(shape = clarity)) +
+  labs(shape = "Clarity") +
+  theme(legend.justification = "top")  #A
+```
+(ref:plot-legend-just-top-p) Default legend position to the right but justified to the top.
+</div>
+</div>
 
 Other values can be used, like `"bottom"`, `"left"`, and `"right"`. We can also combine positioning and justification by providing values to both `legend.position` and `legend.justification`. One use of that (not shown, but looks great) is `theme(legend.position = "bottom", legend.justification = "right")`.
 
-But what if we don't want the legend at all? This is sometimes the case and it's not very obvious how we might hide our legend. The thing to do here is to use `theme(legend.position = "none")`. Then, the legend disappears as we can see in *Figure \@ref(fig:plot-no-legend)*.
+But what if we don't want the legend at all? This is sometimes the case and it's not very obvious how we might hide our legend. The thing to do here is to use `theme(legend.position = "none")`. Then, the legend disappears as we can see in *Figure \@ref(fig:plot-no-legend-p)*.
 
 `r dspatterns::code_hints(
 "**CODE //** Using the ~~legend.position~~ argument of ~~theme()~~ to remove the legend entirely.",
 c(
 "#A There are instances where we don\'t want or need the legend. To do that, we set ~~legend.position~~ to ~~\"none\"~~."
 ))`
-```{r plot-no-legend, fig.cap='(ref:plot-no-legend)'}
+<div class="ggtab">
+
+<input type="radio" name="plot-no-legend-tab" id="plot-no-legend-c" checked="checked">
+<label for="plot-no-legend-c">Code</label>
+<div class="tab">
+```{r plot-no-legend-c, echo=TRUE, fig.show='hide'}
 ggplot(dmd, aes(x = carats, y = price)) +
   geom_point(aes(shape = clarity)) +
   labs(shape = "Clarity") +
   theme(legend.position = "none")  #A
 ```
-(ref:plot-no-legend) A plot with no legend at all. 
+</div>
+
+<input type="radio" name="plot-no-legend-tab" id="plot-no-legend-p">
+<label for="plot-no-legend-p">Plot</label>
+<div class="tab">
+```{r plot-no-legend-p, echo=FALSE, fig.cap='(ref:plot-no-legend-p)'}
+ggplot(dmd, aes(x = carats, y = price)) +
+  geom_point(aes(shape = clarity)) +
+  labs(shape = "Clarity") +
+  theme(legend.position = "none")  #A
+```
+(ref:plot-no-legend-p) A plot with no legend at all. 
+</div>
+</div>
 
 In this example code, there are still labels defined for the nonexistent legend in `labs()` but it's okay to leave them in without worrying about an error.
 
@@ -643,9 +927,3 @@ In this example code, there are still labels defined for the nonexistent legend 
 19. What we get if we run the plotting code is rows of panels that incorporate combinations of `color` and `cut` values in the strip titles, and, columns of `clarity` facets. Additionally, we can see that some of the subplots are empty because the data doesn't have all combinations of `color`, `cut`, and `clarity.`
 
 20. The error message we get from this plotting code reads `Error: A continuous variable can not be mapped to shape`. Because the `depth` variable encompasses a range of values, it is considered to be continuous. Since we have limited numbers of shapes and its inherently difficult to map shapes on continuous scale, **ggplot** cannot construct a plot. One option is to map `depth` to a different visual aesthetic like `color` or `size.` Another option is to use **dplyr** to first modify the dataset by generating a categorical variable based on `depth.`
-
-
-
-
-
-
