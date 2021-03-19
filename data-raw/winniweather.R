@@ -5,11 +5,11 @@ library(tidyverse)
 #
 # This comes from the Environment Canada Weather Information website
 # https://weather.gc.ca/ The downloaded CSV data was processed and reduced in
-# content (both in rows and columns) and saved here as `04-winniweather.csv`
+# content (both in rows and columns) and saved here as `winniweather.csv`
 #
 
 winniweather <-
-  readr::read_csv("./data-raw/04-winniweather.csv", col_types = "iiicdiiid") %>%
+  readr::read_csv("./data-raw/winniweather.csv", col_types = "iiicdiiid") %>%
   tidyr::replace_na(list(temp_c = 9999)) %>%
   dplyr::mutate(yearmonth = paste(year, month, sep = "-")) %>%
   dplyr::select(yearmonth, dplyr::everything(), -year, -month) %>%

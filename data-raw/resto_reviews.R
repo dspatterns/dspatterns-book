@@ -5,5 +5,5 @@ library(tidyverse)
 #
 
 resto_reviews <-
-  readr::read_csv("./data-raw/08-resto_reviews.csv", col_types = "c") %>%
+  readr::read_csv("./data-raw/resto_reviews.csv", col_types = "c") %>%
   dplyr::pull(review)

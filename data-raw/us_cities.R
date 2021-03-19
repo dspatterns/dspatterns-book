@@ -5,11 +5,11 @@ library(tidyverse)
 #
 # This comes from the SimpleMaps website (https://simplemaps.com). The CSV data
 # was downloaded from https://simplemaps.com/data/us-cities on April 29, 2019
-# and saved as `05-us_cities.csv`.
+# and saved as `us_cities.csv`.
 
 us_cities <-
   readr::read_csv(
-    "./data-raw/05-us_cities.csv",
+    "./data-raw/us_cities.csv",
     col_types = "ccccdcdddddclccd") %>%
   dplyr::select(
     city_ascii, state_id, state_name,

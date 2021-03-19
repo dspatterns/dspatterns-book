@@ -5,7 +5,7 @@ library(tidyverse)
 #
 
 nycweather <-
-  readr::read_csv("./data-raw/06-nycweather.csv", col_types = "cciiiiiddddddddddc") %>%
+  readr::read_csv("./data-raw/nycweather.csv", col_types = "cciiiiiddddddddddc") %>%
   dplyr::select(time, wd, ws, temp, p = atmos_pres, rh) %>%
   dplyr::mutate(time = time %>% stringr::str_replace("T", " ")) %>%
   dplyr::mutate(time = time %>% stringr::str_replace("Z", ""))

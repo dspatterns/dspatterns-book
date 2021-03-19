@@ -7,7 +7,7 @@ library(lubridate)
 # The `pitchfork` dataset
 #
 
-conn <- RSQLite::dbConnect(RSQLite::SQLite(), "./data-raw/10d-pitchfork.db")
+conn <- RSQLite::dbConnect(RSQLite::SQLite(), "./data-raw/pitchfork.db")
 
 pitchfork <-
   dplyr::tbl(src = conn, "reviews") %>%
