@@ -875,6 +875,11 @@ In this example code, there are still labels defined for the nonexistent legend 
 
 ## Exercises
 
+Notes
+ - questions might be split nicely into quiz-type questions (definitive answers), open-ended/requiring exploration
+ - reframe questions about practices to emphasize the reasons for doing so (e.g., first question should be reframed)
+
+
 1. When you are creating a new **R Markdown** document for visualization with **ggplot**, what **R** statement should be written (and executed) before any plotting?
 
 2. What is the first function that should use when making a **ggplot** plot?
@@ -915,7 +920,7 @@ In this example code, there are still labels defined for the nonexistent legend 
 
 20. Try running the following plotting code: `ggplot(dmd, aes(x = carats, y = price)) + geom_point(aes(shape = depth))`. It results in an error. Why do you think this error occurs? What can be done instead?
 
-## Possible Answers
+## Possible Answers (put in `details` section for each question)
 
 1. A `library` statement should ideally come first and be executed first. This could be `library(tidyverse)` (or `library(ggplot2)` if you know you just want to use functions from **ggplot**).
 
@@ -959,3 +964,34 @@ In this example code, there are still labels defined for the nonexistent legend 
 19. What we get if we run the plotting code is rows of panels that incorporate combinations of `color` and `cut` values in the strip titles, and, columns of `clarity` facets. Additionally, we can see that some of the subplots are empty because the data doesn't have all combinations of `color`, `cut`, and `clarity.`
 
 20. The error message we get from this plotting code reads `Error: A continuous variable can not be mapped to shape`. Because the `depth` variable encompasses a range of values, it is considered to be continuous. Since we have limited numbers of shapes and its inherently difficult to map shapes on continuous scale, **ggplot** cannot construct a plot. One option is to map `depth` to a different visual aesthetic like `color` or `size.` Another option is to use **dplyr** to first modify the dataset by generating a categorical variable based on `depth.`
+
+
+## Project
+
+
+(should have a fully working set of Rmd templates, presented in the form of a project template - this can be prepped for the reader with a function call)
+
+The moma dataset (https://apreshill.github.io/data-vis-labs-2018/02-moma.html) would be great for a project
+- explore using the lisa palette from paletteer
+
+
+### Intro
+
+
+### Data
+
+
+### Goals
+
+
+### Instructions
+
+ - instructions on using project wizard
+
+
+### Packages Needed
+
+ - installation details (script with `library()` calls)
+ - possibly use: https://github.com/rstudio4edu/rmd4edu/blob/master/R/lesson.R
+
+
