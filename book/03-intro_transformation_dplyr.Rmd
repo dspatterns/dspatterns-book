@@ -5,6 +5,16 @@ library(dspatterns)
 library(tidyverse)
 ```
 
+## Introduction
+
+Notes: 
+ - Use the `wordbank` dataset (https://apreshill.github.io/data-vis-labs-2018/03-colors.html)
+ - slice n' dice with facets/groups (geom_line())
+ - recognizing and effectively using categorical/continuous data (both in dplyr and in ggplot)
+ - explore color/fill and using aesthetics (global/local) including greyscale and colorblind palettes
+ - dplyr verbs covered: group_by()/summarize() (but please no n())
+
+
 This chapter covers
 
 - learning the basics of assigning values to variables
@@ -864,3 +874,34 @@ The resulting tibble appears just as we laid out the values. As can be seen in t
 19. The Q17 statement can be rewritten with the pipe as: `sw %>% group_by(species) %>% summarize(avg_mass = mean(mass))`.
 
 20. In the tibble printout, we get information on the groups we made from the `group_by()` statement. It provides the number of groups and lists the group names alongside that.
+
+
+## Project
+
+(should have a fully working set of Rmd templates, presented in the form of a project template - this can be prepped for the reader with a function call)
+
+Use the sticker sharing dataset
+https://alison.rbind.io/post/2018-02-23-read-multiple-header-rows/
+
+put stickers.csv in the package as a dataset <- Rich will do this
+
+### Intro
+
+
+### Data
+
+
+### Goals
+
+
+### Instructions
+
+ - instructions on using project wizard
+
+### Packages Needed
+
+ - installation details (script with `library()` calls)
+ - possibly use: https://github.com/rstudio4edu/rmd4edu/blob/master/R/lesson.R
+ 
+ 
+
