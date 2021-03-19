@@ -47,7 +47,39 @@ library(tidyverse)
 }
 ```
 
-This chapter covers
+## Introduction
+
+Notes: 
+ - Use the bakeoff dataset (diamonds has been seen before)
+ - This chapter really ought to be an intro vis / data inspection/exploration section with multiple packages
+   - introduce functions:
+     - dplyr::glimpse()
+     - dplyr::distinct() (getting unique rows by selection of columns)
+     - dplyr::count() (counting distinct values by rows; count by series, use built-in sort feature)
+     - geom_boxplot()
+   - use some code from course material that uses bakeoff
+     - links: https://alison.netlify.app/rls-plot-twist/#19, https://alison.netlify.app/rls-plot-twist/#19 (counting slides)
+   - start off with histogram and create this plot: https://alison.netlify.app/rls-plot-twist/#19
+   - histogram of ages of bakers + other interesting plots
+   - goals: making exploratory bar charts and histograms (useful for initial understanding of the data)
+
+## Patterns
+
+Explore: exploring a brand new dataset with dplyr and ggplot
+Understand: from exploratory plots (confirms or disproves your assumptions about the data) gain an intuition and develop that ability
+Explain: 
+Collaborate:
+Communicate:
+
+## Project Ideas
+
+(should have a fully working set of Rmd templates, presented in the form of a project template - this can be prepped for the reader with a function call)
+
+The moma dataset (https://apreshill.github.io/data-vis-labs-2018/02-moma.html) would be great for a project
+- explore using the lisa palette from paletteer
+
+
+## This chapter covers
 
 - What the **ggplot** **R** package is and how it can be used to create plots from tabular data
 - Creating a scatterplot from a dataset, using different aesthetic choices (e.g., shapes, color, and more)
