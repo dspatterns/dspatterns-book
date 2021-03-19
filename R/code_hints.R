@@ -1,7 +1,7 @@
 #' @export
 code_hints <- function(title = "CODE",
                        entries = NULL,
-                       hints = "Code Hints") {
+                       hints = "Notes on the Code") {
 
   markdownify <- function(text) {
     vapply(
@@ -76,15 +76,24 @@ code_hints <- function(title = "CODE",
       style = paste(
         "font-family: 'Open Sans', sans-serif;",
         "color: #333333;",
-        "font-size:10px;",
-        "margin:0 !important",
+        "font-size:11px;",
+        "margin-bottom: 2px;",
+        "padding-top: 4px;",
+        "padding-bottom: 4px;",
         sep = " "
       ),
       htmltools::tags$summary(
         style = paste(
-          "outline-style: none;",
-          "margin-left: 2px;",
-          "cursor: pointer;"
+          "outline-style: solid;",
+          "outline-width: 1px;",
+          "outline-color: #B6B4FA;",
+          "background-color: white;",
+          "margin-left: -0.5px;",
+          "margin-bottom: 6px;",
+          "text-indent: 6px;",
+          "cursor: pointer;",
+          "font-size: 10px;",
+          "display: list-item;"
         ),
         htmltools::HTML(hints)
       ),
