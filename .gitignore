@@ -44,4 +44,4 @@ bookdown*
 rsconnect/
 
 # Specific database files
-data-raw/10d-pitchfork.db
+data-raw/pitchfork.db
