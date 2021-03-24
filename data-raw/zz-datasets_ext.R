@@ -3,6 +3,8 @@ library(usethis)
 # This script uses `usethis::use_data()` to add data to the package
 
 # Source all of the datasets
+source("data-raw/moma.R")
+
 source("data-raw/sw.R")
 source("data-raw/dmd.R")
 source("data-raw/winniweather.R")
@@ -18,6 +20,10 @@ source("data-raw/pitchfork.R")
 
 # Create external datasets
 use_data(
+  # New datasets
+  moma,
+
+  # Existing datasets
   sw,
   dmd,
   winniweather,
