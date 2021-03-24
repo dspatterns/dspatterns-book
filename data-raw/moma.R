@@ -9,6 +9,3 @@ moma <-
     here::here("data-raw", "moma.csv"),
     col_types = "ccciiiiiciidddddddcllcc"
   )
-
-
-
