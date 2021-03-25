@@ -7,6 +7,7 @@ library(usethis)
 # New datasets
 source("data-raw/moma.R")
 source("data-raw/vitamind.R")
+source("data-raw/chopsticks.R")
 
 
 # Existing datasets
@@ -28,6 +29,7 @@ use_data(
   # New datasets
   moma,
   vitamind,
+  chopsticks,
 
   # Existing datasets
   sw,
