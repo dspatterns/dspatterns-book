@@ -1,0 +1,57 @@
+year,authors,country,pop,lowerage,upperage,medianage,asdn,normaliq,gender,report_prev,95ci,l95,u95,icd_10,dsm_iii,dsm_iv,dsm_iv_tr,dsm_five,screener,study,crude_prev,true_prev,cum_mean,order
+2000,Baird et al.,UK,16235,7,7,7,94,60,15.7,57.9,46.8; 70.9,46.8,70.9,1,NA,NA,NA,NA,NA,Baird et al. (2000),57.9,57.9,57.9,56
+2000,Powell et al.,UK,58654,1,5,3,122,NA,NA,20.8,17.3; 24.9,17.3,24.9,1,NA,1,NA,NA,NA,Powell et al. (2000),20.8,20.8,39.35,55
+2001,Bertrand et al.,USA,8896,3,10,6.5,60,51,2.7,67.4,51.5; 86.7,51.5,86.7,NA,NA,1,NA,NA,NA,Bertrand et al. (2001),67.4,67.4,48.7,54
+2001,Chakrabarti and Fombonne,UK,15500,2.5,6.5,4.5,96,74.2,3.8,61.9,50.2; 75.6,50.2,75.6,1,NA,NA,NA,NA,NA,Chakrabarti and Fombonne (2001),61.9,61.9,52,53
+2001,Fombonne et al.,UK,10438,5,15,10,27,55.5,8,26.1,16.2; 36.0,16.2,36,1,NA,1,NA,NA,NA,Fombonne et al. (2001),25.9,26.1,46.82,52
+2002,Scott et al.,UK,33598,5,11,8,196,NA,4,58.3,50.7; 67.1,50.7,67.1,1,NA,NA,NA,NA,NA,Scott et al. (2002),58.3,58.3,48.73333333,51
+2003,Gurney et al.,USA,787308,6,11,8.5,4094,NA,NA,52,50.4; 53.6,50.4,53.6,NA,NA,NA,NA,NA,NA,Gurney et al. (2003),52,52,49.2,50
+2003,Lingam et al.,UK,186206,5,14,9.5,567,NA,4.8,30.5,27.9; 32.9,27.9,32.9,1,NA,NA,NA,NA,NA,Lingam et al. (2003),30.5,30.5,46.8625,49
+2003,Yeargin-Allsopp et al.,USA,289456,3,10,6.5,987,31.8,4,34,32; 36,32,36,NA,NA,1,NA,NA,NA,Yeargin-Allsopp et al. (2003),34.1,34,45.43333333,48
+2004,Icasiano et al.,Australia,45153,2,17,9.5,177,53.4,8.3,39.2,33.8; 45.4,33.8,45.4,NA,NA,1,NA,NA,NA,Icasiano et al. (2004),39.2,39.2,44.81,47
+2005,Chakrabarti and Fombonne,UK,10903,4,6,5,64,70.2,6.1,58.7,45.2; 74.9,45.2,74.9,1,NA,NA,NA,NA,NA,Chakrabarti and Fombonne (2005),58.7,58.7,46.07272727,46
+2006,Baird et al.,UK,56946,9,10,9.5,158,45,3.3,116.1,90.4; 141.8,90.4,141.8,1,NA,NA,NA,NA,NA,Baird et al. (2006),27.7,116.1,51.90833333,45
+2006,Fombonne et al.,Canada,27749,5,17,11,180,NA,4.8,64.9,55.8; 75.0,55.8,75,NA,NA,1,NA,NA,NA,Fombonne et al. (2006),64.9,64.9,52.90769231,44
+2006,Gillberg et al.,Sweden,32568,7,12,9.5,262,NA,3.6,80.4,71.3; 90.3,71.3,90.3,NA,1,1,NA,NA,NA,Gillberg et al. (2006),80.4,80.4,54.87142857,43
+2006,Harrison et al.,UK,134661,0,15,7.5,443,NA,7,44.2,39.5; 48.9,39.5,48.9,1,NA,1,NA,NA,NA,Harrison et al. (2006),32.9,44.2,54.16,42
+2006,Ouellette-Kuntz et al.,Canada,227526,1,14,7.5,657,NA,4.1,28.9,26.8; 31.2,26.8,31.2,NA,NA,1,NA,NA,NA,Ouellette-Kuntz et al. (2006),28.9,28.9,52.58125,41
+2007,CDC,USA,187761,8,8,8,1252,49,4.15,67,63.1; 70.5,63.1,70.5,NA,NA,NA,1,NA,NA,CDC (2007a),66.7,67,53.42941176,40
+2007,CDC,USA,407578,8,8,8,2685,55.4,4.95,66,63; 68,63,68,NA,NA,NA,1,NA,NA,CDC (2007b),65.9,66,54.12777778,39
+2007,Croen et al.,USA,132844,5,10,7.5,593,NA,5.5,45,41.2; 48.4,41.2,48.4,NA,NA,NA,NA,NA,NA,Croen et al. (2007),44.6,45,53.64736842,38
+2007,Latif and Williams,UK,39220,0,17,8.5,240,NA,6.8,61.2,53.9; 69.4,53.9,69.4,1,NA,1,NA,NA,NA,Latif and Williams (2007),61.2,61.2,54.025,37
+2008,Kawamura et al.,Japan,12589,5,8,6.5,228,66.4,2.8,181.1,159.2; 205.9,159.2,205.9,NA,NA,1,NA,NA,NA,Kawamura et al. (2008),181.1,181.1,60.07619048,36
+2008,Montiel-Nava et al.,Venezuela,254905,3,9,6,430,NA,3.3,17,13; 20,13,20,NA,NA,NA,1,NA,NA,Montiel-Nava et al. (2008),16.9,17,58.11818182,35
+2008,Williams et al.,UK,14062,11,11,11,86,85.3,6.8,61.9,48.8; 74.9,48.8,74.9,1,NA,NA,NA,NA,NA,Williams et al. (2008),61.2,61.9,58.2826087,34
+2008,Wong and Hui,China,4247206,0,14,7,682,30,6.6,16.1,NA,NA,NA,NA,NA,1,NA,NA,NA,Wong and Hui (2008),1.6,1.6,56.525,33
+2009,Baron-Cohen et al.,UK,8824,5,9,7,83,NA,NA,94,75; 116,75,116,1,NA,NA,NA,NA,NA,Baron-Cohen et al. (2009),94.1,94,58.024,32
+2009,CDC,USA,308038,8,8,8,2757,59,4.5,90,86; 93,86,93,NA,NA,1,NA,NA,NA,CDC (2009),89.5,90,59.25384615,31
+2009,Nicholas et al.,USA,8156,4,4,4,65,44.2,4.7,80,61; 99,61,99,NA,NA,NA,1,NA,NA,Nicholas et al. (2009),79.7,80,60.02222222,30
+2009,van Balkom et al.,Netherlands,13109,0,13,6.5,69,58.8,6.7,52.6,41.0; 66.6,41,66.6,NA,NA,1,NA,NA,NA,van Balkom et al. (2009),52.6,52.6,59.75714286,29
+2010,Barnevik-Olsson et al.,Sweden,113391,6,10,8,250,0,NA,22,19.4; 25.0,19.4,25,NA,NA,1,NA,NA,NA,Barnevik-Olsson et al. (2010),22,22,58.45517241,28
+2010,Fernell and Gillberg,Sweden,23566,6,6,6,147,33,5.1,62,52; 72,52,72,1,NA,1,1,NA,NA,Fernell and Gillberg (2010),62.4,62,58.57333333,27
+2010,Lazoff et al.,Canada,23635,5,17,11,187,NA,5.4,79.1,67.8; 90.4,67.8,90.4,NA,NA,1,NA,NA,NA,Lazoff et al. (2010),79.1,79.1,59.23548387,26
+2010,Maenner and Durkin,USA,428030,NA,NA,NA,3831,NA,NA,90,86.7; 92.4,86.7,92.4,NA,NA,NA,NA,NA,NA,Maenner and Durkin (2010),89.5,90,60.196875,25
+2010,Posserud et al.,Norway,9430,7,9,8,16,NA,7,72,36; 107,36,107,1,NA,1,NA,NA,NA,Posserud et al. (2010),17,72,60.55454545,24
+2011,Al-Farsi et al.,Oman,798913,0,14,7,113,NA,2.9,1.4,1.2; 1.7,1.2,1.7,NA,NA,NA,1,NA,NA,Al-Farsi et al. (2011),1.4,1.4,58.81470588,23
+2011,Brugha et al.,UK,7333,16,98,57,72,100,3.8,98.2,30; 165,30,165,NA,NA,NA,NA,NA,NA,Brugha et al. (2011),98.2,98.2,59.94,22
+2011,Chien et al.,Taiwan,229457,0,18,9,659,NA,3.7,28.7,26.6; 31,26.6,31,NA,NA,NA,NA,NA,NA,Chien et al. (2011),28.7,28.7,59.07222222,21
+2011,Kim et al.,S. Korea,55266,7,12,9.5,201,31.5,3.8,264,191; 337,191,337,NA,NA,NA,1,NA,NA,Kim et al. (2011),36.4,264,64.61081081,20
+2011,Parner et al.,Australia,151048,0,10,5,678,NA,4.1,51,47; 55.3,47,55.3,NA,NA,1,1,NA,NA,Parner et al. (2011),44.9,51,64.25263158,19
+2011,Samadi et al.,Iran,1320334,5,5,5,826,NA,4.3,6.4,5.84; 6.70,5.84,6.7,NA,NA,NA,NA,NA,NA,Samadi et al. (2011),6.3,6.4,62.76923077,18
+2011,Windham et al.,USA,80249,9,9,9,374,NA,6.2,47,42; 52,42,52,NA,NA,1,NA,NA,NA,Windham et al. (2011),46.6,47,62.375,17
+2012,CDC,USA,337093,8,8,8,3820,38,4.6,113,110; 117,110,117,NA,NA,1,NA,NA,NA,CDC (2012),113.3,113,63.6097561,16
+2012,Davidovitch et al.,Israel,423524,1,12,6.5,2034,NA,5.2,48,45.9; 50.1,45.9,50.1,NA,NA,1,NA,NA,NA,Davidovitch et al. (2012),48,48,63.23809524,15
+2012,Idring et al.,Sweden,444154,0,17,8.5,5100,57.4,2.6,115,112; 118,112,118,1,NA,1,NA,NA,NA,Idring et al. (2012),114.8,115,64.44186047,14
+2012,Isaksen et al.,Norway,31015,6,12,9,158,NA,4.27,51,43; 59,43,59,1,NA,NA,NA,NA,NA,Isaksen et al. (2012),50.9,51,64.13636364,13
+2012,"Kocovska, Biskupsto et al.",Denmark,7128,15,24,19.5,67,NA,2.7,94,73; 119,73,119,1,NA,1,NA,NA,NA,"Kocovska, Biskupsto et al. (2012)",94,94,64.8,12
+2012,Nygren et al.,Sweden,5007,2,2,2,40,63,4,80,57; 109,57,109,NA,NA,NA,1,NA,NA,Nygren et al. (2012),79.9,80,65.13043478,11
+2012,Parner et al.,Denmark,1311736,6,29,17.5,9556,NA,4.1,72.9,71.4; 74.3,71.4,74.3,1,NA,NA,NA,NA,NA,Parner et al. (2012),72.9,72.9,65.29574468,10
+2013,Ouellette-Kuntz et al.,Canada,89786,2,14,8,1173,NA,4.8,130.6,123.4; 138.3,123.4,138.3,NA,NA,NA,NA,NA,NA,Ouellette-Kuntz et al. (2013),130.6,130.6,66.65625,9
+2013,Saemundsen et al.,Iceland,22229,6,6,6,267,54.7,2.8,120.1,106.6; 135.3,106.6,135.3,1,NA,NA,NA,NA,NA,Saemundsen et al. (2013),120.1,120.1,67.74693878,8
+2013,Taylor et al.,UK,256278,8,8,8,616,NA,5.1,24,22.2; 26.0,22.2,26,NA,NA,1,NA,NA,NA,Taylor et al. (2013),24,24,66.872,7
+2014,CDC,USA,363749,8,8,8,5338,69,4.5,147,142.9; 150.7,142.9,150.7,NA,NA,1,NA,NA,NA,CDC (2014),146.7,147,68.44313725,6
+2015,van Bakel et al.,France,307751,7,7,7,1123,53.1,4.1,36.5,34.4;38.7,34.4,38.7,1,NA,NA,NA,NA,NA,van Bakel et al. (2015),36.5,36.5,67.82884615,5
+2016,CDC,USA,346978,8,8,8,5063,68.4,4.5,146,142; 150,142,150,NA,NA,NA,1,NA,NA,CDC (2016),145.9,146,69.30377358,4
+2016,Christensen et al.,USA,58467,4,4,4,783,54,3.3,134,125;144,125,144,NA,NA,NA,1,NA,NA,Christensen et al. (2016),133.9,134,70.50185185,3
+2016,Fombonne et al.,Mexico,12116,8,8,8,36,33.3,4.1,87,62; 110,62,110,NA,NA,NA,1,NA,NA,Fombonne et al. (2016),29.7,87,70.80181818,2
+2016,Skonieczna-Zydecka et al.,Poland,708029,0,16,NA,2514,NA,4.3,35,NA,NA,NA,1,NA,NA,NA,NA,NA,Skonieczna-Zydecka et al. (2016),35.5,35,70.1625,1
