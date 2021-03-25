@@ -9,6 +9,7 @@ source("data-raw/moma.R")
 source("data-raw/vitamind.R")
 source("data-raw/chopsticks.R")
 source("data-raw/asd_prevalence.R")
+source("data-raw/maze.R")
 
 
 # Existing datasets
@@ -32,6 +33,7 @@ use_data(
   vitamind,
   chopsticks,
   asd_prevalence,
+  maze,
 
   # Existing datasets
   sw,
