@@ -8,6 +8,7 @@ library(usethis)
 source("data-raw/moma.R")
 source("data-raw/vitamind.R")
 source("data-raw/chopsticks.R")
+source("data-raw/asd_prevalence.R")
 
 
 # Existing datasets
@@ -30,6 +31,7 @@ use_data(
   moma,
   vitamind,
   chopsticks,
+  asd_prevalence,
 
   # Existing datasets
   sw,
