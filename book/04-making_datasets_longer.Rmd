@@ -1,4 +1,4 @@
-# Tidying Data for Analysis {#tidying_data_for_analysis}
+# Making Datasets Longer {#making_datasets_longer}
 
 ```{r setup, include=FALSE, echo=FALSE}
 library(dspatterns)
