@@ -5,6 +5,11 @@ library(dspatterns)
 library(tidyverse)
 ```
 
+- emphasis should be on tidying for counting
+- include advanced examples
+- take a dataset that has repeated measures by individual (especially grouped measures): `anscombe`
+
+
 This chapter covers
 
 - The characteristics of tidy data
