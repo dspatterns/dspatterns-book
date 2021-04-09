@@ -244,6 +244,118 @@
 #' dplyr::glimpse(imdb)
 "imdb"
 
+#' Vitamin D levels across patients
+#'
+#' @format A tibble with 533 rows and 6 variables:
+#' \describe{
+#'   \item{patient_type}{The type of patient as a factor variable.}
+#'   \item{gender}{The reported gender of the patient.}
+#'   \item{season}{The season of of the observation as a factor variable.}
+#'   \item{region}{The region where the patient resides as a factor variable.}
+#'   \item{age}{The age of the patient.}
+#'   \item{vitamin_d}{The amount of Vitamin D.}
+#' }
+#'
+#' @examples
+#' # Here is a glimpse at the data
+#' # available in `vitamind`
+#' dplyr::glimpse(vitamind)
+"vitamind"
+
+#' Observations Across Published Studies of Autism Spectrum Disorder
+#'
+#' @format A tibble with 56 rows and 25 variables:
+#' \describe{
+#'   \item{year}{}
+#'   \item{authors}{}
+#'   \item{country}{}
+#'   \item{pop}{}
+#'   \item{lowerage,upperage,medianage}{}
+#'   \item{asdn}{}
+#'   \item{normaliq}{}
+#'   \item{gender}{}
+#'   \item{report_prev}{}
+#'   \item{95ci}{}
+#'   \item{l95,u95}{}
+#'   \item{icd_10}{}
+#'   \item{dsm_iii,dsm_iv,dsm_iv_tr,dsm_five}{}
+#'   \item{screener}{}
+#'   \item{study}{}
+#'   \item{crude_prev,true_prev}{}
+#'   \item{cum_mean}{}
+#'   \item{order}{}
+#' }
+#'
+#' @examples
+#' # Here is a glimpse at the data
+#' # available in `asd_prevalence`
+#' dplyr::glimpse(asd_prevalence)
+"asd_prevalence"
+
+#' Efficiency of using chopsticks by length
+#'
+#' @format A tibble with 186 rows and 3 variables:
+#' \describe{
+#'   \item{individual}{}
+#'   \item{length_amt}{}
+#'   \item{efficiency}{}
+#' }
+#'
+#' @examples
+#' # Here is a glimpse at the data
+#' # available in `chopsticks`
+#' dplyr::glimpse(chopsticks)
+"chopsticks"
+
+#' The maze dataset
+#'
+#' @format A tibble with 381 rows and 12 variables:
+#' \describe{
+#'   \item{Study.ID}{The identifier for the study.}
+#'   \item{CA}{CA}
+#'   \item{VIQ}{VIQ}
+#'   \item{DX}{DX}
+#'   \item{Activity}{Activity}
+#'   \item{Content}{Content}
+#'   \item{Filler}{Filler}
+#'   \item{REP}{REP}
+#'   \item{REV}{REV}
+#'   \item{FS}{FS}
+#'   \item{Cued, Not.Cued}{Cued, Not.Cued}
+#' }
+#'
+#' @examples
+#' # Here is a glimpse at the data
+#' # available in `maze`
+#' dplyr::glimpse(maze)
+"maze"
+
+#' The moma dataset
+#'
+#' @format A tibble with 2,253 rows and 23 variables:
+#' \describe{
+#'   \item{title}{title}
+#'   \item{artist}{artist}
+#'   \item{artist_bio}{artist_bio}
+#'   \item{artist_birth_year, artist_death_year}{artist_birth_year, artist_death_year}
+#'   \item{n_female_artists, n_male_artists}{n_female_artists, n_male_artists}
+#'   \item{artist_gender}{artist_gender}
+#'   \item{year_acquired}{year_acquired}
+#'   \item{year_created}{year_created}
+#'   \item{circumference_cm,depth_cm,diameter_cm,height_cm,length_cm,width_cm,seat_height_cm}{dimensions}
+#'   \item{purchase}{purchase}
+#'   \item{gift}{gift}
+#'   \item{exchange}{exchange}
+#'   \item{classification}{classification}
+#'   \item{department}{department}
+#' }
+#'
+#' @examples
+#' # Here is a glimpse at the data
+#' # available in `moma`
+#' dplyr::glimpse(moma)
+"moma"
+
 # Datasets in the dspatterns package
 dspatterns_datasets <- function() {
   c(
@@ -258,6 +370,11 @@ dspatterns_datasets <- function() {
     "employment",
     "rainfall",
     "pitchfork",
-    "imdb"
+    "imdb",
+    "vitamind",
+    "asd_prevalence",
+    "chopsticks",
+    "maze",
+    "moma"
   )
 }
