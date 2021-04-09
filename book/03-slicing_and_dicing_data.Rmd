@@ -1,4 +1,4 @@
-# Careful Counting Patterns {#careful_counting_patterns}
+# Slicing and Dicing Data {#slicing_and_dicing_data}
 
 ```{r setup, include=FALSE, echo=FALSE}
 library(dspatterns)
@@ -8,11 +8,13 @@ library(tidyverse)
 ## Introduction
 
 Notes: 
- - Use the `wordbank` dataset (https://apreshill.github.io/data-vis-labs-2018/03-colors.html)
- - slice n' dice with facets/groups (geom_line())
- - recognizing and effectively using categorical/continuous data (both in dplyr and in ggplot)
- - explore color/fill and using aesthetics (global/local) including greyscale and colorblind palettes
- - dplyr verbs covered: group_by()/summarize() (but please no n())
+
+- Use the `wordbank` dataset (https://apreshill.github.io/data-vis-labs-2018/03-colors.html)
+- slice n' dice with facets/groups (`geom_line()`)
+- recognizing and effectively using categorical/continuous data (both in dplyr and in ggplot)
+- explore color/fill and using aesthetics (global/local) including greyscale and colorblind palettes
+- dplyr verbs covered: `group_by()`/`summarize()` (but please no `n()`)
+- use dplyr's `slice_*()` functions
 
 
 This chapter covers

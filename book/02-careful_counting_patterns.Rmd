@@ -1,4 +1,4 @@
-# Introductory Data Visualization with **ggplot** {#intro_visualization_ggplot}
+# Careful Counting Patterns {#careful_counting_patterns}
 
 ```{r setup, include=FALSE, echo=FALSE}
 library(dspatterns)
