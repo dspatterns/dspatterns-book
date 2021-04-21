@@ -3,3 +3,23 @@ delete_merged_file: true
 before_chapter_script: "_common.R"
 
 new_session: yes
+
+rmd_files: [
+  "index.Rmd",
+  "starting-with-r.Rmd",
+  "careful-counting-patterns.Rmd",
+  "slicing-and-dicing-data.Rmd",
+  "making-datasets-longer.Rmd",
+  "factors-help-us-make-better-plots.Rmd",
+  "more-plotting-with-ggplot-i.Rmd",
+  "more-plotting-with-ggplot-ii.Rmd",
+  "z-checkpoint-1.Rmd",
+  "importing-data-from-common-formats.Rmd",
+  "transformations-dates-times.Rmd",
+  "a-closer-look-at-r-programming.Rmd",
+  "string-transformations.Rmd",
+  "r-lists.Rmd",
+  "z-checkpoint-2.Rmd",
+  "making-presentation-tables.Rmd",
+  "appendix.Rmd"
+]

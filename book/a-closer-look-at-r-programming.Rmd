@@ -1,4 +1,4 @@
-# A Closer Look at R Programming {#closer_look_r_programming}
+# A Closer Look at R Programming {#a-closer-look-at-r-programming}
 
 ```{r setup, include=FALSE, echo=FALSE}
 library(dspatterns)

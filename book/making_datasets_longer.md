@@ -1,20 +1,22 @@
 # Making Datasets Longer {#making_datasets_longer}
 
-```{r setup, include=FALSE, echo=FALSE}
-library(dspatterns)
-library(tidyverse)
-```
+
 
 - emphasis should be on tidying for counting
 - include advanced examples
 - take a dataset that has repeated measures by individual (especially grouped measures): `anscombe`
-
 
 This chapter covers
 
 - The characteristics of tidy data
 - How to reshape a data table using the `pivot_longer()` function
 - Further tidying of data tables with the `na_if()` function
+- Explain data organization in terms of indexed and cartesian paradigms, see: https://www.storybench.org/pivoting-data-from-columns-to-rows-and-back-in-the-tidyverse/ and https://github.com/apreshill/teachthat/tree/master/pivot and https://github.com/apreshill/teachthat/blob/master/pivot/pivot_multiples.md for animated pivot gifs.
+- Use this: https://apreshill.github.io/bakeoff-tidy/
+
+Next chapter should cover
+- Doing more summarizing/table-prep with grouped data
+- plot using grouped/faceted data
 
 The last two chapters introduced us to data transformation (using **dplyr**) and data visualization (using **ggplot**). We really learned a lot, and we just dove right in with example data tables that were furnished by the **dspatterns** package. The `sw` and `dmd` datasets from Chapters 2 and 3 were tidy datasets. We didn't have to think much about the arrangement of the data within those tables, there were used as is. They just worked. Quite often, however, the datasets you'll encounter and want to use will not be tidy. This can cause problems in your analyses, so we really need to make the effort to tidy them before performing any analysis. This chapter is all about recognizing the difference between tidy and untidy data, and then, using strategies to tidy that data before getting to the analysis stage.
 
@@ -58,11 +60,20 @@ The **tidyr** package, part of the *Tidyverse*, has been designed to help with t
 
 The `winniweather` dataset is available in the **dspatterns** package; let's look at the top of the table by printing the dataset.
 
-`r dspatterns::code_hints(
-"**CODE //** The ~~winniweather~~ dataset, printed to the console."
-)`
-```{r winniweather-print}
+`<p style="margin-bottom: 0; font-size: 14px"><strong>CODE //</strong> The <code>winniweather</code> dataset, printed to the console.</p>`{=html}
+
+```r
 winniweather
+#> # A tibble: 28 x 6
+#>   yearmonth   day temp00_00 temp06_00 temp12_00 temp18_00
+#>   <chr>     <int>     <dbl>     <dbl>     <dbl>     <dbl>
+#> 1 2015-2        1     -26.8     -29.2     -22.5     -21  
+#> 2 2015-2        2     -19.7     -16.7     -13.9     -17.3
+#> 3 2015-2        3     -19.4     -21.1     -14.9     -13.9
+#> 4 2015-2        4     -20.2     -23.6     -21.7     -19.7
+#> 5 2015-2        5     -18.8     -15.8      -7.8     -13.3
+#> 6 2015-2        6     -17       -18.3     -16.9     -14.6
+#> # … with 22 more rows
 ```
 
 The dataset provides hourly temperatures at four times in each day, at `00:00`, `06:00`, `12:00`, and `18:00` (all 24-hour times) in the last four columns. The temperature values are in degrees Celsius. The first column, `yearmonth`, gives us the year and month (as combined string, in a `YYYY-M` format), and the second column (`day`) has the day of the month.
@@ -75,15 +86,18 @@ Another potential problem is that the `yearmonth` column is a combined value of 
 
 Let's start to transform `winniweather` into a tidy dataset by first addressing the `"temp*"` columns with **tidyr**'s `pivot_longer()` function. This function takes multiple columns and collapses them into key-value pairs (making the resulting table longer, with more rows). Put another way, the column names become values in the new key column and the values in each of the targeted columns go into the value column (we can supply our own names for the new key and value columns). It's far better to show than tell in this case. The following demonstrates how we would use `pivot_longer()` to make this table more tidy.
 
-`r dspatterns::code_hints(
-"**CODE //** How to make data ~~pivot_longer()~~ and thus make it more tidy.",
-c(
-"#A We are piping the ~~winniweather~~ dataset to the ~~pivot_longer()~~ function.",
-"#B We start by supplying a set of columns that contain data to be put in a 'longer' format (i.e., one observation per row). The ~~starts_with()~~ function is familiar: it's also used in **dplyr**'s ~~select()~~ function.",
-"#C The ~~names_to~~ argument expects a name for a new column. This new column will contain the column names from the ~~starts_with()~~ selection.",
-"#D The ~~values_to~~ argument also expects a name (again, of your choosing) for a new column; this column will contain the values."
-))`
-```{r winni-pivot-longer, paged.print=FALSE}
+
+```{=html}
+<p style="margin-bottom: 0; font-size: 14px"><strong>CODE //</strong> How to make data <code>pivot_longer()</code> and thus make it more tidy.</p>
+<details style="font-family: &#39;Open Sans&#39;, sans-serif; color: #333333; font-size:11px; margin-bottom: 2px; padding-top: 4px; padding-bottom: 4px;">
+<summary style="outline-style: solid; outline-width: 1px; outline-color: #B6B4FA; background-color: white; margin-left: -0.5px; margin-bottom: 6px; text-indent: 6px; cursor: pointer; font-size: 10px; display: list-item;">Notes on the Code</summary>
+<span style="color:steelblue;font-weight:bold;">#A </span>We are piping the <code>winniweather</code> dataset to the <code>pivot_longer()</code> function.<br><span style="color:steelblue;font-weight:bold;">#B </span>We start by supplying a set of columns that contain data to be put in a 'longer' format (i.e., one observation per row). The <code>starts_with()</code> function is familiar: it's also used in <strong>dplyr</strong>'s <code>select()</code> function.<br><span style="color:steelblue;font-weight:bold;">#C </span>The <code>names_to</code> argument expects a name for a new column. This new column will contain the column names from the <code>starts_with()</code> selection.<br><span style="color:steelblue;font-weight:bold;">#D </span>The <code>values_to</code> argument also expects a name (again, of your choosing) for a new column; this column will contain the values.
+<br style="font-size: 14px;"/>
+</details>
+```
+
+
+```r
 winni_mod <- 
   winniweather %>%  #A
   pivot_longer(
@@ -93,6 +107,16 @@ winni_mod <-
   )
 
 winni_mod
+#> # A tibble: 112 x 4
+#>   yearmonth   day hour       temp
+#>   <chr>     <int> <chr>     <dbl>
+#> 1 2015-2        1 temp00_00 -26.8
+#> 2 2015-2        1 temp06_00 -29.2
+#> 3 2015-2        1 temp12_00 -22.5
+#> 4 2015-2        1 temp18_00 -21  
+#> 5 2015-2        2 temp00_00 -19.7
+#> 6 2015-2        2 temp06_00 -16.7
+#> # … with 106 more rows
 ```
 
 The printing of the new `winni_mod` tibble in the console shows the transformation of multiple temperature columns to a single a temp column.
@@ -101,14 +125,18 @@ We supplied a key of `"hour"` and a value of `"temp"` and targeted the columns t
 
 Although this is a great start, there is still some work to do to make the resulting table more useful. We can see that the `hour` column in its current state is not ideal as it contains a string with the hour embedded within it. It's better to make that a number representing the hour of day. Let's do that now with a combination of **dplyr**'s `mutate()` function paired with `case_when()`.
 
-`r dspatterns::code_hints(
-"**CODE //** Modifying values in the hour column with ~~mutate()~~.",
-c(
-"#A We are piping the ~~winni_mod~~ object to **dplyr**'s ~~mutate()~~ function.",
-"#B The ~~hour~~ column already exists. We are essentially modifying values within the ~~hour~~ column on a case-by-case basis with the ~~case_when()~~ function.",
-"#C Each line represents a different possible case (~~hour~~ being equal to a specific string) and a replacement value (the integer-based hour of day in 24-hour time)."
-))`
-```{r mutate-case-when, paged.print=FALSE}
+
+```{=html}
+<p style="margin-bottom: 0; font-size: 14px"><strong>CODE //</strong> Modifying values in the hour column with <code>mutate()</code>.</p>
+<details style="font-family: &#39;Open Sans&#39;, sans-serif; color: #333333; font-size:11px; margin-bottom: 2px; padding-top: 4px; padding-bottom: 4px;">
+<summary style="outline-style: solid; outline-width: 1px; outline-color: #B6B4FA; background-color: white; margin-left: -0.5px; margin-bottom: 6px; text-indent: 6px; cursor: pointer; font-size: 10px; display: list-item;">Notes on the Code</summary>
+<span style="color:steelblue;font-weight:bold;">#A </span>We are piping the <code>winni_mod</code> object to <strong>dplyr</strong>'s <code>mutate()</code> function.<br><span style="color:steelblue;font-weight:bold;">#B </span>The <code>hour</code> column already exists. We are essentially modifying values within the <code>hour</code> column on a case-by-case basis with the <code>case_when()</code> function.<br><span style="color:steelblue;font-weight:bold;">#C </span>Each line represents a different possible case (<code>hour</code> being equal to a specific string) and a replacement value (the integer-based hour of day in 24-hour time).
+<br style="font-size: 14px;"/>
+</details>
+```
+
+
+```r
 winni_mod <- 
   winni_mod %>%  #A
   mutate(hour = case_when(  #B
@@ -119,6 +147,16 @@ winni_mod <-
   ))
 
 winni_mod
+#> # A tibble: 112 x 4
+#>   yearmonth   day  hour  temp
+#>   <chr>     <int> <int> <dbl>
+#> 1 2015-2        1     0 -26.8
+#> 2 2015-2        1     6 -29.2
+#> 3 2015-2        1    12 -22.5
+#> 4 2015-2        1    18 -21  
+#> 5 2015-2        2     0 -19.7
+#> 6 2015-2        2     6 -16.7
+#> # … with 106 more rows
 ```
 
 We now find that `winni_mod` has an `hour` column with integer-based values (instead of text labels).
@@ -131,16 +169,18 @@ We can now separate `yearmonth` into `year` and `month` columns. We'll make thes
 
 Using the `separate()` function effectively only requires a little planning, which will be outlined here. To start, we know which column we want to separate (`yearmonth`) and we also have names for the new columns (`year` and `month`). These names will be used within the col and into arguments of `separate()`. Secondly, we know that the `yearmonth` column in this dataset contains the `2015-2` value repeated in all rows (i.e., there is a single unique value). We ultimately want the `2015` part in a new `year` column and the `2` part in a new `month` column. That the hyphen separates the values we want in our new columns is ideal for our use of `separate()`: we can use `sep = "-"` and the function will understand that values before and after that character will comprise the new columns. Lastly, we are taking a character column as input (`yearmonth`) and we'd like integer-based values in the new `year` and `month` columns. We can ask `separate()` to do this conversion for us with the `convert = TRUE` option. Let's see how this comes together in the code and table output:
 
-`r dspatterns::code_hints(
-"**CODE //** Separating the ~~yearmonth~~ column into ~~year~~ and ~~month~~ columns.",
-c(
-"#A The ~~winni_mod~~ object is piped into the ~~separate()~~ function, the result of that is stored as ~~winni_tidy~~.",
-"#B For the ~~col~~ argument, we should provide the column name that contains the string to separate into multiple columns (~~yearmonth~~). The column name shouldn't be in quotes because the column exists.",
-"#C The ~~into~~ argument lets us define column names for the split string. Since we are separating a string into two parts, we will provide two column names (in ~~c()~~): ~~year~~ and ~~month~~. These new names need to be in quotes because they don't yet exist.",
-"#D With ~~sep~~, we provide an instruction on how to separate the strings in ~~col~~. In this case, we are splitting on a hyphen (~~-~~): everything left of it will be put into the ~~year~~ column, everything to the right of the hyphen is placed in the ~~month~~ column.",
-"#E Using ~~convert = TRUE~~ will convert the new columns (~~year~~ and ~~month~~) to integer-type columns in this case."
-))`
-```{r separate, paged.print=FALSE}
+
+```{=html}
+<p style="margin-bottom: 0; font-size: 14px"><strong>CODE //</strong> Separating the <code>yearmonth</code> column into <code>year</code> and <code>month</code> columns.</p>
+<details style="font-family: &#39;Open Sans&#39;, sans-serif; color: #333333; font-size:11px; margin-bottom: 2px; padding-top: 4px; padding-bottom: 4px;">
+<summary style="outline-style: solid; outline-width: 1px; outline-color: #B6B4FA; background-color: white; margin-left: -0.5px; margin-bottom: 6px; text-indent: 6px; cursor: pointer; font-size: 10px; display: list-item;">Notes on the Code</summary>
+<span style="color:steelblue;font-weight:bold;">#A </span>The <code>winni_mod</code> object is piped into the <code>separate()</code> function, the result of that is stored as <code>winni_tidy</code>.<br><span style="color:steelblue;font-weight:bold;">#B </span>For the <code>col</code> argument, we should provide the column name that contains the string to separate into multiple columns (<code>yearmonth</code>). The column name shouldn't be in quotes because the column exists.<br><span style="color:steelblue;font-weight:bold;">#C </span>The <code>into</code> argument lets us define column names for the split string. Since we are separating a string into two parts, we will provide two column names (in <code>c()</code>): <code>year</code> and <code>month</code>. These new names need to be in quotes because they don't yet exist.<br><span style="color:steelblue;font-weight:bold;">#D </span>With <code>sep</code>, we provide an instruction on how to separate the strings in <code>col</code>. In this case, we are splitting on a hyphen (<code>-</code>): everything left of it will be put into the <code>year</code> column, everything to the right of the hyphen is placed in the <code>month</code> column.<br><span style="color:steelblue;font-weight:bold;">#E </span>Using <code>convert = TRUE</code> will convert the new columns (<code>year</code> and <code>month</code>) to integer-type columns in this case.
+<br style="font-size: 14px;"/>
+</details>
+```
+
+
+```r
 winni_tidy <-  #A
   winni_mod %>%                
   separate(
@@ -151,23 +191,49 @@ winni_tidy <-  #A
   )
 
 winni_tidy
+#> # A tibble: 112 x 5
+#>    year month   day  hour  temp
+#>   <int> <int> <int> <int> <dbl>
+#> 1  2015     2     1     0 -26.8
+#> 2  2015     2     1     6 -29.2
+#> 3  2015     2     1    12 -22.5
+#> 4  2015     2     1    18 -21  
+#> 5  2015     2     2     0 -19.7
+#> 6  2015     2     2     6 -16.7
+#> # … with 106 more rows
 ```
 
 We see from the table printed in the console that the `yearmonth` column has been replaced by the `year` and `month` columns.
 
 This table is now tidy! As a last thing to do we could arrange the rows to be in the order of the observation times. This is the perfect case for using the `arrange()` function.
 
-`r dspatterns::code_hints(
-"**CODE //** Using ~~arrange()~~ to put the observations in the correct order.",
-c(
-"#A The ~~arrange()~~ function from the **dplyr** package takes unquoted column names (or expressions with ~~desc()~~, not shown here but demonstrated in Chapter 2). The order is important. We are sorting first by ~~year~~, then ~~month~~, then ~~day~~, and finally by ~~hour~~."
-))`
-```{r weather-arrange, paged.print=FALSE}
+
+```{=html}
+<p style="margin-bottom: 0; font-size: 14px"><strong>CODE //</strong> Using <code>arrange()</code> to put the observations in the correct order.</p>
+<details style="font-family: &#39;Open Sans&#39;, sans-serif; color: #333333; font-size:11px; margin-bottom: 2px; padding-top: 4px; padding-bottom: 4px;">
+<summary style="outline-style: solid; outline-width: 1px; outline-color: #B6B4FA; background-color: white; margin-left: -0.5px; margin-bottom: 6px; text-indent: 6px; cursor: pointer; font-size: 10px; display: list-item;">Notes on the Code</summary>
+<span style="color:steelblue;font-weight:bold;">#A </span>The <code>arrange()</code> function from the <strong>dplyr</strong> package takes unquoted column names (or expressions with <code>desc()</code>, not shown here but demonstrated in Chapter 2). The order is important. We are sorting first by <code>year</code>, then <code>month</code>, then <code>day</code>, and finally by <code>hour</code>.
+<br style="font-size: 14px;"/>
+</details>
+```
+
+
+```r
 winni_tidy <- 
   winni_tidy %>%
   arrange(year, month, day, hour)  #A
 
 winni_tidy
+#> # A tibble: 112 x 5
+#>    year month   day  hour  temp
+#>   <int> <int> <int> <int> <dbl>
+#> 1  2015     2     1     0 -26.8
+#> 2  2015     2     1     6 -29.2
+#> 3  2015     2     1    12 -22.5
+#> 4  2015     2     1    18 -21  
+#> 5  2015     2     2     0 -19.7
+#> 6  2015     2     2     6 -16.7
+#> # … with 106 more rows
 ```
 
 The output is now arranged, and the printed tibble above allows us to verify this.
@@ -178,15 +244,24 @@ Recall that the columns given to `arrange()` have a sorting priority. Here we ar
 
 We now have a single observation per row and, as far as we can tell, all observations are accounted for. There is immense value in having our data in a tidy format. For one thing, it's easier now to plot the data as time-series plot using **ggplot**. We do have to make one more alteration though (and this is only a small change). We should create a date-time column so that each point in time is represented by a single variable. We can do that with **dplyr**'s `mutate()` function and the base function `ISOdate()`. With those functions, the new `iso_date` column can be created by supplying all of the time-component columns to `ISOdate()`.
 
-`r dspatterns::code_hints(
-"**CODE //** A date-time column is necessary for **ggplot**-based time-series plots."
-)`
-```{r winni-iso-date, paged.print=FALSE}
+`<p style="margin-bottom: 0; font-size: 14px"><strong>CODE //</strong> A date-time column is necessary for <strong>ggplot</strong>-based time-series plots.</p>`{=html}
+
+```r
 winni_tidy <- 
   winni_tidy %>%
   mutate(iso_date = ISOdate(year, month, day, hour))
 
 winni_tidy
+#> # A tibble: 112 x 6
+#>    year month   day  hour  temp iso_date           
+#>   <int> <int> <int> <int> <dbl> <dttm>             
+#> 1  2015     2     1     0 -26.8 2015-02-01 00:00:00
+#> 2  2015     2     1     6 -29.2 2015-02-01 06:00:00
+#> 3  2015     2     1    12 -22.5 2015-02-01 12:00:00
+#> 4  2015     2     1    18 -21   2015-02-01 18:00:00
+#> 5  2015     2     2     0 -19.7 2015-02-02 00:00:00
+#> 6  2015     2     2     6 -16.7 2015-02-02 06:00:00
+#> # … with 106 more rows
 ```
 
 The `winni_tidy` table now indeed contains a new column called `iso_date`. The `iso_date` column appears to have a type with the `<dttm>` (date-time) abbreviation in the tibble print out. The object type of `iso_date` is not `character` or `numeric` but instead `POSIXct`. It's a convenient way to store accurate date-time values in a single column of a table.
@@ -195,16 +270,26 @@ About `POSIXct`: Under the hood, the `POSIXct` data type contains the number of 
 
 Now that we have the time data represented in a single column, a basic scatterplot in **ggplot** requires only two statements: the `ggplot()` call followed by defining a layer of points with the `geom_point()` function.
 
-`r dspatterns::code_hints(
-"**CODE //** A scatterplot of all observations in ~~winni_tidy~~ using **ggplot**.",
-c(
-"#A The ~~ggplot()~~ function call begins the plotting process, where we provide the tidied ~~winni_tidy~~ table as the plot data.",
-"#B We use the ~~geom_point()~~ *geom* to indicate that we want a scatterplot. We are giving this function the minimally required aesthetics of ~~x~~ and ~~y~~ (the ~~iso_date~~ and ~~temp~~ columns in ~~winni_tidy~~)."
-))`
-```{r winni-tidy-ggplot-1, fig.cap='(ref:winni-tidy-ggplot-1)'}
+
+```{=html}
+<p style="margin-bottom: 0; font-size: 14px"><strong>CODE //</strong> A scatterplot of all observations in <code>winni_tidy</code> using <strong>ggplot</strong>.</p>
+<details style="font-family: &#39;Open Sans&#39;, sans-serif; color: #333333; font-size:11px; margin-bottom: 2px; padding-top: 4px; padding-bottom: 4px;">
+<summary style="outline-style: solid; outline-width: 1px; outline-color: #B6B4FA; background-color: white; margin-left: -0.5px; margin-bottom: 6px; text-indent: 6px; cursor: pointer; font-size: 10px; display: list-item;">Notes on the Code</summary>
+<span style="color:steelblue;font-weight:bold;">#A </span>The <code>ggplot()</code> function call begins the plotting process, where we provide the tidied <code>winni_tidy</code> table as the plot data.<br><span style="color:steelblue;font-weight:bold;">#B </span>We use the <code>geom_point()</code> <em>geom</em> to indicate that we want a scatterplot. We are giving this function the minimally required aesthetics of <code>x</code> and <code>y</code> (the <code>iso_date</code> and <code>temp</code> columns in <code>winni_tidy</code>).
+<br style="font-size: 14px;"/>
+</details>
+```
+
+
+```r
 ggplot(data = winni_tidy) +  #A
   geom_point(aes(x = iso_date, y = temp))  #B
 ```
+
+<div class="figure" style="text-align: center">
+<img src="making_datasets_longer_files/figure-html/winni-tidy-ggplot-1-1.png" alt="(ref:winni-tidy-ggplot-1)" width="70%" />
+<p class="caption">(\#fig:winni-tidy-ggplot-1)(ref:winni-tidy-ggplot-1)</p>
+</div>
 (ref:winni-tidy-ggplot-1) The scatterplot with all temperature data reveals a spurious data point.
 
 The plot we obtain from this code might surprise us since there is a temperature value with an extremely high value (`9999`). Plots like these are easy to create and are very useful for finding anomalous values hiding in the dataset. In this case, we see a single spurious value. There is a logical explanation for why we have a very high temperature value in this dataset: it is actually missing value. In datasets you may obtain from different sources, the encoding of missing values can take various forms. Sometimes, the field is blank, there may be text (e.g., `"N/A"`, `"missing"`, `"-"`, etc.), or, in this case, it may be a value of the same type (`numeric`) but set to a physically improbable value (9999 degrees Celsius!). Once we know how missing values are encoded for any particular dataset, we can take action to re-encode as proper `NA` values. In this way, our tidy tools, such as **ggplot**, can better handle the data.
@@ -213,12 +298,18 @@ The plot we obtain from this code might surprise us since there is a temperature
 
 The `winni_tidy` table that we worked hard to make tidy requires yet another change in the name of tidiness. The `9999` value, which is a missing value according to the data creator, needs to be transformed to an `NA` value. The **tidyr** package has a useful function for this, and it works nicely in conjunction with **dplyr**'s mutate: the `na_if()` function. We can use the same construction as with `mutate()`/`case_when()` to modify the temp column, replacing that `9999` value with an `NA` value.
 
-`r dspatterns::code_hints(
-"**CODE //** Replacement of missing values with the ~~mutate()~~ and ~~na_if()~~ functions.",
-c(
-"#A The ~~na_if()~~ function is used inside of ~~mutate()~~ to modify the ~~temp~~ column. Inside ~~na_if()~~ we first supply the column name to modify, then, we supply the value that is considered to be an ~~NA~~ value."
-))`
-```{r winni-na-if, paged.print=FALSE}
+
+```{=html}
+<p style="margin-bottom: 0; font-size: 14px"><strong>CODE //</strong> Replacement of missing values with the <code>mutate()</code> and <code>na_if()</code> functions.</p>
+<details style="font-family: &#39;Open Sans&#39;, sans-serif; color: #333333; font-size:11px; margin-bottom: 2px; padding-top: 4px; padding-bottom: 4px;">
+<summary style="outline-style: solid; outline-width: 1px; outline-color: #B6B4FA; background-color: white; margin-left: -0.5px; margin-bottom: 6px; text-indent: 6px; cursor: pointer; font-size: 10px; display: list-item;">Notes on the Code</summary>
+<span style="color:steelblue;font-weight:bold;">#A </span>The <code>na_if()</code> function is used inside of <code>mutate()</code> to modify the <code>temp</code> column. Inside <code>na_if()</code> we first supply the column name to modify, then, we supply the value that is considered to be an <code>NA</code> value.
+<br style="font-size: 14px;"/>
+</details>
+```
+
+
+```r
 winni_tidy <-  
   winni_tidy %>%
   mutate(temp = na_if(temp, 9999))  #A
@@ -228,17 +319,29 @@ The code that mutates the `winni_tidy` table writes over the previous version of
 
 A reasonable method involves both **dplyr**'s `select()` function and the base **R** function `summary()`. The idea is to reduce the table to the column of interest first, and then get summary statistics for the single column (so as to not clutter up the console with summary output for many columns). We won't overwrite the `winni_tidy` object with a reassignment here, we just want to inspect the table non-destructively.
 
-`r dspatterns::code_hints(
-"**CODE //** Inspecting the data in a column (~~temp~~) to verify that the mutation had occurred.",
-c(
-"#A No reassignment back to ~~winni_tidy~~ here like in previous code listings, we just want to inspect the data.",
-"#B We are selecting the ~~temp~~ column to focus only on that column's summary statistics.",
-"#C The ~~summary()~~ function is very useful for getting simple summary statistics and validating one's assumptions of the data."
-))`
-```{r winni-temp-summary, paged.print=FALSE}
+
+```{=html}
+<p style="margin-bottom: 0; font-size: 14px"><strong>CODE //</strong> Inspecting the data in a column (<code>temp</code>) to verify that the mutation had occurred.</p>
+<details style="font-family: &#39;Open Sans&#39;, sans-serif; color: #333333; font-size:11px; margin-bottom: 2px; padding-top: 4px; padding-bottom: 4px;">
+<summary style="outline-style: solid; outline-width: 1px; outline-color: #B6B4FA; background-color: white; margin-left: -0.5px; margin-bottom: 6px; text-indent: 6px; cursor: pointer; font-size: 10px; display: list-item;">Notes on the Code</summary>
+<span style="color:steelblue;font-weight:bold;">#A </span>No reassignment back to <code>winni_tidy</code> here like in previous code listings, we just want to inspect the data.<br><span style="color:steelblue;font-weight:bold;">#B </span>We are selecting the <code>temp</code> column to focus only on that column's summary statistics.<br><span style="color:steelblue;font-weight:bold;">#C </span>The <code>summary()</code> function is very useful for getting simple summary statistics and validating one's assumptions of the data.
+<br style="font-size: 14px;"/>
+</details>
+```
+
+
+```r
 winni_tidy %>%  #A
   select(temp) %>%  #B
   summary()  #C
+#>       temp       
+#>  Min.   :-32.30  
+#>  1st Qu.:-22.40  
+#>  Median :-18.50  
+#>  Mean   :-18.61  
+#>  3rd Qu.:-14.60  
+#>  Max.   : -3.30  
+#>  NA's   :1
 ```
 
 The output shows that the maximum value for `temp` is now `-3.30` and not `9999`, which is a huge improvement! Also, we now have a single `NA` value in the `temp` column (this was our doing).
@@ -247,29 +350,53 @@ On this road to tidiness, we have accomplished quite a lot. This is very much ho
 
 Let's now plot this data again. The next bit of plotting code isn't different than the previous plotting code, but it's here again for sake of convenience.
 
-`r dspatterns::code_hints(
-"**CODE //** Another attempt at a scatterplot of all the observations in ~~winni_tidy~~ (the even tidier version).",
-c(
-"#A This **ggplot** code is unchanged from before, which just goes to show that **ggplot** code can be highly reusable."
-))`
-```{r winni-tidy-ggplot-2, fig.cap='(ref:winni-tidy-ggplot-2)'}
+
+```{=html}
+<p style="margin-bottom: 0; font-size: 14px"><strong>CODE //</strong> Another attempt at a scatterplot of all the observations in <code>winni_tidy</code> (the even tidier version).</p>
+<details style="font-family: &#39;Open Sans&#39;, sans-serif; color: #333333; font-size:11px; margin-bottom: 2px; padding-top: 4px; padding-bottom: 4px;">
+<summary style="outline-style: solid; outline-width: 1px; outline-color: #B6B4FA; background-color: white; margin-left: -0.5px; margin-bottom: 6px; text-indent: 6px; cursor: pointer; font-size: 10px; display: list-item;">Notes on the Code</summary>
+<span style="color:steelblue;font-weight:bold;">#A </span>This <strong>ggplot</strong> code is unchanged from before, which just goes to show that <strong>ggplot</strong> code can be highly reusable.
+<br style="font-size: 14px;"/>
+</details>
+```
+
+
+```r
 ggplot(data = winni_tidy) +  #A
   geom_point(aes(x = iso_date, y = temp))
+#> Warning: Removed 1 rows containing missing values (geom_point).
 ```
+
+<div class="figure" style="text-align: center">
+<img src="making_datasets_longer_files/figure-html/winni-tidy-ggplot-2-1.png" alt="(ref:winni-tidy-ggplot-2)" width="70%" />
+<p class="caption">(\#fig:winni-tidy-ggplot-2)(ref:winni-tidy-ggplot-2)</p>
+</div>
 (ref:winni-tidy-ggplot-2) The scatterplot with all temperature data after dealing with the spurious data point.
 
 This plot is much changed from the previous one. This plot is now usable, since the temperature value of `9999` has now been classified as an `NA` value (and `NA` values aren't plotted, of course). Let's make things interesting and facet the plot by the hour of day. We have that flexibility now since there is an `hour` column. We do this in **ggplot** with the `facet_wrap()` function, and the result is a plot with four facets (*Figure \@ref(fig:winni-tidy-ggplot-3)*).
 
-`r dspatterns::code_hints(
-"**CODE //** Faceting the temperatures in winni_tidy by the time of day.",
-c(
-"#A We are using ~~facet_wrap()~~ to make a set of plots faceted by the four different hours that temperatures are available each day in this dataset. The ~~labeler = label_both~~ statement always provides useful information and is a nice touch."
-))`
-```{r winni-tidy-ggplot-3, fig.cap='(ref:winni-tidy-ggplot-3)'}
+
+```{=html}
+<p style="margin-bottom: 0; font-size: 14px"><strong>CODE //</strong> Faceting the temperatures in winni_tidy by the time of day.</p>
+<details style="font-family: &#39;Open Sans&#39;, sans-serif; color: #333333; font-size:11px; margin-bottom: 2px; padding-top: 4px; padding-bottom: 4px;">
+<summary style="outline-style: solid; outline-width: 1px; outline-color: #B6B4FA; background-color: white; margin-left: -0.5px; margin-bottom: 6px; text-indent: 6px; cursor: pointer; font-size: 10px; display: list-item;">Notes on the Code</summary>
+<span style="color:steelblue;font-weight:bold;">#A </span>We are using <code>facet_wrap()</code> to make a set of plots faceted by the four different hours that temperatures are available each day in this dataset. The <code>labeler = label_both</code> statement always provides useful information and is a nice touch.
+<br style="font-size: 14px;"/>
+</details>
+```
+
+
+```r
 ggplot(data = winni_tidy) +
   geom_point(aes(x = iso_date, y = temp)) +
   facet_wrap(vars(hour), labeller = label_both)  #A
+#> Warning: Removed 1 rows containing missing values (geom_point).
 ```
+
+<div class="figure" style="text-align: center">
+<img src="making_datasets_longer_files/figure-html/winni-tidy-ggplot-3-1.png" alt="(ref:winni-tidy-ggplot-3)" width="70%" />
+<p class="caption">(\#fig:winni-tidy-ggplot-3)(ref:winni-tidy-ggplot-3)</p>
+</div>
 (ref:winni-tidy-ggplot-3) A scatterplot with facets. Now possible with our tidy data.
 
 The plot of *Figure \@ref(fig:winni-tidy-ggplot-3)* couldn't be generated without our tidying transformations. Actually, none of these plots could be made with the same number of data points we have here. The data were effectively divided across four columns, and, we didn't have a date-time column. But now, we have the freedom to further transform the tidy data (e.g., filtering the data, converting temperature values to degrees Fahrenheit, etc.) and plot again with ease.

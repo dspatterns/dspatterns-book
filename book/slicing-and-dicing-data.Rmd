@@ -1,4 +1,4 @@
-# Slicing and Dicing Data {#slicing_and_dicing_data}
+# Slicing and Dicing Data {#slicing-and-dicing-data}
 
 ```{r setup, include=FALSE, echo=FALSE}
 library(dspatterns)

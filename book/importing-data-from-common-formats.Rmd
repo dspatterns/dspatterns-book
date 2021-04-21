@@ -1,4 +1,4 @@
-# Importing Data From Common Formats {#importing_data_common_formats}
+# Importing Data From Common Formats {#importing-data-from-common-formats}
 
 ```{r setup, include=FALSE, echo=FALSE}
 library(dspatterns)

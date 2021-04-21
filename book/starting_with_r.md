@@ -26,9 +26,10 @@ Throughout the upcoming lessons, we'll learn how to use **R** to gather, transfo
 	
 **RStudio** has a customizable, four-pane workspace. It has a collection of useful features that help with **R** coding such as syntax highlighting, autocomplete, file and project management, and much more.
 
-```{r rstudio-desktop-env, echo = FALSE, fig.cap = '(ref:rstudio-desktop-env)'}
-knitr::include_graphics("figures/chapter_01/01-01-figure-rstudio-desktop-env.png")
-```
+<div class="figure" style="text-align: center">
+<img src="figures/chapter_01/01-01-figure-rstudio-desktop-env.png" alt="(ref:rstudio-desktop-env)" width="70%" />
+<p class="caption">(\#fig:rstudio-desktop-env)(ref:rstudio-desktop-env)</p>
+</div>
 (ref:rstudio-desktop-env) The **RStudio Desktop** environment with an **R Markdown** file in focus in top-left (the source pane) and the **R** console occupying the bottom-left.
 
 The diagram shown in *Figure \@ref(fig:rstudio-desktop-env)* provides a reference to a cross section of the buttons available in the initial view. The most important takeaways from this first look at **RStudio** are:
@@ -62,16 +63,18 @@ There are many advantages of taking this approach for virtually all data analysi
 
 You may or may not be familiar with **Markdown**, which is a big part of this format. **Markdown** is a text markup language that translates really well to **HTML**. It was created by John Gruber as a very simple way for anybody (i.e., non-programmers) to write in an easy-to-read format that could be converted directly into **HTML**. It was inspired by the informal text markup that people would often use in email messages, and, owing to this familiarity, it feels quite natural to write. *Figure \@ref(fig:markdown-reference)* has a quick reference of **Markdown** and what it looks like when rendered to **HTML**.
 
-```{r markdown-reference, echo = FALSE, fig.cap = '(ref:markdown-reference)'}
-knitr::include_graphics("figures/chapter_01/01-02-figure-markdown-reference.png")
-```
+<div class="figure" style="text-align: center">
+<img src="figures/chapter_01/01-02-figure-markdown-reference.png" alt="(ref:markdown-reference)" width="70%" />
+<p class="caption">(\#fig:markdown-reference)(ref:markdown-reference)</p>
+</div>
 (ref:markdown-reference) A simple reference for Markdown. The text on the left will become the HTML on the right after an **R Markdown** document is *knitted*.
 
 All of the lessons in this book will incorporate **R Markdown** because it really is a great approach for running all **R** code in data analysis and visualization contexts. The prose portion of **R Markdown** (i.e., *not* the **R** code) is the default text entry type. The **R** code is run inside code chunks, which are marked off areas (with three backticks: ```) in the document. The schematic in *Figure \@ref(fig:rmarkdown-annotation)* shows what an **R** code chunk looks like and what controls are available in **R Markdown**.
 
-```{r rmarkdown-annotation, echo = FALSE, fig.cap='(ref:rmarkdown-annotation)'}
-knitr::include_graphics("figures/chapter_01/01-03-figure-rmarkdown-annotation.png")
-```
+<div class="figure" style="text-align: center">
+<img src="figures/chapter_01/01-03-figure-rmarkdown-annotation.png" alt="(ref:rmarkdown-annotation)" width="70%" />
+<p class="caption">(\#fig:rmarkdown-annotation)(ref:rmarkdown-annotation)</p>
+</div>
 (ref:rmarkdown-annotation) A simple reference for Markdown. The text on the left will become the HTML on the right after an **R Markdown** document is *knitted*.
 
 Aside from reproducibility, the finished **R Markdown** document can be rendered to a self-contained HTML file, to a Word document, to a various presentation types including Powerpoint, or to a PDF file. There are lots of ways to customize what the rendered document will look like (e.g., hiding code for non-technical audiences, adding HTML display elements, etc.), so, the analysis can double as a deliverable report. This will undoubtedly save you time. If ever the input data should change, the report could be run again and updated, usually with minimal (if any) modification. That's one of the features of reproducible reporting.
@@ -80,55 +83,46 @@ Let's walk through a simple example of how to use **R Markdown** in RStudio. You
 
 <hr>
 
-```{r walkthrough-1, echo = FALSE}
-knitr::include_graphics("figures/chapter_01/01-column-rmarkdown_walkthrough_1.png")
-```
+<img src="figures/chapter_01/01-column-rmarkdown_walkthrough_1.png" width="70%" style="display: block; margin: auto;" />
 
 **STEP 1**. The first thing to do is create a new **R Markdown** document. This is conveniently done through the *New File* dropdown button (top left of IDE). A new **R Markdown** document is the third choice from the top.
 
 <hr>
 
-```{r walkthrough-2, echo = FALSE}
-knitr::include_graphics("figures/chapter_01/01-column-rmarkdown_walkthrough_2.png")
-```
+<img src="figures/chapter_01/01-column-rmarkdown_walkthrough_2.png" width="70%" style="display: block; margin: auto;" />
 
 **STEP 2**. You'll be presented with a dialog box and some options. The default option of HTML is what we want for this walkthrough, so hit Enter or the *OK* button. A new, untitled **R Markdown** document will appear in the Source pane (the top-left pane).
 
 <hr>
 
-```{r walkthrough-3, echo = FALSE}
-knitr::include_graphics("figures/chapter_01/01-column-rmarkdown_walkthrough_3.png")
-```
+<img src="figures/chapter_01/01-column-rmarkdown_walkthrough_3.png" width="70%" style="display: block; margin: auto;" />
 
 **STEP 3**. We should delete everything in this default document except for the useful YAML Front Matter (i.e., the text enclosed by three hyphens). Then save the document as an .Rmd file. Saving is necessary before rendering and is generally considered a good practice (though RStudio will always keep your unsaved documents across sessions).
   
 <hr>
 
-```{r walkthrough-4, echo = FALSE}
-knitr::include_graphics("figures/chapter_01/01-column-rmarkdown_walkthrough_4.png")
-```
+<img src="figures/chapter_01/01-column-rmarkdown_walkthrough_4.png" width="70%" style="display: block; margin: auto;" />
 
 **STEP 4**. Now, place the insertion point in the document below the YAML and insert two **R** code chunks. This can be done through the *Insert Code Chunk* button or the handy keyboard shortcut `Command` + `Option` + `I` (`Control` + `Alt` + `I` on Windows). You'll see two text areas enclosed by backticks and the language of the code in curly braces: `{r}`.
 
 <hr>
 
-```{r walkthrough-5, echo = FALSE}
-knitr::include_graphics("figures/chapter_01/01-column-rmarkdown_walkthrough_5.png")
-```
+<img src="figures/chapter_01/01-column-rmarkdown_walkthrough_5.png" width="70%" style="display: block; margin: auto;" />
 
 **STEP 5**. Now we can do some writing of code. Place the insertion point inside the first **R** code chunk and type `summary(airquality)` (this is a built-in **R** dataset and is always available). Then, run the code in that chunk by pressing the green run button, or, with the keyboard shortcut: `Control` + `Enter`. You'll see a summary of data appear below! Running the code and verifying the output matches expectations is a great practice (although running each code chunk is not necessary for rendering the **R Markdown** document). We'll do something similar in the second code chunk. First type in this plotting code.
 
-  ```{r}
+  
+  ```r
   plot(x = airquality$Temp, y = airquality$Ozone)
   ```
+  
+  <img src="starting_with_r_files/figure-html/unnamed-chunk-1-1.png" width="70%" style="display: block; margin: auto;" />
 
 After running this code chunk, we'll see a plot showing the effect of temperature on ground level ozone concentrations (conveniently right below the code chunk).
 
 <hr>
 
-```{r walkthrough-6, echo = FALSE}
-knitr::include_graphics("figures/chapter_01/01-column-rmarkdown_walkthrough_6.png")
-```
+<img src="figures/chapter_01/01-column-rmarkdown_walkthrough_6.png" width="70%" style="display: block; margin: auto;" />
 
 **STEP 6**. To make this document function as a report, let's add some text above and below the **R** code chunks. Here is the Markdown text that could be put in above:
 
@@ -148,9 +142,10 @@ Inside the IDE, this just looks like plaintext with some highlighting applied wh
 
 That will produce an HTML document with the same name as the **R Markdown** document (in the directory where the .Rmd file was saved) and the process opens a preview window with the HTML report (*Figure \@ref(fig:rmarkdown-html-output)*).
 
-```{r rmarkdown-html-output, echo = FALSE, fig.cap = '(ref:rmarkdown-html-output)'}
-knitr::include_graphics("figures/chapter_01/01-04-figure-rmarkdown-html-output.png")
-```
+<div class="figure" style="text-align: center">
+<img src="figures/chapter_01/01-04-figure-rmarkdown-html-output.png" alt="(ref:rmarkdown-html-output)" width="70%" />
+<p class="caption">(\#fig:rmarkdown-html-output)(ref:rmarkdown-html-output)</p>
+</div>
 (ref:rmarkdown-html-output) The rendered HTML document based on the **R Markdown** document. The preview window provides a way to easily look over the output initiated by a *Knit*.
 
 It's here where you can see that the Markdown elements become things like bold and italicized text. That rendered text appears above and below the code and the outputs, just as it was in the **R Markdown** document. It's also here where its more apparent that **R Markdown** is indeed useful for working with data and also for creating reports.
@@ -165,9 +160,10 @@ The *Tidyverse* (<https://www.tidyverse.org>) is a collection of **R** packages 
 
 The skills we need to learn are closely tied to the packages that provide us with the toolsets for the task at hand. The diagram presented as *Figure \@ref(fig:workflow)* outlines the basic data analysis and reporting workflow. It is annotated with the packages that we'll learn and use in different chapters of this book.
 
-```{r workflow, echo = FALSE, fig.cap='(ref:workflow)'}
-knitr::include_graphics("figures/chapter_01/01-05-figure-workflow.png")
-```
+<div class="figure" style="text-align: center">
+<img src="figures/chapter_01/01-05-figure-workflow.png" alt="(ref:workflow)" width="70%" />
+<p class="caption">(\#fig:workflow)(ref:workflow)</p>
+</div>
 (ref:workflow) A typical workflow in a data analysis task or project. We begin by importing and tidying the data, enter into a cycle of transformation, visualization, and modeling, then we conclude by reporting our findings. All the while, we use our **R** programming skills along with functions from various packages.
 
 Throughout this book, we'll use *Tidyverse* packages and several other packages to perform a range of data-related tasks. These include data collection, data transformation, and data visualization. We will learn when it's appropriate to write our code inside **R Markdown**, **R** scripts, or in the **R** console. As **R Markdown** is a great medium for data exploration and for communication so we will be predominantly working in that format. Taken all together, the combination of **R** programming, **R** packages, and **R Markdown** makes for a very powerful and effective toolset for working with the data you'll encounter in the real world.

@@ -1,4 +1,4 @@
-# R Lists and Factors {#r_lists_and_factors}
+# R Lists {#r-lists}
 
 ```{r setup, include=FALSE, echo=FALSE}
 library(dspatterns)

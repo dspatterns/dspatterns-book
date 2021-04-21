@@ -1,4 +1,4 @@
-# Transformations Involving Dates and Times {#transformations_dates_times}
+# Transformations Involving Dates and Times {#transformations-dates-times}
 
 ```{r setup, include=FALSE, echo=FALSE}
 library(dspatterns)

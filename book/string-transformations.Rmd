@@ -1,4 +1,4 @@
-# String Transformations {#string_transformations}
+# String Transformations {#string-transformations}
 
 ```{r setup, include=FALSE, echo=FALSE}
 library(dspatterns)

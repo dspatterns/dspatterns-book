@@ -1,4 +1,4 @@
-# Factors Help Us Make Better Plots {#factors_help_us_make_better_plots}
+# Factors Help Us Make Better Plots {#factors-help-us-make-better-plots}
 
 ```{r setup, include=FALSE, echo=FALSE}
 library(dspatterns)
