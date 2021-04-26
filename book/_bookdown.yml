@@ -7,19 +7,24 @@ new_session: yes
 rmd_files: [
   "index.Rmd",
   "starting-with-r.Rmd",
-  "careful-counting-patterns.Rmd",
-  "slicing-and-dicing-data.Rmd",
+  # "Section 1",
+  "careful-counting-patterns.Rmd",  # NOTES: remove content with factors
+  "slicing-and-dicing-data.Rmd",    # NOTES: remove content with factors
   "making-datasets-longer.Rmd",
-  "factors-help-us-make-better-plots.Rmd",
+  # "windows-of-data.Rmd",
+  # "making-datasets-wider.Rmd", # NOTES: transforming data for tables and modeling applications
+  "project-1.Rmd",
+  # "Section 2",
+  # "",
+  "importing-data-from-common-formats.Rmd",
+  "transformations-dates-times.Rmd", # NOTE: use the {clock} package
+  "ordering-data-to-make-better-plots.Rmd", # Uses factors
   "more-plotting-with-ggplot-i.Rmd",
   "more-plotting-with-ggplot-ii.Rmd",
-  "z-checkpoint-1.Rmd",
-  "importing-data-from-common-formats.Rmd",
-  "transformations-dates-times.Rmd",
+  "project-2.Rmd",
   "a-closer-look-at-r-programming.Rmd",
-  "string-transformations.Rmd",
+  "string-transformations.Rmd", # str_detect, str_replace, word()
   "r-lists.Rmd",
-  "z-checkpoint-2.Rmd",
   "making-presentation-tables.Rmd",
   "appendix.Rmd"
 ]
