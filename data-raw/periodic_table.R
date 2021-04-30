@@ -7,7 +7,7 @@ library(jsonlite)
 
 periodic_table <-
   jsonlite::fromJSON(
-    "data-raw/periodictable.json",
+    "data-raw/periodic_table.json",
     ) %>%
   dplyr::as_tibble() %>%
   tidyr::unpack(cols = everything()) %>%
