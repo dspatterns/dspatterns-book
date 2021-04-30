@@ -25,6 +25,7 @@ source("data-raw/employment.R")
 source("data-raw/rainfall.R")
 source("data-raw/imdb.R")
 source("data-raw/pitchfork.R")
+source("data-raw/periodic_table.R")
 
 # Create external datasets
 use_data(
@@ -34,6 +35,7 @@ use_data(
   chopsticks,
   asd_prevalence,
   maze,
+  periodic_table,
 
   # Existing datasets
   sw,
