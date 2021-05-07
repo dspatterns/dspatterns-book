@@ -2,8 +2,9 @@
 
 Notes:
 
-- installing packages
+- installing packages (`palmerpenguins`)
 - introduce ways to inspect the `penguins` dataset: `head()`, `tail()`, `dplyr::glimpse()`, `skimr::skim()` (let's avoid the `%>%` for now)
+- explain how to access and read a help file (inspiration here: https://socviz.co/appendix.html#a-little-more-about-r)
 - Rmd: refer reader to new Rmd site to get an introduction to the mechanics
 - change Markdown reference to copy/paste-able text (use Pandoc divs for a two-column layout)
 - getting help
