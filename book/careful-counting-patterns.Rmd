@@ -1,3 +1,5 @@
+# (PART) Part I {-}
+
 # Careful Counting Patterns {#careful-counting-patterns}
 
 ```{r setup, include=FALSE, echo=FALSE}
@@ -51,7 +53,16 @@ library(tidyverse)
 
 Notes: 
 
-- Use the bakeoff dataset (diamonds has been seen before)
+- Use the bakeoff package (diamonds has been seen before)
+  - user the bakers datasets
+  - how many bakers...
+    - overall?
+    - per series?
+    - per hometown?
+    - per episode / per series?
+    - most common first name `baker_first`?
+  
+    
 - This chapter really ought to be an intro vis / data inspection/exploration section with multiple packages
 - introduce functions:
   - dplyr::glimpse()
@@ -82,6 +93,9 @@ Communicate:
 
 The moma dataset (https://apreshill.github.io/data-vis-labs-2018/02-moma.html) would be great for a project
 - explore using the lisa palette from paletteer
+
+
+
 
 
 ## This chapter covers

@@ -1,0 +1,7 @@
+# Ordering Data to Make Better Plots {#ordering-data-to-make-better-plots}
+
+```{r setup, include=FALSE, echo=FALSE}
+library(dspatterns)
+library(tidyverse)
+```
+

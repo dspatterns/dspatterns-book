@@ -6,15 +6,16 @@ new_session: yes
 
 rmd_files: [
   "index.Rmd",
-  "starting-with-r.Rmd",
   # "Section 1",
+  "starting-with-r.Rmd", # NOTES: include beginner patterns
+  # "Section 2",
   "careful-counting-patterns.Rmd",  # NOTES: remove content with factors
   "slicing-and-dicing-data.Rmd",    # NOTES: remove content with factors
   "making-datasets-longer.Rmd",
-  # "windows-of-data.Rmd",
-  # "making-datasets-wider.Rmd", # NOTES: transforming data for tables and modeling applications
+  "windows-of-data.Rmd",
+  "making-datasets-wider.Rmd", # NOTES: transforming data for tables and modeling applications
   "project-1.Rmd",
-  # "Section 2",
+  # "Section 3",
   # "",
   "importing-data-from-common-formats.Rmd",
   "transformations-dates-times.Rmd", # NOTE: use the {clock} package
@@ -26,5 +27,6 @@ rmd_files: [
   "string-transformations.Rmd", # str_detect, str_replace, word()
   "r-lists.Rmd",
   "making-presentation-tables.Rmd",
+  # NOTE: Put fragments in the Appendix
   "appendix.Rmd"
 ]
