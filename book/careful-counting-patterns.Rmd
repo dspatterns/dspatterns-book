@@ -5,6 +5,7 @@
 ```{r setup, include=FALSE, echo=FALSE}
 library(dspatterns)
 library(tidyverse)
+library(bakeoff)
 ```
 
 
@@ -56,13 +57,114 @@ Notes:
 - Use the bakeoff package (diamonds has been seen before)
   - user the bakers datasets
   - how many bakers...
-    - overall?
+  
+This is really good for interactive use. Gives you the rows and columns plus some of row content.
+```{r how-many-bakers-glimpse}
+glimpse(bakers)
+```
+
+Use the chunk option `paged.print=TRUE` to print tables as an HTML table that has controls for pagination.
+
+```{r baker-paged, paged.print=TRUE}
+bakers
+```
+
+Use the chunk option `paged.print=FALSE` to give us the 'console' version of the table.
+
+```{r bakers-non-paged, paged.print=FALSE}
+bakers
+```
+
+
+This is good for sharing a preview of the dataset. Use gt's `gt_preview()` function when you want to share in a static document.
+
+```{r bakers-gt-preview}
+gt::gt_preview(bakers)
+```
+
+
+
+```{r}
+bakers %>% nrow()
+```
+
+But are the contestants unique across all the rows? (Did somebody drop out and come back?)
+
+```{r, paged.print=FALSE}
+bakers %>% distinct(baker_full)
+```
+
+QLC: how would you get a count of distinct rows in the `bakers` table.
+```{r}
+bakers %>% n_distinct() %>% nrow()
+```
+- most common first name `baker_first`?
+
+```{r}
+bakers %>% distinct(baker_first)
+```
+
+`107` is less than the `120` row count we've seen earlier. Let's instead `count()` by first name (`baker_first`)
+
+```{r}
+bakers %>% count(baker_first)
+```
+
+
+This is more apparent when sorting with the `sort` option in `count()`.
+
+```{r}
+bakers %>% count(baker_first, sort = TRUE)
+```
+
+Now we see that the most common first name is `Kate`.
+
+This is useful but a bit confusing because of the sorting (only descending by `name_total`).
+
+```{r}
+bakers %>% 
+  distinct(series, baker_first) %>%
+  add_count(baker_first, sort = TRUE, name = "name_total")
+```
+
+   - overall?
+
+Let's do a count of baker by series (were there any series where two people shared the same name?)
+
+
+```{r}
+bakers %>% count(series, baker_first, sort = TRUE)
+```
+Seems like no? All `n` values are `1` and the total count here is the same as before (`120`). 
+
+```{r}
+bakers %>% count(series)
+```
+This follows the original order of the table (series increasing). Interestingly, the first series started with only 10 but it became at least bakers dozen's worth later on. 
+
+```{r}
+bakers_by_series <- bakers %>% count(series)
+```
+
+In R Markdown, we often want to use the things we calculated inside the text. We can do that with `r knitr::inline_expr("min(bakers_by_series$n)")`
+ 
     - per series?
     - per hometown?
-    - per episode / per series?
-    - most common first name `baker_first`?
-  
     
+EXERCISE: Can you figure out if any bakers are from the same hometown? How about from the same hometown and the same series?
+
+```{r}
+bakers %>% count(hometown, series, sort = TRUE)
+```
+    
+    - per episode / per series?
+    
+```{r}
+episodes %>% count(series, episode)
+```
+
+
+
 - This chapter really ought to be an intro vis / data inspection/exploration section with multiple packages
 - introduce functions:
   - dplyr::glimpse()
