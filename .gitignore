@@ -36,6 +36,9 @@ _main.rds
 _book
 bookdown*
 
+# quarto files and directories
+quarto-book/docs
+
 # Temporary files created by R markdown
 *.utf8.md
 *.knit.md

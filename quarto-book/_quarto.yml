@@ -1,0 +1,28 @@
+project:
+  type: book
+  output-dir: docs
+
+book:
+  title: "A Data Science Pattern Language"
+  author: "Alison Presmanes Hill and Richard Iannone"
+  description: |
+    A Data Science Pattern Language: Designing Projects with R* will get you up
+    and running with R. You'll learn many things in this book, with the
+    main goals of enabling you to explore data, perform analysis on it, and
+    communicate the results of that analysis. There are lots of little things
+    to learn to get to that stage, but we'll take a structured approach using
+    a collection of R packages.
+  cover-image: images/cover.png
+  repo-branch: master
+  repo-actions: [edit]
+  chapters:
+    - index.Rmd
+    - part:
+      chapters:
+        - starting-with-r.Rmd
+
+format:
+  html:
+    theme: cosmo
+    cover-image: cover.png
+    code-link: true
