@@ -2,6 +2,11 @@
 knit: quarto render
 ---
 
+``` {r setup, include=FALSE, echo=FALSE}
+library(gt)
+library(tidyverse)
+```
+
 # Starting with R {#sec:starting}
 
 Notes:
@@ -67,40 +72,53 @@ With time, it becomes easier to **RStudio** with less reliance on a pointing dev
 
 Reporting the results of a data analysis is quite important and is often the deliverable. **R** has something known as **R Markdown** which is a format for writing code and prose in the same document. The idea for this comes from literate programming, where the mixture of source code for a computer program is intertwined both with an explanation of what the program is doing and also the results of running the program.
   
-There are many advantages of taking this approach for virtually all data analysis tasks:
+There are many advantages of taking this approach for all of your data analysis tasks:
 
   1. The explanation of the code is adjacent to the code itself; code comments are like this, but these explanations are more prominent and accessible than source code comments.
   2. There is no risk of having the code explanation and the code itself dissociated from one another; these two elements are tightly bound.
   3. A single document contains all of the analysis which is part code and part explanation. It's self-contained.
 
-You may or may not be familiar with **Markdown**, which is a big part of this format. **Markdown** is a text markup language that translates really well to **HTML**. It was created by John Gruber as a very simple way for anybody (i.e., non-programmers) to write in an easy-to-read format that could be converted directly into **HTML**. It was inspired by the informal text markup that people would often use in email messages, and, owing to this familiarity, it feels quite natural to write. @fig:markdown-reference has a quick reference of **Markdown** and what it looks like when rendered to **HTML**.
+You may or may not be familiar with **Markdown**, which is a big part of this format. **Markdown** is a text markup language that translates really well to **HTML**. It was created as a very simple way for anybody (i.e., non-programmers) to write in an easy-to-read format that could be converted directly into **HTML**. The following table provides a quick rundown of what typical **Markdown** looks like before and after rendering to **HTML**.
 
-![A simple reference for Markdown. The text on the left will become the HTML on the right after an **R Markdown** document is *knitted*.](figures/chapter_01/01-02-figure-markdown-reference.png){#fig:markdown-reference}
+```{r echo=FALSE}
+tribble(
+  ~a,                                         ~b,
+  "`Plain text`",                             "Plain text",
+  "`*italics* and **bold**`",                 "*italics* and **bold**",
+  "`verbatim code`",                          "`verbatim code`",
+  "`~~strikethrough~~`",
+  "<span style='text-decoration:line-through;'>strikethrough</span>",
+  "`subscript~2~ / superscript^2^`",          "subscript<sub>2</sub> / superscript<sup>2</sup>",
+  "`[link](https://www.rstudio.com)`",        "[link](https://www.rstudio.com)",
+  "`inline equation: $E=mc^2$`",              "inline equation: $E=mc^2$",
+  "`image: ![]()`",                           "image: ![]()",
+  "`# Biggest Heading`",                      "# Biggest Heading",
+  "`###### Smallest Heading`",                
+  "<span style='font-size:16px;'>Smallest Heading</span>",
+  "`> block quote`",                          
+  "<span style='padding-left:1rem;border-left-color:#999;border-left-style:solid;border-left-width:1px;'>block quote</span>",
+  "`* unordered list`<br>`* item 2`<br>`   + sub-item 1`<br>`   + sub-item 2`",
+  "* unordered list\n* item 2\n   + sub-item 1\n   + sub-item 2",
+  
+  "`1. ordered list`<br>`2. item 2`<br>`   + sub-item 1`<br>`   + sub-item 2`",
+  "1. ordered list\n2. item 2\n   + sub-item 1\n   + sub-item 2",
+) %>%
+  gt(caption = "Markdown Reference", id = "md_ref") %>%
+  fmt_markdown(columns = everything()) %>%
+  cols_label(
+    a = "Write this down as Markdown...",
+    b = "...get this in HTML form"
+  ) %>%
+  tab_options(table.width = pct(100)) %>%
+  opt_css(
+    css = "
+    #md_ref code {
+      color: #333333;
+    }"
+  )
+```
 
-Markdown Reference
-
------------------------------------------------------------------------------------------------
-Write this down as Markdown...            ...get this when it's rendered to HTML
----------------------------------------   -------------------------
-`Plain text`                              Plain text
-
-`*italics* and **bold**`                  *italics* and **bold**
-
-`verbatim code`                           `verbatim code`
-
-`~~strikethrough~~`                       ~~strikethrough~~
-
-`subscript~2~ / superscript^2^`           subscript~2~ / superscript^2^
-
-`[link](https://www.rstudio.com)`         [link](https://www.rstudio.com)
-
-`inline equation: $E=mc^2$`               inline equation: $E=mc^2$
-
-`image: ![]()`                            image: ![]()
-
------------------------------------------------------------------------------------------------
-
-
+<br>
 
 All of the lessons in this book will incorporate **R Markdown** because it really is a great approach for running all **R** code in data analysis and visualization contexts. The prose portion of **R Markdown** (i.e., *not* the **R** code) is the default text entry type. The **R** code is run inside code chunks, which are marked off areas (with three backticks: ```) in the document. The schematic in @fig:rmarkdown-annotation shows what an **R** code chunk looks like and what controls are available in **R Markdown**.
 
@@ -139,9 +157,11 @@ Let's walk through a simple example of how to use **R Markdown** in RStudio. You
 
 **STEP 5**. Now we can do some writing of code. Place the insertion point inside the first **R** code chunk and type `summary(airquality)` (this is a built-in **R** dataset and is always available). Then, run the code in that chunk by pressing the green run button, or, with the keyboard shortcut: `Control` + `Enter`. You'll see a summary of data appear below! Running the code and verifying the output matches expectations is a great practice (although running each code chunk is not necessary for rendering the **R Markdown** document). We'll do something similar in the second code chunk. First type in this plotting code.
 
-  ```{r}
-  plot(x = airquality$Temp, y = airquality$Ozone)
-  ```
+
+```{r eval=FALSE}
+plot(x = airquality$Temp, y = airquality$Ozone)
+```
+
 
 After running this code chunk, we'll see a plot showing the effect of temperature on ground level ozone concentrations (conveniently right below the code chunk).
 
@@ -179,16 +199,9 @@ To make all of this much easier, we can and should adopt a way to store data and
 
 The *Tidyverse* (<https://www.tidyverse.org>) is a collection of **R** packages designed for working with tabular data. These packages work well together, and, they all share an underlying design philosophy. By installing the tidyverse package, we get the entire collection of **R** packages under the *Tidyverse* umbrella.
 
-The skills we need to learn are closely tied to the packages that provide us with the toolsets for the task at hand. The diagram presented as @fig:workflow outlines the basic data analysis and reporting workflow. It is annotated with the packages that we'll learn and use in different chapters of this book.
-
-
-![A typical workflow in a data analysis task or project. We begin by importing and tidying the data, enter into a cycle of transformation, visualization, and modeling, then we conclude by reporting our findings. All the while, we use our **R** programming skills along with functions from various packages.](figures/chapter_01/01-05-figure-workflow.png){#fig:workflow}
-
 Throughout this book, we'll use *Tidyverse* packages and several other packages to perform a range of data-related tasks. These include data collection, data transformation, and data visualization. We will learn when it's appropriate to write our code inside **R Markdown**, **R** scripts, or in the **R** console. As **R Markdown** is a great medium for data exploration and for communication so we will be predominantly working in that format. Taken all together, the combination of **R** programming, **R** packages, and **R Markdown** makes for a very powerful and effective toolset for working with the data you'll encounter in the real world.
 
 The lessons from each of the chapters are available in a **GitHub** repository (<https://github.com/dspatterns/dspatterns>). That public repository also contains the source code for an **R** package called **dspatterns** that we'll need to install before experimenting with the **R** code presented throughout the book. Aside from the **R Markdown** files available in the repo's `/rmd` folder, the package gives us access to the datasets and specialized functions that we'll see and use in the upcoming lessons.
-
-
 
 ### Installing and Loading Packages in **R**
 
@@ -226,14 +239,11 @@ The *RStudio Community* website (<https://community.rstudio.com>) is also a grea
 
 It's hard to get a sense of how **R** can help you do before you get down to using it. Getting started is probably the hardest part but we have a defined learning path and, so long as **R** and **RStudio** are installed and using **R Markdown** doesn't feel cryptic, we are well on our way!
 
-
-
 ## Summary
 
-- Installing **R** (the language) and installing the **RStudio Desktop** IDE are two separate tasks than can be done in any order
+- Installing **R** (the language) and installing the **RStudio Desktop** IDE are two separate tasks that can be done in any order
 - We will use **RStudio** to work with **R** throughout this book
 - **R Markdown** is a way to run **R** code and create a report from a combination of prose and code
-- Our learning path is largely centered around **R** packages (mainly from the *Tidyverse* collection), which are focused collections of functions for doing a particular type of work
 - Installing packages from **CRAN** can be done with the `install.packages()` function whereas packages on **GitHub** can be installed with the `install_github()` function
 - The best places to go for help when you inevitably get stuck with an **R** problem are *Stack Overflow* (via a search engine), *Twitter*, and *RStudio Community*
 
