@@ -43,6 +43,7 @@ Throughout the upcoming lessons, we'll learn how to use **R** to gather, transfo
 **RStudio** has a customizable, four-pane workspace. It has a collection of useful features that help with **R** coding such as syntax highlighting, autocomplete, file and project management, and much more.
 
 ![The **RStudio Desktop** environment with an **R Markdown** file in focus in top-left (the source pane) and the **R** console occupying the bottom-left.](figures/chapter_01/01-01-figure-rstudio-desktop-env.png){#fig:rstudio-desktop-env}
+
 The diagram shown in @fig:rstudio-desktop-env provides a reference to a cross section of the buttons available in the initial view. The most important takeaways from this first look at **RStudio** are:
 
   1. The source pane (top-left) is where you would work on **R** scripts and **R Markdown** documents.
@@ -60,7 +61,7 @@ Indeed, a little can go a long way, so, while on the topic of the small things, 
   3. <kbd>Control</kbd> + <kbd>.</kbd> — brings up a search bar where you can search for files or functions. Up and down arrows and return allow you to navigate quickly to the file (at the right location) in a new tab.
   4. <kbd>Command</kbd> + <kbd>Option</kbd> + <kbd>I</kbd> (<kbd>Control</kbd> + <kbd>Alt</kbd> + <kbd>I</kbd> on Windows) — creates an empty **R** code chunk in an **R Markdown** document. As this is one of the key things you'll be doing, this shortcut does save a lot of time.
   
-With time, it becomes easier to **RStudio** with less reliance on a pointing device. If you want to get on that road try the **RStudio** shortcut `Shift` + `Option` + `K` (`Shift` + `Alt` + `K` on Windows), it brings up the (Keyboard Shortcuts Help* overlay (which has a lot of keyboard shortcuts).
+With time, it becomes easier to **RStudio** with less reliance on a pointing device. If you want to get on that road try the **RStudio** shortcut <kbd>Shift</kbd> + <kbd>Option</kbd> + <kbd>K</kbd> (<kbd>Shift</kbd> + <kbd>Alt</kbd> + <kbd>K</kbd> on Windows), it brings up the (Keyboard Shortcuts Help* overlay (which has a lot of keyboard shortcuts).
 
 ## Using **R Markdown** for Reproducible Reporting
 
@@ -76,6 +77,29 @@ You may or may not be familiar with **Markdown**, which is a big part of this fo
 
 ![A simple reference for Markdown. The text on the left will become the HTML on the right after an **R Markdown** document is *knitted*.](figures/chapter_01/01-02-figure-markdown-reference.png){#fig:markdown-reference}
 
+Markdown Reference
+
+-----------------------------------------------------------------------------------------------
+Write this down as Markdown...            ...get this when it's rendered to HTML
+---------------------------------------   -------------------------
+`Plain text`                              Plain text
+
+`*italics* and **bold**`                  *italics* and **bold**
+
+`verbatim code`                           `verbatim code`
+
+`~~strikethrough~~`                       ~~strikethrough~~
+
+`subscript~2~ / superscript^2^`           subscript~2~ / superscript^2^
+
+`[link](https://www.rstudio.com)`         [link](https://www.rstudio.com)
+
+`inline equation: $E=mc^2$`               inline equation: $E=mc^2$
+
+`image: ![]()`                            image: ![]()
+
+-----------------------------------------------------------------------------------------------
+
 
 
 All of the lessons in this book will incorporate **R Markdown** because it really is a great approach for running all **R** code in data analysis and visualization contexts. The prose portion of **R Markdown** (i.e., *not* the **R** code) is the default text entry type. The **R** code is run inside code chunks, which are marked off areas (with three backticks: ```) in the document. The schematic in @fig:rmarkdown-annotation shows what an **R** code chunk looks like and what controls are available in **R Markdown**.
@@ -89,7 +113,6 @@ Let's walk through a simple example of how to use **R Markdown** in RStudio. You
 <hr>
 
 ![](figures/chapter_01/01-column-rmarkdown_walkthrough_1.png)
-
 **STEP 1**. The first thing to do is create a new **R Markdown** document. This is conveniently done through the *New File* dropdown button (top left of IDE). A new **R Markdown** document is the third choice from the top.
 
 <hr>
