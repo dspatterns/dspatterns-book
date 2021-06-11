@@ -10,7 +10,59 @@ library(tidyverse)
 library(bakeoff)
 ```
 
+```{css, echo=FALSE}
 
+.sourceCode {
+  font-size: small;
+}
+
+.cell-output-stdout {
+  font-size: small;
+}
+
+.gt_table {
+  font-size: small;
+}
+
+.ggtab {
+  display: flex;
+  flex-wrap: wrap;
+  outline: #B6B4FA solid 1px;
+  padding: 5px;
+  margin-bottom: 20px;
+}
+
+.ggtab label {
+  order: 1;
+  display: block;
+  padding: 1rem 2rem;
+  cursor: pointer;
+  background: white;
+  font-weight: bold;
+  transition: background ease 0.2s;
+}
+
+.ggtab [class^="tab"] {
+  order: 99;
+  flex-grow: 1;
+  width: 100%;
+  display: none;
+  padding: 1rem;
+  background: white;
+}
+
+.ggtab input[type="radio"] {
+  display: none;
+}
+
+.ggtab input[type="radio"]:checked + label {
+  background: #E3E3FD;
+}
+
+.ggtab input[type="radio"]:checked + label + [class^="tab"] {
+  display: block;
+}
+```
 
 
 ## Introduction
