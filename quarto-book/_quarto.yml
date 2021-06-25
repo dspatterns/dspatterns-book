@@ -5,6 +5,10 @@ project:
 book:
   title: "A Data Science Pattern Language"
   author: "Alison Presmanes Hill and Richard Iannone"
+  sidebar:
+    style: docked
+    background: light
+  search: true
   description: |
     A Data Science Pattern Language: Designing Projects with R* will get you up
     and running with R. You'll learn many things in this book, with the
@@ -13,13 +17,12 @@ book:
     to learn to get to that stage, but we'll take a structured approach using
     a collection of R packages.
   cover-image: cover.png
-  repo-branch: master
-  repo-actions: [edit]
   chapters:
     - index.Rmd
-    - part:
+    - part: "Part 1"
       chapters:
-        - starting-with-r.Rmd
+        - 01-starting-with-r.Rmd
+        - 02-careful-counting-patterns.Rmd
 
 format:
   html:
