@@ -46,9 +46,7 @@ code_details <- function(entries = NULL,
       "font-family: 'Open Sans', sans-serif;",
       "color: #333333;",
       "font-size: 12px;",
-      "margin-bottom: 12px;",
-      "padding-top: 4px;",
-      "padding-bottom: 4px;",
+      "margin-top: 20px;",
       sep = " "
     ),
     htmltools::tags$summary(
@@ -154,8 +152,8 @@ code_hints <- function(title = "CODE",
       style = paste(
         "font-family: 'Open Sans', sans-serif;",
         "color: #333333;",
-        "font-size:11px;",
-        "margin-bottom: 2px;",
+        "font-size: 11px;",
+        "margin-bottom: 0;",
         "padding-top: 4px;",
         "padding-bottom: 4px;",
         sep = " "
