@@ -9,17 +9,6 @@ library(tidyverse)
 
 # Starting with R {#sec:starting}
 
-Notes:
-
-- installing packages (`palmerpenguins`)
-- introduce ways to inspect the `penguins` dataset: `head()`, `tail()`, `dplyr::glimpse()`, `skimr::skim()` (let's avoid the `%>%` for now)
-- explain how to access and read a help file (inspiration here: https://socviz.co/appendix.html#a-little-more-about-r)
-- Rmd: refer reader to new Rmd site to get an introduction to the mechanics
-- change Markdown reference to copy/paste-able text (use Pandoc divs for a two-column layout)
-- getting help
-
-- draw from: https://apreshill.github.io/data-vis-labs-2018/slides.html for organization of this chapter
-
 This chapter covers
 
 - Getting a feel for what **R** is and what its ecosystem is like
@@ -30,6 +19,18 @@ This chapter covers
 - Understanding our learning path for this book
 - File organization basics (but don't go into Projects, yet)
 - Where to go for help
+
+
+Notes:
+
+- installing packages (`palmerpenguins`)
+- introduce ways to inspect the `penguins` dataset: `head()`, `tail()`, `dplyr::glimpse()`, `skimr::skim()` (let's avoid the `%>%` for now)
+- explain how to access and read a help file (inspiration here: https://socviz.co/appendix.html#a-little-more-about-r)
+- Rmd: refer reader to new Rmd site to get an introduction to the mechanics
+- change Markdown reference to copy/paste-able text (use Pandoc divs for a two-column layout)
+- getting help
+- draw from: https://apreshill.github.io/data-vis-labs-2018/slides.html for organization of this chapter
+
 
 **R** is a great language for working with data. Have you ever used **Excel** for data analysis work and wished you could make better charts? Perhaps you came up against problems with working with larger amounts of data? The lessons in this book will help to address those common woes and much more. We'll tidy and summarize tabular data. We'll make beautiful charts. We'll also work toward making those trickier topics (like working with dates and times, joining datasets together, and publishing and distributing our work) less cumbersome and much more understandable.
 	
