@@ -115,12 +115,13 @@ Our first **ggplot** plot... with data!
 :::
 
 
-
 The plot indeed now has data points thanks to the use of `geom_point()`! There are a lot of *geom* functions in **ggplot** and all have the form `geom_...()` (e.g., `geom_bar()`, `geom_boxplot()`, `geom_text()`, etc.). Each *geom* essentially adds a layer to the plot. 
 
-.callout
+::: {.callout-tip}
+
 Note: In the plotting code for *Figures \@ref(fig:gg-empty-p) and \@ref(fig:dmd-carats-price-p)*, notice that the two statements are joined by a `+`. This is different than the pipe operator (`%>%`) that was used to join together, or pipe, the **dplyr** statements in the last lesson. This is sometimes a point of confusion so always try to remember that **ggplot** exclusively uses `+` whereas every other package of the *Tidyverse* (and beyond) uses `%>%`.
-.callout
+
+:::
 
 Let's unpack what's happening in the previous code listing just a bit more. The first line with `ggplot()` allows you to set default values that are passed down to later statements. So, `geom_point()` is receiving the data of `dmd` and also the aesthetics defined in the `aes()` object. We'll see in later examples that any values provided after the `ggplot()` statement will take precedence over the defaults (to convince ourselves fully, we'll need to go through those examples).
 
