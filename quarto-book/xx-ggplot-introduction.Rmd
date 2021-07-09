@@ -11,16 +11,11 @@ library(tidyverse)
 
 ```{css, echo=FALSE}
 
-.sourceCode {
-  font-size: small;
-}
-
-.cell-output-stdout {
-  font-size: small;
-}
-
-.gt_table {
-  font-size: small;
+# TODO: place in external CSS file
+pre code {
+    overflow-wrap: unset;
+    word-break: unset;
+    white-space: unset;
 }
 ```
 
@@ -97,7 +92,7 @@ ggplot(data = dmd, mapping = aes(x = carats, y = price)) +  #A
   geom_point()  #B
 ```
 `r dspatterns::code_details(c(
-"#A Same line as in the previous code; need to add a linking ~~~~ sign.",
+"#A Same line as in the previous code; need to add a linking ~~+~~ sign.",
 "#B The ~~geom_point()~~ function makes all the difference here. It creates a layer of data points."
 ))`
 
