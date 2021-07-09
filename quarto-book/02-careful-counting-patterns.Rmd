@@ -11,17 +11,11 @@ library(bakeoff)
 ```
 
 ```{css, echo=FALSE}
-
-.sourceCode {
-  font-size: small;
-}
-
-.cell-output-stdout {
-  font-size: small;
-}
-
-.gt_table {
-  font-size: small;
+# TODO: place in external CSS file
+pre code {
+    overflow-wrap: unset;
+    word-break: unset;
+    white-space: unset;
 }
 ```
 
