@@ -28,28 +28,25 @@ book:
         - 03-careful-counting-patterns.Rmd
         - 04-rolling-up-data.Rmd
         - 05-slicing-and-dicing-data.Rmd
-
-
-  "careful-counting-patterns.Rmd",
-  "slicing-and-dicing-data.Rmd"
-  "making-datasets-longer.Rmd",
-  "windows-of-data.Rmd",
-  "making-datasets-wider.Rmd", # NOTES: transforming data for tables and modeling applications
-  "project-1.Rmd",
-  # "Section 3",
-  # "",
-  "transformations-dates-times.Rmd", # NOTE: use the {clock} package
-  "ordering-data-to-make-better-plots.Rmd", # Uses factors
-  "more-plotting-with-ggplot-i.Rmd",
-  "more-plotting-with-ggplot-ii.Rmd",
-  "project-2.Rmd",
-  "a-closer-look-at-r-programming.Rmd",
-  "string-transformations.Rmd", # str_detect, str_replace, word()
-  "r-lists.Rmd",
-  "making-presentation-tables.Rmd",
-  # NOTE: Put fragments in the Appendix
-  "appendix.Rmd"
-
+        - 06-making-datasets-longer.Rmd
+        - 07-windows-of-data.Rmd
+        - 08-making-datasets-wider.Rmd # NOTES: transforming data for tables and modeling applications
+        - 09-project-1.Rmd,
+    - part: "Part 2"
+      chapters:
+        # "Section 3"
+        - 10-transformations-dates-times.Rmd # NOTE: use the {clock} package
+        - 11-ordering-data-to-make-better-plots.Rmd # Uses factors
+        - 12-more-plotting-with-ggplot-i.Rmd
+        - 13-more-plotting-with-ggplot-ii.Rmd
+        - 14-project-2.Rmd
+        # "Section 4"
+        - 15-a-closer-look-at-r-programming.Rmd
+        - 16-string-transformations.Rmd # str_detect, str_replace, word()
+        - 17-r-lists.Rmd
+        - 18-project-3.Rmd
+        # "Appendix"
+        - appendix.Rmd
 
 format:
   html:
