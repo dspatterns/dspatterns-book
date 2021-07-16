@@ -8,6 +8,7 @@ rmd_files: [
   "index.Rmd",
   # "Section 1",
   "starting-with-r.Rmd", # NOTES: include beginner patterns
+  "importing-raw-and-messy-data.Rmd",
   # "Section 2",
   "careful-counting-patterns.Rmd",  # NOTES: remove content with factors
   "slicing-and-dicing-data.Rmd",    # NOTES: remove content with factors
@@ -17,7 +18,6 @@ rmd_files: [
   "project-1.Rmd",
   # "Section 3",
   # "",
-  "importing-data-from-common-formats.Rmd",
   "transformations-dates-times.Rmd", # NOTE: use the {clock} package
   "ordering-data-to-make-better-plots.Rmd", # Uses factors
   "more-plotting-with-ggplot-i.Rmd",

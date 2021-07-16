@@ -1,0 +1,9 @@
+--- 
+knit: quarto render
+---
+
+Notes: 
+
+- focusing on explaining data by pulling out data bits from objects (e.g., summary stats)
+- feature gtsummary()
+

@@ -20,7 +20,6 @@ This chapter covers
 - File organization basics (but don't go into Projects, yet)
 - Where to go for help
 
-
 Notes:
 
 - installing packages (`palmerpenguins`)
@@ -31,6 +30,12 @@ Notes:
 - getting help
 - draw from: https://apreshill.github.io/data-vis-labs-2018/slides.html for organization of this chapter
 
+## Our chapter pattern
+
+Explore: for first steps with a new pattern (e.g., get info you need, take stock, smell checks)
+Understand: asking questions (what kinds? How to actually translate to code? Interpreting outputs personally, may lead to more exploration)
+Explain: how do we take the answers and rationalize with the investigations. How to document to oneself, programmatic text for resilient reporting.
+Share (Collaborate/Communicate): Making everything presentable and the outputs are in a format that allows for easy consumption and feedback.
 
 **R** is a great language for working with data. Have you ever used **Excel** for data analysis work and wished you could make better charts? Perhaps you came up against problems with working with larger amounts of data? The lessons in this book will help to address those common woes and much more. We'll tidy and summarize tabular data. We'll make beautiful charts. We'll also work toward making those trickier topics (like working with dates and times, joining datasets together, and publishing and distributing our work) less cumbersome and much more understandable.
 	

@@ -8,6 +8,7 @@ knit: quarto render
 library(dspatterns)
 library(tidyverse)
 library(bakeoff)
+library(gt)
 ```
 
 ```{css, echo=FALSE}
@@ -17,57 +18,69 @@ pre code {
     word-break: unset;
     white-space: unset;
 }
+
+pre.numberSource code > span > a:first-child::before {
+  left: -0.5em;
+}
+
+pre.numberSource {
+  margin-left: 2em;
+}
 ```
 
 
 ## Introduction
 
-Notes: 
+Private Notes: 
 
 - Use the bakeoff package (diamonds has been seen before)
   - user the bakers datasets
   - how many bakers...
   
+## Project cycle
+
+Make treemap visual with R (squares in quadrant)
+
+Explore: glimpse/head/tail
+Understand: tables + viz (distinct / count / geom_col)
+Explain: nrow/ncol + combine with glue for inline code?
+Share (Collaborate/Communicate): use pointblank; gt for tables?
+  
+### Explore
+
 This is really good for interactive use. Gives you the rows and columns plus some of row content.
-```{r how-many-bakers-glimpse}
+
+```{r how-many-bakers-glimpse, attr.source='.numberLines'}
 glimpse(bakers)
 ```
 
-Use the chunk option `paged.print=TRUE` to print tables as an HTML table that has controls for pagination.
-
-```{r baker-paged, paged.print=TRUE}
-bakers
-```
-
-Use the chunk option `paged.print=FALSE` to give us the 'console' version of the table.
-
-```{r bakers-non-paged, paged.print=FALSE}
-bakers
-```
-
-
-This is good for sharing a preview of the dataset. Use gt's `gt_preview()` function when you want to share in a static document.
-
-```{r bakers-gt-preview}
-gt::gt_preview(bakers)
-```
-
-
+When knitting, this will look like console output:
 
 ```{r}
-bakers %>% nrow()
+bakers
 ```
+
+This is a bit better for sharing a preview of the dataset. Use gt's `gt_preview()` function when you want to share in a static document.
+
+```{r bakers-gt-preview}
+gt_preview(bakers)
+```
+
+```{r}
+skimr::skim(bakers)
+```
+
+
+### Understand
+
+Janitor functions: `janitor::tabyl()` + a few `adorn_*()` functions (just enough to get understanding)
 
 But are the contestants unique across all the rows? (Did somebody drop out and come back?)
 
-```{r, paged.print=FALSE}
+```{r}
 bakers %>% distinct(baker_full)
 ```
 
-QLC: how would you get a count of distinct rows in the `bakers` table.
-```{r}
-bakers %>% n_distinct() %>% nrow()
-```
 - most common first name `baker_first`?
 
 ```{r}
@@ -79,7 +92,6 @@ bakers %>% distinct(baker_first)
 ```{r}
 bakers %>% count(baker_first)
 ```
-
 
 This is more apparent when sorting with the `sort` option in `count()`.
 
@@ -101,15 +113,16 @@ bakers %>%
 
 Let's do a count of baker by series (were there any series where two people shared the same name?)
 
-
 ```{r}
 bakers %>% count(series, baker_first, sort = TRUE)
 ```
+
 Seems like no? All `n` values are `1` and the total count here is the same as before (`120`). 
 
 ```{r}
 bakers %>% count(series)
 ```
+
 This follows the original order of the table (series increasing). Interestingly, the first series started with only 10 but it became at least bakers dozen's worth later on. 
 
 ```{r}
@@ -133,6 +146,21 @@ bakers %>% count(hometown, series, sort = TRUE)
 episodes %>% count(series, episode)
 ```
 
+### Explain
+
+Sometimes, in the text of a document, you might want to describe your data. We can, for example, use `nrow()` to get the number of rows in the table like this `r knitr::inline_expr("`r nrow(bakers)`")`.
+
+This is similar: bakers %>% n_distinct()
+
+
+
+- use inline code
+- present with gt() - provide a few basics here
+
+### Share
+
+pointblank::scan_data()
+pointblank::draft_validation_report()
 
 
 - This chapter really ought to be an intro vis / data inspection/exploration section with multiple packages

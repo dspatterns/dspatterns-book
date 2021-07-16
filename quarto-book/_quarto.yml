@@ -21,8 +21,35 @@ book:
     - index.Rmd
     - part: "Part 1"
       chapters:
+        # "Section 1"
         - 01-starting-with-r.Rmd
-        - 02-careful-counting-patterns.Rmd
+        - 02-importing-raw-and-messy-data.Rmd
+        # "Section 2"
+        - 03-careful-counting-patterns.Rmd
+        - 04-rolling-up-data.Rmd
+        - 05-slicing-and-dicing-data.Rmd
+
+
+  "careful-counting-patterns.Rmd",
+  "slicing-and-dicing-data.Rmd"
+  "making-datasets-longer.Rmd",
+  "windows-of-data.Rmd",
+  "making-datasets-wider.Rmd", # NOTES: transforming data for tables and modeling applications
+  "project-1.Rmd",
+  # "Section 3",
+  # "",
+  "transformations-dates-times.Rmd", # NOTE: use the {clock} package
+  "ordering-data-to-make-better-plots.Rmd", # Uses factors
+  "more-plotting-with-ggplot-i.Rmd",
+  "more-plotting-with-ggplot-ii.Rmd",
+  "project-2.Rmd",
+  "a-closer-look-at-r-programming.Rmd",
+  "string-transformations.Rmd", # str_detect, str_replace, word()
+  "r-lists.Rmd",
+  "making-presentation-tables.Rmd",
+  # NOTE: Put fragments in the Appendix
+  "appendix.Rmd"
+
 
 format:
   html:
