@@ -1,16 +1,22 @@
---- 
-knit: quarto render
----
+<!-- Our Notes:  -->
 
-Notes: 
+<!-- - Use the `wordbank` dataset (https://apreshill.github.io/data-vis-labs-2018/03-colors.html) -->
+<!-- - slice n' dice with facets/groups (`geom_line()`) -->
 
-- Use the `wordbank` dataset (https://apreshill.github.io/data-vis-labs-2018/03-colors.html)
-- slice n' dice with facets/groups (`geom_line()`)
+## New Packages and Functions  
 
-## Explain:
+## This Chapter's Pattern
+
+## Explore
+
+## Understand
+
+## Explain
+
 - grab data with dplyr::pull()
 - recognizing and effectively using categorical/continuous data (both in dplyr and in ggplot)
 - explore color/fill and using aesthetics (global/local) including greyscale and colorblind palettes
 - dplyr verbs covered: `group_by()`/`summarize()` (but please no `n()`)
 - use dplyr's `slice_*()` functions
 
+## Share

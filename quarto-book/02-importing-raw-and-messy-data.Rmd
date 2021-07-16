@@ -1,7 +1,3 @@
---- 
-knit: quarto render
----
-
 https://garthtarr.github.io/meatR/janitor.html#excel_numeric_to_date()
 http://jenrichmond.rbind.io/post/digging-into-the-janitor-package/
 

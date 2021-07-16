@@ -1,7 +1,3 @@
---- 
-knit: quarto render
----
-
 ## Welcome {.unnumbered}
 
 *A Data Science Pattern Language: Designing Projects with R* will get you up and running with **R**. You'll learn many things in this book, with the main goals of enabling you to explore data, perform analysis on it, and communicate the results of that analysis. There are lots of little things to learn to get to that stage, but we'll take a structured approach using a collection of **R** packages. You may have had experience using **Excel** or other GUI-driven data manipulation tools when working with data. However, we're going to assume a sort of blank slate here: experience with such tools is not expected or required for this book.

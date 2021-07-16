@@ -1,7 +1,3 @@
---- 
-knit: quarto render
----
-
 # Careful Counting Patterns {#sec:careful-counting-patterns}
 
 ```{r setup, include=FALSE, echo=FALSE}
