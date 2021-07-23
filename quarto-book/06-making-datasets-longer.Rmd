@@ -1,3 +1,7 @@
+---
+title: Making datasets longer
+---
+
 <!-- Notes:  -->
 
 ## New Packages and Functions  

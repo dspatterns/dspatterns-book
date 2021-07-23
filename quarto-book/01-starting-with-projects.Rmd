@@ -1,0 +1,49 @@
+---
+title: Starting with projects
+---
+
+Decision: start with Quarto projects
+
+``` {r setup, include=FALSE, echo=FALSE}
+library(gt)
+library(tidyverse)
+```
+
+
+something here more of an intro
+
+
+This chapter covers
+
+- Getting a feel for what **R** is and what its ecosystem is like
+- Installing the **R** language and **RStudio Desktop** application
+- Installing and loading packages from **CRAN** and **GitHub**
+- Acquainting ourselves with the **RStudio** and learning some keyboard shortcuts
+- Introducing **R Markdown** as a way to run **R** code
+- Understanding our learning path for this book
+- File organization basics (but don't go into Projects, yet) <- actually do
+- Where to go for help (app)
+
+Notes: [ use this to develop a single project following the chapter pattern ]
+
+- draw from: https://apreshill.github.io/data-vis-labs-2018/slides.html for organization of this chapter
+
+We'll start with our first pattern. 
+
+## Explore
+
+- installing packages (`palmerpenguins`)
+- introduce ways to inspect the `penguins` dataset: `head()`, `tail()`, `dplyr::glimpse()`, `skimr::skim()` (let's avoid the `%>%` for now)
+
+## Understand
+
+- explain how to access and read a help file (inspiration here: https://socviz.co/appendix.html#a-little-more-about-r)
+
+## Explain
+
+talking to yourself with markdown
+- change Markdown reference to copy/paste-able text (use Pandoc divs for a two-column layout)
+
+## Share
+
+talking to others, if future thing doesn't pan out netlify drop

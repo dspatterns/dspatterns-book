@@ -1,4 +1,6 @@
-# Careful Counting Patterns {#sec:careful-counting-patterns}
+---
+title: Careful counting patterns
+---
 
 ```{r setup, include=FALSE, echo=FALSE}
 library(dspatterns)
@@ -33,16 +35,26 @@ Private Notes:
   - user the bakers datasets
   - how many bakers...
   
-## Project cycle
+## This chapter's pattern
 
 Make treemap visual with R (squares in quadrant)
 
-Explore: glimpse/head/tail
-Understand: tables + viz (distinct / count / geom_col)
-Explain: nrow/ncol + combine with glue for inline code?
-Share (Collaborate/Communicate): use pointblank; gt for tables?
+- Explore: glimpse / head / tail / skimr
+- Understand: tables + viz (distinct / count / geom_col janitor::tabyl)
+- Explain: nrow/ncol + combine with glue for inline code? / epoxy
+- Share (Collaborate/Communicate): use pointblank; gt for tables?
+
+Explore: exploring a brand new dataset with dplyr and ggplot
+
+Understand: from exploratory plots (confirms or disproves your assumptions about the data) gain an intuition and develop that ability
+
+Explain:
+
+Collaborate:
+
+Communicate:
   
-### Explore
+## Explore
 
 This is really good for interactive use. Gives you the rows and columns plus some of row content.
 
@@ -67,7 +79,7 @@ skimr::skim(bakers)
 ```
 
 
-### Understand
+## Understand
 
 Janitor functions: `janitor::tabyl()` + a few `adorn_*()` functions (just enough to get understanding)
 
@@ -142,9 +154,9 @@ bakers %>% count(hometown, series, sort = TRUE)
 episodes %>% count(series, episode)
 ```
 
-### Explain
+## Explain
 
-Sometimes, in the text of a document, you might want to describe your data. We can, for example, use `nrow()` to get the number of rows in the table like this `r knitr::inline_expr("`r nrow(bakers)`")`.
+Sometimes, in the text of a document, you might want to describe your data. We can, for example, use `nrow()` to get the number of rows in the table like this `r knitr::inline_expr(" nrow(bakers)")`.
 
 This is similar: bakers %>% n_distinct()
 
@@ -153,7 +165,7 @@ This is similar: bakers %>% n_distinct()
 - use inline code
 - present with gt() - provide a few basics here
 
-### Share
+## Share
 
 pointblank::scan_data()
 pointblank::draft_validation_report()
@@ -171,17 +183,7 @@ pointblank::draft_validation_report()
 - histogram of ages of bakers + other interesting plots
 - goals: making exploratory bar charts and histograms (useful for initial understanding of the data)
 
-## Patterns
 
-Explore: exploring a brand new dataset with dplyr and ggplot
-
-Understand: from exploratory plots (confirms or disproves your assumptions about the data) gain an intuition and develop that ability
-
-Explain:
-
-Collaborate:
-
-Communicate:
 
 ## Project Ideas
 
@@ -189,23 +191,6 @@ Communicate:
 
 The moma dataset (https://apreshill.github.io/data-vis-labs-2018/02-moma.html) would be great for a project
 - explore using the lisa palette from paletteer
-
-
-
-
-
-### Intro
-
-
-### Data
-
-
-### Goals
-
-
-### Instructions
-
- - instructions on using project wizard
 
 
 ### Packages Needed

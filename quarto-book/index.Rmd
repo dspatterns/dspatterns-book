@@ -8,6 +8,22 @@ Throughout the book's lessons, you'll learn how to use **R** to gather, transfor
 
 We sincerely hope that you find the lessons give you the skills to become productive with data using **R** (with a minimum of frustration). We always appreciate feedback and so you are encouraged to post any questions, comments, or suggestions you have about the book in the *Issues* section of the **dspatterns** repo. Your feedback is taken quite seriously and will be incredibly valuable for the development of this book.
 
+## Assumptions about you
+
+We think you are familiar with a lot of the basics of using R, like installing it, using an IDE like RStudio, and packages. If you are not, go to appendix.
+
+What we think you are here for: patterns + good practices :)
+
+## Our chapter pattern
+
+Explore: for first steps with a new pattern (e.g., get info you need, take stock, smell checks)
+
+Understand: asking questions (what kinds? How to actually translate to code? Interpreting outputs personally, may lead to more exploration)
+
+Explain: how do we take the answers and rationalize with the investigations. How to document to oneself, programmatic text for resilient reporting. (talking to yourself)
+
+Share (Collaborate/Communicate): Making everything presentable and the outputs are in a format that allows for easy consumption and feedback. (sometimes reordering plots or tables to make them easier to interpret)
+
 #### About the Book {-}
 
 *A Data Science Pattern Language: Designing Projects with R* is written by [Alison Presmanes Hill](https://github.com/apreshill) and [Richard Iannone](https://github.com/rich-iannone). The book's development can be followed at the [**dspatterns/dspatterns** repository on **GitHub**](https://github.com/dspatterns/dspatterns). There are [*Issues*](https://github.com/dspatterns/dspatterns/issues) and [*Discussions*](https://github.com/dspatterns/dspatterns/discussions) sections in the repo so feel free to create an *Issue* or more casually share ideas about how to improve the book material.

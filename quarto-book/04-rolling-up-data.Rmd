@@ -1,9 +1,25 @@
 --- 
-knit: quarto render
+title: Rolling up data
 ---
 
 Notes: 
 
 - focusing on explaining data by pulling out data bits from objects (e.g., summary stats)
 - feature gtsummary()
+- explicitly numeric variables - NOT ones that you want to count essentially
+- https://apreshill.github.io/data-vis-labs-2018/04-distributions.html
+- this chapter might be slightly opinionated about which stats to use when? (i.e., median is always useful)
+- the idea being people may simply report means b/c they are easy to calculate, and easy to explain. But this chapter is going to take a different view: there is nothing harder about calculating other stats, or explaining them with the right tools.
 
+## This chapter's pattern
+
+- Explore: summary / describe / skimr /  gtsummary::tbl_summary() [default is median yay] / looking at & fixing missingness
+- Understand: tables (gtsummary + gt) + viz (distributions - boxplots / beeswarms / stat_*)
+- Explain: pull / pluck + combine with glue for inline code? (need ways to extract individual cells from gt/gtsummary) https://www.tjmahr.com/lists-knitr-secret-weapon/
+- Share (Collaborate/Communicate): use pointblank; gtsummary with better formatting (Median (IQR) )
+
+## test
+
+rich- put this in a chunk pls
+
+penguins %>% select(where(is.numeric))

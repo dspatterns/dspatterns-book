@@ -1,3 +1,7 @@
+---
+title: Slicing and dicing data
+---
+
 <!-- Our Notes:  -->
 
 <!-- - Use the `wordbank` dataset (https://apreshill.github.io/data-vis-labs-2018/03-colors.html) -->

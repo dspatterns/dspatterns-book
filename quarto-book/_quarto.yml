@@ -21,10 +21,10 @@ book:
     - index.Rmd
     - part: "Part 1"
       chapters:
-        # "Section 1"
-        - 01-starting-with-r.Rmd
+        - 01-starting-with-projects.Rmd
         - 02-importing-raw-and-messy-data.Rmd
-        # "Section 2"
+    - part: "Part 2"
+      chapters:
         - 03-careful-counting-patterns.Rmd
         - 04-rolling-up-data.Rmd
         - 05-slicing-and-dicing-data.Rmd
@@ -32,21 +32,23 @@ book:
         - 07-windows-of-data.Rmd
         - 08-making-datasets-wider.Rmd # NOTES: transforming data for tables and modeling applications
         - 09-project-1.Rmd,
-    - part: "Part 2"
+    - part: "Part 3"
       chapters:
-        # "Section 3"
         - 10-transformations-dates-times.Rmd # NOTE: use the {clock} package
         - 11-ordering-data-to-make-better-plots.Rmd # Uses factors
         - 12-more-plotting-with-ggplot-i.Rmd
         - 13-more-plotting-with-ggplot-ii.Rmd
         - 14-project-2.Rmd
-        # "Section 4"
+    - part: "Part 4"
+      chapters:
         - 15-a-closer-look-at-r-programming.Rmd
         - 16-string-transformations.Rmd # str_detect, str_replace, word()
         - 17-r-lists.Rmd
         - 18-project-3.Rmd
-        # "Appendix"
-        - appendix.Rmd
+  # "Appendix"
+  appendices:
+    - appendix.Rmd
+    - starting-with-r.Rmd
 
 format:
   html:
