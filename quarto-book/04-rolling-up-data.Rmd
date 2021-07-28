@@ -5,6 +5,7 @@ title: Rolling Up Data
 ```{r setup, include=FALSE, echo=FALSE}
 library(dspatterns)
 library(palmerpenguins)
+library(dplyr)
 ```
 
 # Rolling Up Data
