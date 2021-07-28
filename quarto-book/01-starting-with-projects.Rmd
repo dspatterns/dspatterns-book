@@ -5,8 +5,6 @@ title: Starting with Projects
 Decision: start with Quarto projects
 
 ``` {r setup, include=FALSE, echo=FALSE}
-library(gt)
-library(tidyverse)
 ```
 
 # Starting with Projects
