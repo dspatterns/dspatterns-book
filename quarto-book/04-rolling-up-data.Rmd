@@ -4,7 +4,6 @@ title: Rolling Up Data
 
 ```{r setup, include=FALSE, echo=FALSE}
 library(dspatterns)
-library(tidyverse)
 library(palmerpenguins)
 ```
 
