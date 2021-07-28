@@ -42,13 +42,6 @@ pains:
 - Explain: make sure you can do this again (communication to yourself); never edit the raw file; Annotate the Rmd with WHATEVER, use a future child doc? all the text will be hidden but the code will run; maybe with something with pointblank to write checks for yourself?
 - Share (Collaborate/Communicate): pointblank data dictionary as a conversation starter, documenting for others, writing the file out, advice for having conversations with data providers who ruin your life; rmd parent that uses the child?
 
-
-```{r eval=FALSE}
-readr::read_csv(file = palmerpenguins::path_to_file(path = "penguins_raw.csv"), 
-                name_repair = ~ janitor::make_clean_names(.))
-```
-
-
 ## Explore
 
 
