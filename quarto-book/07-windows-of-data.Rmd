@@ -1,8 +1,12 @@
 ---
-title: Windows of data
+title: Windows of Data
 ---
 
-<!-- Notes:  -->
+```{r setup, include=FALSE, echo=FALSE}
+library(dspatterns)
+```
+
+# Windows of Data
 
 ## New Packages and Functions  
 
