@@ -6,6 +6,7 @@ title: Careful Counting Patterns
 library(dspatterns)
 library(bakeoff)
 library(dplyr)
+library(skimr)
 library(gt)
 ```
 
