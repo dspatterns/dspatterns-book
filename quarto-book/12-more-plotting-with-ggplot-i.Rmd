@@ -1,4 +1,12 @@
-<!-- Notes:  -->
+---
+title: "More plotting with ggplot: I"
+---
+
+```{r setup, include=FALSE, echo=FALSE}
+library(dspatterns)
+```
+
+# More plotting with ggplot: I
 
 ## New Packages and Functions  
 
