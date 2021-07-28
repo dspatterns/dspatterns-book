@@ -1,8 +1,12 @@
 ---
-title: Making datasets wider
+title: Making Datasets Wider
 ---
 
-<!-- Notes:  -->
+```{r setup, include=FALSE, echo=FALSE}
+library(dspatterns)
+```
+
+# Making Datasets Wider
 
 ## New Packages and Functions  
 
