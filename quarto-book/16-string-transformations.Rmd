@@ -1,4 +1,12 @@
-<!-- Notes:  -->
+---
+title: "String Transformations"
+---
+
+```{r setup, include=FALSE, echo=FALSE}
+library(dspatterns)
+```
+
+# String Transformations
 
 ## New Packages and Functions  
 
