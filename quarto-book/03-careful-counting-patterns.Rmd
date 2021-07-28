@@ -5,6 +5,8 @@ title: Careful Counting Patterns
 ```{r setup, include=FALSE, echo=FALSE}
 library(dspatterns)
 library(bakeoff)
+library(dplyr)
+library(gt)
 ```
 
 # Careful Counting Patterns
