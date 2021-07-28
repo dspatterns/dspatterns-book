@@ -1,9 +1,8 @@
-# Appendix {-}
+---
+title: "Installing R"
+---
 
-```{r setup, include=FALSE, echo=FALSE}
-library(dspatterns)
-library(tidyverse)
-```
+# Installing R {#sec:installing}
 
 ## Installing **R** and The **RStudio Desktop** IDE {-}
 
