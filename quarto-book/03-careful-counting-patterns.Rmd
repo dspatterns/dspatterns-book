@@ -4,9 +4,7 @@ title: Careful Counting Patterns
 
 ```{r setup, include=FALSE, echo=FALSE}
 library(dspatterns)
-library(tidyverse)
 library(bakeoff)
-library(gt)
 ```
 
 # Careful Counting Patterns
