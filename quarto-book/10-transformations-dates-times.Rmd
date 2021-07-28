@@ -1,8 +1,12 @@
 ---
-title: Dates and times
+title: Dates and Times
 ---
 
-<!-- Notes:  -->
+```{r setup, include=FALSE, echo=FALSE}
+library(dspatterns)
+```
+
+# Dates and Times
 
 ## New Packages and Functions  
 
