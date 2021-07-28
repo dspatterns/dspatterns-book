@@ -1,5 +1,5 @@
 ---
-title: Careful counting patterns
+title: Careful Counting Patterns
 ---
 
 ```{r setup, include=FALSE, echo=FALSE}
@@ -8,6 +8,8 @@ library(tidyverse)
 library(bakeoff)
 library(gt)
 ```
+
+# Careful Counting Patterns
 
 ```{css, echo=FALSE}
 # TODO: place in external CSS file
@@ -26,7 +28,6 @@ pre.numberSource {
 }
 ```
 
-
 ## Introduction
 
 Private Notes: 
@@ -40,19 +41,11 @@ Private Notes:
 Make treemap visual with R (squares in quadrant)
 
 - Explore: glimpse / head / tail / skimr
-- Understand: tables + viz (distinct / count / geom_col janitor::tabyl)
+- Understand: 
+  - tables + viz (distinct / count / geom_col janitor::tabyl)
+  - from exploratory plots (confirms or disproves your assumptions about the data) gain an intuition and develop that ability
 - Explain: nrow/ncol + combine with glue for inline code? / epoxy
 - Share (Collaborate/Communicate): use pointblank; gt for tables?
-
-Explore: exploring a brand new dataset with dplyr and ggplot
-
-Understand: from exploratory plots (confirms or disproves your assumptions about the data) gain an intuition and develop that ability
-
-Explain:
-
-Collaborate:
-
-Communicate:
   
 ## Explore
 
