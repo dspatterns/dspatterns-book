@@ -13,7 +13,7 @@ name: build-book
 
 jobs:
   build:
-    runs-on: macOS-latest
+    runs-on: ubuntu-latest
     env:
       # NETLIFY_AUTH_TOKEN and NETLIFY_SITE_ID added in the repo's secrets
       NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
