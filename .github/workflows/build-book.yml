@@ -24,6 +24,14 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v2
 
+      - name: "Install quarto bin"
+      run: |
+        curl -s https://api.github.com/repos/quarto-dev/quarto-cli/releases/latest |
+        grep "browser_download_url.*deb" |
+        cut -d '"' -f 4 |
+        wget -i -
+        sudo dpkg -i quarto-0.2-amd64.deb
+
       - name: Setup R
         uses: r-lib/actions/setup-r@master
 
@@ -34,17 +42,18 @@ jobs:
         run: |
          install.packages("remotes")
          install.packages("tidyverse")
-         install.packages("bookdown")
+         install.packages("quarto")
+         install.packages("palmerpenguins")
          install.packages("gt")
          install.packages("DT")
          install.packages("ggridges")
          remotes::install_github("dspatterns/dspatterns")
         shell: Rscript {0}
 
-      - name: Build site
+      - name: Build book/site
         run: |
-         setwd("./book")
-         bookdown::render_book("index.Rmd", quiet = TRUE)
+         setwd("./quarto-book")
+         quarto::quarto_render()
         shell: Rscript {0}
 
       - name: Deploy to Netlify
@@ -52,7 +61,7 @@ jobs:
         id: netlify-deploy
         uses: nwtgck/actions-netlify@v1.1
         with:
-          publish-dir: 'book/_book'
+          publish-dir: 'quarto-book/docs'
           production-branch: main
           github-token: ${{ secrets.GITHUB_TOKEN }}
           deploy-message:
