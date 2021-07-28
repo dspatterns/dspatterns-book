@@ -1,6 +1,14 @@
 --- 
-title: Rolling up data
+title: Rolling Up Data
 ---
+
+```{r setup, include=FALSE, echo=FALSE}
+library(dspatterns)
+library(tidyverse)
+library(palmerpenguins)
+```
+
+# Rolling Up Data
 
 Notes: 
 
@@ -20,6 +28,9 @@ Notes:
 
 ## test
 
-rich- put this in a chunk pls
 
+```{r}
 penguins %>% select(where(is.numeric))
+```
+
+
