@@ -3,8 +3,8 @@ title: "Starting with R"
 ---
 
 ``` {r setup, include=FALSE, echo=FALSE}
+library(dplyr)
 library(gt)
-library(tidyverse)
 ```
 
 # Starting with R {#sec:starting}
