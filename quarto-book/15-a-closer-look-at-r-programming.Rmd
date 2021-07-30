@@ -1,4 +1,12 @@
-<!-- Notes:  -->
+---
+title: "A Closer Look at R Programming"
+---
+
+```{r setup, include=FALSE, echo=FALSE}
+library(dspatterns)
+```
+
+# A Closer Look at R Programming
 
 ## New Packages and Functions  
 

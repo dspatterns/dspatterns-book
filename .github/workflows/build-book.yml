@@ -13,7 +13,7 @@ name: build-book
 
 jobs:
   build:
-    runs-on: macOS-latest
+    runs-on: ubuntu-latest
     env:
       # NETLIFY_AUTH_TOKEN and NETLIFY_SITE_ID added in the repo's secrets
       NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
@@ -24,27 +24,51 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v2
 
+      - name: "Install quarto bin"
+        run: |
+          curl -s https://api.github.com/repos/quarto-dev/quarto-cli/releases/latest |
+          grep "browser_download_url.*deb" |
+          cut -d '"' -f 4 |
+          wget -i -
+          sudo dpkg -i quarto-0.2.34-amd64.deb
+
       - name: Setup R
         uses: r-lib/actions/setup-r@master
 
       - name: Setup pandoc
         uses: r-lib/actions/setup-pandoc@master
 
+      - name: Query dependencies
+        run: |
+          install.packages('remotes')
+          saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)
+        shell: Rscript {0}
+
+      - name: Cache R packages
+        uses: actions/cache@v1
+        with:
+          path: ${{ env.R_LIBS_USER }}
+          key: ubuntu-r-4.1-0-${{ hashFiles('depends.Rds') }}
+          restore-keys: ubuntu-r-4.1-0
+
       - name: Install R packages
         run: |
          install.packages("remotes")
          install.packages("tidyverse")
-         install.packages("bookdown")
+         install.packages("quarto")
+         install.packages("palmerpenguins")
          install.packages("gt")
          install.packages("DT")
          install.packages("ggridges")
+         install.packages("skimr")
          remotes::install_github("dspatterns/dspatterns")
+         remotes::install_github("apreshill/bakeoff")
         shell: Rscript {0}
 
-      - name: Build site
+      - name: Build book/site
         run: |
-         setwd("./book")
-         bookdown::render_book("index.Rmd", quiet = TRUE)
+         setwd("./quarto-book")
+         quarto::quarto_render()
         shell: Rscript {0}
 
       - name: Deploy to Netlify
@@ -52,7 +76,7 @@ jobs:
         id: netlify-deploy
         uses: nwtgck/actions-netlify@v1.1
         with:
-          publish-dir: 'book/_book'
+          publish-dir: 'quarto-book/docs'
           production-branch: main
           github-token: ${{ secrets.GITHUB_TOKEN }}
           deploy-message:

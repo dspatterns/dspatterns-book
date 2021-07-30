@@ -1,4 +1,12 @@
-<!-- Notes:  -->
+---
+title: "Project 1"
+---
+
+```{r setup, include=FALSE, echo=FALSE}
+library(dspatterns)
+```
+
+# Project 1
 
 ## New Packages and Functions  
 

@@ -1,8 +1,12 @@
 ---
-title: Factors and orders
+title: Factors and Ordering
 ---
 
-<!-- Notes:  -->
+```{r setup, include=FALSE, echo=FALSE}
+library(dspatterns)
+```
+
+# Factors and Ordering
 
 ## New Packages and Functions  
 

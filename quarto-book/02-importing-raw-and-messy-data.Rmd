@@ -1,11 +1,26 @@
-https://garthtarr.github.io/meatR/janitor.html#excel_numeric_to_date()
-http://jenrichmond.rbind.io/post/digging-into-the-janitor-package/
-https://cran.r-project.org/doc/contrib/de_Jonge+van_der_Loo-Introduction_to_data_cleaning_with_R.pdf
-https://www.tandfonline.com/doi/pdf/10.1080/00031305.2017.1375989?needAccess=true
+---
+title: Importing Raw and Messy Data
+---
+
+```{r setup, include=FALSE, echo=FALSE}
+library(dspatterns)
+```
+
+# Importing Raw and Messy Data
+
+## Introduction
 
 Use: 
-rio functions for importing (maybe readr?)
-janitor::clean_names() janitor::get_dupes()
+
+- readr and readxl
+- janitor::clean_names() janitor::get_dupes()
+
+Resources:
+
+- https://garthtarr.github.io/meatR/janitor.html#excel_numeric_to_date()
+- http://jenrichmond.rbind.io/post/digging-into-the-janitor-package/
+- https://cran.r-project.org/doc/contrib/de_Jonge+van_der_Loo-Introduction_to_data_cleaning_with_R.pdf
+- https://www.tandfonline.com/doi/pdf/10.1080/00031305.2017.1375989?needAccess=true
 
 Goal: proactive resilient workflows for working with messy data (i.e., file organization, strategies, troubleshooting, talking to yourself / future collaborators, having difficult conversations about data and what you need)
 
@@ -22,16 +37,21 @@ pains:
 
 ## This chapter's pattern
 
-- Explore: find out what went wrong? (diagnostic files, treasure hunt / glimpse / count / head / tail / readr::problems?? / janitor::get_dupes) [ this is a messy rmd file - leave behind in your dust when you are able to diagnose all the issues - scratch file - save something tell them where ]
+- Explore: find out what went wrong? (diagnostic files, treasure hunt / glimpse / count / head / tail / readr::problems?? / janitor::get_dupes) [ this is a messy rmd file - leave behind in your dust when you are able to diagnose all the issues     - scratch file - save something tell them where ]
 - Understand: is fix- solving the problem (stick to readxl / skip / col_types / NA / janitor::clean_names ) [ start a new clean rmd here for importing? ]
 - Explain: make sure you can do this again (communication to yourself); never edit the raw file; Annotate the Rmd with WHATEVER, use a future child doc? all the text will be hidden but the code will run; maybe with something with pointblank to write checks for yourself?
 - Share (Collaborate/Communicate): pointblank data dictionary as a conversation starter, documenting for others, writing the file out, advice for having conversations with data providers who ruin your life; rmd parent that uses the child?
 
-
-```{r eval=FALSE}
-readr::read_csv(file = palmerpenguins::path_to_file(path = "penguins_raw.csv"), 
-                name_repair = ~ janitor::make_clean_names(.))
-```
+## Explore
 
 
-###
+## Understand
+
+
+## Explain
+
+
+## Share
+
+
+

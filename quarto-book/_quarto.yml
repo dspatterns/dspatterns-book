@@ -30,25 +30,24 @@ book:
         - 05-slicing-and-dicing-data.Rmd
         - 06-making-datasets-longer.Rmd
         - 07-windows-of-data.Rmd
-        - 08-making-datasets-wider.Rmd # NOTES: transforming data for tables and modeling applications
-        - 09-project-1.Rmd,
+        - 08-making-datasets-wider.Rmd
+        - 09-project-1.Rmd
     - part: "Part 3"
       chapters:
-        - 10-transformations-dates-times.Rmd # NOTE: use the {clock} package
-        - 11-ordering-data-to-make-better-plots.Rmd # Uses factors
+        - 10-transformations-dates-times.Rmd
+        - 11-ordering-data-to-make-better-plots.Rmd
         - 12-more-plotting-with-ggplot-i.Rmd
         - 13-more-plotting-with-ggplot-ii.Rmd
         - 14-project-2.Rmd
     - part: "Part 4"
       chapters:
         - 15-a-closer-look-at-r-programming.Rmd
-        - 16-string-transformations.Rmd # str_detect, str_replace, word()
+        - 16-string-transformations.Rmd
         - 17-r-lists.Rmd
         - 18-project-3.Rmd
-  # "Appendix"
   appendices:
-    - appendix.Rmd
-    - starting-with-r.Rmd
+    - Z01-installing-r.Rmd
+    - Z02-starting-with-r.Rmd
 
 format:
   html:

@@ -1,6 +1,14 @@
 --- 
-title: Rolling up data
+title: Rolling Up Data
 ---
+
+```{r setup, include=FALSE, echo=FALSE}
+library(dspatterns)
+library(palmerpenguins)
+library(dplyr)
+```
+
+# Rolling Up Data
 
 Notes: 
 
@@ -14,12 +22,15 @@ Notes:
 ## This chapter's pattern
 
 - Explore: summary / describe / skimr /  gtsummary::tbl_summary() [default is median yay] / looking at & fixing missingness
-- Understand: tables (gtsummary + gt) + viz (distributions - boxplots / beeswarms / stat_*)
+- Understand: tables (gtsummary + gt) + viz (distributions - boxplots / beeswarms / stat_*) / layer_data() to understand where the data is in a ggplot layer
 - Explain: pull / pluck + combine with glue for inline code? (need ways to extract individual cells from gt/gtsummary) https://www.tjmahr.com/lists-knitr-secret-weapon/
 - Share (Collaborate/Communicate): use pointblank; gtsummary with better formatting (Median (IQR) )
 
 ## test
 
-rich- put this in a chunk pls
 
+```{r}
 penguins %>% select(where(is.numeric))
+```
+
+
