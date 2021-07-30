@@ -1,12 +1,10 @@
 ---
-title: Importing Raw and Messy Data
+title: Importing data for the first time
 ---
 
 ```{r setup, include=FALSE, echo=FALSE}
 library(dspatterns)
 ```
-
-# Importing Raw and Messy Data
 
 ## Introduction
 

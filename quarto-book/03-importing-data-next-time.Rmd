@@ -1,0 +1,56 @@
+---
+title: Importing data for the next time
+---
+
+```{r setup, include=FALSE, echo=FALSE}
+library(dspatterns)
+```
+
+
+## Introduction
+
+Use: 
+
+- readr and readxl
+- janitor::clean_names() janitor::get_dupes()
+
+Resources:
+
+- https://garthtarr.github.io/meatR/janitor.html#excel_numeric_to_date()
+- http://jenrichmond.rbind.io/post/digging-into-the-janitor-package/
+- https://cran.r-project.org/doc/contrib/de_Jonge+van_der_Loo-Introduction_to_data_cleaning_with_R.pdf
+- https://www.tandfonline.com/doi/pdf/10.1080/00031305.2017.1375989?needAccess=true
+
+Goal: proactive resilient workflows for working with messy data (i.e., file organization, strategies, troubleshooting, talking to yourself / future collaborators, having difficult conversations about data and what you need)
+
+pains:
+- dates
+- numbers becoming dates
+- column names with spaces numbers or punctuation or other weird characters 
+- missingness (i.e., blank cells or recoding missing values to NA)
+- blank or extra misc rows/columns
+- multiple header rows (https://alison.rbind.io/blog/2018-07-multiple-headers/)
+- column types 
+- factor levels
+- duplicate values
+
+## This chapter's pattern
+
+- Explore: find out what went wrong? (diagnostic files, treasure hunt / glimpse / count / head / tail / readr::problems?? / janitor::get_dupes) [ this is a messy rmd file - leave behind in your dust when you are able to diagnose all the issues     - scratch file - save something tell them where ]
+- Understand: is fix- solving the problem (stick to readxl / skip / col_types / NA / janitor::clean_names ) [ start a new clean rmd here for importing? ]
+- Explain: make sure you can do this again (communication to yourself); never edit the raw file; Annotate the Rmd with WHATEVER, use a future child doc? all the text will be hidden but the code will run; maybe with something with pointblank to write checks for yourself?
+- Share (Collaborate/Communicate): pointblank data dictionary as a conversation starter, documenting for others, writing the file out, advice for having conversations with data providers who ruin your life; rmd parent that uses the child?
+
+## Explore
+
+
+## Understand
+
+
+## Explain
+
+
+## Share
+
+
+

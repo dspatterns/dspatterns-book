@@ -22,29 +22,30 @@ book:
     - part: "Part 1"
       chapters:
         - 01-starting-with-projects.Rmd
-        - 02-importing-raw-and-messy-data.Rmd
+        - 02-importing-data-first-time.Rmd
+        - 03-importing-data-next-time.Rmd
     - part: "Part 2"
       chapters:
-        - 03-careful-counting-patterns.Rmd
-        - 04-rolling-up-data.Rmd
-        - 05-slicing-and-dicing-data.Rmd
-        - 06-making-datasets-longer.Rmd
-        - 07-windows-of-data.Rmd
-        - 08-making-datasets-wider.Rmd
-        - 09-project-1.Rmd
+        - 04-careful-counting-patterns.Rmd
+        - 05-rolling-up-data.Rmd
+        - 06-slicing-and-dicing-data.Rmd
+        - 07-making-datasets-longer.Rmd
+        - 08-windows-of-data.Rmd
+        - 09-making-datasets-wider.Rmd
+        - 10-project-1.Rmd
     - part: "Part 3"
       chapters:
-        - 10-transformations-dates-times.Rmd
-        - 11-ordering-data-to-make-better-plots.Rmd
-        - 12-more-plotting-with-ggplot-i.Rmd
-        - 13-more-plotting-with-ggplot-ii.Rmd
-        - 14-project-2.Rmd
+        - 11-transformations-dates-times.Rmd
+        - 12-ordering-data-to-make-better-plots.Rmd
+        - 13-more-plotting-with-ggplot-i.Rmd
+        - 14-more-plotting-with-ggplot-ii.Rmd
+        - 15-project-2.Rmd
     - part: "Part 4"
       chapters:
-        - 15-a-closer-look-at-r-programming.Rmd
-        - 16-string-transformations.Rmd
-        - 17-r-lists.Rmd
-        - 18-project-3.Rmd
+        - 16-a-closer-look-at-r-programming.Rmd
+        - 17-string-transformations.Rmd
+        - 18-r-lists.Rmd
+        - 19-project-3.Rmd
   appendices:
     - Z01-installing-r.Rmd
     - Z02-starting-with-r.Rmd
