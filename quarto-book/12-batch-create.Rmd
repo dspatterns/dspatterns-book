@@ -1,0 +1,30 @@
+# Batch creation of tables and plots
+
+```{r setup, include=FALSE, echo=FALSE}
+library(dspatterns)
+```
+
+- Creating a function to make a table with different variables / filtered by values (using curly curly)
+- See programming with dplyr: https://dplyr.tidyverse.org/articles/programming.html#how-tos-1
+- Want to do something repetitively 
+- Creating a function to make a plot (time series great example)
+- Good dataset: Intendo
+- Intro functions like `add_house_style()`
+
+Examples:
+https://stat545.com/join-cheatsheet.html
+https://github.com/rstudio-education/stat545/edit/master/15_join-tibbles.Rmd
+
+## New Packages and Functions  
+
+## This Chapter's Pattern
+
+## Explore
+
+## Understand
+
+## Explain
+
+## Share
+
+

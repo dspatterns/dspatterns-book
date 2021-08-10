@@ -1,12 +1,9 @@
----
-title: "R Lists"
----
+# R Lists
 
 ```{r setup, include=FALSE, echo=FALSE}
 library(dspatterns)
 ```
 
-# R Lists
 
 ## New Packages and Functions  
 

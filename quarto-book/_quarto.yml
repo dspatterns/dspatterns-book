@@ -33,17 +33,17 @@ book:
         - 08-windows-of-data.Rmd
         - 09-making-datasets-wider.Rmd
         - 10-project-1.Rmd
-    - part: "Part 3"
+    - part: "Part 3: Batch mode"
       chapters:
-        - 11-transformations-dates-times.Rmd
-        - 12-ordering-data-to-make-better-plots.Rmd
-        - 13-more-plotting-with-ggplot-i.Rmd
-        - 14-more-plotting-with-ggplot-ii.Rmd
+        - 11-batch-style.Rmd
+        - 12-batch-create.Rmd
+        - 13-parameters.Rmd
+        - 14-style-package.Rmd
         - 15-project-2.Rmd
-    - part: "Part 4"
+    - part: "Part 4: Production mode"
       chapters:
-        - 16-a-closer-look-at-r-programming.Rmd
-        - 17-string-transformations.Rmd
+        - 16-deploy-on-demand.Rmd
+        - 17-deploy-on-time-cycle.Rmd
         - 18-r-lists.Rmd
         - 19-project-3.Rmd
   appendices:

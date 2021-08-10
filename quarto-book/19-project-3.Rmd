@@ -1,12 +1,9 @@
----
-title: "Project 3"
----
+# Project 3
 
 ```{r setup, include=FALSE, echo=FALSE}
 library(dspatterns)
 ```
 
-# Project 3
 
 ## New Packages and Functions  
 

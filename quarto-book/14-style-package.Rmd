@@ -1,0 +1,27 @@
+# Style package
+
+```{r setup, include=FALSE, echo=FALSE}
+library(dspatterns)
+```
+
+usethis
+css / sass / bslib to add additional styles (will quarto have templates that can be put in packages)
+corporate style brand guidelines
+
+## New Packages and Functions  
+
+## This Chapter's Pattern
+
+## Explore
+
+## Understand
+
+## Explain
+
+document your functions well
+
+## Share
+
+pkgdown
+
+

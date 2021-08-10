@@ -1,0 +1,24 @@
+# Batch styling
+
+
+```{r setup, include=FALSE, echo=FALSE}
+library(dspatterns)
+```
+
+How to style a table AND reuse that style later in same document (basic function, not in a package)
+
+how to style a ggplot and reuse that style later in same document
+
+## New Packages and Functions  
+
+## This Chapter's Pattern
+
+## Explore
+
+## Understand
+
+## Explain
+
+## Share
+
+

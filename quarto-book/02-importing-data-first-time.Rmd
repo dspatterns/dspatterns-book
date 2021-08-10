@@ -1,12 +1,10 @@
----
-title: Importing data for the first time
----
+# Importing data for the first time
+
 
 ```{r setup, include=FALSE, echo=FALSE}
 library(dspatterns)
 ```
 
-## Introduction
 
 Use: 
 

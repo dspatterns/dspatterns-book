@@ -1,0 +1,26 @@
+# Parameterized reports
+
+```{r setup, include=FALSE, echo=FALSE}
+library(dspatterns)
+```
+
+Patterns: scoped vs filtered
+
+https://alison.netlify.app/rmd-valentine/#28
+
+Batch render: https://alison.netlify.app/rmd-valentine/?panelset9=the-setup#48
+
+
+## New Packages and Functions  
+
+## This Chapter's Pattern
+
+## Explore
+
+## Understand
+
+## Explain
+
+## Share
+
+

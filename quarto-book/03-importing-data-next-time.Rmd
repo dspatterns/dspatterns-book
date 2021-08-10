@@ -1,6 +1,4 @@
----
-title: Importing data for the next time
----
+# Importing data for the next time
 
 ```{r setup, include=FALSE, echo=FALSE}
 library(dspatterns)

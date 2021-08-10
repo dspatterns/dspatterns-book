@@ -1,12 +1,10 @@
----
-title: Making Datasets Longer
----
+# Making Datasets Longer
+
 
 ```{r setup, include=FALSE, echo=FALSE}
 library(dspatterns)
 ```
 
-# Making Datasets Longer
 
 ## New Packages and Functions  
 

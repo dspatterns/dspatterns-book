@@ -1,6 +1,4 @@
----
-title: Windows of Data
----
+# Windows of Data
 
 ```{r setup, include=FALSE, echo=FALSE}
 library(dspatterns)

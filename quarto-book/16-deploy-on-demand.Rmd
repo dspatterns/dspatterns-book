@@ -1,0 +1,25 @@
+# Deploying on demand
+
+```{r setup, include=FALSE, echo=FALSE}
+library(dspatterns)
+```
+
+Pattern: you want what you see to update automatically online based on any change you push. You care about keeping the link up to date with your local work.
+
+- Ideal focus: single docs, presentations, book in Quarto
+- Netlify continuous deployment (only works if Netlify knows how to build- hopefully Quarto gets this soon, otherwise only for Hugo sites for R users)
+- GitHub actions to hurl site source files & render & deploy into production
+
+## New Packages and Functions  
+
+## This Chapter's Pattern
+
+## Explore
+
+## Understand
+
+## Explain
+
+## Share
+
+

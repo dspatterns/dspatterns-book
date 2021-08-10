@@ -1,12 +1,8 @@
----
-title: Slicing and Dicing Data
----
+# Slicing and Dicing Data
 
 ```{r setup, include=FALSE, echo=FALSE}
 library(dspatterns)
 ```
-
-# Slicing and Dicing Data
 
 Notes:
 

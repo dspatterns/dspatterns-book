@@ -1,13 +1,9 @@
----
-title: Starting with Projects
----
+# Starting with Projects
 
 Decision: start with Quarto projects
 
 ``` {r setup, include=FALSE, echo=FALSE}
 ```
-
-# Starting with Projects
 
 This chapter covers
 
