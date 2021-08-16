@@ -24,9 +24,6 @@ rsconnect/
 # quarto files and directories
 docs
 
-# other source files
-_book-old
-
 # Temporary files created by R markdown
 *.utf8.md
 *.knit.md
