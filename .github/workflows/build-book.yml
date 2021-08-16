@@ -24,14 +24,6 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v2
 
-      - name: "Install quarto bin"
-        run: |
-          curl -s https://api.github.com/repos/quarto-dev/quarto-cli/releases/latest |
-          grep "browser_download_url.*deb" |
-          cut -d '"' -f 4 |
-          wget -i -
-          sudo dpkg -i quarto-0.2.34-amd64.deb
-
       - name: Setup R
         uses: r-lib/actions/setup-r@master
 
@@ -71,12 +63,15 @@ jobs:
          quarto::quarto_render()
         shell: Rscript {0}
 
+      - name: "Install Quarto and render project"
+      uses: pommevilla/quarto-render@v0.3.1
+
       - name: Deploy to Netlify
         if: contains(env.isExtPR, 'false')
         id: netlify-deploy
         uses: nwtgck/actions-netlify@v1.1
         with:
-          publish-dir: 'quarto-book/docs'
+          publish-dir: 'docs'
           production-branch: main
           github-token: ${{ secrets.GITHUB_TOKEN }}
           deploy-message:
