@@ -18,37 +18,37 @@ book:
     a collection of R packages.
   cover-image: cover.png
   chapters:
-    - index.Rmd
+    - index.qmd
     - part: "Part 1"
       chapters:
-        - 01-starting-with-projects.Rmd
-        - 02-importing-data-first-time.Rmd
-        - 03-importing-data-next-time.Rmd
+        - 01-starting-with-projects.qmd
+        - 02-importing-data-first-time.qmd
+        - 03-importing-data-next-time.qmd
     - part: "Part 2"
       chapters:
-        - 04-careful-counting-patterns.Rmd
-        - 05-rolling-up-data.Rmd
-        - 06-slicing-and-dicing-data.Rmd
-        - 07-making-datasets-longer.Rmd
-        - 08-windows-of-data.Rmd
-        - 09-making-datasets-wider.Rmd
-        - 10-project-1.Rmd
+        - 04-careful-counting-patterns.qmd
+        - 05-rolling-up-data.qmd
+        - 06-slicing-and-dicing-data.qmd
+        - 07-making-datasets-longer.qmd
+        - 08-windows-of-data.qmd
+        - 09-making-datasets-wider.qmd
+        - 10-project-1.qmd
     - part: "Part 3: Batch mode"
       chapters:
-        - 11-batch-style.Rmd
-        - 12-batch-create.Rmd
-        - 13-parameters.Rmd
-        - 14-style-package.Rmd
-        - 15-project-2.Rmd
+        - 11-batch-style.qmd
+        - 12-batch-create.qmd
+        - 13-parameters.qmd
+        - 14-style-package.qmd
+        - 15-project-2.qmd
     - part: "Part 4: Production mode"
       chapters:
-        - 16-deploy-on-demand.Rmd
-        - 17-deploy-on-time-cycle.Rmd
-        - 18-r-lists.Rmd
-        - 19-project-3.Rmd
+        - 16-deploy-on-demand.qmd
+        - 17-deploy-on-time-cycle.qmd
+        - 18-r-lists.qmd
+        - 19-project-3.qmd
   appendices:
-    - Z01-installing-r.Rmd
-    - Z02-starting-with-r.Rmd
+    - 91-installing-r.qmd
+    - 92-starting-with-r.qmd
 
 format:
   html:
