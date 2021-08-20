@@ -85,11 +85,11 @@ By default, we get a lot of information very quickly. The printed info gives us:
 
 The `skim()` function is certainly something to keep in your toolbelt, and quite handy when you get a new dataset to look at for the first time.
 
-Another option is the `scan_data()` function from the **pointblank** package. It's a lot like `skim()` in principle, except it provides even more information and does so in an HTML-based report. Let's look at `bakers` via `scan_data()`
+Another option is the `scan_data()` function from the **pointblank** package. It's a lot like `skim()` in principle, except it provides even more information and does so in a strictly-HTML-based report. Let's look at `bakers` via `scan_data()`
 
 <!-- Graphic of scan_data() report here -->
 
-The report is huge and highly interactive. The graphic above tries to distill what you'll find in the report. More description and a discussion on why one might use this and when it's appropriate to use. 
+The report is **huge** and highly interactive. The graphic above tries to distill what you'll find in the report. More description and a discussion on why one might use this and when it's appropriate to use. 
 
 ## Understand
 
