@@ -1,0 +1,31 @@
+# Conditional deploy
+
+```{r setup, include=FALSE, echo=FALSE}
+library(dspatterns)
+```
+
+Maybe: steps that must occur in a sequence, or in parallel
+
+The idea is to mimic this presentation – have an email that triggers with a link to a RStudio Connect hosted report with more detail. My use case is “new entrants to the market.”
+
+My issue is that I’m not sure when my data are updated each month. It’s an external source, and can happen anytime. My ETL that checks our data base and then pins the final dataset runs each day – but most days, it’s just the same data. At some point the next month is available and the data are actually different. My ETL script checks to see if all the states are reporting for the most recent month before allowing that month to be included.
+
+So I’m thinking about how to tell my hosted report and outgoing email to only go out when the data are updated. Open to suggestions if you have some!
+
+--> pointblank validation
+
+## New Packages and Functions  
+
+## This Chapter's Pattern
+
+## Explore
+
+## Understand
+
+## Explain
+
+## Share
+
+
+
+

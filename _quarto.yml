@@ -44,7 +44,7 @@ book:
       chapters:
         - 16-deploy-on-demand.qmd
         - 17-deploy-on-time-cycle.qmd
-        - 18-r-lists.qmd
+        - 18-deploy-on-conditions.qmd
         - 19-project-3.qmd
   appendices:
     - 91-installing-r.qmd
