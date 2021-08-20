@@ -43,7 +43,7 @@ book:
     - part: "Part 4: Production mode"
       chapters:
         - 16-deploy-on-demand.qmd
-        - 17-deploy-on-time-cycle.qmd
+        - 17-deploy-on-schedule.qmd
         - 18-deploy-on-conditions.qmd
         - 19-project-3.qmd
   appendices:

@@ -1,4 +1,4 @@
-# Deploy on a time cycle
+# Deploy on a schedule
 
 ```{r setup, include=FALSE, echo=FALSE}
 library(dspatterns)
@@ -27,5 +27,4 @@ Need "SMTP2GO" https://www.smtp2go.com/
 ## Explain
 
 ## Share
-
 
