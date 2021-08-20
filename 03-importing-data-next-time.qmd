@@ -2,6 +2,7 @@
 
 ```{r setup, include=FALSE, echo=FALSE}
 library(dspatterns)
+library(pointblank)
 ```
 
 
@@ -9,46 +10,77 @@ library(dspatterns)
 
 Use: 
 
-- readr and readxl
-- janitor::clean_names() janitor::get_dupes()
+- pointblank for data checking
 
 Resources:
 
-- https://garthtarr.github.io/meatR/janitor.html#excel_numeric_to_date()
-- http://jenrichmond.rbind.io/post/digging-into-the-janitor-package/
-- https://cran.r-project.org/doc/contrib/de_Jonge+van_der_Loo-Introduction_to_data_cleaning_with_R.pdf
-- https://www.tandfonline.com/doi/pdf/10.1080/00031305.2017.1375989?needAccess=true
-
-Goal: proactive resilient workflows for working with messy data (i.e., file organization, strategies, troubleshooting, talking to yourself / future collaborators, having difficult conversations about data and what you need)
+Goal: While you have basic data checking skills now, you have to build habits that ensure that every time you get data (even and especially updated data) you perform a high level of data checking. Small errors can easily creep in and cause small to huge problems with your analysis, so, this is super important!
 
 pains:
-- dates
-- numbers becoming dates
-- column names with spaces numbers or punctuation or other weird characters 
-- missingness (i.e., blank cells or recoding missing values to NA)
-- blank or extra misc rows/columns
-- multiple header rows (https://alison.rbind.io/blog/2018-07-multiple-headers/)
-- column types 
-- factor levels
-- duplicate values
+
+- updated data where things have unexpectedly changed (e.g., less rows, different columns, modified data)
+
 
 ## This chapter's pattern
 
-- Explore: find out what went wrong? (diagnostic files, treasure hunt / glimpse / count / head / tail / readr::problems?? / janitor::get_dupes) [ this is a messy rmd file - leave behind in your dust when you are able to diagnose all the issues     - scratch file - save something tell them where ]
-- Understand: is fix- solving the problem (stick to readxl / skip / col_types / NA / janitor::clean_names ) [ start a new clean rmd here for importing? ]
-- Explain: make sure you can do this again (communication to yourself); never edit the raw file; Annotate the Rmd with WHATEVER, use a future child doc? all the text will be hidden but the code will run; maybe with something with pointblank to write checks for yourself?
-- Share (Collaborate/Communicate): pointblank data dictionary as a conversation starter, documenting for others, writing the file out, advice for having conversations with data providers who ruin your life; rmd parent that uses the child?
 
 ## Explore
 
+**Things you should do with every dataset either new or old**
+
+Provide a series of steps that can be used to quickly get up to speed with a dataset.
+
+
+**Find out what went wrong with data updates using pointblank workflows.**
+
+- Provide examples of data changing over time (from initial dataset to revisions of the data)
+- Show potential issues like schema changes, reductions of rows, unexpected data in certain columns
 
 ## Understand
 
+**If the existing pointblank workflow failed you upon data refresh, we need to understand what went wrong and update our workflows**
+
+This may require some communication with the data provider. For now, we just have to make note of all the changes whether they are correct or not. 
+
+- Demonstrate how problem rows can be extracted and packaged up for communication with upstream data providers
+
+- Save the validation report if the data is changing quickly over time (this can be considered a validation snapshot, important if we have frequent changes)
+
+- What is the frequency and breadth of problems? Is it just one or two that cause predictable errors or are there several that cause many problems?
+
+- If there are problems that can be traced, then write a pointblank validation step for that (provide example where text data is becoming incorrect)
+
+- Use `scan_data()` on incoming/refreshed data to quickly determine if anything changed in a very obvious/bad way; save the reports to disk using `export_report()` to get table scan snapshots
+
+**Is the data I'm getting truly the raw data?** 
+
+- It's important to know if there are upstream processes you don't have access to when it comes to the data you're given. If it's truly raw data, then you can expect that the existing data won't change (new data might be added but existing data won't be mutated). However, if this data has been subject to treatments before being given to you, then that process is a bit out of your hands. However, you can improve these processes by checking data and pointing out anomalies that your data provider might have missed (or didn't check for). In doing so, the provider might improve the data transformation process and you get better (i.e., less anomalous) data.
 
 ## Explain
 
+- We have to organize this workflow to easily keep on top of anything that may compromise data quality; that way we can react quickly and provide some evidence of data issues to data providers/producers
+
+- Put extensive notes about each validation step in the data dictionary, or, in an associated report
+
+- Show how to update a data dictionary with important information about the evolution of a dataset
+
+- Demonstration of the possible organization of reports with timestamps so that we have an audit trail of sorts
+
+- We have to be able to determine whether data quality is becoming more of a problem or is getting better because that will inform our next actions
 
 ## Share
 
+A data dictionary as produced by **pointblank** can serve as really important data documentation for the team. While it can provide the basic information about a dataset (and can be kept up to date with changes to the dataset), it can also serve as a log for more detailed changes to the data. 
 
+- demonstrate how notes can be added to the data dictionary, with dates and detailed text
+
+It's a good idea always to keep the the data dictionary reporting accessible via a persistent link that stakeholders can always access. The report always contains the last modified date at the bottom, so viewers will be assured that they have the latest version in front of them.
+
+Share data quality reports with team/collaborators. These are meant to be easy to read and, again, they should be centralized and available at a link that all stakeholders can access. You may need to explain the checks in some detail with the stakeholders (especially if there are lots of detailed validations). A great place to put descriptions of checks is in the data dictionary. Here's an example of a validation report and the corresponding data dictionary:
+
+<!-- validation report -->
+
+<!-- data dictionary -->
+
+Triage upstream data quality issues with collaborators or data providers and provide descriptions of problems via explanations of 'bad rows' in R Markdown reports (use gt tables to produce data extracts in the document). This communication will help to get to the root causes of the bad data, even if you can't directly do much about it (i.e., collaborator must fix upstream process).
 
