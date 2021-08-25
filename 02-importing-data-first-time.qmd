@@ -40,6 +40,26 @@ pains:
 
 ## Explore
 
+Getting new data can be really exciting but it can often result in a lot of work.
+You have to import the data such that it's not a garbled mess, you have to understand how the data is organized, and, you may have to do some cleaning and data quality tasks.
+The first few times you do this can be an exercise in frustration, involving much messing around until you feel you have a handle on things. That said, the goal of this chapter 
+is to provide you with some workflows and many tips/tricks that'll serve you well when onboarding new datasets. 
+We'll be working exclusively with tabular data for this chapter, using a variety of datasets of the messy variety to keep things real.
+
+Let's be upfront about some of the challenging things you may have to deal with:
+
+- getting dates in nonstandard formats
+- having numbers transformed to dates (an Excel thing)
+- seeing column names with spaces numbers or punctuation or other weird characters 
+- taking stock of missingness (i.e., blank cells or recoding missing values to NA)
+- blank or extra misc rows/columns
+- multiple header rows (https://alison.rbind.io/blog/2018-07-multiple-headers/)
+- identifying column types for import
+- dealing with factor levels
+- having duplicate values
+
+
+
 
 ## Understand
 
