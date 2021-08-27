@@ -12,8 +12,15 @@ library(dspatterns)
 
 ## Explore
 
+- dataset: `bakeoff::spice_test_wide`
+
 ## Understand
 
 ## Explain
 
 ## Share
+
+
+## DIY
+
+- dataset: ``

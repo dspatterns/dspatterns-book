@@ -53,8 +53,6 @@ We sincerely hope that you find the book gives you the skills to become producti
 
 We think you are familiar with a lot of the basics of using **R**, like installing it, using an IDE like RStudio, and making use of R packages. If you are not, we got you covered in the Appendices.
 
-
-
 #### About the Book {-}
 
 *A Data Science Pattern Language: Designing Projects with R* is written by [Alison Presmanes Hill](https://github.com/apreshill) and [Richard Iannone](https://github.com/rich-iannone). The book's development can be followed at the [**dspatterns/dspatterns** repository on **GitHub**](https://github.com/dspatterns/dspatterns). There are [*Issues*](https://github.com/dspatterns/dspatterns/issues) and [*Discussions*](https://github.com/dspatterns/dspatterns/discussions) sections in the repo so feel free to create an *Issue* or more casually share ideas about how to improve the book material.

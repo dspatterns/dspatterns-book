@@ -11,14 +11,17 @@ This chapter covers
 - File organization basics; using Projects
 - Where to go for help (app)
 
-Notes: [ use this to develop a single project following the chapter pattern ]
-
+Notes: 
+ 
+- use this to develop a single project following the chapter pattern
+- show the Simpsons Paradox plot
 - draw from: https://apreshill.github.io/data-vis-labs-2018/slides.html for organization of this chapter
 
 We'll start with our first pattern. 
 
 ## Explore
 
+- about the dataset (`penguins`)
 - installing packages (`palmerpenguins`)
 - introduce ways to inspect the `penguins` dataset: `head()`, `tail()`, `dplyr::glimpse()`, `skimr::skim()` (let's avoid the `%>%` for now)
 
@@ -28,9 +31,17 @@ We'll start with our first pattern.
 
 ## Explain
 
-talking to yourself with markdown
+- talking to yourself with Quarto
 - change Markdown reference to copy/paste-able text (use Pandoc divs for a two-column layout)
+- add a top-level `index.qmd`
+- add a `readme.md` to have general notes for the project
 
 ## Share
 
-talking to others, if future thing doesn't pan out netlify drop
+- with GitHub! 
+- talking to others, if future thing doesn't pan out netlify drop
+
+## DIY
+
+- use: https://alison.netlify.app/rls-plot-twist/#20
+

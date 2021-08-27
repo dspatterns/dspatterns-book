@@ -15,10 +15,14 @@ how to style a ggplot and reuse that style later in same document
 
 ## Explore
 
+- dataset: ``
+
 ## Understand
 
 ## Explain
 
 ## Share
 
+## DIY
 
+- dataset: ``

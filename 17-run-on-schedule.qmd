@@ -1,8 +1,10 @@
-# Deploy on a schedule
+# Run on a schedule
 
 ```{r setup, include=FALSE, echo=FALSE}
 library(dspatterns)
 ```
+
+--> pointblank validation
 
 pattern is about needing to re-run on a predictable time cycle- like daily dashboard updates, weekly report digests, etc.
 

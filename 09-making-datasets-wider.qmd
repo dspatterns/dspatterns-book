@@ -11,9 +11,14 @@ library(dspatterns)
 
 ## Explore
 
+- dataset: from https://github.com/apreshill/teachthat/blob/master/pivot/pivot_wider.md (will be in `bakeoff` later, use as tibble for now)
+
 ## Understand
 
 ## Explain
 
 ## Share
 
+## DIY
+
+- dataset: ``

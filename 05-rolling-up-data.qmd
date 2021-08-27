@@ -30,4 +30,7 @@ Notes:
 penguins %>% select(where(is.numeric))
 ```
 
+## DIY
+
+- dataset: 
 

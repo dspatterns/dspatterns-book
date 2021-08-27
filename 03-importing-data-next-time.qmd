@@ -25,6 +25,8 @@ pains:
 
 ## Explore
 
+- `stickers` raw to clean using qmd + experience from (use `knitr::purl()` to get .R script from .qmd, rewrite/refactor to get 'transformation' chunk -> we can `source()` that in, it will contain the data reading, cleaning, transformation, etc.)
+
 **Things you should do with every dataset either new or old**
 
 Provide a series of steps that can be used to quickly get up to speed with a dataset.
@@ -82,4 +84,11 @@ Share data quality reports with team/collaborators. These are meant to be easy t
 <!-- data dictionary -->
 
 Triage upstream data quality issues with collaborators or data providers and provide descriptions of problems via explanations of 'bad rows' in R Markdown reports (use gt tables to produce data extracts in the document). This communication will help to get to the root causes of the bad data, even if you can't directly do much about it (i.e., collaborator must fix upstream process).
+
+
+
+## DIY
+
+- dataset: `penguins_raw`
+- come up with pointblank validation and create rules using your domain knowledge (you have to read up on the research around the penguin subjects)
 

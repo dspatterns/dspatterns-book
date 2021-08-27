@@ -33,20 +33,20 @@ pains:
 
 ## This chapter's pattern
 
-- Explore: find out what went wrong? (diagnostic files, treasure hunt / glimpse / count / head / tail / readr::problems?? / janitor::get_dupes) [ this is a messy rmd file - leave behind in your dust when you are able to diagnose all the issues     - scratch file - save something tell them where ]
+- Explore: find out what went wrong? (diagnostic files, treasure hunt / glimpse / count / head / tail / readr::problems?? / janitor::get_dupes) [ this is a messy rmd file - leave behind in your dust when you are able to diagnose all the issues     - scratch file - save something tell them where ], explain where to store files in Project (`data-raw` for raw data files and maybe `data` for the transformed/cleaned-up files)
 - Understand: is fix- solving the problem (stick to readxl / skip / col_types / NA / janitor::clean_names ) [ start a new clean rmd here for importing? ]
 - Explain: make sure you can do this again (communication to yourself); never edit the raw file; Annotate the Rmd with WHATEVER, use a future child doc? all the text will be hidden but the code will run; maybe with something with pointblank to write checks for yourself?
 - Share (Collaborate/Communicate): pointblank data dictionary as a conversation starter, documenting for others, writing the file out, advice for having conversations with data providers who ruin your life; rmd parent that uses the child?
 
 ## Explore
 
-Getting new data can be really exciting but it can often result in a lot of work.
-You have to import the data such that it's not a garbled mess, you have to understand how the data is organized, and, you may have to do some cleaning and data quality tasks.
-The first few times you do this can be an exercise in frustration, involving much messing around until you feel you have a handle on things. That said, the goal of this chapter 
-is to provide you with some workflows and many tips/tricks that'll serve you well when onboarding new datasets. 
-We'll be working exclusively with tabular data for this chapter, using a variety of datasets of the messy variety to keep things real.
+- about the dataset (`stickers`) (this will be an Excel file)
 
-Let's be upfront about some of the challenging things you may have to deal with:
+- turn paranoia into data validation checks
+
+Getting new data can be really exciting but it can often result in a lot of work. You have to import the data such that it's not a garbled mess, you have to understand how the data is organized, and, you may have to do some cleaning and data quality tasks. The first few times you do this can be an exercise in frustration, involving much messing around until you feel you have a handle on things. That said, the goal of this chapter is to provide you with some workflows and many tips/tricks that'll serve you well when onboarding new datasets.
+
+We'll be working exclusively with tabular data for this chapter, using a variety of datasets of the messy variety to keep things real. Let's be upfront about some of the challenging things you may have to deal with:
 
 - getting dates in nonstandard formats
 - having numbers transformed to dates (an Excel thing)
@@ -58,6 +58,36 @@ Let's be upfront about some of the challenging things you may have to deal with:
 - dealing with factor levels
 - having duplicate values
 
+Two pretty common file formats containing tabular data are CSV file and Excel files. We will explore importing them both in turn and troubleshoot the inevitable issues in the *Understand* section
+
+### Importing a CSV file
+
+CSV files (short for *comma separated values*) are quite commonplace as method for storing tabular data in plain text. Most pieces of software that deal with tabular data can often export such data to CSV. While the CSV format isn't too rigorously specified (there really is a lot of variation), we generally find that:
+
+1. each line is a separate record,
+2. the records are divided into fields (separated by delimiters such as the comma, but sometimes by other characters like spaces or tab characters),
+3. there is the same number of fields per record, and
+4. there is (very commonly) a header line that defines the column names.
+
+While such variations in CSV formatting can't really be avoided, the *Tidyverse* **readr** package has many options to successfully deal with any such potential issues.
+
+We need a sample CSV file on disk to experiment with. The **dspatterns** package has a function to turn its included datasets into CSV files. Let's CSV-ify the `us_cities` dataset inside **dspatterns** like this:
+
+`r dspatterns::code_hints(
+"**CODE //** Writing ~~us_cities.csv~~ to the project directory with ~~dataset_to_csv()~~."
+)`
+```{r datset-to-csv, eval=FALSE}
+dataset_to_csv(dataset = "us_cities")
+```
+
+Great. We have the file on disk, so let's now read in that file into a tibble object. We can do this using the `read_csv()` function from the **readr** package. This package is available in the *Tidyverse* so we need to first execute `library(tidyverse)` before using that function.
+
+:::{.callout-tip}
+## Checking that the CSV file is where we think it is
+
+After using `dataset_to_csv()` we should have a look at the *Files* tab in **RStudio** (in the lower-right pane, first tab). The `us_cities.csv` file should be there. If it isn't, we can try two things. We should check that the path above the file view is same as that given in the message received after executing the `dataset_to_csv()` function. If it's different for whatever reason, we could navigate back to the project directory by clicking on the icon to the right of the path (the blue, **R**-in-cube icon). One last thing to try is clicking the refresh button just above (it could be that, on some file systems, a refresh of the directory listing is necessary).
+
+:::
 
 
 
@@ -70,4 +100,6 @@ Let's be upfront about some of the challenging things you may have to deal with:
 ## Share
 
 
+## DIY
 
+- dataset: `penguins_raw.csv` (use `palmerpenguins::path_to_file()` to get this CSV)

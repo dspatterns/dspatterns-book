@@ -18,4 +18,6 @@ library(dspatterns)
 
 ## Share
 
+## DIY
 
+- dataset: 

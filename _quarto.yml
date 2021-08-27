@@ -5,6 +5,9 @@ project:
 book:
   title: "A Data Science Pattern Language"
   author: "Alison Presmanes Hill and Richard Iannone"
+  repo-actions:
+    - source
+  repo-url: "https://github.com/dspatterns/dspatterns-book"
   sidebar:
     style: docked
     background: light
@@ -19,6 +22,7 @@ book:
   cover-image: cover.png
   chapters:
     - index.qmd
+    - prereqs.qmd
     - part: "Part 1"
       chapters:
         - 01-starting-with-projects.qmd
@@ -42,9 +46,9 @@ book:
         - 15-project-2.qmd
     - part: "Part 4: Production mode"
       chapters:
-        - 16-deploy-on-demand.qmd
-        - 17-deploy-on-schedule.qmd
-        - 18-deploy-on-conditions.qmd
+        - 16-run-on-demand.qmd
+        - 17-run-on-schedule.qmd
+        - 18-run-on-conditions.qmd
         - 19-project-3.qmd
   appendices:
     - 91-installing-r.qmd

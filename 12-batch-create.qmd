@@ -10,6 +10,8 @@ library(dspatterns)
 - Creating a function to make a plot (time series great example)
 - Good dataset: Intendo
 - Intro functions like `add_house_style()`
+- R Markdown video for good looping pattern within doc for batch creation: https://www.youtube.com/watch?v=WkF7nqEYF1E
+
 
 Examples:
 https://stat545.com/join-cheatsheet.html
@@ -27,4 +29,7 @@ https://github.com/rstudio-education/stat545/edit/master/15_join-tibbles.Rmd
 
 ## Share
 
+## DIY
+
+- dataset: ``
 

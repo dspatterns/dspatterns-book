@@ -210,4 +210,7 @@ The moma dataset (https://apreshill.github.io/data-vis-labs-2018/02-moma.html) w
  - installation details (script with `library()` calls)
  - possibly use: https://github.com/rstudio4edu/rmd4edu/blob/master/R/lesson.R
 
+## DIY
+
+- dataset: 
 

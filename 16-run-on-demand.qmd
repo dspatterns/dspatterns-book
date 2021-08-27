@@ -1,10 +1,12 @@
-# Deploying on demand
+# Run on demand
 
 ```{r setup, include=FALSE, echo=FALSE}
 library(dspatterns)
 ```
 
 Pattern: you want what you see to update automatically online based on any change you push. You care about keeping the link up to date with your local work.
+
+--> pointblank validation
 
 - Ideal focus: single docs, presentations, book in Quarto
 - Netlify continuous deployment (only works if Netlify knows how to build- hopefully Quarto gets this soon, otherwise only for Hugo sites for R users)

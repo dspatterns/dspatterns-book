@@ -1,4 +1,4 @@
-# Conditional deploy
+# Run on conditions
 
 ```{r setup, include=FALSE, echo=FALSE}
 library(dspatterns)
