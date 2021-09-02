@@ -4,6 +4,7 @@
 library(dspatterns)
 library(dplyr)
 library(readxl)
+library(readr)
 library(janitor)
 ```
 
@@ -162,6 +163,8 @@ stickers_dd <-
 
 stickers_dd
 ```
+
+![A data dictionary for the `stickers` dataset.](figures/02-importing-data-first-time/stickers_dd.png){#fig:stickers-data-dictionary}
 
 ## Explain
 
