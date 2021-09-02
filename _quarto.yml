@@ -23,12 +23,12 @@ book:
   chapters:
     - index.qmd
     - prereqs.qmd
-    - part: "Part 1"
+    - part: "Part 1: Starting out"
       chapters:
         - 01-starting-with-projects.qmd
         - 02-importing-data-first-time.qmd
         - 03-importing-data-next-time.qmd
-    - part: "Part 2"
+    - part: "Part 2: Getting into it"
       chapters:
         - 04-careful-counting-patterns.qmd
         - 05-rolling-up-data.qmd
