@@ -79,10 +79,10 @@ stickers
 
 Having long and descriptive column names is not really desirable in a data table. It's much better to have short fragments rendered in snake case (aim for less than 10 letters, if possible).
 
-:::{.callout-tip}
+::: callout-tip
 ## What's the deal with snake_case?
 
-There are a number of ways to write out variables and column names. Why do it in     `snake_case`? It's easy to parse the words/symbols of a variable this way.
+There are a number of ways to write out variables and column names. Why do it in `snake_case`? It's easy to parse the words/symbols of a variable this way.
 :::
 
 We need to acknowledge and accept our paranoia about data quality. It'll result in better work! And, let's constructively turn that paranoia into data validation checks.
@@ -101,7 +101,7 @@ Now that we just finished some radical surgery on `stickers`, here's a question:
 
 Now that we have data in fairly reasonable shape it's a great idea to put together a data dictionary. It's documentation that will help us understand the data, now and especially for later on.
 
-We can do this easily with the **pointblank** package and its functions for building up a data dictionary. We do this with an *informant* object and that's created with the `create_informant()` function. Give it the `stickers` table and 
+We can do this easily with the **pointblank** package and its functions for building up a data dictionary. We do this with an *informant* object and that's created with the `create_informant()` function. Give it the `stickers` table and
 
 ```{r}
 stickers_dd <- 
@@ -164,7 +164,6 @@ stickers_dd <-
 stickers_dd
 ```
 
-
 ## Explain
 
 We got to make sure this can be done again. Let's take stock of what was done here.
@@ -186,4 +185,3 @@ Let's build a `.qmd` parent that uses a child `.qmd`. It's smart and we can brea
 ## DIY
 
 It's now time to Do It Yourself. We'll recommend some dataset, give you some project ideas, steer you in the right direction, and you'll make something to be proud of.
-
