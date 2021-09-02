@@ -40,6 +40,9 @@ jobs:
          install.packages("DT")
          install.packages("ggridges")
          install.packages("skimr")
+         install.packages("pointblank")
+         install.packages("readxl")
+         install.packages("janitor")
          remotes::install_github("dspatterns/dspatterns")
          remotes::install_github("apreshill/bakeoff")
         shell: Rscript {0}
