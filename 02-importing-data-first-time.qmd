@@ -8,6 +8,8 @@ library(janitor)
 library(pointblank)
 ```
 
+## Introduction
+
 In this chapter we'll get down and dirty with some messy (but important to use) data. We need to use this data and although we acknowledge the data is dirty, we can use a smorgasbord of strategies to overcome this.
 
 First, we'll explore the data and find out what went wrong during the import phase. This will be a treasure hunt of sorts. Functions like `glimpse()`, `count()`, `head()`, `tail()`, and `get_dupes()` will be used during the first inspection. This will inevitably be a messy `.qmd` file but you'll leave it behind in your dust when you're finally able to diagnose all of the issues. (We recommend you save the file for later use and we'll provide a tip or two on how to organize these scratch files.)
@@ -92,16 +94,6 @@ Let's write the cleaned up tibble to a file for later use. Make a sub-folder cal
 ```{r eval=FALSE}
 write_csv(stickers, file = "stickers.csv")
 ```
-
-<!-- - getting dates in nonstandard formats -->
-<!-- - having numbers transformed to dates (an Excel thing) -->
-<!-- - seeing column names with spaces numbers or punctuation or other weird characters  -->
-<!-- - taking stock of missingness (i.e., blank cells or recoding missing values to NA) -->
-<!-- - blank or extra misc rows/columns -->
-<!-- - multiple header rows  -->
-<!-- - identifying column types for import -->
-<!-- - dealing with factor levels -->
-<!-- - having duplicate values -->
 
 ## Understand
 
@@ -195,4 +187,3 @@ Let's build a `.qmd` parent that uses a child `.qmd`. It's smart and we can brea
 
 It's now time to Do It Yourself. We'll recommend some dataset, give you some project ideas, steer you in the right direction, and you'll make something to be proud of.
 
-<!-- - dataset: `penguins_raw.csv` (use `palmerpenguins::path_to_file()` to get this CSV) -->
