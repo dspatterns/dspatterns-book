@@ -1,6 +1,5 @@
 # Importing data for the first time
 
-
 ```{r setup, include=FALSE, echo=FALSE}
 library(dspatterns)
 library(tidyverse)
@@ -8,28 +7,6 @@ library(readxl)
 library(janitor)
 library(pointblank)
 ```
-
-
-<!-- Resources: -->
-
-<!-- - https://garthtarr.github.io/meatR/janitor.html#excel_numeric_to_date() -->
-<!-- - http://jenrichmond.rbind.io/post/digging-into-the-janitor-package/ -->
-<!-- - https://cran.r-project.org/doc/contrib/de_Jonge+van_der_Loo-Introduction_to_data_cleaning_with_R.pdf -->
-<!-- - https://www.tandfonline.com/doi/pdf/10.1080/00031305.2017.1375989?needAccess=true -->
-
-<!-- Goal: proactive resilient workflows for working with messy data (i.e., file organization, strategies, troubleshooting, talking to yourself / future collaborators, having difficult conversations about data and what you need) -->
-
-<!-- pains: -->
-<!-- - dates -->
-<!-- - numbers becoming dates -->
-<!-- - column names with spaces numbers or punctuation or other weird characters  -->
-<!-- - missingness (i.e., blank cells or recoding missing values to NA) -->
-<!-- - blank or extra misc rows/columns -->
-<!-- - multiple header rows (https://alison.rbind.io/blog/2018-07-multiple-headers/) -->
-<!-- - column types  -->
-<!-- - factor levels -->
-<!-- - duplicate values -->
-
 
 In this chapter we'll get down and dirty with some messy (but important to use) data. We need to use this data and although we acknowledge the data is dirty, we can use a smorgasbord of strategies to overcome this.
 
