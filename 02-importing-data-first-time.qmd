@@ -3,38 +3,41 @@
 
 ```{r setup, include=FALSE, echo=FALSE}
 library(dspatterns)
+library(tidyverse)
+library(readxl)
+library(janitor)
+library(pointblank)
 ```
 
 
-Use: 
+<!-- Resources: -->
 
-- readr and readxl
-- janitor::clean_names() janitor::get_dupes()
+<!-- - https://garthtarr.github.io/meatR/janitor.html#excel_numeric_to_date() -->
+<!-- - http://jenrichmond.rbind.io/post/digging-into-the-janitor-package/ -->
+<!-- - https://cran.r-project.org/doc/contrib/de_Jonge+van_der_Loo-Introduction_to_data_cleaning_with_R.pdf -->
+<!-- - https://www.tandfonline.com/doi/pdf/10.1080/00031305.2017.1375989?needAccess=true -->
 
-Resources:
+<!-- Goal: proactive resilient workflows for working with messy data (i.e., file organization, strategies, troubleshooting, talking to yourself / future collaborators, having difficult conversations about data and what you need) -->
 
-- https://garthtarr.github.io/meatR/janitor.html#excel_numeric_to_date()
-- http://jenrichmond.rbind.io/post/digging-into-the-janitor-package/
-- https://cran.r-project.org/doc/contrib/de_Jonge+van_der_Loo-Introduction_to_data_cleaning_with_R.pdf
-- https://www.tandfonline.com/doi/pdf/10.1080/00031305.2017.1375989?needAccess=true
+<!-- pains: -->
+<!-- - dates -->
+<!-- - numbers becoming dates -->
+<!-- - column names with spaces numbers or punctuation or other weird characters  -->
+<!-- - missingness (i.e., blank cells or recoding missing values to NA) -->
+<!-- - blank or extra misc rows/columns -->
+<!-- - multiple header rows (https://alison.rbind.io/blog/2018-07-multiple-headers/) -->
+<!-- - column types  -->
+<!-- - factor levels -->
+<!-- - duplicate values -->
 
-Goal: proactive resilient workflows for working with messy data (i.e., file organization, strategies, troubleshooting, talking to yourself / future collaborators, having difficult conversations about data and what you need)
 
-pains:
-- dates
-- numbers becoming dates
-- column names with spaces numbers or punctuation or other weird characters 
-- missingness (i.e., blank cells or recoding missing values to NA)
-- blank or extra misc rows/columns
-- multiple header rows (https://alison.rbind.io/blog/2018-07-multiple-headers/)
-- column types 
-- factor levels
-- duplicate values
+In this chapter we'll get down and dirty with some messy (but important to use) data. We need to use this data and although we acknowledge the data is dirty, we can use a smorgasbord of strategies to overcome this.
 
-## This chapter's pattern
+First, we'll explore the data and find out what went wrong during the import phase. This will be a treasure hunt of sorts. Functions like `glimpse()`, `count()`, `head()`, `tail()`, and `get_dupes()` will be used during the first inspection. This will inevitably be a messy `.qmd` file but you'll leave it behind in your dust when you're finally able to diagnose all of the issues. (We recommend you save the file for later use and we'll provide a tip or two on how to organize these scratch files.)
 
-- Explore: find out what went wrong? (diagnostic files, treasure hunt / glimpse / count / head / tail / readr::problems?? / janitor::get_dupes) [ this is a messy rmd file - leave behind in your dust when you are able to diagnose all the issues     - scratch file - save something tell them where ], explain where to store files in Project (`data-raw` for raw data files and maybe `data` for the transformed/cleaned-up files)
-- Understand: is fix- solving the problem (stick to readxl / skip / col_types / NA / janitor::clean_names ) [ start a new clean rmd here for importing? ]
+
+<!-- - Explore: find out what went wrong? (diagnostic files, treasure hunt / glimpse / count / head / tail / readr::problems?? / janitor::get_dupes) [ this is a messy rmd file - leave behind in your dust when you are able to diagnose all the issues     - scratch file - save something tell them where ], explain where to store files in Project (`data-raw` for raw data files and maybe `data` for the transformed/cleaned-up files) -->
+<!-- - Understand: is fix- solving the problem (stick to readxl / skip / col_types / NA / janitor::clean_names ) [ start a new clean rmd here for importing? ] -->
 - Explain: make sure you can do this again (communication to yourself); never edit the raw file; Annotate the Rmd with WHATEVER, use a future child doc? all the text will be hidden but the code will run; maybe with something with pointblank to write checks for yourself?
 - Share (Collaborate/Communicate): pointblank data dictionary as a conversation starter, documenting for others, writing the file out, advice for having conversations with data providers who ruin your life; rmd parent that uses the child?
 
@@ -42,64 +45,220 @@ pains:
 
 - about the dataset (`stickers`) (this will be an Excel file)
 
-- turn paranoia into data validation checks
+
 
 Getting new data can be really exciting but it can often result in a lot of work. You have to import the data such that it's not a garbled mess, you have to understand how the data is organized, and, you may have to do some cleaning and data quality tasks. The first few times you do this can be an exercise in frustration, involving much messing around until you feel you have a handle on things. That said, the goal of this chapter is to provide you with some workflows and many tips/tricks that'll serve you well when onboarding new datasets.
 
-We'll be working exclusively with tabular data for this chapter, using a variety of datasets of the messy variety to keep things real. Let's be upfront about some of the challenging things you may have to deal with:
+We'll be working with an Excel file called `stickers.xlsx` in this chapter. The dataset has a lot to do with sharing stickers and it's a really interesting one. The problem is that the data in its Excel form is a bit problematic (lots of messiness to overcome).
 
-- getting dates in nonstandard formats
-- having numbers transformed to dates (an Excel thing)
-- seeing column names with spaces numbers or punctuation or other weird characters 
-- taking stock of missingness (i.e., blank cells or recoding missing values to NA)
-- blank or extra misc rows/columns
-- multiple header rows (https://alison.rbind.io/blog/2018-07-multiple-headers/)
-- identifying column types for import
-- dealing with factor levels
-- having duplicate values
+Let's read in the file with the readxl package (with the `read_excel()` function) and have a first look at the data table.
 
-Two pretty common file formats containing tabular data are CSV file and Excel files. We will explore importing them both in turn and troubleshoot the inevitable issues in the *Understand* section
-
-### Importing a CSV file
-
-CSV files (short for *comma separated values*) are quite commonplace as method for storing tabular data in plain text. Most pieces of software that deal with tabular data can often export such data to CSV. While the CSV format isn't too rigorously specified (there really is a lot of variation), we generally find that:
-
-1. each line is a separate record,
-2. the records are divided into fields (separated by delimiters such as the comma, but sometimes by other characters like spaces or tab characters),
-3. there is the same number of fields per record, and
-4. there is (very commonly) a header line that defines the column names.
-
-While such variations in CSV formatting can't really be avoided, the *Tidyverse* **readr** package has many options to successfully deal with any such potential issues.
-
-We need a sample CSV file on disk to experiment with. The **dspatterns** package has a function to turn its included datasets into CSV files. Let's CSV-ify the `us_cities` dataset inside **dspatterns** like this:
-
-`r dspatterns::code_hints(
-"**CODE //** Writing ~~us_cities.csv~~ to the project directory with ~~dataset_to_csv()~~."
-)`
-```{r datset-to-csv, eval=FALSE}
-dataset_to_csv(dataset = "us_cities")
+```{r, paged.print=FALSE}
+readxl::read_excel("stickers.xlsx")
 ```
 
-Great. We have the file on disk, so let's now read in that file into a tibble object. We can do this using the `read_csv()` function from the **readr** package. This package is available in the *Tidyverse* so we need to first execute `library(tidyverse)` before using that function.
+Okay, a few things stick out as being non-ideal. First, we seem to have an extra 'header' row that got into the table rows (as row 1). It contains notes and remarks about data encoding. We don't want that, so let's use the `skip` option inside `readxl::read_excel()`:
+
+```{r, paged.print=FALSE}
+read_excel("stickers.xlsx", skip = 1)
+```
+
+That is actually no better. The problem is that `skip` will skip the number of rows *above* the header and what we actually have is a row of notes *between* the header and the actual data that needs to be skipped. We could try again with another `read_excel()` option like `range` but it might be more pragmatic to slice the data and move on. Let's make use of **dplyr**'s `slice()` function with `-1`, which will remove the first (bad) row.
+
+```{r, paged.print=FALSE}
+stickers <- 
+  read_excel("stickers.xlsx") %>%
+  slice(-1)
+
+stickers
+```
+
+Let's clean these terrifying names with **janitor**'s world-beating `clean_names()` function:
+
+```{r, paged.print=FALSE}
+stickers <- clean_names(stickers)
+
+stickers
+```
+
+We still have an outrageously long column name (`absolutenumberofstickersgiven_conditions1or3_outof12_conditions2or4_outof30`) and having that is not great for readability. Let's rename that and, while we're at it, rename quite a few other columns. We'll do this with **dplyr**'s `rename()` function. Like this:
+
+```{r, paged.print=FALSE}
+stickers <- 
+  stickers %>%
+  dplyr::rename(
+    subject = subject_number,
+    stickers_n = number_stickers,
+    env_n = number_envelopes,
+    age_months = agemonths,
+    age_years = ageyears,
+    age_groups = agegroups,
+    subjects_env = subjects_envelope,
+    l_env = left_envelope,
+    r_env = right_envelope,
+    stickers_given = absolutenumberofstickersgiven_conditions1or3_outof12_conditions2or4_outof30,
+    pct_given = percent_given_outof100percent,
+    given = giveornot,
+    l_env_n = larger_envelopeabs,
+    s_env_n = smaller_envelopeabs,
+    l_env_pct = large_envelopepercent,
+    s_env_pct = small_envelopepercent
+  )
+
+stickers
+```
+
+Having long and descriptive column names is not really desirable in a data table. It's much better to have short fragments rendered in snake case (aim for less than 10 letters, if possible).
 
 :::{.callout-tip}
-## Checking that the CSV file is where we think it is
+## What's the deal with snake_case?
 
-After using `dataset_to_csv()` we should have a look at the *Files* tab in **RStudio** (in the lower-right pane, first tab). The `us_cities.csv` file should be there. If it isn't, we can try two things. We should check that the path above the file view is same as that given in the message received after executing the `dataset_to_csv()` function. If it's different for whatever reason, we could navigate back to the project directory by clicking on the icon to the right of the path (the blue, **R**-in-cube icon). One last thing to try is clicking the refresh button just above (it could be that, on some file systems, a refresh of the directory listing is necessary).
-
+There are a number of ways to write out variables and column names. Why do it in     `snake_case`? It's easy to parse the words/symbols of a variable this way.
 :::
 
+We need to acknowledge and accept our paranoia about data quality. It'll result in better work! And, let's constructively turn that paranoia into data validation checks.
 
+If you did this all in a `.qmd` file (recommended) we suggest that it be saved to location with other scratch files. You're in a Project, right? Make a sub-folder called `data-raw` and put it in there along with the raw data files themselves.
+
+Let's write the cleaned up tibble to a file for later use. Make a sub-folder called `data` and write a CSV using `write_csv()` from the **readr** package.
+
+```{r eval=FALSE}
+write_csv(stickers, file = "stickers.csv")
+```
+
+
+
+<!-- - getting dates in nonstandard formats -->
+<!-- - having numbers transformed to dates (an Excel thing) -->
+<!-- - seeing column names with spaces numbers or punctuation or other weird characters  -->
+<!-- - taking stock of missingness (i.e., blank cells or recoding missing values to NA) -->
+<!-- - blank or extra misc rows/columns -->
+<!-- - multiple header rows  -->
+<!-- - identifying column types for import -->
+<!-- - dealing with factor levels -->
+<!-- - having duplicate values -->
+
+<!-- Two pretty common file formats containing tabular data are CSV file and Excel files. We will explore importing them both in turn and troubleshoot the inevitable issues in the *Understand* section -->
+
+<!-- ### Importing a CSV file -->
+
+<!-- CSV files (short for *comma separated values*) are quite commonplace as method for storing tabular data in plain text. Most pieces of software that deal with tabular data can often export such data to CSV. While the CSV format isn't too rigorously specified (there really is a lot of variation), we generally find that: -->
+
+<!-- 1. each line is a separate record, -->
+<!-- 2. the records are divided into fields (separated by delimiters such as the comma, but sometimes by other characters like spaces or tab characters), -->
+<!-- 3. there is the same number of fields per record, and -->
+<!-- 4. there is (very commonly) a header line that defines the column names. -->
+
+<!-- While such variations in CSV formatting can't really be avoided, the *Tidyverse* **readr** package has many options to successfully deal with any such potential issues. -->
+
+<!-- We need a sample CSV file on disk to experiment with. The **dspatterns** package has a function to turn its included datasets into CSV files. Let's CSV-ify the `us_cities` dataset inside **dspatterns** like this: -->
+
+<!-- `r dspatterns::code_hints( -->
+<!-- "**CODE //** Writing ~~us_cities.csv~~ to the project directory with ~~dataset_to_csv()~~." -->
+<!-- )` -->
+<!-- ```{r datset-to-csv, eval=FALSE} -->
+<!-- dataset_to_csv(dataset = "us_cities") -->
+<!-- ``` -->
+
+<!-- Great. We have the file on disk, so let's now read in that file into a tibble object. We can do this using the `read_csv()` function from the **readr** package. This package is available in the *Tidyverse* so we need to first execute `library(tidyverse)` before using that function. -->
+
+<!-- :::{.callout-tip} -->
+<!-- ## Checking that the CSV file is where we think it is -->
+
+<!-- After using `dataset_to_csv()` we should have a look at the *Files* tab in **RStudio** (in the lower-right pane, first tab). The `us_cities.csv` file should be there. If it isn't, we can try two things. We should check that the path above the file view is same as that given in the message received after executing the `dataset_to_csv()` function. If it's different for whatever reason, we could navigate back to the project directory by clicking on the icon to the right of the path (the blue, **R**-in-cube icon). One last thing to try is clicking the refresh button just above (it could be that, on some file systems, a refresh of the directory listing is necessary). -->
+
+<!-- ::: -->
 
 ## Understand
+
+Now that we just finished some radical surgery on `stickers`, here's a question: did the fixing up solve the problem? Let's import the data from a `.qmd` that just contains the importing directives.
+
+Now that we have data in fairly reasonable shape it's a great idea to put together a data dictionary. It's documentation that will help us understand the data, now and especially for later on.
+
+We can do this easily with the **pointblank** package and its functions for building up a data dictionary. We do this with an *informant* object and that's created with the `create_informant()` function. Give it the `stickers` table and 
+
+```{r}
+stickers_dd <- 
+  create_informant(tbl = stickers) %>%
+  info_columns("subject",
+    info = "The ID number for the subject."
+  ) %>%
+  info_columns("condition",
+    info = "Code from 1 to 4, where 1 = 12:1; 2 = 12:2, 3 = 30:1, 4 = 30:2."
+  ) %>%
+  info_columns("stickers_n",
+    info = "Code where 1 = 12; 2 = 30."
+  ) %>%
+  info_columns("env_n",
+    info = "Code where 1 = 1 recipient; 2 = 2 recipients."
+  ) %>%
+  info_columns("gender",
+    info = "Code from 1 = female and 2 = male."
+  ) %>%
+  info_columns("age_months",
+    info = "The age of the subject in months."
+  ) %>%
+  info_columns("age_years",
+    info = "The age of the subject in years."
+  ) %>%
+  info_columns("age_groups",
+    info = "Code from 1 to 4 where 1 = 3-4yrs; 2 = 5-6yrs; 3 = 7-8yrs; 4 = 9-11yrs."
+  ) %>%
+  info_columns("subjects_env",
+    info = "How many stickers did the child keep for themselves."
+  ) %>%
+  info_columns("l_env",
+    info = "How many stickers the subject put in the recipient's envelope to their left."
+  ) %>%
+  info_columns("r_env",
+    info = "How many stickers the subject put in the recipient's envelope to their right."
+  ) %>%
+  info_columns("stickers_given",
+    info = "The number of stickers the subject placed in the recipient(s) envelope(s)."
+  ) %>%
+  info_columns("pct_given",
+    info = "The proportion of stickers the subject placed in the recipient(s) envelope(s)."
+  ) %>%
+  info_columns("given",
+    info = "Did the subject give any stickers at all? It's 0 for FALSE and 1 for TRUE."
+  ) %>%
+  info_columns("l_env_n",
+    info = "The larger value of `l_env` and `r_env`."
+  ) %>%
+  info_columns("l_env_pct",
+    info = "The fraction of `l_env_n` and `stickers_given`."
+  ) %>%
+  info_columns("s_env_n",
+    info = "The smaller value of `l_env` and `r_env`."
+  ) %>%
+  info_columns("s_env_pct",
+    info = "The fraction of `s_env_n` and `stickers_given`."
+  )
+
+stickers_dd
+```
 
 
 ## Explain
 
+We got to make sure this can be done again. Let's take stock of what was done here.
+
+Never, ever edit the raw data file.
+
+We can annotate the `.qmd` file with WHATEVER WE WANT. We can make a child doc where all the text will be hidden but the code will run.
+
+A good practice is to include data validation statements after importing. Who knows, maybe the raw data will change and having the checks in place will catch a data error that crept in during the data update. This is something we can do with **pointblank** within a `.qmd` file.
 
 ## Share
 
+We can build upon the pointblank data dictionary we made earlier. It's both great for you as an aid in understanding the data, and, others will certainly appreciate it as well! It can either serve as a conversation starter or a valuable reference that will be used again and again. Let's extend that file with more sections. Then, we can publish it or save the reporting as HTML.
+
+Sometimes, you need to have difficult conversations with data providers. Sometimes they are great (i.e., they provide you with data) and other times they can ruin your life (i.e., they provide you with *bad* data).
+
+Let's build a `.qmd` parent that uses a child `.qmd`. It's smart and we can break `.qmd`s down to components, if you will.
 
 ## DIY
 
-- dataset: `penguins_raw.csv` (use `palmerpenguins::path_to_file()` to get this CSV)
+It's now time to Do It Yourself. We'll recommend some dataset, give you some project ideas, steer you in the right direction, and you'll make something to be proud of.
+
+<!-- - dataset: `penguins_raw.csv` (use `palmerpenguins::path_to_file()` to get this CSV) -->
