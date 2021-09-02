@@ -10,17 +10,27 @@ Authors@R: c(
            comment = c(ORCID = "0000-0003-3925-190X"))
     )
 Encoding: UTF-8
-LazyData: true
 ByteCompile: true
 RoxygenNote: 7.1.1
 Depends:
     R (>= 3.5.0)
 Imports:
-    commonmark (>= 1.7),
-    here (>= 0.1),
-    htmltools (>= 0.5.0),
-    palmerpenguins (>= 0.1.0),
-    readr (>= 1.3.1),
-    regexplain (>= 0.2.2),
-    shiny (>= 1.4.0)
+    quarto,
+    dspatterns,
+    tidyverse,
+    bakeoff,
+    palmerpenguins,
+    tidyverse,
+    readxl,
+    janitor,
+    pointblank,
+    readr,
+    shiny,
+    skimr,
+    gt,
+    DT,
+    ggridges
+Remotes:
+    apreshill/bakeoff
+    dspatterns/dspatterns
 
