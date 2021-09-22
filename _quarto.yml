@@ -56,7 +56,10 @@ book:
 
 format:
   html:
-    theme: cosmo
+    theme:
+      - cosmo
+      - style/style.scss
+      - style/fonts.scss
     toc: true
     toc-depth: 2
     cover-image: cover.png

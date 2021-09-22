@@ -1,0 +1,96 @@
+/*-- scss:defaults --*/
+
+/* bootstrap variables */
+$primary: #6B2084;                   /* amethyst */
+$code-color: #702459;                /* constrast ratio: 8.94 */
+$link-color: darken($primary, 8%);
+$link-hover-color: darken($link-color, 8%);
+$body-color: #404040;                /* rstudio dark gray, matches rstudio.com */
+$navbar-light-color: lighten($navbar-light-hover-color, 40%);
+$navbar-light-hover-color: #000;
+$navbar-light-brand-color: #404040;  /* rstudio dark gray, matches rstudio.com */
+$headings-color: $primary;            /* rstudio dark gray, matches rstudio.com */
+$border-color: #9DCBE7;               /* punchy */
+$border-width: 5rem;
+
+/* workbench variables */
+$pro-header: #4D4D4D;                /* rstudio logo gray, contrast: 8.45 */
+$pro-header-border: lighten($pro-header, 50%);
+
+
+/*-- scss:rules --*/
+
+/*-- the following all aim to increase visible whitespace *--/
+/* styling underlined links */
+a {
+  text-decoration-thickness: .05em;
+  text-underline-offset: .15em;
+}
+
+/* increase padding around code blocks */
+pre.sourceCode.code-with-copy {
+  padding: 1rem 25px 1rem 1rem;
+}
+
+/* increase title letter spacing to lighten it up */
+.navbar-brand {
+  letter-spacing: .05rem;
+}
+
+/* increase padding around navbar links so less squished */
+.navbar-expand-lg .navbar-nav .nav-link {
+  padding: 0rem 1rem;
+}
+
+/* increase padding above the page nav */
+main {
+  margin-bottom: 5rem;
+}
+
+/* increase padding above ALL content */
+.sidebar {
+  padding-top: 50px;
+}
+.sidebar-menu-container {
+  padding-top: 25px;
+}
+main {
+  padding-top: 28px;
+}
+
+/* increase padding between sidebar nav items */
+.sidebar-navigation .sidebar-section.depth1 {
+  padding-bottom: .2rem; /* double the default */
+}
+
+/* Navbar */
+
+/* should be able to use navbar-bg for this */
+.bg-primary {
+  background-color: #ffffff !important;
+}
+
+#quarto-header {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+/* Logo */
+
+.navbar-brand img {
+    width: 3rem;
+    height: 3rem;
+    margin-right: 0rem;
+    margin-bottom: .3125rem; /* align the logo with text */
+}
+
+/* Sidebar */
+
+#quarto-sidebar [class*="overflow-scroll"] {
+  background-color: #ffffff;
+}
+
+/* darken nav page text */
+
+.nav-page .nav-page-text {
+  color: $pro-header;
+}
