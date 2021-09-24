@@ -46,7 +46,7 @@ After making the `slice()`, we should again view the tibble to see if the result
 stickers
 ```
 
-Much better! We have to keep in mind, though, that printing out a tibble only gives us a tiny preview of the data. We can look at the tail of the data with `tail()` to verify that the end of the table is what we might expect.
+Much better since the unwanted row is now gone! We have to keep in mind, though, that printing out a tibble only gives us a tiny preview of the data. We can look at the tail of the data with `tail()` to verify that the end of the table is what we might expect.
 
 ```{r, paged.print=FALSE}
 tail(stickers)
@@ -99,24 +99,49 @@ stickers <-
 stickers
 ```
 
-Having long and descriptive column names is not really desirable in a data table. It's much better to have short fragments rendered in snake case (aim for less than 10 letters, if possible). Let's look at our revised `stickers` table using the `glimpse()` function:
+Having long and descriptive column names is not really desirable in a data table. It's much better to have short fragments rendered in snake case (aim for less than 10 letters, if possible). 
+
+::: callout-warning
+## The order of names in `rename()`
+
+When using **dplyr**'s `rename()` function, we can rename as many columns as we like. The only thing to remember is that the new name goes on the left of the `=` and the old name is on the right. It might help to think of it as multiple assignments. If that doesn't stick, it's okay because we can look at the function's documentation with `help(rename)` (the key information about ordering is right at the top).
+:::
+
+Let's look at our revised `stickers` table using the `glimpse()` function:
 
 ```{r}
 glimpse(stickers)
 ```
 
+It looks *almost* right. The incident with the bad raw early on has forced most of the columns to be of the `character` type. We can see here that every column except for `subject` should be `numeric`. Let's make a correction to `stickers` that changes many column types all at once.
 
-::: callout-warning
-## The order of names in `rename()`
+```{r, paged.print=FALSE}
+stickers <-
+  stickers %>%
+  mutate(across(.cols = 2:last_col(), .fns = as.numeric))
+```
 
-When using **dplyr**'s `rename()` function, we can rename as many columns as we like. The only thing to remember is that the new name goes on the left of the `=` and the old name is on the right. Think of it like multiple assignments. If you totally forget what the order should be, look at the help with `help(rename)` (this key information is right at the top).
+Using `mutate()` and `across()` is tricky at first but very worthwhile since we can apply the same transformation to multiple columns. Within `across()`, the important components are a selection of columns (in `.cols`) and the function to apply (in `.fns`). For the latter, we want the columns of our choosing to be numeric so we'll supply `as.numeric` here. To choose the columns, we can specify them with a range using the `:` style. We'll start at `2` and end at the last column. The **dplyr** package has a helper function `last_col()` that's perfect for this, so, the column selection becomes `2:last_col()`.
+
+Let's now have a `glimpse()` at the changed `stickers` table and make certain that the transformation worked out:
+
+```{r}
+glimpse(stickers)
+```
+
+Looks good now! Always make little inspections after making such changes to the data.
+
+::: callout-tip
+## Selection helpers in **dplyr**
+
+There are so many ways we can specify, or select, columns in a table using **dplyr**. It's hard to keep all that in your head so a good resource for selection features is the documentation for **dplyr**'s `select()` function; it's accessible with `help(select)`. 
 :::
 
-
-
-
+**Data Quality Concerns**
 
 We need to acknowledge and accept our paranoia about data quality. It'll result in better work! And, let's constructively turn that paranoia into data validation checks.
+
+**Saving Your Work**
 
 If you did this all in a `.qmd` file (recommended) we suggest that it be saved to location with other scratch files. You're in a Project, right? Make a sub-folder called `data-raw` and put it in there along with the raw data files themselves.
 
@@ -136,59 +161,59 @@ We can do this easily with the **pointblank** package and its functions for buil
 
 ```{r eval=FALSE}
 stickers_dd <-
-  pointblank::create_informant(tbl = stickers) %>%
-  pointblank::info_columns("subject",
+  create_informant(tbl = stickers) %>%
+  info_columns("subject",
     info = "The ID number for the subject."
   ) %>%
-  pointblank::info_columns("condition",
+  info_columns("condition",
     info = "Code from 1 to 4, where 1 = 12:1; 2 = 12:2, 3 = 30:1, 4 = 30:2."
   ) %>%
-  pointblank::info_columns("stickers_n",
+  info_columns("stickers_n",
     info = "Code where 1 = 12; 2 = 30."
   ) %>%
-  pointblank::info_columns("env_n",
+  info_columns("env_n",
     info = "Code where 1 = 1 recipient; 2 = 2 recipients."
   ) %>%
-  pointblank::info_columns("gender",
-    info = "Code from 1 = female and 2 = male."
+  info_columns("gender",
+    info = "Code where 1 = female and 2 = male."
   ) %>%
-  pointblank::info_columns("age_months",
+  info_columns("age_months",
     info = "The age of the subject in months."
   ) %>%
-  pointblank::info_columns("age_years",
+  info_columns("age_years",
     info = "The age of the subject in years."
   ) %>%
-  pointblank::info_columns("age_groups",
+  info_columns("age_groups",
     info = "Code from 1 to 4 where 1 = 3-4yrs; 2 = 5-6yrs; 3 = 7-8yrs; 4 = 9-11yrs."
   ) %>%
-  pointblank::info_columns("subjects_env",
+  info_columns("subjects_env",
     info = "How many stickers did the child keep for themselves."
   ) %>%
-  pointblank::info_columns("l_env",
+  info_columns("l_env",
     info = "How many stickers the subject put in the recipient's envelope to their left."
   ) %>%
-  pointblank::info_columns("r_env",
+  info_columns("r_env",
     info = "How many stickers the subject put in the recipient's envelope to their right."
   ) %>%
-  pointblank::info_columns("stickers_given",
+  info_columns("stickers_given",
     info = "The number of stickers the subject placed in the recipient(s) envelope(s)."
   ) %>%
-  pointblank::info_columns("pct_given",
+  info_columns("pct_given",
     info = "The proportion of stickers the subject placed in the recipient(s) envelope(s)."
   ) %>%
-  pointblank::info_columns("given",
+  info_columns("given",
     info = "Did the subject give any stickers at all? It's 0 for FALSE and 1 for TRUE."
   ) %>%
-  pointblank::info_columns("l_env_n",
+  info_columns("l_env_n",
     info = "The larger value of `l_env` and `r_env`."
   ) %>%
-  pointblank::info_columns("l_env_pct",
+  info_columns("l_env_pct",
     info = "The fraction of `l_env_n` and `stickers_given`."
   ) %>%
-  pointblank::info_columns("s_env_n",
+  info_columns("s_env_n",
     info = "The smaller value of `l_env` and `r_env`."
   ) %>%
-  pointblank::info_columns("s_env_pct",
+  info_columns("s_env_pct",
     info = "The fraction of `s_env_n` and `stickers_given`."
   )
 
