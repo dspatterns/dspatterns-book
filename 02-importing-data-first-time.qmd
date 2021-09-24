@@ -38,19 +38,41 @@ That is actually no better. The problem is that `skip` will skip the number of r
 stickers <- 
   read_excel("stickers.xlsx") %>%
   slice(-1)
-
-stickers
 ```
 
-Let's clean these terrifying names with **janitor**'s world-beating `clean_names()` function:
+After making the `slice()`, we should again view the tibble to see if the result is satisfying:
 
 ```{r, paged.print=FALSE}
-stickers <- clean_names(stickers)
-
 stickers
 ```
 
-We still have an outrageously long column name (`absolutenumberofstickersgiven_conditions1or3_outof12_conditions2or4_outof30`) and having that is not great for readability. Let's rename that and, while we're at it, rename quite a few other columns. We'll do this with **dplyr**'s `rename()` function. Like this:
+Much better! We have to keep in mind, though, that printing out a tibble only gives us a tiny preview of the data. We can look at the tail of the data with `tail()` to verify that the end of the table is what we might expect.
+
+```{r, paged.print=FALSE}
+tail(stickers)
+```
+
+Now let's clean these terrifying names with **janitor**'s world-beating `clean_names()` function:
+
+```{r}
+stickers <- clean_names(stickers)
+```
+
+Now, let's have a look at just revised set of column names in the revised `stickers`. We can easily do this with `colnames()` and here it is:
+
+```{r, paged.print=FALSE}
+colnames(stickers)
+```
+
+These column names have been cleaned up by transforming them to `snake_case`, which are words separated by the underscore (`_`) character.
+
+::: callout-tip
+## What's the deal with `snake_case`?
+
+There are a number of ways to write out variables and column names. Why do it in `snake_case`? It's easy to parse the words/symbols of a variable this way.
+:::
+
+These column names present a bit better now, however, we still have an outrageously long column name (`absolutenumberofstickersgiven_conditions1or3_outof12_conditions2or4_outof30`) and having that is not at all great for readability. Let's rename that and, while we're at it, rename quite a few of other columns where the names are verbose, redundant, or confusing. We'll do this with **dplyr**'s `rename()` function. Like this:
 
 ```{r, paged.print=FALSE}
 stickers <- 
@@ -77,13 +99,22 @@ stickers <-
 stickers
 ```
 
-Having long and descriptive column names is not really desirable in a data table. It's much better to have short fragments rendered in snake case (aim for less than 10 letters, if possible).
+Having long and descriptive column names is not really desirable in a data table. It's much better to have short fragments rendered in snake case (aim for less than 10 letters, if possible). Let's look at our revised `stickers` table using the `glimpse()` function:
 
-::: callout-tip
-## What's the deal with snake_case?
+```{r}
+glimpse(stickers)
+```
 
-There are a number of ways to write out variables and column names. Why do it in `snake_case`? It's easy to parse the words/symbols of a variable this way.
+
+::: callout-warning
+## The order of names in `rename()`
+
+When using **dplyr**'s `rename()` function, we can rename as many columns as we like. The only thing to remember is that the new name goes on the left of the `=` and the old name is on the right. Think of it like multiple assignments. If you totally forget what the order should be, look at the help with `help(rename)` (this key information is right at the top).
 :::
+
+
+
+
 
 We need to acknowledge and accept our paranoia about data quality. It'll result in better work! And, let's constructively turn that paranoia into data validation checks.
 
