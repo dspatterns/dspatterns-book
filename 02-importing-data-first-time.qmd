@@ -155,7 +155,7 @@ Now that we just finished some radical surgery on `stickers`, here's a question:
 
 Now that we have data in fairly reasonable shape it's a great idea to put together a data dictionary. It's documentation that will help us understand the data, now and especially for later on.
 
-We can do this easily with the **pointblank** package and its functions for building up a data dictionary. We do this with an *informant* object and that's created with the `create_informant()` function. Give it the `stickers` table and
+We can do this easily with the **pointblank** package and its functions for building up a data dictionary. We do this with an *informant* object and that's created with the `create_informant()` function. Start with providing the `stickers` table to that function and then use a series of `info_columns()` calls to provide a statement for each of the 18 columns.
 
 ```{r eval=FALSE}
 stickers_dd <-
@@ -214,7 +214,11 @@ stickers_dd <-
   info_columns("s_env_pct",
     info = "The fraction of `s_env_n` and `stickers_given`."
   )
+```
 
+Once the data dictionary has been produced for `stickers`, we can look at it in the Viewer by printing it out.
+
+```{r eval=FALSE}
 stickers_dd
 ```
 
