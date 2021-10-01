@@ -74,7 +74,7 @@ stickers_empty
 Now, we're not going to put two tibbles together to form our final table. Let's instead pull out these column names as a vector of cleaned names, storing it in `col_names_vec`:
 
 ```{r}
-col_names_vec <- names(stickers_col_names) 
+col_names_vec <- names(stickers_empty) 
 ```
 
 Now, finally, we can retry `read_excel()` with a few options in place. First, we'll skip over the first two rows of Excel data: the row with the column names and the non-data row. Second, we have the column names now as `col_names_vec` and we can provide them to the `col_names` argument (it needs a vector and that's really why we prepared one). Let's assign the resulting table to `stickers`.
