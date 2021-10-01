@@ -8,17 +8,26 @@ library(readr)
 library(janitor)
 ```
 
-In this chapter we'll get down and dirty with some messy (but important to use) data. We need to use this data and although we acknowledge the data is dirty, we can use a smorgasbord of strategies to overcome this.
+In this chapter we'll get down and dirty with some messy (but important to use) data. We need to use this data and although we acknowledge the data has problems, we can use a few strategies to overcome this.
 
-First, we'll explore the data and find out what went wrong during the import phase. This will be a treasure hunt of sorts. Functions like `glimpse()`, `count()`, `head()`, and `tail()` will be used during the first inspection. This will inevitably be a messy `.qmd` file but you'll leave it in the dust when you're finally able to diagnose all of the issues. (We recommend you save the file for later use and we'll provide a tip or two on how to organize these scratch files.)
+First, we'll explore the data and find out what went wrong during the import phase. This will invariably require some trial-and-error at first to get to a usable solution (which is the ideal import statement for the dataset at hand). After that, we'll use functions like `glimpse()`, `count()`, `head()`, and `tail()` to make sense of what we have during every step of the process. Checking the data at every major transformation is informative and important during this early phase of exploring a new dataset. All of this work will inevitably result in a messy `.qmd` file but you'll leave it in the dust when you're finally able to diagnose all of the issues. (We recommend you save the file for later use and we'll provide a tip or two on how to organize these scratch files.)
+
+We'll need a few packages loaded in for this chapter:
+
+- **tidyverse**: for various functions across a collection of packages (the Tidyverse packages)
+- **readxl**: for reading in the Excel dataset
+- **janitor**: for cleaning column names
+- **pointblank**: for building a data dictionary
+
+If you're following along, add a set of `library()` statements at the top of your `.qmd` file.
 
 ## Explore
 
 Getting new data can be really exciting but it can often result in a lot of work. You have to import the data such that it's not a garbled mess, you have to understand how the data is organized, and, you may have to do some cleaning and data quality tasks. The first few times you do this can be an exercise in frustration, involving much messing around until you feel you have a handle on things. That said, the goal of this chapter is to provide you with some workflows and many tips/tricks that'll serve you well when onboarding new datasets.
 
-We'll be working with an Excel file called `stickers.xlsx` in this chapter (the file is available in the book repository). The dataset has a lot to do with sharing stickers and it's a really interesting one. The problem is that the data in its Excel form is a bit problematic (lots of messiness to overcome).
+We'll be working with an Excel file called `stickers.xlsx` in this chapter (the file is available in the book repository). The dataset has a lot to do with sharing stickers and it's a really interesting one. The problem is that the data in its Excel form is a bit problematic (there's a few problems to overcome).
 
-Putting the problems aside for now, let's learn about where the `stickers` dataset came from. It's a dataset from an experimental study where children played a variation of the dictator or ultimatum game, using stickers instead of money. The [study](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0138928) looked at how numerical context affects children's sharing behavior study.    
+Putting the problems aside for now, let's learn about where this dataset came from. It's a dataset from an experimental study where children played a variation of the dictator or ultimatum game, using stickers instead of money. The [study](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0138928) looked at how numerical context affects children's sharing behavior study.    
 
 ![The ultimatum game.](figures/02-importing-data-first-time/ultimatum-game.png){#fig:stickers-ultimatum-game}
 
