@@ -18,86 +18,38 @@ Getting new data can be really exciting but it can often result in a lot of work
 
 We'll be working with an Excel file called `stickers.xlsx` in this chapter. The dataset has a lot to do with sharing stickers and it's a really interesting one. The problem is that the data in its Excel form is a bit problematic (lots of messiness to overcome).
 
-Let's read in the file with the readxl package (with the `read_excel()` function) and have a first look at the data table.
+Provide a description of the `stickers` dataset. Add a picture of the dictator game (maybe sourced from Wikipedia).
+
+Let's read in the file with the **readxl** package (with the `read_excel()` function) and have a first look at the data table.
 
 ```{r, paged.print=FALSE}
-readxl::read_excel("stickers.xlsx")
+read_excel("stickers.xlsx")
 ```
 
-Okay, a few things stick out as being non-ideal. First, we seem to have an extra 'header' row that got into the table rows (as row 1). It contains notes and remarks about data encoding. We don't want that, so let's use the `skip` option inside `readxl::read_excel()`:
+Okay, a few things stick out as being non-ideal. First, we seem to have an extra 'header' row that got into the table rows (as row 1). It contains notes and remarks about data encoding. We don't want that, so let's try using the `skip` option that's available in `readxl::read_excel()`. We need to provide some number of rows and while we can try `1` and `2`, they don't quite work (try using `read_excel("stickers.xlsx", skip = 1)` and `read_excel("stickers.xlsx", skip = 2)` and take note of the output table).
 
-```{r, paged.print=FALSE}
-read_excel("stickers.xlsx", skip = 1)
-```
-
-That is actually no better. The problem is that `skip` will skip the number of rows *above* the header and what we actually have is a row of notes *between* the header and the actual data that needs to be skipped. We could try again with another `read_excel()` option like `range` but it might be more pragmatic to slice the data and move on. Let's make use of **dplyr**'s `slice()` function with `-1`, which will remove the first (bad) row.
-
-```{r, paged.print=FALSE}
-stickers <- 
-  read_excel("stickers.xlsx") %>%
-  slice(-1)
-```
-
-After making the `slice()`, we should again view the tibble to see if the result is satisfying:
-
-```{r, paged.print=FALSE}
-stickers
-```
-
-Much better since the unwanted row is now gone! We have to keep in mind, though, that printing out a tibble only gives us a tiny preview of the data. We can look at the tail of the data with `tail()` to verify that the end of the table is what we might expect.
-
-```{r, paged.print=FALSE}
-tail(stickers)
-```
-
-Now let's clean these terrifying names with **janitor**'s world-beating `clean_names()` function:
+Because the rows to skip begin *after* the row with the column names, we'll have to try a different strategy. It'll seem a bit strange but the idea will be to get the column names separately and then all of the *good* data rows. First, let's get those column names, and we can do that with `n_max = 0` in the `read_excel()` call:
 
 ```{r}
-stickers <- clean_names(stickers)
+stickers_empty <- read_excel("stickers.xlsx", n_max = 0)
 ```
 
-Now, let's have a look at just revised set of column names in the revised `stickers`. We can easily do this with `colnames()` and here it is:
+This gives us a tibble with no rows, but with the column names nonetheless:
 
 ```{r, paged.print=FALSE}
-colnames(stickers)
+stickers_empty
 ```
 
-These column names have been cleaned up by transforming them to `snake_case`, which are words separated by the underscore (`_`) character.
+We notice from this initial view of the column names is that they are none too good. One of them is incredibly long, for instance. Let's rename the overly-long name in column `12` with `stickers_given` and also use the `clean_names()` function from the **janitor** package.
 
-::: callout-tip
-## What's the deal with `snake_case`?
-
-There are a number of ways to write out variables and column names. Why do it in `snake_case`? It's easy to parse the words/symbols of a variable this way.
-:::
-
-These column names present a bit better now, however, we still have an outrageously long column name (`absolutenumberofstickersgiven_conditions1or3_outof12_conditions2or4_outof30`) and having that is not at all great for readability. Let's rename that and, while we're at it, rename quite a few of other columns where the names are verbose, redundant, or confusing. We'll do this with **dplyr**'s `rename()` function. Like this:
-
-```{r, paged.print=FALSE}
-stickers <- 
-  stickers %>%
-  dplyr::rename(
-    subject = subject_number,
-    stickers_n = number_stickers,
-    env_n = number_envelopes,
-    age_months = agemonths,
-    age_years = ageyears,
-    age_groups = agegroups,
-    subjects_env = subjects_envelope,
-    l_env = left_envelope,
-    r_env = right_envelope,
-    stickers_given = absolutenumberofstickersgiven_conditions1or3_outof12_conditions2or4_outof30,
-    pct_given = percent_given_outof100percent,
-    given = giveornot,
-    l_env_n = larger_envelopeabs,
-    s_env_n = smaller_envelopeabs,
-    l_env_pct = large_envelopepercent,
-    s_env_pct = small_envelopepercent
-  )
-
-stickers
+```{r , paged.print=FALSE}
+stickers_empty <- 
+  stickers_empty %>%
+  rename(stickers_given = 12) %>%
+  clean_names()
 ```
 
-Having long and descriptive column names is not really desirable in a data table. It's much better to have short fragments rendered in snake case (aim for less than 10 letters, if possible). 
+The **dplyr** `rename()` function is very useful for all your renaming needs and we'll use it a lot throughout this book.
 
 ::: callout-warning
 ## The order of names in `rename()`
@@ -105,26 +57,46 @@ Having long and descriptive column names is not really desirable in a data table
 When using **dplyr**'s `rename()` function, we can rename as many columns as we like. The only thing to remember is that the new name goes on the left of the `=` and the old name is on the right. It might help to think of it as multiple assignments. If that doesn't stick, it's okay because we can look at the function's documentation with `help(rename)` (the key information about ordering is right at the top).
 :::
 
-Let's look at our revised `stickers` table using the `glimpse()` function:
+These column names have been cleaned up by transforming them to `snake_case`, which are words separated by the underscore (`_`) character. Having long and descriptive column names is not really desirable in a data table. It's much better to have short fragments rendered in snake case (aim for less than 10 letters, if possible). 
 
-```{r}
-glimpse(stickers)
+::: callout-tip
+## What's the deal with `snake_case`?
+
+There are a number of ways to write out variables and column names. Why do it in `snake_case`? It's easy to parse the words/symbols of a variable this way.
+:::
+
+We'll print out the empty tibble again and have a look at the changes in the column names. It's *a lot* better now:
+
+```{r, paged.print=FALSE}
+stickers_empty
 ```
 
-It looks *almost* right. The incident with the bad raw early on has forced most of the columns to be of the `character` type. We can see here that every column except for `subject` should be `numeric`. Let's make a correction to `stickers` that changes many column types all at once.
+Now, we're not going to put two tibbles together to form our final table. Let's instead pull out these column names as a vector of cleaned names, storing it in `col_names_vec`:
+
+```{r}
+col_names_vec <- names(stickers_col_names) 
+```
+
+Now, finally, we can retry `read_excel()` with a few options in place. First, we'll skip over the first two rows of Excel data: the row with the column names and the non-data row. Second, we have the column names now as `col_names_vec` and we can provide them to the `col_names` argument (it needs a vector and that's really why we prepared one). Let's assign the resulting table to `stickers`.
+
+```{r}
+stickers <- read_excel("stickers.xlsx", skip = 2, col_names = col_names_vec)
+```
+
+And now, we'll have a look at the `stickers` table:
+
+```{r, paged.print=FALSE}
+stickers
+```
+
+Not bad! All column types were guessed properly by the `read_excel()` function, so we needn't do anything on that. One column, `percent_given_outof100percent` has a bit of a silly name; we can fix that easily with **dplyr**'s `rename()` function, using the `ends_with()` select helper while we're at it:
 
 ```{r, paged.print=FALSE}
 stickers <-
   stickers %>%
-  mutate(across(.cols = 2:last_col(), .fns = as.numeric))
-```
+  rename(percent_given = ends_with("100percent"))
 
-Using `mutate()` and `across()` is tricky at first but very worthwhile since we can apply the same transformation to multiple columns. Within `across()`, the important components are a selection of columns (in `.cols`) and the function to apply (in `.fns`). For the latter, we want the columns of our choosing to be numeric so we'll supply `as.numeric` here. To choose the columns, we can specify them with a range using the `:` style. We'll start at `2` and end at the last column. The **dplyr** package has a helper function `last_col()` that's perfect for this, so, the column selection becomes `2:last_col()`.
-
-Let's now have a `glimpse()` at the changed `stickers` table and make certain that the transformation worked out:
-
-```{r}
-glimpse(stickers)
+stickers
 ```
 
 Looks good now! Always make little inspections after making such changes to the data.
@@ -134,6 +106,18 @@ Looks good now! Always make little inspections after making such changes to the 
 
 There are so many ways we can specify, or select, columns in a table using **dplyr**. It's hard to keep all that in your head so a good resource for selection features is the documentation for **dplyr**'s `select()` function; it's accessible with `help(select)`. 
 :::
+
+```{r, paged.print=FALSE}
+stickers %>%
+  rename(env = ends_with("abs"))
+```
+Let's look at our revised `stickers` table using the `glimpse()` function:
+
+```{r}
+glimpse(stickers)
+```
+
+Looks good now! Always make little inspections after making such changes to the data.
 
 **Data Quality Concerns**
 
@@ -156,6 +140,14 @@ Now that we just finished some radical surgery on `stickers`, here's a question:
 Now that we have data in fairly reasonable shape it's a great idea to put together a data dictionary. It's documentation that will help us understand the data, now and especially for later on.
 
 We can do this easily with the **pointblank** package and its functions for building up a data dictionary. We do this with an *informant* object and that's created with the `create_informant()` function. Start with providing the `stickers` table to that function and then use a series of `info_columns()` calls to provide a statement for each of the 18 columns.
+
+Make it possible in **pointblank** to use a tibble to get a basic data dictionary made with `info_columns()`. Allow for an extra column in the tibble to specify the position of the variable (this info should be combined with the description text).
+
+tibble(
+   ~name, ~info, ~position,
+   subject, sldfjsl, 1,
+   condition, sdlfjslf, 2,
+)
 
 ```{r eval=FALSE}
 stickers_dd <-
@@ -216,7 +208,7 @@ stickers_dd <-
   )
 ```
 
-Once the data dictionary has been produced for `stickers`, we can look at it in the Viewer by printing it out.
+Once the data dictionary has been produced for `stickers`, we can look at it in the RStudio Viewer by printing it out.
 
 ```{r eval=FALSE}
 stickers_dd
@@ -226,7 +218,11 @@ stickers_dd
 
 ## Explain
 
+More discussion on variable names (e.g., names as contracts - see Emily's blog post)
+
 We got to make sure this can be done again. Let's take stock of what was done here.
+
+How to manually generate a data dictionary (in an aside)
 
 Never, ever edit the raw data file.
 
