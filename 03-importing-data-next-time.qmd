@@ -13,6 +13,8 @@ library(janitor)
 Use: 
 
 - pointblank for data checking
+- introduce subject 263 in the data, which has data validity issues
+  - find some way to easily detect this with some data checking
 
 Resources:
 
