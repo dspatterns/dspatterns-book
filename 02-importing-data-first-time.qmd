@@ -27,7 +27,7 @@ Getting new data can be really exciting but it can often result in a lot of work
 
 We'll be working with an Excel file called `stickers.xlsx` in this chapter (the file is available in the book repository). The dataset has a lot to do with sharing stickers and it's a really interesting one. The problem is that the data in its Excel form is a bit problematic (there's a few problems to overcome).
 
-Putting the problems aside for now, let's learn about where this dataset came from. It's a dataset from an experimental study where children played a variation of the dictator or ultimatum game, using stickers instead of money. The [study](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0138928) looked at how numerical context affects children's sharing behavior study.    
+Putting the problems aside for now, let's learn about where this dataset came from. It's a dataset from an experimental study where children played a variation of the dictator or ultimatum game, using stickers instead of money. The [study](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0138928) looked at how numerical context affects children's sharing behavior.    
 
 ![The ultimatum game.](figures/02-importing-data-first-time/ultimatum-game.png){#fig:stickers-ultimatum-game}
 
