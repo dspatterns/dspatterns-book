@@ -118,10 +118,6 @@ Looks good now! Always make little inspections after making such changes to the 
 There are so many ways we can specify, or select, columns in a table using **dplyr**. It's hard to keep all that in your head so a good resource for selection features is the documentation for **dplyr**'s `select()` function; it's accessible with `help(select)`. 
 :::
 
-```{r, paged.print=FALSE}
-stickers %>%
-  rename(env = ends_with("abs"))
-```
 Let's look at our revised `stickers` table using the `glimpse()` function:
 
 ```{r}
@@ -150,76 +146,44 @@ Now that we just finished some radical surgery on `stickers`, here's a question:
 
 Now that we have data in fairly reasonable shape it's a great idea to put together a data dictionary. It's documentation that will help us understand the data, now and especially for later on.
 
-We can do this easily with the **pointblank** package and its functions for building up a data dictionary. We do this with an *informant* object and that's created with the `create_informant()` function. Start with providing the `stickers` table to that function and then use a series of `info_columns()` calls to provide a statement for each of the 18 columns.
+We can do this easily with the **pointblank** package and its functions for building up a data dictionary. That row that we banished from the data table is actually metadata for each of the columns. Let's recover that and put it in a shape that allows for data dictionary creation! We can read in that first row (and only the first row) with `read_excel()` and `n_max = 1`:
 
-Make it possible in **pointblank** to use a tibble to get a basic data dictionary made with `info_columns()`. Allow for an extra column in the tibble to specify the position of the variable (this info should be combined with the description text).
+```{r}
+stickers_meta <- read_excel("stickers.xlsx", n_max = 1)
+```
 
-tibble(
-   ~name, ~info, ~position,
-   subject, sldfjsl, 1,
-   condition, sdlfjslf, 2,
-)
+Looking at the single row table of `stickers_meta`, we can plainly see some informative text in that row.
+
+```{r, paged.print=FALSE}
+stickers_meta
+```
+
+This is a good start and all the infomation we need is available, we just have to get it in the right form. The **pointblank** package makes it easy to generate a data dictionary with a prepared table of metadata entries. We do this by creating an *informant* object with the `create_informant()` function and then using the `info_columns_from_tbl()` function to pass in the metadata for each column. The major requirement for the second step is making a tibble with two columns: the first with the column names (the cleaned up ones!) and the second with the metadata (from `stickers_meta`). Let's make the `stickers_metadata` table with the `tibble()` function:
+
+```{r}
+stickers_metadata <- 
+  tibble(
+    column = colnames(stickers),
+    info = as.character(stickers_meta[1, ])
+  )
+```
+
+We can have a quick look at the table with `glimpse()`:
+
+```{r}
+glimpse(stickers_metadata)
+```
+
+Now that we have `stickers_metadata` in the correct form, we can use it in `info_columns_from_tbl()`. To get an informative title at the top of the data dictionary, we use the `get_informant_report()` function and use the `title` argument. 
 
 ```{r eval=FALSE}
 stickers_dd <-
   create_informant(tbl = stickers) %>%
-  info_columns("subject",
-    info = "The ID number for the subject."
-  ) %>%
-  info_columns("condition",
-    info = "Code from 1 to 4, where 1 = 12:1; 2 = 12:2, 3 = 30:1, 4 = 30:2."
-  ) %>%
-  info_columns("stickers_n",
-    info = "Code where 1 = 12; 2 = 30."
-  ) %>%
-  info_columns("env_n",
-    info = "Code where 1 = 1 recipient; 2 = 2 recipients."
-  ) %>%
-  info_columns("gender",
-    info = "Code where 1 = female and 2 = male."
-  ) %>%
-  info_columns("age_months",
-    info = "The age of the subject in months."
-  ) %>%
-  info_columns("age_years",
-    info = "The age of the subject in years."
-  ) %>%
-  info_columns("age_groups",
-    info = "Code from 1 to 4 where 1 = 3-4yrs; 2 = 5-6yrs; 3 = 7-8yrs; 4 = 9-11yrs."
-  ) %>%
-  info_columns("subjects_env",
-    info = "How many stickers did the child keep for themselves."
-  ) %>%
-  info_columns("l_env",
-    info = "How many stickers the subject put in the recipient's envelope to their left."
-  ) %>%
-  info_columns("r_env",
-    info = "How many stickers the subject put in the recipient's envelope to their right."
-  ) %>%
-  info_columns("stickers_given",
-    info = "The number of stickers the subject placed in the recipient envelopes."
-  ) %>%
-  info_columns("pct_given",
-    info = "The proportion of stickers the subject placed in the recipient envelopes."
-  ) %>%
-  info_columns("given",
-    info = "Did the subject give any stickers at all? It's 0 for FALSE and 1 for TRUE."
-  ) %>%
-  info_columns("l_env_n",
-    info = "The larger value of `l_env` and `r_env`."
-  ) %>%
-  info_columns("l_env_pct",
-    info = "The fraction of `l_env_n` and `stickers_given`."
-  ) %>%
-  info_columns("s_env_n",
-    info = "The smaller value of `l_env` and `r_env`."
-  ) %>%
-  info_columns("s_env_pct",
-    info = "The fraction of `s_env_n` and `stickers_given`."
-  )
+  info_columns_from_tbl(tbl = stickers_metadata) %>%
+  get_informant_report(title = "Data Dictionary for `stickers`")
 ```
 
-Once the data dictionary has been produced for `stickers`, we can look at it in the RStudio Viewer by printing it out.
+Once the data dictionary has been produced for `stickers`, we can look at it in the RStudio Viewer by printing out `stickers_dd`. Here is an excerpt of that output (which is quite long because of all the columns contained within `stickers`).
 
 ```{r eval=FALSE}
 stickers_dd
