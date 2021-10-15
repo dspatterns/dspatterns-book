@@ -9,7 +9,25 @@ This chapter covers
 
 - Understanding our learning path for this book
 - File organization basics; using Projects
-- Where to go for help (app)
+- How to organize a project folder
+  - raw data
+  - clean data
+  - each file should be named clearly (e.g., `...-raw.csv`)
+  - on naming incoming files from collaborators:
+    - some files can strange names; rename them sensibility (with iso dates and some words that indicate provenance)
+    - create a data-README file that has notes on where files came from; like a 'lab notebook'
+- GitHub:
+  - one repo per project (matching with local project paradigm)
+  - checking in data project with all files (including data) is totally fine and recommended
+  - if your data size is really big (~100 MB) then consider .gitignore-ing the data (problem is that the project won't be truly reproducible)
+  - use happygitwithr as an invaluable resource
+- Introduce Quarto
+  - test mechanics of Quarto (project relative paths)
+    - is there a new document flow and what should be used (HTML)
+      - easier to share and most portable/flexible format
+      - better features and looks better
+    - does moving the quarto file around into different subfolders cause issues
+- Where to go for help (in the appendix)
 
 Notes: 
  
@@ -21,24 +39,31 @@ We'll start with our first pattern.
 
 ## Explore
 
-- about the dataset (`penguins`)
-- installing packages (`palmerpenguins`)
-- introduce ways to inspect the `penguins` dataset: `head()`, `tail()`, `dplyr::glimpse()`, `skimr::skim()` (let's avoid the `%>%` for now)
+- explore file structure on your personal system
+- tie this into GitHub which is your remote system (almost like a sync)
+- When starting a new Quarto file, we recommend using a top-level `index.qmd` (better for sharing)
+
+- Light data analysis (filler content mostly to be more instructive for learning Quarto):
+  - anatomy of a document (installed packages and using packages and the text and code chunks)
+  - we have the option to show the chunk output either inline (default) or in the Viewer/Plots pane (show option in settings)
+  - introduce the dataset (`penguins` from `palmerpenguins`) and inspect the data:
+    - `head()`, `tail()`, `dplyr::glimpse()`, `skimr::skim()` (let's avoid the `%>%` for now)
 
 ## Understand
 
-- explain how to access and read a help file (inspiration here: https://socviz.co/appendix.html#a-little-more-about-r)
+- review how projects fit in with the documents they contain and where they physically live
+- relationship between your local files and your remote files (in GitHub)
 
 ## Explain
 
 - talking to yourself with Quarto
-- change Markdown reference to copy/paste-able text (use Pandoc divs for a two-column layout)
-- add a top-level `index.qmd`
+- note that in Appendix there is a Markdown reference
+
 - add a `readme.md` to have general notes for the project
 
 ## Share
 
-- with GitHub! 
+- with GitHub!
 - talking to others, if future thing doesn't pan out netlify drop
 
 ## DIY
