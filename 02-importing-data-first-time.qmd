@@ -3,6 +3,7 @@
 ```{r setup, include=FALSE, echo=FALSE}
 library(dspatterns)
 library(dplyr)
+library(tidyr)
 library(readxl)
 library(readr)
 library(janitor)
@@ -162,9 +163,11 @@ This is a good start and all the infomation we need is available, we just have t
 
 ```{r}
 stickers_metadata <- 
-  tibble(
-    column = colnames(stickers),
-    info = as.character(stickers_meta[1, ])
+  stickers_meta %>%
+  pivot_longer(
+    cols = everything(),
+    names_to = "column",
+    values_to = "info"
   )
 ```
 
@@ -193,7 +196,15 @@ stickers_dd
 
 ## Explain
 
-More discussion on variable names (e.g., names as contracts - see Emily's blog post)
+
+The naming of columns in a data table is not at all easy. While the naming of the variables in the raw `stickers` dataset is clearly something we should avoid (and we did apply some correctives to that during import), we could and should always strive for better naming. One idea is to define for yourself (well ahead of time) a set of words or word fragments with well-defined meanings for you. These can work as symbols that convey meaning and thus they can be used to index information. When these pieces are defined for different types of information and arranged together in a consistent order (again, of your choosing), we can generate a vocabulary for data which serves as a descriptive grammar. In doing all this, we can describe both simple things and even complex content and behavior.
+
+We might combine these fragments together with a separator such as the `_` (as we have been doing in this chapter), and again the order should be consistent. Here are some examples for column names:
+
+- `id_subject`: the ID value for a test subject
+- `amt_
+
+In the context of a data set, this vocabulary can also serve as a latent contract between data producers and data consumers and carry promises regarding different aspects of the data lineage, valid values, and appropriate uses. When used consistently across all of an organization’s tables, it can significantly scale data management and increase usability as knowledge from working with one dataset easily transfers to another.
 
 We got to make sure this can be done again. Let's take stock of what was done here.
 
