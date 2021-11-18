@@ -4,6 +4,7 @@
 library(dspatterns)
 library(bakeoff)
 library(dplyr)
+library(tidyr)
 library(skimr)
 library(gt)
 library(ggplot2)
