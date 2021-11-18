@@ -30,7 +30,7 @@ Counting things in our data is super important. It allows us to account for thin
 
 We'll make extensive use of the **bakeoff** package. It's a package that contains datasets based on the Great British Bake Off television show. In particular, the `bakers` dataset will be used for many of the examples.
 
-As far as packages requirements, we will need **bakeoff**, **tidyverse**, and **pointblank**.
+As far as packages requirements, we will need **bakeoff**, **tidyverse**, **gt**, and **pointblank**.
 
 This chapter's pattern:
 
@@ -95,10 +95,7 @@ You never really know when a dataset may change for the worse, so, scan it up an
 
 ## Understand
 
-  - tables + viz (distinct / count / geom_col)
-  - from exploratory plots (confirms or disproves your assumptions about the data)
-
-To get an even greater understanding of our data, we might want to explore it. Let's explore the `bakers` dataset from the **bakeoff** package. This dataset provides a record for every contestant from every series of the show.
+To get an even greater understanding of our data, we'll want to ask several questions of it and then get the answer to confirm our assumptions. Let's explore the `bakers` dataset from the **bakeoff** package. This table provides a record for every contestant from every series of the show. In particular, it provides their names (`baker_full`, `baker_last`, and `baker_first`), ages (`age`), occupations (`occupation`), and where they live (`hometown`).
 
 Suppose we have the question: are the contestants unique across all of the rows? Well, we could find that out by knowing that there are `120` rows in the dataset and that using the `distinct()` function (from the **dplyr** package) should give us the same number of rows when used just on the `baker_full` column (full names for each contestant). Let's take a look at that in action:
 
@@ -171,11 +168,29 @@ This is an interesting overview of the series and how eliminations were carried 
 
 ## Explain
 
-Sometimes, in the text of a document, you might want to describe your data. We can, for example, use `nrow()` to get the number of rows in the table like this `r knitr::inline_expr("nrow(bakers)")`.
+Now that we better understand the **bakeoff** data in general. We need to develop some ways to explain the data. If you're using R Markdown or Quarto, you'll sometimes want to get the values inside of the inline text of the document. This is key for describing your data and we can, for example, use `nrow()` to get the number of rows in the table like this `r knitr::inline_expr("nrow(bakers)")`. It's pretty essential that we directly use the input data and function calls to get the derived values. If the values were hardcoded that might be fine but there's always the risks that (1) your transcription is inaccurate, and (2) the underlying data might change when rendering the document.
+
+While sometimes it's useful to explain things in the prose of the report, other times a well-placed table can provide more information. Let's look at a few summary tables that can explain the results found previously.
+
+Perhaps the last plot of contestant counts per episode per series might be better presented as a table? Sometimes it's hard to really know until the table is made. We can do that with `count()` as before, pivoting the data to a wide format with `pivot_wider()` (so that we can scan across episodes per each series), and then use `gt()` to construct the summary table.
+
+```{r}
+episode_summary <- 
+  episodes %>% 
+  count(series, episode) %>%
+  pivot_wider(names_from = episode, values_from = n) %>%
+  gt(rowname_col = "series") %>%
+  tab_spanner(label = "Episode", columns = matches("[0-9]*")) %>%
+  fmt_missing(columns = everything()) %>%
+  cols_width(1 ~ "60px", everything() ~ "40px") %>%
+  tab_stubhead(label = "Series")
+
+episode_summary
+```
+
+This is good and presents exact numbers per episode (important if someone needs to scan down episode numbers across seasons and compare contestant counts). In this summary table we always see that the last episode became a showdown between three final contestants and other little patterns become apparent, like that 5-4-3 contestants is a motif across all the series.
 
 
-- use inline code
-- present with gt() - provide a few basics here
 
 ## Share
 
@@ -184,18 +199,13 @@ pointblank::draft_validation_report()
 
 
 - This chapter really ought to be an intro vis / data inspection/exploration section with multiple packages
-- introduce functions:
-  - dplyr::glimpse()
-  - dplyr::distinct() (getting unique rows by selection of columns)
-  - dplyr::count() (counting distinct values by rows; count by series, use built-in sort feature)
-  - geom_boxplot()
+
+
 - use some code from course material that uses bakeoff
   - links: https://alison.netlify.app/rls-plot-twist/#19, https://alison.netlify.app/rls-plot-twist/#19 (counting slides)
 - start off with histogram and create this plot: https://alison.netlify.app/rls-plot-twist/#19
 - histogram of ages of bakers + other interesting plots
 - goals: making exploratory bar charts and histograms (useful for initial understanding of the data)
-
-EXERCISE: Can you figure out if any bakers are from the same hometown? How about from the same hometown and the same series?
 
 ## Project Ideas
 
