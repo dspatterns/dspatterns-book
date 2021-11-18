@@ -6,6 +6,7 @@ library(bakeoff)
 library(dplyr)
 library(skimr)
 library(gt)
+library(ggplot2)
 ```
 
 ```{css, echo=FALSE}
@@ -90,6 +91,8 @@ The report is **huge** and highly interactive. The graphic above shows a bit of 
 1. a new dataset
 2. a familiar dataset where data might have changed
 
+You never really know when a dataset may change for the worse, so, scan it up and down with `scan_data()`.
+
 ## Understand
 
   - tables + viz (distinct / count / geom_col)
@@ -123,27 +126,48 @@ The table we get now has counts that go along with each of the first names! But 
 bakers %>% count(baker_first, sort = TRUE)
 ```
 
-This is exactly what we need and it's now plain to see that the most common first name is Kate (with three *different* contestants having that name).
+This is exactly what we need and it's now plain to see that the most common first name is Kate (with three *different* contestants having that name). Should you want to visualize this, it can be done very quickly with **ggplot** and the `geom_col()` function. Here, we will do that, but only include those names that are shared with others.
 
-Was there an awkward series where two contestants shared the same first name? We can find that out. Let's do a count of baker by series (were there any series where two people shared the same name?)
+```{r}
+bakers %>%
+  count(baker_first, sort = TRUE) %>%
+  filter(n > 1) %>%
+  ggplot() +
+  geom_col(aes(x = n, y = baker_first))
+```
+
+On to another question we might ask of the dataset: was there any series where two contestants shared the same first name? We can find that out by getting a count of contestants' first names by series. Still using `count()` to do this except now we must provide *two* grouping variables (`baker_first` and `series`). 
 
 ```{r, paged.print=FALSE}
 bakers %>% count(series, baker_first, sort = TRUE)
 ```
 
-It seems like this is not the case. All `n` values are `1` and the total count here is the same as before (`120`). This follows the original order of the table (series increasing). Interestingly, the first series started with only 10 but it became at least bakers dozen's worth later on. 
+It seems like this is not the case. All `n` values are `1` and the total row count in this output table is the same as that of the original table (`120`). This follows the original order of the table (series increasing). Note that if you reverse the groups (specifying `baker_first` and then `series`) then the sorting order becomes an alphabetical sorting of all bakers' first names (since `n` is `1` all the way down).
 
-Can we figure out if any bakers are from the same hometown? How about from the same hometown and the same series?
+Can we figure out if any bakers are from the same hometown? How about from the same hometown and the same series? Sure. Use the groups `hometown` and `series` and then ensure that `sort = TRUE` as before.
     
 ```{r, paged.print=FALSE}
 bakers %>% count(hometown, series, sort = TRUE)
 ```
-    
-We can extend this line of thinking to get a count of contestants per episode across all series?
+
+We can see that we had fellow townies in series `8` and four Londoners in series `9`. For sure, this `count()` function from **dplyr** is incredibly powerful.
+
+We can extend this line of thinking to get a count of contestants per episode across all series. Again, `count()` is your friend here and all we need to do is choose the right grouping variables. In this case, those variables are `series` and `episode`. Here it is:
     
 ```{r, paged.print=FALSE}
 episodes %>% count(series, episode)
 ```
+
+We see that the counts of contestants across episodes in each series decreases, which is to be expected from shows where participants are routinely eliminated. This is plottable and, crucially, we can facet the plots by `series`. 
+
+```{r}
+episodes %>% 
+  count(series, episode) %>%
+  ggplot() +
+  geom_col(aes(x = episode, y = n)) +
+  facet_wrap(~series)
+```
+This is an interesting overview of the series and how eliminations were carried out. We see that most series had 10 episodes except for the first two. Most episodes resulted in the elimination of a single contestant but, sometimes, it was two (or none!).
 
 ## Explain
 
