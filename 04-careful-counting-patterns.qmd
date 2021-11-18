@@ -25,17 +25,13 @@ pre.numberSource {
 }
 ```
 
-## Introduction
+Counting things in our data is super important. It allows us to account for things and also make sense of data. Sometimes you'll want sums of values (for example, total amount of revenue earned in a week or a month), other times, you'll need an accurate count of occurrences (like the daily active users of a service).
 
-Private Notes: 
+We'll make extensive use of the **bakeoff** package. It's a package that contains datasets based on the Great British Bake Off television show. In particular, the `bakers` dataset will be used for many of the examples.
 
-- Use the bakeoff package (diamonds has been seen before)
-  - user the bakers datasets
-  - how many bakers...
-  
-## This chapter's pattern
+As far as packages requirements, we will need **bakeoff**, **tidyverse**, and **pointblank**.
 
-Make treemap visual with R (squares in quadrant)
+This chapter's pattern:
 
 - Explore: glimpse / head / tail / skimr
 - Understand: 
@@ -48,11 +44,11 @@ Make treemap visual with R (squares in quadrant)
 
 We are going to explore a few datasets from the **bakeoff** package. It's primarily a *dataset* package but it has a few handy functions as well. Let's begin with **bakeoff**'s `bakers` dataset. We know nothing about it at this point so we'll use `glimpse()` to inspect the structure of the data table (plus some of row content).
 
-```{r how-many-bakers-glimpse, attr.source='.numberLines'}
+```{r}
 glimpse(bakers)
 ```
 
-Right up front we get told there are 120 rows and 8 columns. That's very useful because we get a sense of the overall size of the dataset. Because `bakers` is a tibble, when the core Tidyverse packages are loaded with `library(tidyverse)` we get a pretty nice printing of the table just by calling its name. Check it out:
+Right up front we get told there are 120 rows and 8 columns. That's very useful because we get a sense of the overall size of the dataset. Because `bakers` is a tibble, when the core *Tidyverse* packages are loaded with `library(tidyverse)` we get a pretty nice printing of the table just by calling its name. Check it out:
 
 ```{r}
 bakers
@@ -67,7 +63,7 @@ gt_preview(bakers)
 
 This table presents really nicely and so it's great for sharing a preview of the dataset (e.g., in static R Markdown documents).
 
-Sometimes, however, you need more. You need some stats. Descriptive statistics can better aid in the understanding of a dataset. You'll get a sense of numerical ranges (for numerical columns), if there are missing values in certain columns, and the degree of uniqueness across columns (or variables). There are multiple great solutions for this in R. One of them in the `skim()` function provided by the **skimr** package:
+Sometimes, however, you need more. You need some stats. Descriptive statistics can better aid in the understanding of a dataset. You'll get a sense of numerical ranges (for numerical columns), if there are missing values in certain columns, and the degree of uniqueness across columns (or variables). There are multiple great solutions for this in **R**. One of them in the `skim()` function provided by the **skimr** package:
 
 ```{r}
 skimr::skim(bakers)
@@ -87,91 +83,71 @@ The `skim()` function is certainly something to keep in your toolbelt, and quite
 
 Another option is the `scan_data()` function from the **pointblank** package. It's a lot like `skim()` in principle, except it provides even more information and does so in a strictly-HTML-based report. Let's look at `bakers` via `scan_data()`
 
-<!-- Graphic of scan_data() report here -->
+![Table Scan for bakers](figures/04-careful-counting-patterns/scan-data-bakers.png){#fig:scan-data-bakers}
 
-The report is **huge** and highly interactive. The graphic above tries to distill what you'll find in the report. More description and a discussion on why one might use this and when it's appropriate to use. 
+The report is **huge** and highly interactive. The graphic above shows a bit of what you'll find in the report. The reason this would be useful is that anomalies in the data (especially egregious ones) are easily discovered by looking through the report. For that reason, it's a great idea to use this functionality whenever encountering either
+
+1. a new dataset
+2. a familiar dataset where data might have changed
 
 ## Understand
 
-Janitor functions: `janitor::tabyl()` + a few `adorn_*()` functions (just enough to get understanding)
+  - tables + viz (distinct / count / geom_col)
+  - from exploratory plots (confirms or disproves your assumptions about the data)
 
-But are the contestants unique across all the rows? (Did somebody drop out and come back?)
+To get an even greater understanding of our data, we might want to explore it. Let's explore the `bakers` dataset from the **bakeoff** package. This dataset provides a record for every contestant from every series of the show.
 
-```{r}
+Suppose we have the question: are the contestants unique across all of the rows? Well, we could find that out by knowing that there are `120` rows in the dataset and that using the `distinct()` function (from the **dplyr** package) should give us the same number of rows when used just on the `baker_full` column (full names for each contestant). Let's take a look at that in action:
+
+```{r, paged.print=FALSE}
 bakers %>% distinct(baker_full)
 ```
 
-- most common first name `baker_first`?
+Yes! This one-column table gives us 120 rows as well. This proves that every contestant appeared once per season. If a person appeared in multiple seasons then the resulting table would have less than 120 rows (since duplicate entries for `baker_full` would be removed).
 
-```{r}
+Here's another question: what's the most common first name for a contestant on the show? To get this, we'd have to focus on the `baker_first` column (first names for each and every contestant).
+
+```{r, paged.print=FALSE}
 bakers %>% distinct(baker_first)
 ```
 
-`107` is less than the `120` row count we've seen earlier. Let's instead `count()` by first name (`baker_first`)
+The row count here is `107` and this is less than the `120` row count for the complete dataset. From this, we now know there are some first names shared amongst the contestants. Let's change up our strategy and instead use the `count()` function (from **dplyr**) to count the first names (in the `baker_first` column):
 
-```{r}
+```{r, paged.print=FALSE}
 bakers %>% count(baker_first)
 ```
 
-This is more apparent when sorting with the `sort` option in `count()`.
+The table we get now has counts that go along with each of the first names! But the names are sorted alphabetically and it's hard to determine what the most common name is. This can be entired remedied by using the `sort` option in `count()`. With `sort = TRUE`, the sorting of the `n` column will be from high to low.
 
-```{r}
+```{r, paged.print=FALSE}
 bakers %>% count(baker_first, sort = TRUE)
 ```
 
-Now we see that the most common first name is `Kate`.
+This is exactly what we need and it's now plain to see that the most common first name is Kate (with three *different* contestants having that name).
 
-This is useful but a bit confusing because of the sorting (only descending by `name_total`).
+Was there an awkward series where two contestants shared the same first name? We can find that out. Let's do a count of baker by series (were there any series where two people shared the same name?)
 
-```{r}
-bakers %>% 
-  distinct(series, baker_first) %>%
-  add_count(baker_first, sort = TRUE, name = "name_total")
-```
-
-   - overall?
-
-Let's do a count of baker by series (were there any series where two people shared the same name?)
-
-```{r}
+```{r, paged.print=FALSE}
 bakers %>% count(series, baker_first, sort = TRUE)
 ```
 
-Seems like no? All `n` values are `1` and the total count here is the same as before (`120`). 
+It seems like this is not the case. All `n` values are `1` and the total count here is the same as before (`120`). This follows the original order of the table (series increasing). Interestingly, the first series started with only 10 but it became at least bakers dozen's worth later on. 
 
-```{r}
-bakers %>% count(series)
-```
-
-This follows the original order of the table (series increasing). Interestingly, the first series started with only 10 but it became at least bakers dozen's worth later on. 
-
-```{r}
-bakers_by_series <- bakers %>% count(series)
-```
-
-In R Markdown, we often want to use the things we calculated inside the text. We can do that with `r knitr::inline_expr("min(bakers_by_series$n)")`
- 
-    - per series?
-    - per hometown?
+Can we figure out if any bakers are from the same hometown? How about from the same hometown and the same series?
     
-EXERCISE: Can you figure out if any bakers are from the same hometown? How about from the same hometown and the same series?
-
-```{r}
+```{r, paged.print=FALSE}
 bakers %>% count(hometown, series, sort = TRUE)
 ```
     
-    - per episode / per series?
+We can extend this line of thinking to get a count of contestants per episode across all series?
     
-```{r}
+```{r, paged.print=FALSE}
 episodes %>% count(series, episode)
 ```
 
 ## Explain
 
-Sometimes, in the text of a document, you might want to describe your data. We can, for example, use `nrow()` to get the number of rows in the table like this `r knitr::inline_expr(" nrow(bakers)")`.
-
-This is similar: bakers %>% n_distinct()
-
+Sometimes, in the text of a document, you might want to describe your data. We can, for example, use `nrow()` to get the number of rows in the table like this `r knitr::inline_expr("nrow(bakers)")`.
 
 
 - use inline code
@@ -195,7 +171,7 @@ pointblank::draft_validation_report()
 - histogram of ages of bakers + other interesting plots
 - goals: making exploratory bar charts and histograms (useful for initial understanding of the data)
 
-
+EXERCISE: Can you figure out if any bakers are from the same hometown? How about from the same hometown and the same series?
 
 ## Project Ideas
 
