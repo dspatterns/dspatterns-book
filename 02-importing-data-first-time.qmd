@@ -52,9 +52,9 @@ This gives us a tibble with no rows, but with the column names nonetheless:
 stickers_empty
 ```
 
-We notice from this initial view of the column names is that they are none too good. One of them is incredibly long, for instance. Let's rename the overly-long name in column `12` with `stickers_given` and also use the `clean_names()` function from the **janitor** package.
+We notice from this initial view of the column names is that they are none too good. One of them is incredibly long, for instance. Let's rename the overly-long name in column `12` with `stickers_given` using the `rename()` function from **dplyr**. After that, we'll use the `clean_names()` function from the **janitor** package.
 
-```{r , paged.print=FALSE}
+```{r, paged.print=FALSE}
 stickers_empty <- 
   stickers_empty %>%
   rename(stickers_given = 12) %>%
@@ -204,7 +204,7 @@ We might combine these fragments together with a separator such as the `_` (as w
 - `id_subject`: the ID value for a test subject
 - `amt_
 
-In the context of a data set, this vocabulary can also serve as a latent contract between data producers and data consumers and carry promises regarding different aspects of the data lineage, valid values, and appropriate uses. When used consistently across all of an organization’s tables, it can significantly scale data management and increase usability as knowledge from working with one dataset easily transfers to another.
+In the context of a dataset, this vocabulary can also serve as a latent contract between data producers and data consumers and carry promises regarding different aspects of the data lineage, valid values, and appropriate uses. When used consistently across all of an organization’s tables, it can significantly scale data management and increase usability as knowledge from working with one dataset easily transfers to another.
 
 We got to make sure this can be done again. Let's take stock of what was done here.
 
