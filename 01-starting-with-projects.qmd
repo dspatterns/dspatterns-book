@@ -1,72 +1,97 @@
 # Starting with Projects
 
-Decision: start with Quarto projects
+One of the hardest things about starting anything new is deciding where to start. So we will make this easy for you and for us. We are starting with projects.
 
-``` {r setup, include=FALSE, echo=FALSE}
+Depending on who you are, you may be thinking "ok, so what?" Or it may seem like quite the bold move, and we have just told you that you need to prepare a thesis on a topic and you feel like hitting the "panic" button on this book altogether. If that is you, stop right there! We are starting with a pep talk. If you are not panicking and instead feeling totally peppy about this new project, feel free to skip to the next section.
+
+## Project pep-talk
+
+In this book, we want to help you cultivate healthy project habits. This includes both knowing proper project hygiene, but it starts with having a small "p" project mindset. 
+
+What does that mean? It means that you acknowledge and appreciate that a project is just a place to put things. To paraphrase a famous Dr. Seuss quote from "Horton Hears a Who":
+
+> "A project is a project, no matter how small."
+
+Say it with us: *A project is a project, no matter how small.*
+
+A project doesn't have to be a capital "P" Project! You don't need an objective, a hypothesis, or even a plan (yet). It can be as simple as a single Excel file with a handful of rows and columns. 
+
+For the person tasked with doing anything with that file, you have a choice when you start. You could choose to fanny around with some files on your desktop, maybe adding some formulas or formatting to your Excel file, perhaps saving some of your work along the way. Instead, we suggest- or rather implore- you to mentally and functionally start a project by doing the following.
+
+Are you ready? Let's start with our first pattern.
+
+```{r setup, include=FALSE, echo=FALSE}
 ```
 
 This chapter covers
 
-- Understanding our learning path for this book
-- File organization basics; using Projects
-- How to organize a project folder
-  - raw data
-  - clean data
-  - each file should be named clearly (e.g., `...-raw.csv`)
-  - on naming incoming files from collaborators:
-    - some files can strange names; rename them sensibility (with iso dates and some words that indicate provenance)
-    - create a data-README file that has notes on where files came from; like a 'lab notebook'
-- GitHub:
-  - one repo per project (matching with local project paradigm)
-  - checking in data project with all files (including data) is totally fine and recommended
-  - if your data size is really big (~100 MB) then consider .gitignore-ing the data (problem is that the project won't be truly reproducible)
-  - use happygitwithr as an invaluable resource
-- Introduce Quarto
-  - test mechanics of Quarto (project relative paths)
-    - is there a new document flow and what should be used (HTML)
-      - easier to share and most portable/flexible format
-      - better features and looks better
-    - does moving the quarto file around into different subfolders cause issues
-- Where to go for help (in the appendix)
+-   Understanding our learning path for this book
+-   File organization basics; using Projects
+-   How to organize a project folder
+    -   raw data
+    -   clean data
+    -   each file should be named clearly (e.g., `...-raw.csv`)
+    -   on naming incoming files from collaborators:
+        -   some files can strange names; rename them sensibility (with iso dates and some words that indicate provenance)
+        -   create a data-README file that has notes on where files came from; like a 'lab notebook'
+-   GitHub:
+    -   one repo per project (matching with local project paradigm)
+    -   checking in data project with all files (including data) is totally fine and recommended
+    -   if your data size is really big (\~100 MB) then consider .gitignore-ing the data (problem is that the project won't be truly reproducible)
+    -   use happygitwithr as an invaluable resource
+-   Introduce Quarto
+    -   test mechanics of Quarto (project relative paths)
+        -   is there a new document flow and what should be used (HTML)
+            -   easier to share and most portable/flexible format
+            -   better features and looks better
+        -   does moving the quarto file around into different subfolders cause issues
+-   Where to go for help (in the appendix)
 
-Notes: 
- 
-- use this to develop a single project following the chapter pattern
-- show the Simpsons Paradox plot
-- draw from: https://apreshill.github.io/data-vis-labs-2018/slides.html for organization of this chapter
+Notes:
 
-We'll start with our first pattern. 
+-   use this to develop a single project following the chapter pattern
+-   show the Simpsons Paradox plot
+-   draw from: https://apreshill.github.io/data-vis-labs-2018/slides.html for organization of this chapter
 
 ## Explore
 
-- explore file structure on your personal system
-- tie this into GitHub which is your remote system (almost like a sync)
-- When starting a new Quarto file, we recommend using a top-level `index.qmd` (better for sharing)
+Imagine you are a researcher in Antarctica.
 
-- Light data analysis (filler content mostly to be more instructive for learning Quarto):
-  - anatomy of a document (installed packages and using packages and the text and code chunks)
-  - we have the option to show the chunk output either inline (default) or in the Viewer/Plots pane (show option in settings)
-  - introduce the dataset (`penguins` from `palmerpenguins`) and inspect the data:
-    - `head()`, `tail()`, `dplyr::glimpse()`, `skimr::skim()` (let's avoid the `%>%` for now)
+Now you saved this file on a shared laptop while working in the field. But you need to get the file from this laptop out in the field to yourself, on a nice laptop in a warm place where you *actually* want to work. 
+
+
+idea: git with one year, second year, etc
+-   explore file structure on your personal system
+
+-   tie this into GitHub which is your remote system (almost like a sync)
+
+-   When starting a new Quarto file, we recommend using a top-level `index.qmd` (better for sharing)
+
+-   Light data analysis (filler content mostly to be more instructive for learning Quarto):
+
+    -   anatomy of a document (installed packages and using packages and the text and code chunks)
+    -   we have the option to show the chunk output either inline (default) or in the Viewer/Plots pane (show option in settings)
+    -   introduce the dataset (`penguins` from `palmerpenguins`) and inspect the data:
+        -   `head()`, `tail()`, `dplyr::glimpse()`, `skimr::skim()` (let's avoid the `%>%` for now)
 
 ## Understand
 
-- review how projects fit in with the documents they contain and where they physically live
-- relationship between your local files and your remote files (in GitHub)
+-   review how projects fit in with the documents they contain and where they physically live
+-   relationship between your local files and your remote files (in GitHub)
 
 ## Explain
 
-- talking to yourself with Quarto
-- note that in Appendix there is a Markdown reference
+-   talking to yourself with Quarto
 
-- add a `readme.md` to have general notes for the project
+-   note that in Appendix there is a Markdown reference
+
+-   add a `readme.md` to have general notes for the project
 
 ## Share
 
-- with GitHub!
-- talking to others, if future thing doesn't pan out netlify drop
+-   with GitHub!
+-   talking to others, if future thing doesn't pan out netlify drop
 
 ## DIY
 
-- use: https://alison.netlify.app/rls-plot-twist/#20
-
+-   use: https://alison.netlify.app/rls-plot-twist/#20
