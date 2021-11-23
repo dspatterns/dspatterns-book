@@ -2,11 +2,13 @@
 
 One of the hardest things about starting anything new is deciding where to start. So we will make this easy for you and for us. We are starting with projects.
 
-Depending on who you are, you may be thinking "ok, so what?" Or it may seem like quite the bold move, and we have just told you that you need to prepare a thesis on a topic and you feel like hitting the "panic" button on this book altogether. If that is you, stop right there! We are starting with a pep talk. If you are not panicking and instead feeling totally peppy about this new project, feel free to skip to the next section.
+Depending on who you are, you may be thinking "ok, so what?" Or it may seem like quite the bold statement! You may be feeling like we just told you to prepare a thesis on a topic, and you feel like hitting the "panic" button on this book altogether. If that is you, stop right there! We are starting with a pep talk.
+
+If you are not panicking and instead feeling totally peppy about this new project, feel free to skip this pep talk.
 
 ## Project pep-talk
 
-In this book, we want to help you cultivate healthy project habits. This includes both knowing proper project hygiene, but it starts with having a small "p" project mindset. 
+In this book, we want to help you cultivate healthy project habits. This includes knowing proper project hygiene, but it starts with having a small "p" project mindset.
 
 What does that mean? It means that you acknowledge and appreciate that a project is just a place to put things. To paraphrase a famous Dr. Seuss quote from "Horton Hears a Who":
 
@@ -14,15 +16,15 @@ What does that mean? It means that you acknowledge and appreciate that a project
 
 Say it with us: *A project is a project, no matter how small.*
 
-A project doesn't have to be a capital "P" Project! You don't need an objective, a hypothesis, or even a plan (yet). It can be as simple as a single Excel file with a handful of rows and columns. 
+A project doesn't have to be a capital "P" Project! You don't need an objective, a hypothesis, or even a plan (yet). It can be as simple as a single Excel file with a handful of rows and columns.
 
-For the person tasked with doing anything with that file, you have a choice when you start. You could choose to fanny around with some files on your desktop, maybe adding some formulas or formatting to your Excel file, perhaps saving some of your work along the way. Instead, we suggest- or rather implore- you to mentally and functionally start a project by doing the following.
-
-Are you ready? Let's start with our first pattern.
+For the person tasked with doing anything with that file, you have a choice when you start. You could choose to fanny around with some files on your desktop, maybe adding some formulas or formatting to your Excel file, perhaps saving some of your work along the way. Instead, we suggest- or rather implore- you to mentally and functionally start a project. How? Read on.
 
 ```{r setup, include=FALSE, echo=FALSE}
 ```
 
+```{=html}
+<!--
 This chapter covers
 
 -   Understanding our learning path for this book
@@ -52,16 +54,78 @@ Notes:
 -   use this to develop a single project following the chapter pattern
 -   show the Simpsons Paradox plot
 -   draw from: https://apreshill.github.io/data-vis-labs-2018/slides.html for organization of this chapter
-
+-->
+```
 ## Explore
 
-Imagine you are a researcher in Antarctica.
+Our first pattern is the "new project" pattern. To explore this "new project" pattern, we need to explore our actual computer and where the project files should live.
 
-Now you saved this file on a shared laptop while working in the field. But you need to get the file from this laptop out in the field to yourself, on a nice laptop in a warm place where you *actually* want to work. 
+In a nutshell, even the smallest of small projects gets its own folder (remember: "a project is a project, no matter how small!"). We recommend setting yourself up for success by having a dedicated folder on your computer to store all your projects.
 
+Do this right now:
 
-idea: git with one year, second year, etc
--   explore file structure on your personal system
+Create a folder on your computer - put it in a place where you will remember to look for it.
+
+That is it!
+
+Oddly enough, the last part of that step can be the hardest. We recommend creating a folder called `ds-projects`. Then, make a project-specific folder *inside* that one. Let's break this down.
+
+1.  Create a personal `Documents` folder, if you don't already have one. Use this folder as a container for other folders.
+
+2.  Add a folder inside the `Documents` folder and name it `ds-projects`.
+
+Now, you'll use this folder to hold all your future data science projects. Right? Right. It will look something like this:
+
+![Where to put your project](img/ds-projects.png){fig-alt="Make a folder for your projects called \"ds-projects\", and make folders for each project inside of this folder" fig-align="center"}
+
+Here is a visual "file tree", if we had three `ds-projects` to keep track of:
+
+``` yaml
+├── ds-projects/
+│   └── horton/
+│   └── grinch/
+│   └── lorax/
+├── photos/
+└── recipes/
+```
+
+::: alison
+Obsessing about naming and organizing (and renaming and reorganizing) files/folders on your computer is an affliction we call "project puttering." Puttering is [defined](https://www.dictionary.com/browse/putter) as "to move or go in a specified manner with ineffective action or little energy or purpose."
+
+It is a way to fuss and faff about with files to feel busy, without really doing all that much. Having a "new project" pattern can help you resist the urge to project putter.
+:::
+
+You may still be saying "But Alison and Rich, this does not qualify as a Project - I know I'll never need this file again." We believe you that you truly believe this, and believe us, we have both been in this same situation. Nine times out of ten though, dear reader, we have lived to regret those words. Nonetheless, we do offer an alternative recommendation.
+
+When you earnestly believe that you'll not need this particular project ever again, if it makes you feel better, you can create a folder called `ds-scratch` and put your project files in there. I do this locally and every month or so, I clear this folder out. There is a famous saying: "If you love something, set it free. If it comes back, it's yours. If not, it was never meant to be." This is how you can think of projects in your scratchpad. If I ever find myself needing to open that folder back up before it gets trashed, it graduates to `ds-projects`. Graduating just involves me physically dragging and dropping the project folder from `ds-scratch` into `ds-projects`. This works if and only if you set up your projects right (i.e., which we will show you in this chapter).
+
+It looks like this:
+
+![Where to put your project scratchpad](img/ds-scratch.png){fig-alt="Create a folder for scratch projects called \"ds-scratch\" and clear it out regularly." fig-align="center"}
+
+Now that we have a place to put our project things, let's create our first project. Do the following:
+
+1.  Open up RStudio
+2.  In the top menu bar, go to: *File \> New Project... \> New Directory*
+3.  In the "New Project Wizard", select "Quarto Project" as the project type.
+4.  We'll be creating a penguin progress report as an example, so name the directory `penguin-progress`.
+5.  Make sure it is a subdirectory of your `ds-projects` folder (remember the task was to put it in a place where you will remember to look for it!)
+6.  Check the boxes to make this project a git repository (more on that in a second) and to open in a new session.
+7.  Click **Create Project** 🚀
+
+::: {#new-quarto-proj layout-ncol="2"}
+![Create a new Quarto Project in the RStudio New Project Wizard](img/quarto-project.png)
+
+![Make a penguin progress report with Quarto](img/penguin-progress.png)
+:::
+
+Who are these penguins and why do they need a progress report?
+
+Imagine you are a researcher doing field work at the Palmer Station in Antarctica. You've been meticulously taking size measurements of three species of adult foraging penguins under pretty precarious circumstances. It's been a lot of hard work, but it shows when you analyze all the data you've collected. This report is your chance to share your work with your colleagues in the Long-term Ecological Research Network.
+
+Now you saved this file on a shared laptop while working in the field. But you need to get the file from this laptop out in the field to yourself, on a nice laptop in a warm place where you *actually* want to work.
+
+idea: git with one year, second year, etc - explore file structure on your personal system
 
 -   tie this into GitHub which is your remote system (almost like a sync)
 
