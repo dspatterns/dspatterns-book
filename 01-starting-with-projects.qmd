@@ -78,7 +78,7 @@ Now, you'll use this folder to hold all your future data science projects. Right
 
 ![Where to put your project](img/ds-projects.png){fig-alt="Make a folder for your projects called \"ds-projects\", and make folders for each project inside of this folder" fig-align="center"}
 
-Here is a visual "file tree", if we had three `ds-projects` to keep track of:
+Here is a visual "file tree", if Dr. Seuss had three `ds-projects` to keep track of:
 
 ``` yaml
 ├── ds-projects/
@@ -90,14 +90,14 @@ Here is a visual "file tree", if we had three `ds-projects` to keep track of:
 ```
 
 ::: alison
-Obsessing about naming and organizing (and renaming and reorganizing) files/folders on your computer is an affliction we call "project puttering." Puttering is [defined](https://www.dictionary.com/browse/putter) as "to move or go in a specified manner with ineffective action or little energy or purpose."
+Obsessing about naming and organizing (and renaming and reorganizing) files/folders on your computer is an affliction we will call "project puttering." Puttering is [defined](https://www.dictionary.com/browse/putter) as "to move or go in a specified manner with ineffective action or little energy or purpose."
 
-It is a way to fuss and faff about with files to feel busy, without really doing all that much. Having a "new project" pattern can help you resist the urge to project putter.
+Although naming and organizing files is important, it *can* often be a way to fuss and faff about with files to feel busy, without really doing all that much. Having a "new project" pattern can help you ward off project puttering.
 :::
 
 You may still be saying "But Alison and Rich, this does not qualify as a Project - I know I'll never need this file again." We believe you that you truly believe this, and believe us, we have both been in this same situation. Nine times out of ten though, dear reader, we have lived to regret those words. Nonetheless, we do offer an alternative recommendation.
 
-When you earnestly believe that you'll not need this particular project ever again, if it makes you feel better, you can create a folder called `ds-scratch` and put your project files in there. I do this locally and every month or so, I clear this folder out. There is a famous saying: "If you love something, set it free. If it comes back, it's yours. If not, it was never meant to be." This is how you can think of projects in your scratchpad. If I ever find myself needing to open that folder back up before it gets trashed, it graduates to `ds-projects`. Graduating just involves me physically dragging and dropping the project folder from `ds-scratch` into `ds-projects`. This works if and only if you set up your projects right (i.e., which we will show you in this chapter).
+When you earnestly believe that you'll not need this particular project ever again, if it makes you feel better, you can create a folder called `ds-scratch` and put your project files in there. I do this locally and every month or so, I clear this folder out. There is a famous saying: "If you love something, set it free. If it comes back, it's yours. If not, it was never meant to be." This is how you can think of projects in your scratchpad. If you need to open that folder back up before it gets trashed, it graduates to `ds-projects`. Graduating just involves physically dragging and dropping the project folder from `ds-scratch` into `ds-projects`. This works if and only if you set up your projects right (i.e., which we will show you in this chapter).
 
 It looks like this:
 
@@ -113,7 +113,7 @@ Now that we have a place to put our project things, let's create our first proje
 6.  Check the boxes to make this project a git repository (more on that in a second) and to open in a new session.
 7.  Click **Create Project** 🚀
 
-::: {#new-quarto-proj layout-ncol="2"}
+::: {layout-ncol="2"}
 ![Create a new Quarto Project in the RStudio New Project Wizard](img/quarto-project.png)
 
 ![Make a penguin progress report with Quarto](img/penguin-progress.png)
