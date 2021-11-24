@@ -137,17 +137,19 @@ All three files are important ingredients for our project.
 2.  `penguin-progress.Rproj` is a configuration file for RStudio. You never need to open or edit this file, but when you want to open an existing project, you'll want to double-click on the `*.Rproj` file to open the project in RStudio properly.
 3.  `penguin-progress.qmd` is a Quarto markdown file. This is the main file you'll want to open and edit in this project. You can include narrative text using Markdown formatting, and you can also include code written with R or Python. We'll use R in this book.
 
+A note on `kebab-case`.
+
 ### Key Takeaways
 
 -   A project is a project, no matter how small.
 
+-   Store all your projects inside a dedicated folder. We like `Documents/ds-projects` to start (but also give you permission to set up `Documents/ds-scratch` for projects you think you'll scrap).
+
 -   Each project gets a folder in a place on your computer where you will remember to look for it.
 
--   Store all your projects inside a dedicated folder, we like `Documents/ds-projects` (you can use `Documents/ds-scratch` for projects you think you won't need to save)
+-   Use "kebab-case" when naming files and folders like `penguin-progress`, which is a style that replaces spaces with dashes. Try to avoid punctuation, special characters like underscores, and uppercase letters if possible - this will simplify your project life. No SCREAMING-KEBABS-PLEASE.
 
--   Use kebab case when naming files and folders.
-
--   Start new Quarto projects using the RStudio New Project Wizard.
+-   Start a new "batteries included" Quarto project using the RStudio New Project Wizard. Be intentional about creating new projects inside the right subdirectory (we like `ds-projects` to start, but you may create more elaborate subdirectory structures as you gain experience).
 
 ## Understand
 
