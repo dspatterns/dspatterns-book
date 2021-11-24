@@ -119,29 +119,61 @@ Now that we have a place to put our project things, let's create our first proje
 ![Make a penguin progress report with Quarto](img/penguin-progress.png)
 :::
 
+This step should create a "batteries included" project inside your `ds-projects` folder that has this file structure:
+
+``` yaml
+├── ds-projects/
+│   └── penguin-progress/
+│   │   ├── _quarto.yml
+│   │   ├── penguin-progress.Rproj
+│   │   └── penguin-progress.qmd
+├── photos/
+└── recipes/
+```
+
+All three files are important ingredients for our project.
+
+1.  `_quarto.yml` is a configuration file for Quarto, a software system built for open-source scientific and technical publishing. This file will come in more handy when your projects grow, but for now, know that Quarto has a definition of "project" that works for us now, and will keep working for us later.
+2.  `penguin-progress.Rproj` is a configuration file for RStudio. You never need to open or edit this file, but when you want to open an existing project, you'll want to double-click on the `*.Rproj` file to open the project in RStudio properly.
+3.  `penguin-progress.qmd` is a Quarto markdown file. This is the main file you'll want to open and edit in this project. You can include narrative text using Markdown formatting, and you can also include code written with R or Python. We'll use R in this book.
+
+### Key Takeaways
+
+What have we learned so far?
+
+-   A project is a project, no matter how small.
+
+-   Each project gets a folder in a place on your computer where you will remember to look for it.
+
+-   Store all your projects inside a dedicated folder, we like `Documents/ds-projects` (you can use `Documents/ds-scratch` for projects you think you won't need to save)
+
+-   Use kebab case when naming files and folders.
+
+-   Start new Quarto projects using the RStudio New Project Wizard.
+
+## Understand
+
+We can take a break from the exciting secret life of our file system to understand our data
+
+Add a data file
+
 Who are these penguins and why do they need a progress report?
 
 Imagine you are a researcher doing field work at the Palmer Station in Antarctica. You've been meticulously taking size measurements of three species of adult foraging penguins under pretty precarious circumstances. It's been a lot of hard work, but it shows when you analyze all the data you've collected. This report is your chance to share your work with your colleagues in the Long-term Ecological Research Network.
 
 Now you saved this file on a shared laptop while working in the field. But you need to get the file from this laptop out in the field to yourself, on a nice laptop in a warm place where you *actually* want to work.
 
-idea: git with one year, second year, etc - explore file structure on your personal system
+-   review how projects fit in with the documents they contain and where they physically live
 
--   tie this into GitHub which is your remote system (almost like a sync)
-
--   When starting a new Quarto file, we recommend using a top-level `index.qmd` (better for sharing)
-
+```{=html}
+<!-- -->
+```
 -   Light data analysis (filler content mostly to be more instructive for learning Quarto):
 
     -   anatomy of a document (installed packages and using packages and the text and code chunks)
     -   we have the option to show the chunk output either inline (default) or in the Viewer/Plots pane (show option in settings)
     -   introduce the dataset (`penguins` from `palmerpenguins`) and inspect the data:
         -   `head()`, `tail()`, `dplyr::glimpse()`, `skimr::skim()` (let's avoid the `%>%` for now)
-
-## Understand
-
--   review how projects fit in with the documents they contain and where they physically live
--   relationship between your local files and your remote files (in GitHub)
 
 ## Explain
 
@@ -153,6 +185,19 @@ idea: git with one year, second year, etc - explore file structure on your perso
 
 ## Share
 
+-   relationship between your local files and your remote files (in GitHub)
+
+Now we are going to go online to <https://github.com/>,
+
+idea: git with one year, second year, etc - explore file structure on your personal system
+
+-   tie this into GitHub which is your remote system (almost like a sync)
+
+-   When starting a new Quarto file, we recommend using a top-level `index.qmd` (better for sharing)
+
+```{=html}
+<!-- -->
+```
 -   with GitHub!
 -   talking to others, if future thing doesn't pan out netlify drop
 
