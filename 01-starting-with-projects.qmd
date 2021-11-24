@@ -139,8 +139,6 @@ All three files are important ingredients for our project.
 
 ### Key Takeaways
 
-What have we learned so far?
-
 -   A project is a project, no matter how small.
 
 -   Each project gets a folder in a place on your computer where you will remember to look for it.
@@ -152,6 +150,20 @@ What have we learned so far?
 -   Start new Quarto projects using the RStudio New Project Wizard.
 
 ## Understand
+
+This section:
+
+-   How to organize a project folder to help you understand the shape of your project
+
+    -   raw data
+
+    -   clean data
+
+    -   each file should be named clearly (e.g., \`...-raw.csv\`)
+
+    -   on naming incoming files from collaborators:
+
+        -   some files can strange names; rename them sensibility (with iso dates and some words that indicate provenance)
 
 We can take a break from the exciting secret life of our file system to understand our data
 
@@ -177,6 +189,11 @@ Now you saved this file on a shared laptop while working in the field. But you n
 
 ## Explain
 
+-   create a data-README file that has notes on where files came from; like a 'lab notebook'
+
+```{=html}
+<!-- -->
+```
 -   talking to yourself with Quarto
 
 -   note that in Appendix there is a Markdown reference
