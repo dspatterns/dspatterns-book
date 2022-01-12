@@ -35,13 +35,13 @@ As far as packages requirements, we will need **bakeoff**, **tidyverse**, **gt**
 
 This chapter's pattern:
 
-- Explore: glimpse / head / tail / skimr
-- Understand: 
-  - tables + viz (distinct / count / geom_col janitor::tabyl)
-  - from exploratory plots (confirms or disproves your assumptions about the data) gain an intuition and develop that ability
-- Explain: nrow/ncol + combine with glue for inline code? / epoxy
-- Share (Collaborate/Communicate): use pointblank; gt for tables?
-  
+-   Explore: glimpse / head / tail / skimr
+-   Understand:
+    -   tables + viz (distinct / count / geom_col janitor::tabyl)
+    -   from exploratory plots (confirms or disproves your assumptions about the data) gain an intuition and develop that ability
+-   Explain: nrow/ncol + combine with glue for inline code? / epoxy
+-   Share (Collaborate/Communicate): use pointblank; gt for tables?
+
 ## Explore
 
 We are going to explore a few datasets from the **bakeoff** package. It's primarily a *dataset* package but it has a few handy functions as well. Let's begin with **bakeoff**'s `bakers` dataset. We know nothing about it at this point so we'll use `glimpse()` to inspect the structure of the data table (plus some of row content).
@@ -61,6 +61,7 @@ There's no shortage of ways to preview a tabular dataset. We can even use the **
 ```{r}
 gt_preview(bakers)
 ```
+
 <br />
 
 This table presents really nicely and so it's great for sharing a preview of the dataset (e.g., in static R Markdown documents).
@@ -73,13 +74,13 @@ skimr::skim(bakers)
 
 By default, we get a lot of information very quickly. The printed info gives us:
 
-- the table name and its dimensions (row and column counts)
-- a listing of column types and their frequencies
-- whether there are 'grouped' variables (via dplyr's `group_by()` function)
-- info tables for variables by their type with the degree of missingness (`n_missing`) and the completion rate `complete_rate`; let's look at the specialized bits of info for the three column types we have in `bakers`:
-  - *character*: minimum and maximum string lengths, 'empty' strings (`""`), number of unique strings (`n_unique`), and number of strings that are just whitespace (e.g., `" "`)
-  - *factor*: is the factor `ordered`? How many unique factor levels are there? What are the most frequent levels?
-  - *numeric*: descriptive stats like the mean, the standard deviation, quantiles, *and*, a nice little histogram for a quick visual of the data distribution 
+-   the table name and its dimensions (row and column counts)
+-   a listing of column types and their frequencies
+-   whether there are 'grouped' variables (via dplyr's `group_by()` function)
+-   info tables for variables by their type with the degree of missingness (`n_missing`) and the completion rate `complete_rate`; let's look at the specialized bits of info for the three column types we have in `bakers`:
+    -   *character*: minimum and maximum string lengths, 'empty' strings (`""`), number of unique strings (`n_unique`), and number of strings that are just whitespace (e.g., `" "`)
+    -   *factor*: is the factor `ordered`? How many unique factor levels are there? What are the most frequent levels?
+    -   *numeric*: descriptive stats like the mean, the standard deviation, quantiles, *and*, a nice little histogram for a quick visual of the data distribution
 
 The `skim()` function is certainly something to keep in your toolbelt, and quite handy when you get a new dataset to look at for the first time.
 
@@ -89,8 +90,8 @@ Another option is the `scan_data()` function from the **pointblank** package. It
 
 The report is **huge** and highly interactive. The graphic above shows a bit of what you'll find in the report. The reason this would be useful is that anomalies in the data (especially egregious ones) are easily discovered by looking through the report. For that reason, it's a great idea to use this functionality whenever encountering either
 
-1. a new dataset
-2. a familiar dataset where data might have changed
+1.  a new dataset
+2.  a familiar dataset where data might have changed
 
 You never really know when a dataset may change for the worse, so, scan it up and down with `scan_data()`.
 
@@ -134,7 +135,7 @@ bakers %>%
   geom_col(aes(x = n, y = baker_first))
 ```
 
-On to another question we might ask of the dataset: was there any series where two contestants shared the same first name? We can find that out by getting a count of contestants' first names by series. Still using `count()` to do this except now we must provide *two* grouping variables (`baker_first` and `series`). 
+On to another question we might ask of the dataset: was there any series where two contestants shared the same first name? We can find that out by getting a count of contestants' first names by series. Still using `count()` to do this except now we must provide *two* grouping variables (`baker_first` and `series`).
 
 ```{r, paged.print=FALSE}
 bakers %>% count(series, baker_first, sort = TRUE)
@@ -143,7 +144,7 @@ bakers %>% count(series, baker_first, sort = TRUE)
 It seems like this is not the case. All `n` values are `1` and the total row count in this output table is the same as that of the original table (`120`). This follows the original order of the table (series increasing). Note that if you reverse the groups (specifying `baker_first` and then `series`) then the sorting order becomes an alphabetical sorting of all bakers' first names (since `n` is `1` all the way down).
 
 Can we figure out if any bakers are from the same hometown? How about from the same hometown and the same series? Sure. Use the groups `hometown` and `series` and then ensure that `sort = TRUE` as before.
-    
+
 ```{r, paged.print=FALSE}
 bakers %>% count(hometown, series, sort = TRUE)
 ```
@@ -151,12 +152,12 @@ bakers %>% count(hometown, series, sort = TRUE)
 We can see that we had fellow townies in series `8` and four Londoners in series `9`. For sure, this `count()` function from **dplyr** is incredibly powerful.
 
 We can extend this line of thinking to get a count of contestants per episode across all series. Again, `count()` is your friend here and all we need to do is choose the right grouping variables. In this case, those variables are `series` and `episode`. Here it is:
-    
+
 ```{r, paged.print=FALSE}
 episodes %>% count(series, episode)
 ```
 
-We see that the counts of contestants across episodes in each series decreases, which is to be expected from shows where participants are routinely eliminated. This is plottable and, crucially, we can facet the plots by `series`. 
+We see that the counts of contestants across episodes in each series decreases, which is to be expected from shows where participants are routinely eliminated. This is plottable and, crucially, we can facet the plots by `series`.
 
 ```{r}
 episodes %>% 
@@ -165,6 +166,7 @@ episodes %>%
   geom_col(aes(x = episode, y = n)) +
   facet_wrap(~series)
 ```
+
 This is an interesting overview of the series and how eliminations were carried out. We see that most series had 10 episodes except for the first two. Most episodes resulted in the elimination of a single contestant but, sometimes, it was two (or none!).
 
 ## Explain
@@ -191,37 +193,33 @@ episode_summary
 
 This is good and presents exact numbers per episode (important if someone needs to scan down episode numbers across seasons and compare contestant counts). In this summary table we always see that the last episode became a showdown between three final contestants and other little patterns become apparent, like that 5-4-3 contestants is a motif across all the series.
 
-
-
 ## Share
 
-pointblank::scan_data()
-pointblank::draft_validation_report()
+pointblank::scan_data() pointblank::draft_validation_report()
 
+-   This chapter really ought to be an intro vis / data inspection/exploration section with multiple packages
 
-- This chapter really ought to be an intro vis / data inspection/exploration section with multiple packages
+-   use some code from course material that uses bakeoff
 
+    -   links: https://alison.netlify.app/rls-plot-twist/#19, https://alison.netlify.app/rls-plot-twist/#19 (counting slides)
 
-- use some code from course material that uses bakeoff
-  - links: https://alison.netlify.app/rls-plot-twist/#19, https://alison.netlify.app/rls-plot-twist/#19 (counting slides)
-- start off with histogram and create this plot: https://alison.netlify.app/rls-plot-twist/#19
-- histogram of ages of bakers + other interesting plots
-- goals: making exploratory bar charts and histograms (useful for initial understanding of the data)
+-   start off with histogram and create this plot: https://alison.netlify.app/rls-plot-twist/#19
+
+-   histogram of ages of bakers + other interesting plots
+
+-   goals: making exploratory bar charts and histograms (useful for initial understanding of the data)
 
 ## Project Ideas
 
 (should have a fully working set of Rmd templates, presented in the form of a project template - this can be prepped for the reader with a function call)
 
-The moma dataset (https://apreshill.github.io/data-vis-labs-2018/02-moma.html) would be great for a project
-- explore using the lisa palette from paletteer
-
+The moma dataset (https://apreshill.github.io/data-vis-labs-2018/02-moma.html) would be great for a project - explore using the lisa palette from paletteer
 
 ### Packages Needed
 
- - installation details (script with `library()` calls)
- - possibly use: https://github.com/rstudio4edu/rmd4edu/blob/master/R/lesson.R
+-   installation details (script with `library()` calls)
+-   possibly use: https://github.com/rstudio4edu/rmd4edu/blob/master/R/lesson.R
 
 ## DIY
 
-- dataset: 
-
+-   dataset:
