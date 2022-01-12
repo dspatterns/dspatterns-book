@@ -74,7 +74,7 @@ jobs:
         shell: Rscript {0}
 
       - name: "Install Quarto and render project"
-        uses: pommevilla/quarto-render@v0.3.5
+        uses: pommevilla/quarto-render@main
 
       - name: Deploy to Netlify
         if: contains(env.isExtPR, 'false')
