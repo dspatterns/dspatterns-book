@@ -143,7 +143,7 @@ We need to acknowledge and accept concerns about data quality. Little mistakes (
 
 Because we have a table with one row per subject, along with a subject number, there shouldn't be any duplicates. We can test this with **pointblank**'s `test_rows_distinct()` and either get a `TRUE` result (all rows distinct) or `FALSE` result (at least one duplicate row). 
 
-```{r}
+```{r eval=FALSE}
 stickers %>% test_rows_distinct()
 ```
 
@@ -151,13 +151,13 @@ We always want to be on the lookout for duplicate rows in a dataset when it runs
 
 Another test we could perform is verify whether certain columns have complete data. At least for the columns that have to do with the describing the subjects and recording the initial conditions of the dictator game, there shouldn't be any `NA` values. Let's do a quick check to verify this with `test_col_vals_not_null()`. We can check columns `1` (`subject_number`) through `9` (`subjects_envelope`) in a single testing call by providing `columns = 1:9` to `test_col_vals_not_null()`. This performs individual checks of `NA` values across the columns and if any one of those columns has an `NA` then we'll be returned `FALSE` (but we are expecting `TRUE` in this case).
 
-```{r}
+```{r eval=FALSE}
 stickers %>% test_col_vals_not_null(columns = 1:9)
 ```
 
 Extending the column range a bit further would have given us a `FALSE` result because `NA` values are expected in the later columns. However, for these columns we expected 'complete' data. Speaking of which, there is another test function in **pointblank** that handles data completeness: `test_rows_complete()`. Let's try that out with the same range of columns as before.
 
-```{r}
+```{r eval=FALSE}
 stickers %>% test_rows_complete(columns = 1:9)
 ```
 
@@ -165,7 +165,7 @@ Same result but the underlying method for this is a bit different as this test f
 
 Lastly we know that each of the columns (from `glimpse(stickers)`) is of the numeric type. We can test this with `test_col_is_numeric()`:
 
-```{r}
+```{r eval=FALSE}
 stickers %>% test_col_is_numeric(columns = everything())
 ```
 
