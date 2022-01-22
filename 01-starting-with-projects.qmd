@@ -1,4 +1,4 @@
-# Starting with Projects
+# Starting with Projects and Files
 
 One of the hardest things about starting anything new is deciding where to start. So we will make this easy for you and for us. We are starting with projects.
 
@@ -18,7 +18,12 @@ Say it with us: *A project is a project, no matter how small.*
 
 A project doesn't have to be a capital "P" Project! You don't need an objective, a hypothesis, or even a plan (yet). It can be as simple as a single Excel file with a handful of rows and columns.
 
-For the person tasked with doing anything with that file, you have a choice when you start. You could choose to fanny around with some files on your desktop, maybe adding some formulas or formatting to your Excel file, perhaps saving some of your work along the way. Instead, we suggest- or rather implore- you to mentally and functionally start a project. How? Read on.
+For the person tasked with doing anything with that file, you have a choice when you start:
+
+1.  You could choose to fanny around with some files on your desktop, maybe adding some formulas or formatting to your Excel file, perhaps saving some of your work along the way.
+2.  Instead, we suggest- or rather implore- you to mentally and functionally start a project.
+
+How do you choose option 2? Read on.
 
 ```{r setup, include=FALSE, echo=FALSE}
 ```
@@ -95,9 +100,13 @@ Obsessing about naming and organizing (and renaming and reorganizing) files/fold
 Although naming and organizing files is important, it *can* often be a way to fuss and faff about with files to feel busy, without really doing all that much. Having a "new project" pattern can help you ward off project puttering.
 :::
 
-You may still be saying "But Alison and Rich, this does not qualify as a Project - I know I'll never need this file again." We believe you that you truly believe this, and believe us, we have both been in this same situation. Nine times out of ten though, dear reader, we have lived to regret those words. Nonetheless, we do offer an alternative recommendation.
+You may still be saying "But Alison and Rich, this does not qualify as a Project - I know I'll never need this file again."
 
-When you earnestly believe that you'll not need this particular project ever again, if it makes you feel better, you can create a folder called `ds-scratch` and put your project files in there. I do this locally and every month or so, I clear this folder out. There is a famous saying: "If you love something, set it free. If it comes back, it's yours. If not, it was never meant to be." This is how you can think of projects in your scratchpad. If you need to open that folder back up before it gets trashed, it graduates to `ds-projects`. Graduating just involves physically dragging and dropping the project folder from `ds-scratch` into `ds-projects`. This works if and only if you set up your projects right (i.e., which we will show you in this chapter).
+We believe you that you truly believe this, and believe us, we have both been in this same situation. Nine times out of ten though, dear reader, we have lived to regret those words. Nonetheless, we do offer an alternative recommendation.
+
+When you earnestly believe that you'll not need this particular project ever again, if it makes you feel better, you can create a folder called `ds-scratch` and put your project files in there. I do this locally and every month or so, I clear this folder out.
+
+There is a famous saying: "If you love something, set it free. If it comes back, it's yours. If not, it was never meant to be." This is how you can think of projects in your scratchpad. If you need to open that folder back up before it gets trashed, it graduates to `ds-projects`. Graduating just involves physically dragging and dropping the project folder from `ds-scratch` into `ds-projects`. This works if and only if you set up your projects right (i.e., which we will show you in this chapter).
 
 It looks like this:
 
@@ -179,9 +188,8 @@ Now you saved this file on a shared laptop while working in the field. But you n
 
 -   review how projects fit in with the documents they contain and where they physically live
 
-```{=html}
 <!-- -->
-```
+
 -   Light data analysis (filler content mostly to be more instructive for learning Quarto):
 
     -   anatomy of a document (installed packages and using packages and the text and code chunks)
@@ -193,9 +201,8 @@ Now you saved this file on a shared laptop while working in the field. But you n
 
 -   create a data-README file that has notes on where files came from; like a 'lab notebook'
 
-```{=html}
 <!-- -->
-```
+
 -   talking to yourself with Quarto
 
 -   note that in Appendix there is a Markdown reference
@@ -204,21 +211,7 @@ Now you saved this file on a shared laptop while working in the field. But you n
 
 ## Share
 
--   relationship between your local files and your remote files (in GitHub)
-
-Now we are going to go online to <https://github.com/>,
-
-idea: git with one year, second year, etc - explore file structure on your personal system
-
--   tie this into GitHub which is your remote system (almost like a sync)
-
--   When starting a new Quarto file, we recommend using a top-level `index.qmd` (better for sharing)
-
-```{=html}
-<!-- -->
-```
--   with GitHub!
--   talking to others, if future thing doesn't pan out netlify drop
+Netlify drag and drop
 
 ## DIY
 
