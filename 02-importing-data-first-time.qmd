@@ -1,105 +1,263 @@
 # Importing data for the first time
 
-
 ```{r setup, include=FALSE, echo=FALSE}
 library(dspatterns)
+library(dplyr)
+library(tidyr)
+library(readxl)
+library(readr)
+library(janitor)
+library(pointblank)
 ```
 
+In this chapter we'll get down and dirty with some messy (but important to use) data. We need to use this data and although we acknowledge the data has problems, we can use a few strategies to overcome this.
 
-Use: 
+First, we'll explore the data and find out what went wrong during the import phase. This will invariably require some trial-and-error at first to get to a usable solution (which is the ideal import statement for the dataset at hand). After that, we'll use functions like `glimpse()`, `count()`, `head()`, and `tail()` to make sense of what we have during every step of the process. Checking the data at every major transformation is informative and important during this early phase of exploring a new dataset. All of this work will inevitably result in a messy `.qmd` file but you'll leave it in the dust when you're finally able to diagnose all of the issues. (We recommend you save the file for later use and we'll provide a tip or two on how to organize these scratch files.)
 
-- readr and readxl
-- janitor::clean_names() janitor::get_dupes()
+We'll need a few packages loaded in for this chapter:
 
-Resources:
+- **tidyverse**: for various functions across a collection of packages (the Tidyverse packages)
+- **readxl**: for reading in the Excel dataset
+- **janitor**: for cleaning column names
+- **pointblank**: for building a data dictionary
 
-- https://garthtarr.github.io/meatR/janitor.html#excel_numeric_to_date()
-- http://jenrichmond.rbind.io/post/digging-into-the-janitor-package/
-- https://cran.r-project.org/doc/contrib/de_Jonge+van_der_Loo-Introduction_to_data_cleaning_with_R.pdf
-- https://www.tandfonline.com/doi/pdf/10.1080/00031305.2017.1375989?needAccess=true
-
-Goal: proactive resilient workflows for working with messy data (i.e., file organization, strategies, troubleshooting, talking to yourself / future collaborators, having difficult conversations about data and what you need)
-
-pains:
-- dates
-- numbers becoming dates
-- column names with spaces numbers or punctuation or other weird characters 
-- missingness (i.e., blank cells or recoding missing values to NA)
-- blank or extra misc rows/columns
-- multiple header rows (https://alison.rbind.io/blog/2018-07-multiple-headers/)
-- column types 
-- factor levels
-- duplicate values
-
-## This chapter's pattern
-
-- Explore: find out what went wrong? (diagnostic files, treasure hunt / glimpse / count / head / tail / readr::problems?? / janitor::get_dupes) [ this is a messy rmd file - leave behind in your dust when you are able to diagnose all the issues     - scratch file - save something tell them where ], explain where to store files in Project (`data-raw` for raw data files and maybe `data` for the transformed/cleaned-up files)
-- Understand: is fix- solving the problem (stick to readxl / skip / col_types / NA / janitor::clean_names ) [ start a new clean rmd here for importing? ]
-- Explain: make sure you can do this again (communication to yourself); never edit the raw file; Annotate the Rmd with WHATEVER, use a future child doc? all the text will be hidden but the code will run; maybe with something with pointblank to write checks for yourself?
-- Share (Collaborate/Communicate): pointblank data dictionary as a conversation starter, documenting for others, writing the file out, advice for having conversations with data providers who ruin your life; rmd parent that uses the child?
+If you're following along, add a set of `library()` statements at the top of your `.qmd` file.
 
 ## Explore
 
-- about the dataset (`stickers`) (this will be an Excel file)
-
-- turn paranoia into data validation checks
-
 Getting new data can be really exciting but it can often result in a lot of work. You have to import the data such that it's not a garbled mess, you have to understand how the data is organized, and, you may have to do some cleaning and data quality tasks. The first few times you do this can be an exercise in frustration, involving much messing around until you feel you have a handle on things. That said, the goal of this chapter is to provide you with some workflows and many tips/tricks that'll serve you well when onboarding new datasets.
 
-We'll be working exclusively with tabular data for this chapter, using a variety of datasets of the messy variety to keep things real. Let's be upfront about some of the challenging things you may have to deal with:
+We'll be working with an Excel file called `stickers.xlsx` in this chapter (the file is available in the book repository). The dataset has a lot to do with sharing stickers and it's a really interesting one. The problem is that the data in its Excel form is a bit problematic (there's a few problems to overcome).
 
-- getting dates in nonstandard formats
-- having numbers transformed to dates (an Excel thing)
-- seeing column names with spaces numbers or punctuation or other weird characters 
-- taking stock of missingness (i.e., blank cells or recoding missing values to NA)
-- blank or extra misc rows/columns
-- multiple header rows (https://alison.rbind.io/blog/2018-07-multiple-headers/)
-- identifying column types for import
-- dealing with factor levels
-- having duplicate values
+Putting the problems aside for now, let's learn about where this dataset came from. It's a dataset from an experimental study where children played a variation of the dictator or ultimatum game, using stickers instead of money. The [study](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0138928) looked at how numerical context affects children's sharing behavior.    
 
-Two pretty common file formats containing tabular data are CSV file and Excel files. We will explore importing them both in turn and troubleshoot the inevitable issues in the *Understand* section
+![The ultimatum game.](figures/02-importing-data-first-time/ultimatum-game.png){#fig:stickers-ultimatum-game}
 
-### Importing a CSV file
+The authors made that dataset freely available so we in turn get the chance to examine it in R. Let's read in the file with the **readxl** package (with the `read_excel()` function) and have a first look at the data table.
 
-CSV files (short for *comma separated values*) are quite commonplace as method for storing tabular data in plain text. Most pieces of software that deal with tabular data can often export such data to CSV. While the CSV format isn't too rigorously specified (there really is a lot of variation), we generally find that:
-
-1. each line is a separate record,
-2. the records are divided into fields (separated by delimiters such as the comma, but sometimes by other characters like spaces or tab characters),
-3. there is the same number of fields per record, and
-4. there is (very commonly) a header line that defines the column names.
-
-While such variations in CSV formatting can't really be avoided, the *Tidyverse* **readr** package has many options to successfully deal with any such potential issues.
-
-We need a sample CSV file on disk to experiment with. The **dspatterns** package has a function to turn its included datasets into CSV files. Let's CSV-ify the `us_cities` dataset inside **dspatterns** like this:
-
-`r dspatterns::code_hints(
-"**CODE //** Writing ~~us_cities.csv~~ to the project directory with ~~dataset_to_csv()~~."
-)`
-```{r datset-to-csv, eval=FALSE}
-dataset_to_csv(dataset = "us_cities")
+```{r, paged.print=FALSE}
+read_excel("stickers.xlsx")
 ```
 
-Great. We have the file on disk, so let's now read in that file into a tibble object. We can do this using the `read_csv()` function from the **readr** package. This package is available in the *Tidyverse* so we need to first execute `library(tidyverse)` before using that function.
+Okay, a few things stick out as being non-ideal. First, we seem to have an extra 'header' row that got into the table rows (as row 1). It contains notes and remarks about data encoding. We don't want that, so let's try using the `skip` option that's available in `readxl::read_excel()`. We need to provide some number of rows and while we can try `1` and `2`, they don't quite work (try using `read_excel("stickers.xlsx", skip = 1)` and `read_excel("stickers.xlsx", skip = 2)` and take note of the output table).
 
-:::{.callout-tip}
-## Checking that the CSV file is where we think it is
+Because the rows to skip begin *after* the row with the column names, we'll have to try a different strategy. It'll seem a bit strange but the idea will be to get the column names separately and then all of the *good* data rows. First, let's get those column names, and we can do that with `n_max = 0` in the `read_excel()` call:
 
-After using `dataset_to_csv()` we should have a look at the *Files* tab in **RStudio** (in the lower-right pane, first tab). The `us_cities.csv` file should be there. If it isn't, we can try two things. We should check that the path above the file view is same as that given in the message received after executing the `dataset_to_csv()` function. If it's different for whatever reason, we could navigate back to the project directory by clicking on the icon to the right of the path (the blue, **R**-in-cube icon). One last thing to try is clicking the refresh button just above (it could be that, on some file systems, a refresh of the directory listing is necessary).
+```{r}
+stickers_empty <- read_excel("stickers.xlsx", n_max = 0)
+```
 
+This gives us a tibble with no rows, but with the column names nonetheless:
+
+```{r, paged.print=FALSE}
+stickers_empty
+```
+
+We notice from this initial view of the column names is that they are none too good. One of them is incredibly long, for instance. Let's rename the overly-long name in column `12` with `stickers_given` using the `rename()` function from **dplyr**. After that, we'll use the `clean_names()` function from the **janitor** package.
+
+```{r, paged.print=FALSE}
+stickers_empty <- 
+  stickers_empty %>%
+  rename(stickers_given = 12) %>%
+  clean_names()
+```
+
+The **dplyr** `rename()` function is very useful for all your renaming needs and we'll use it a lot throughout this book.
+
+::: callout-warning
+## The order of names in `rename()`
+
+When using **dplyr**'s `rename()` function, we can rename as many columns as we like. The only thing to remember is that the new name goes on the left of the `=` and the old name is on the right. It might help to think of it as multiple assignments. If that doesn't stick, it's okay because we can look at the function's documentation with `help(rename)` (the key information about ordering is right at the top).
 :::
 
+These column names have been cleaned up by transforming them to `snake_case`, which are words separated by the underscore (`_`) character. Having long and descriptive column names is not really desirable in a data table. It's much better to have short fragments rendered in snake case (aim for less than 10 letters, if possible). 
 
+::: callout-tip
+## What's the deal with `snake_case`?
+
+There are a number of ways to write out variables and column names. Why do it in `snake_case`? It's easy to parse the words/symbols of a variable this way.
+:::
+
+We'll print out the empty tibble again and have a look at the changes in the column names. It's *a lot* better now:
+
+```{r, paged.print=FALSE}
+stickers_empty
+```
+
+Now, we're not going to put two tibbles together to form our final table. Let's instead pull out these column names as a vector of cleaned names, storing it in `col_names_vec`:
+
+```{r}
+col_names_vec <- names(stickers_empty)
+```
+
+Now, finally, we can retry `read_excel()` with a few options in place. First, we'll skip over the first two rows of Excel data: the row with the column names and the non-data row. Second, we have the column names now as `col_names_vec` and we can provide them to the `col_names` argument (it needs a vector and that's really why we prepared one). Let's assign the resulting table to `stickers`.
+
+```{r}
+stickers <- read_excel("stickers.xlsx", skip = 2, col_names = col_names_vec)
+```
+
+And now, we'll have a look at the `stickers` table:
+
+```{r, paged.print=FALSE}
+stickers
+```
+
+Not bad! All column types were guessed properly by the `read_excel()` function, so we needn't do anything on that. One column, `percent_given_outof100percent` has a bit of a silly name; we can fix that easily with **dplyr**'s `rename()` function, using the `ends_with()` select helper while we're at it:
+
+```{r, paged.print=FALSE, collapse=TRUE}
+stickers <-
+  stickers %>%
+  rename(percent_given = ends_with("100percent"))
+
+stickers
+```
+
+Looks good now! Always make little inspections after making such changes to the data.
+
+::: callout-tip
+## Selection helpers in **dplyr**
+
+There are so many ways we can specify, or select, columns in a table using **dplyr**. It's hard to keep all that in your head so a good resource for selection features is the documentation for **dplyr**'s `select()` function; it's accessible with `help(select)`. 
+:::
+
+Let's look at our revised `stickers` table using the `glimpse()` function:
+
+```{r}
+glimpse(stickers)
+```
+
+Looks good now! Making quick inspections of the data (especially after changing the data) will always serve you well.
+
+**Saving Your Work**
+
+If you did this all in a `.qmd` file (recommended) we suggest that it be saved to location with other scratch files. You're in a Project, right? Make a sub-folder called `data-raw` and put it in there along with the raw data files themselves.
+
+Let's write the cleaned up tibble to a file for later use. Make a sub-folder called `data` and write a CSV using `write_csv()` from the **readr** package.
+
+```{r eval=FALSE}
+write_csv(stickers, file = "stickers.csv")
+```
+
+**Data Quality Concerns**
+
+We need to acknowledge and accept concerns about data quality. Little mistakes (whether they are yours or part of the data you're provided with) can result in bigger problems later on if left unaddressed. Getting a handle on data quality should always be a concern but taking action should result in better work! Let's constructively turn that paranoia into quick, data validation spot checks.
+
+Because we have a table with one row per subject, along with a subject number, there shouldn't be any duplicates. We can test this with **pointblank**'s `test_rows_distinct()` and either get a `TRUE` result (all rows distinct) or `FALSE` result (at least one duplicate row). 
+
+```{r}
+stickers %>% test_rows_distinct()
+```
+
+We always want to be on the lookout for duplicate rows in a dataset when it runs contrary its rule (in this case, one row per subject).
+
+Another test we could perform is verify whether certain columns have complete data. At least for the columns that have to do with the describing the subjects and recording the initial conditions of the dictator game, there shouldn't be any `NA` values. Let's do a quick check to verify this with `test_col_vals_not_null()`. We can check columns `1` (`subject_number`) through `9` (`subjects_envelope`) in a single testing call by providing `columns = 1:9` to `test_col_vals_not_null()`. This performs individual checks of `NA` values across the columns and if any one of those columns has an `NA` then we'll be returned `FALSE` (but we are expecting `TRUE` in this case).
+
+```{r}
+stickers %>% test_col_vals_not_null(columns = 1:9)
+```
+
+Extending the column range a bit further would have given us a `FALSE` result because `NA` values are expected in the later columns. However, for these columns we expected 'complete' data. Speaking of which, there is another test function in **pointblank** that handles data completeness: `test_rows_complete()`. Let's try that out with the same range of columns as before.
+
+```{r}
+stickers %>% test_rows_complete(columns = 1:9)
+```
+
+Same result but the underlying method for this is a bit different as this test function can take a subset of columns and inspect entire rows. This will probably be useful later when we perform data quality reporting and we want to determine which *rows* may have incomplete data.
+
+Lastly we know that each of the columns (from `glimpse(stickers)`) is of the numeric type. We can test this with `test_col_is_numeric()`:
+
+```{r}
+stickers %>% test_col_is_numeric(columns = everything())
+```
+
+We knew this was true coming into the test but type-checking is exceedingly useful after data transformation tasks since column types might unexpectedly change. So, use this sort of test often as a check of your work!
 
 ## Understand
 
+Now that we just finished some radical surgery on `stickers`, here's a question: did all of the fixing ultimately solve the problem? Let's import the data from a `.qmd` that just contains the importing directives.
+
+**Creating a Basic Data Dictionary for `stickers`**
+
+Now that we have the `stickers` data in reasonable shape it's a good idea to put together a data dictionary. It's documentation that will help us (and others) understand the data, now and especially for later on.
+
+We can do this easily with the **pointblank** package and its functions for building up a data dictionary. That top row that we banished from the data table is actually metadata for each of the columns. Let's recover that and put it in a shape that allows for data dictionary creation! We can read in that first row (and only the first row) with `read_excel()` and `n_max = 1`:
+
+```{r}
+stickers_meta <- read_excel("stickers.xlsx", n_max = 1)
+```
+
+Looking at the single row table of `stickers_meta`, we can plainly see some informative text in that row.
+
+```{r, paged.print=FALSE}
+stickers_meta
+```
+
+This is a good start and all the infomation we need is available, we just have to get it in the right form. The **pointblank** package makes it easy to generate a data dictionary with a prepared table of metadata entries. We do this by creating an *informant* object with the `create_informant()` function and then using the `info_columns_from_tbl()` function to pass in the metadata for each column. The major requirement for the second step is making a tibble with two columns: the first with the column names (the cleaned up ones!) and the second with the metadata (from `stickers_meta`). Let's make the `stickers_metadata` table with the `tibble()` function:
+
+```{r}
+stickers_metadata <- 
+  stickers_meta %>%
+  pivot_longer(
+    cols = everything(),
+    names_to = "column",
+    values_to = "info"
+  )
+```
+
+We can have a quick look at the table with `glimpse()`:
+
+```{r}
+glimpse(stickers_metadata)
+```
+
+Now that we have `stickers_metadata` in the correct form, we can use it in `info_columns_from_tbl()`. To get an informative title at the top of the data dictionary, we use the `get_informant_report()` function and use the `title` argument. 
+
+```{r eval=FALSE}
+stickers_dd <-
+  create_informant(tbl = stickers) %>%
+  info_columns_from_tbl(tbl = stickers_metadata) %>%
+  get_informant_report(title = "Data Dictionary for `stickers`")
+```
+
+Once the data dictionary has been produced for `stickers`, we can look at it in the RStudio Viewer by printing out `stickers_dd`. Here is an excerpt of that output (which is quite long because of all the columns contained within `stickers`).
+
+```{r eval=FALSE}
+stickers_dd
+```
+
+![A data dictionary for the `stickers` dataset.](figures/02-importing-data-first-time/stickers_dd.png){#fig:stickers-data-dictionary}
 
 ## Explain
 
+The naming of columns in a data table is not always easy. While the naming of the variables that we saw in the raw `stickers` dataset is clearly something we should avoid (and we did apply some correctives to that during import), we could and should always strive for better naming. One idea is to define for yourself (well ahead of time) a set of words or word fragments with well-defined meanings for you. These can work as symbols that convey meaning and thus they can be used to index information. When these pieces are defined for different types of information and arranged together in a consistent order (again, of your choosing), we can generate a vocabulary for data which serves as a descriptive grammar. In doing all this, we can describe both simple things and even complex content and behavior.
+
+We might combine these fragments together with a separator such as the `_` (as we have been doing in this chapter), and again the order should be consistent. Here are some examples for column names:
+
+- `id_subject`: the **ID** value for a test subject
+- `amt_sales`: the cumulative **amount** of sales for an item
+- `dt_first_seen`: the **date** of the first observation
+- `lat_site`/`lon_site`: The **latitude** and **longitude** of some site
+
+In the context of a dataset, this sort of naming convention can also serve as instructions between a data producer (the one that created the dataset and the column names) and a data consumer (the one that uses the data for analysis or for deriving new datasets). A few letters precisely placed could actually carry a promise about data lineage (where the data came from), valid values (i.e., acceptable ranges), and appropriate uses. When used consistently across all of an organization’s tables, it can significantly scale data management and increase usability as knowledge from working with one dataset easily transfers to another.
+
+**Importing the Raw Data**
+
+It's vitally important that raw data should never be directly edited. Treat is as read only. Why? Any changes to the raw data will be have no record of what was done. What if the changes were erroneous? What if you applied the changes multiple times? The structuring of a project should always build in the expectation that the raw data files don't change.
+
+But what about your data provider or collaborator that provides you with 'raw' data? We may not know the transformation processes that occurred to the dataset before it was provided to you. And there's a good chance that the data producer may not provide metadata and notes said data handling. Should you be provided with revisions of raw data (where the same analysis applies but the data might be edited or lengthened) then rename each of the raw data files with the date of acquisition and enter any pertinent notes in the data import `.qmd` file. 
+
+The `.qmd` file that imports our raw data can (and should) be annotated with whatever notes are important for the understanding of the raw data and the importing process. In a way, we should provide lab notes for the handling of raw data. An idea here is to make a child doc where all the text will be hidden but the code will run.
+
+A good practice is to include data validation statements after importing. This is extremely important in the case where raw data changes due to revisions. Having the checks in place should catch any data errors that could creep in during data updates. This is something we can do with **pointblank** within the data import `.qmd` file.
 
 ## Share
 
+We can build upon the **pointblank** data dictionary we made earlier. It's both great for you as an aid in understanding the data, and, others will certainly appreciate it as well! It can either serve as a conversation starter or a valuable reference that will be used again and again. Let's extend that file with more sections. Then, we can publish it or save the reporting as HTML.
+
+Sometimes, you need to have difficult conversations with data providers. Sometimes they are great (i.e., they provide you with data) and other times they can ruin your life (i.e., they provide you with *bad* data).
+
+Let's build a `.qmd` parent that uses a child `.qmd`. It's smart and we can break `.qmd`s down to components, if you will.
 
 ## DIY
 
-- dataset: `penguins_raw.csv` (use `palmerpenguins::path_to_file()` to get this CSV)
+It's now time to Do It Yourself. We'll recommend some dataset, give you some project ideas, steer you in the right direction, and you'll make something to be proud of.

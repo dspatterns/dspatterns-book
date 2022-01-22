@@ -1,0 +1,36 @@
+Type: Package
+Package: dspatterns
+Version: 0.0.0.9000
+Title: The 'dspatterns' book
+Description: The book 'A Data Science Pattern Language: Designing Projects with R'.
+Authors@R: c(
+    person("Alison", "Hill", , "apresstats@gmail.com", c("aut", "cre"),
+           comment = c(ORCID = "0000-0002-8082-1890")),
+    person("Richard", "Iannone", , "riannone@me.com", "aut",
+           comment = c(ORCID = "0000-0003-3925-190X"))
+    )
+Encoding: UTF-8
+ByteCompile: true
+RoxygenNote: 7.1.1
+Depends:
+    R (>= 3.5.0)
+Imports:
+    quarto,
+    dspatterns,
+    tidyverse,
+    bakeoff,
+    palmerpenguins,
+    tidyverse,
+    readxl,
+    janitor,
+    pointblank,
+    readr,
+    shiny,
+    skimr,
+    gt,
+    DT,
+    ggridges
+Remotes:
+    apreshill/bakeoff,
+    dspatterns/dspatterns
+

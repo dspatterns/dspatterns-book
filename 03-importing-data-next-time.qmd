@@ -2,6 +2,9 @@
 
 ```{r setup, include=FALSE, echo=FALSE}
 library(dspatterns)
+library(tidyverse)
+library(readxl)
+library(janitor)
 ```
 
 
@@ -10,6 +13,8 @@ library(dspatterns)
 Use: 
 
 - pointblank for data checking
+- introduce subject 263 in the data, which has data validity issues
+  - find some way to easily detect this with some data checking
 
 Resources:
 
@@ -25,11 +30,10 @@ pains:
 
 ## Explore
 
-- `stickers` raw to clean using qmd + experience from (use `knitr::purl()` to get .R script from .qmd, rewrite/refactor to get 'transformation' chunk -> we can `source()` that in, it will contain the data reading, cleaning, transformation, etc.)
-
 **Things you should do with every dataset either new or old**
 
 Provide a series of steps that can be used to quickly get up to speed with a dataset.
+
 
 
 **Find out what went wrong with data updates using pointblank workflows.**

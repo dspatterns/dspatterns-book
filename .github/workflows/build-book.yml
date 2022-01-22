@@ -24,11 +24,37 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v2
 
-      - name: Setup R
-        uses: r-lib/actions/setup-r@master
-
       - name: Setup pandoc
-        uses: r-lib/actions/setup-pandoc@master
+        uses: r-lib/actions/setup-pandoc@v1
+
+      - name: Setup R
+        uses: r-lib/actions/setup-r@v1
+        with:
+          r-version: 'release'
+          use-public-rspm: true
+
+      - name: Query dependencies
+        run: |
+          install.packages('remotes')
+          saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)
+        shell: Rscript {0}
+
+      - name: Cache R packages
+        if: runner.os != 'Windows'
+        uses: actions/cache@v1
+        with:
+          path: ${{ env.R_LIBS_USER }}
+          key: ${{ runner.os }}-r-${{ matrix.config.r }}-2-${{ hashFiles('.github/depends.Rds') }}
+          restore-keys: ${{ runner.os }}-r-${{ matrix.config.r }}-2-
+
+      - name: Install system dependencies
+        if: runner.os == 'Linux'
+        env:
+          RHUB_PLATFORM: linux-x86_64-ubuntu-gcc
+        run: |
+          Rscript -e "remotes::install_github('r-hub/sysreqs')"
+          sysreqs=$(Rscript -e "cat(sysreqs::sysreq_commands('DESCRIPTION'))")
+          sudo -s eval "$sysreqs"
 
       - name: Install R packages
         run: |
@@ -40,12 +66,16 @@ jobs:
          install.packages("DT")
          install.packages("ggridges")
          install.packages("skimr")
+         install.packages("pointblank")
+         install.packages("readxl")
+         install.packages("janitor")
+         remotes::install_github("rich-iannone/pointblank")
          remotes::install_github("dspatterns/dspatterns")
          remotes::install_github("apreshill/bakeoff")
         shell: Rscript {0}
 
       - name: "Install Quarto and render project"
-        uses: pommevilla/quarto-render@v0.3.5
+        uses: pommevilla/quarto-render@main
 
       - name: Deploy to Netlify
         if: contains(env.isExtPR, 'false')

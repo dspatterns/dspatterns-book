@@ -1,0 +1,45 @@
+---
+title: "Chapter 2. Importing data for the first time"
+format: html
+---
+
+```{r setup, include=FALSE, echo=FALSE}
+library(dspatterns)
+library(dplyr)
+library(readxl)
+library(readr)
+library(janitor)
+```
+
+
+```{r}
+stickers_empty <- read_excel("stickers.xlsx", n_max = 0)
+```
+
+
+```{r, paged.print=FALSE}
+stickers_empty <- 
+  stickers_empty %>%
+  rename(stickers_given = 12) %>%
+  clean_names()
+```
+
+
+```{r}
+col_names_vec <- names(stickers_empty) 
+```
+
+
+```{r, paged.print=FALSE}
+stickers <- read_excel("stickers.xlsx", skip = 2, col_names = col_names_vec)
+```
+
+
+```{r, paged.print=FALSE}
+stickers <-
+  stickers %>%
+  rename(percent_given = ends_with("100percent"))
+
+stickers
+```
+
