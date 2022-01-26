@@ -17,9 +17,9 @@ First, we'll explore the data and find out what went wrong during the import pha
 We'll need a few packages loaded in for this chapter:
 
 - **tidyverse**: for various functions across a collection of packages (the Tidyverse packages)
-- **readxl**: for reading in the Excel dataset
+- **readxl**: for reading in the Excel dataset we'll be using here
 - **janitor**: for cleaning column names
-- **pointblank**: for building a data dictionary
+- **pointblank**: for building a data dictionary and performing data checks
 
 If you're following along, add a set of `library()` statements at the top of your `.qmd` file.
 
