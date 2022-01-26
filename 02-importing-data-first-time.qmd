@@ -229,22 +229,24 @@ stickers_dd
 
 ## Explain
 
+**The Naming of Columns in a Tabular Dataset**
+
 The naming of columns in a data table is not always easy. While the naming of the variables that we saw in the raw `stickers` dataset is clearly something we should avoid (and we did apply some correctives to that during import), we could and should always strive for better naming. One idea is to define for yourself (well ahead of time) a set of words or word fragments with well-defined meanings for you. These can work as symbols that convey meaning and thus they can be used to index information. When these pieces are defined for different types of information and arranged together in a consistent order (again, of your choosing), we can generate a vocabulary for data which serves as a descriptive grammar. In doing all this, we can describe both simple things and even complex content and behavior.
 
 We might combine these fragments together with a separator such as the `_` (as we have been doing in this chapter), and again the order should be consistent. Here are some examples for column names:
 
 - `id_subject`: the **ID** value for a test subject
 - `amt_sales`: the cumulative **amount** of sales for an item
-- `dt_first_seen`: the **date** of the first observation
+- `dt_first`: the **date** of the first observation
 - `lat_site`/`lon_site`: The **latitude** and **longitude** of some site
 
-In the context of a dataset, this sort of naming convention can also serve as instructions between a data producer (the one that created the dataset and the column names) and a data consumer (the one that uses the data for analysis or for deriving new datasets). A few letters precisely placed could actually carry a promise about data lineage (where the data came from), valid values (i.e., acceptable ranges), and appropriate uses. When used consistently across all of an organization’s tables, it can significantly scale data management and increase usability as knowledge from working with one dataset easily transfers to another.
+In the context of a dataset, this sort of naming convention can also serve as instructions between a data creator (the author of the dataset and the column names) and a data user (the one that uses the data either for direct analysis or for deriving new datasets). A few letters precisely placed could actually carry a promise about data lineage (where the data came from), valid values (i.e., acceptable ranges), and appropriate uses. When used consistently across all of an organization’s tables, it can significantly scale data management and increase usability as knowledge from working with one dataset can more easily be transferred to other datasets in the organization.
 
 **Importing the Raw Data**
 
-It's vitally important that raw data should never be directly edited. Treat is as read only. Why? Any changes to the raw data will be have no record of what was done. What if the changes were erroneous? What if you applied the changes multiple times? The structuring of a project should always build in the expectation that the raw data files don't change.
+It's vitally important that raw data should never be directly edited. In other words, always treat is as read only. Why? Any changes to the raw data will likely have no record of what was done. What if the changes were erroneous? What if you applied the changes multiple times? Best practice: don't touch. By treating the raw data as a starting point, we can safely and dependably trace changes back to the raw data. Therefore, the structuring of a project should always build in the expectation that the raw data files don't change.
 
-But what about your data provider or collaborator that provides you with 'raw' data? We may not know the transformation processes that occurred to the dataset before it was provided to you. And there's a good chance that the data producer may not provide metadata and notes said data handling. Should you be provided with revisions of raw data (where the same analysis applies but the data might be edited or lengthened) then rename each of the raw data files with the date of acquisition and enter any pertinent notes in the data import `.qmd` file. 
+But what about your data provider or collaborator that provides you with 'raw' data? We may not know the transformation processes that occurred to the dataset before it was provided to you. And there's a good chance that the data creator, which is probably your collaborator, may not provide metadata or any notes on the data production. Should you be provided with revisions of raw data (where the same analysis of your can be applied but the incoming data might be in edited or lengthened form), rename each of the raw data files with the date of acquisition and enter any pertinent notes in the data import `.qmd` file.
 
 The `.qmd` file that imports our raw data can (and should) be annotated with whatever notes are important for the understanding of the raw data and the importing process. In a way, we should provide lab notes for the handling of raw data. An idea here is to make a child doc where all the text will be hidden but the code will run.
 
