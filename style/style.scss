@@ -1,15 +1,15 @@
 /*-- scss:defaults --*/
 
 /* bootstrap variables */
-$primary: #6B2084;                   /* amethyst */
-$code-color: #702459;                /* constrast ratio: 8.94 */
+$primary: #6B2084;                    /* amethyst */
+$code-color: #702459;                 /* constrast ratio: 8.94 */
 $link-color: darken($primary, 8%);
 $link-hover-color: darken($link-color, 8%);
-$body-color: #404040;                /* rstudio dark gray, matches rstudio.com */
+$body-color: #404040;                 /* rstudio dark gray, matches rstudio.com */
 $navbar-light-hover-color: #000;
-$navbar-light-brand-color: #404040;  /* rstudio dark gray, matches rstudio.com */
+$navbar-light-brand-color: #404040;   /* rstudio dark gray, matches rstudio.com */
 $headings-color: $primary;            /* rstudio dark gray, matches rstudio.com */
-$border-color: lighten($primary, 50%);               /* punchy */
+$border-color: lighten($primary, 50%);
 /*$border-width: 5rem; seems to throw a quarto error */
 /*$navbar-light-color: lighten($navbar-light-hover-color, 40%); seems to throw a quarto error*/
 
