@@ -9,7 +9,7 @@ $body-color: #404040;                /* rstudio dark gray, matches rstudio.com *
 $navbar-light-hover-color: #000;
 $navbar-light-brand-color: #404040;  /* rstudio dark gray, matches rstudio.com */
 $headings-color: $primary;            /* rstudio dark gray, matches rstudio.com */
-$border-color: #9DCBE7;               /* punchy */
+$border-color: lighten($primary, 50%);               /* punchy */
 /*$border-width: 5rem; seems to throw a quarto error */
 /*$navbar-light-color: lighten($navbar-light-hover-color, 40%); seems to throw a quarto error*/
 
