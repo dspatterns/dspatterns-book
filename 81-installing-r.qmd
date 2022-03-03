@@ -1,0 +1,47 @@
+---
+title: "Installing R"
+---
+
+# Installing R {#sec:installing}
+
+## Installing **R** and The **RStudio Desktop** IDE {-}
+
+There are two pieces of software you'll need to download. One is **R** itself and the other is the *Community Edition* of the **RStudio Desktop** IDE. Luckily, you can use both of these in Windows, macOS, and in various distributions of Linux. Depending on your OS there are preferred ways to install both. While we do need both pieces of software installed, the order of installation is not important.
+
+### macOS Installation {-}
+
+Here are the steps for obtaining and installing the **R** programming language.
+
+1. With your preferred web browser, go to <http://www.r-project.org>. This is the main site for **R** and *CRAN*.
+2. Follow the *CRAN* link to the left.
+3. Follow the *Downloads* link to go to the download page then get the installer for the Macintosh computing platform. It downloads as a DMG file.
+4. Open the installer file and follow the installation instructions to completion.
+
+You then have **R**. If you’d like to be fully certain of that, open the *Terminal* application and type **R** and the **R** command-line console should appear.
+
+The next task is to download and install RStudio Desktop.
+
+1. Go to the *RStudio* website, which is at <https://www.rstudio.com>.
+2. Once there, look for the macOS installation file of **RStudio Desktop Community Edition**. If browsing from a Mac, the site will present you with a large download button that leads to the latest stable Mac release of **RStudio Desktop**.
+3. Download the DMG file, open it, and drag the app to the Applications directory.
+
+Keeping the **RStudio** app in the macOS Dock is a good idea for easy access to the IDE.
+
+### Windows Installation {-}
+
+The installation of **R** and **RStudio Desktop** on Windows is not very different from that on the Mac. There are some subtle differences though. Let's walk through the entire process. First, we need to get **R**, so here are the steps:
+
+1. Go to <http://www.r-project.org>. This is the entry point to **R**-as-a-project and *CRAN.*
+2. Follow the *CRAN* link to the left.
+3. Follow the *Downloads* link to go to the download page then get the installer for the Windows computing platform.
+4. Run the installer program; it may ask a number of potentially confusing questions, however, just accept the defaults. Soon thereafter the installation will finish, and **R** for Windows will be installed.
+
+**R** will create a few shortcut icons and a good way to check that the installation had succeeded is to open **R** through the *Start Menu*.
+
+The next step is to get **RStudio Desktop**.
+
+1. Go to the website of *RStudio* (<https://www.rstudio.com>).
+2. Look for the Windows install of **RStudio Desktop Community Edition**. A large download button for the Windows version of **RStudio Desktop** will appear (it leads to the latest stable Windows release).
+3. Download the installation package and open it. Installation will proceed through a number of dialogue boxes, so, ensure that all are followed until completion of the install process.
+
+After installation, try opening **RStudio**; the IDE will appear on the screen. I suggest keeping the **RStudio** icon pinned to the Task Bar so that it's easily accessible.

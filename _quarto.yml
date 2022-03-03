@@ -51,8 +51,19 @@ book:
         - 18-run-on-conditions.qmd
         - 19-project-3.qmd
   appendices:
-    - 91-installing-r.qmd
-    - 92-starting-with-r.qmd
+    - 81-installing-r.qmd
+    - 82-starting-with-r.qmd
+    - 83-data-transformation-dplyr.qmd
+    - 84-data-visualization-ggplot.qmd
+    - 85-tidying-data-for-analysis.qmd
+    - 86-importing-data-common-formats.qmd
+    - 87-transformations-dates-times.qmd
+    - 88-closer-look-r-programming.qmd
+    - 89-string-transformations.qmd
+    - 90-lists-and-factors.qmd
+    - 91-more-ggplot-1.qmd
+    - 92-more-ggplot-2.qmd
+    - 93-making-presentation-tables.qmd
 
 format:
   html:

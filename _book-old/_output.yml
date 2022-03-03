@@ -1,7 +1,0 @@
-bookdown::gitbook:
-  css: dspatterns.css
-  config:
-    toc:
-      before: |
-        <li><strong><a href="./">dspatterns</a></strong></li>
-    sharing: no

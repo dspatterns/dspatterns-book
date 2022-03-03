@@ -1,7 +1,0 @@
-# Windows of Data {#windows-of-data}
-
-```{r setup, include=FALSE, echo=FALSE}
-library(dspatterns)
-library(tidyverse)
-```
-

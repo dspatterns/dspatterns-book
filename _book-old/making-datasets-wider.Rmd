@@ -1,7 +1,0 @@
-# Making Datasets Wider {#making-datasets-wider}
-
-```{r setup, include=FALSE, echo=FALSE}
-library(dspatterns)
-library(tidyverse)
-```
-
