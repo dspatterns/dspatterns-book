@@ -8,24 +8,33 @@ library(dplyr)
 library(ggplot2)
 ```
 
-## Introduction
+This section covers
 
-We will start off by getting our bearings with assignment of variables in **R**. Later in the book, we'll certainly get the opportunity to learn more programming fundamentals, however assignment is one of those topics that should be addressed right away. Then, the installation of packages will be covered. This will give us the chance to install the packages that are required for the book: **tidyverse**, **dspatterns**, and **devtools**.
+- learning the basics of assigning values to variables
+- installing and loading packages from **CRAN** and **GitHub**
+- accessing datasets and understanding the basic elements of a table
+using the **dplyr** `filter()` function, with expressions that filter a table to only the rows you need
+- reordering rows with the **dplyr** `arrange()` function
+performing several column-selection operations with **dplyr**’s `select()` function
+= creating new table columns (or modifying existing ones) with `mutate()` and carefully crafted expressions
+- summarizing tabular data with the combination of `group_by()` and `summarize()`
 
-The rest of the chapter is devoted to learning a skill that is very important: transforming tabular data. Of all the skills you will learn in this book, the value of this one cannot be understated. A bit more than the usual amount of time will and should be spent on this.
+We will start off by getting our bearings with assignment of variables in **R**. Later, we'll certainly get the opportunity to learn more programming fundamentals, however assignment is one of those topics that should be addressed right away. Then, the installation of packages will be covered. This will give us the chance to install some of required packages: **tidyverse**, **dspatterns**, and **devtools**.
 
-The **dspatterns** package will give us the dataset needed for the examples in this chapter: `sw`. This dataset is a modified version of the `starwars` dataset that is available in the **dplyr** package. Whenever we load in the **dspatterns** package using `library(dspatterns)`, the `sw` table will be available for use. This particular dataset has 87 rows, one for each Star Wars character, and the following 8 variables (or columns):
+The rest of the section is devoted to learning a skill that is very important: transforming tabular data. Of all the skills you will learn, the value of this one cannot be understated. A bit more than the usual amount of time will and should be spent on this.
+
+The **dspatterns** package will give us the dataset needed for the examples in this section: `sw`. This dataset is a modified version of the `starwars` dataset that is available in the **dplyr** package. Whenever we load in the **dspatterns** package using `library(dspatterns)`, the `sw` table will be available for use. This particular dataset has 87 rows, one for each Star Wars character, and the following 8 variables (or columns):
 
 - `name`: the name of the character
 - `height`, `mass`: the character's height and weight (in centimeters and kilograms)
 - `hair_color`: a description of the character's hair color, where available
 - `gender`, `homeworld`, `species`: the character's gender, homeworld (i.e., a planet name), and species
 
-We will learn how to install packages like **tidyverse**, **dspatterns**, and devtools in *Section 2.1.2*. Once you've gotten the hang on that (and those packages are installed), more information on the `sw` dataset can be obtained by executing `?sw` in the **RStudio** console (a help page will appear).
+We will learn how to install packages like **tidyverse**, **dspatterns**, and **devtools**. Once you've gotten the hang of that (and those packages are installed), more information on the `sw` dataset can be obtained by executing `?sw` in the **RStudio** console (a help page will appear).
 
 ## Programming Basics and Package Installation
 
-Before we get to the fun stuff, it's best if we first get acquainted with two things: (1) the programming concept of assignment, and (2) installing packages. We will have a more in-depth look at **R** programming later in the book and just touch upon the basics for now. In **R**, installing and using packages is commonplace and thus a fundamental skill, so a few packages will be installed in this chapter.
+Before we get to the fun stuff, it's best if we first get acquainted with two things: (1) the programming concept of assignment, and (2) installing packages. We will have a more in-depth look at **R** programming in later sections and just touch upon the basics for now. In **R**, installing and using packages is commonplace and thus a fundamental skill, so a few packages will be installed in this section.
 
 ### The Basics of Assignment
 
@@ -96,7 +105,7 @@ The return value in the console is now `"hi"`, or, `#> [1] "hi"`. The *Environme
 
 ## Using **dplyr** to Transform Data
 
-While visualizing your data is useful for generating insights, it's not common that you'll initially have the data in exactly the form you need. It's far more likely that you first will have to create some new variables or generate some summaries before plotting the data. So, we'll get to visualization in the next chapter and learn all transforming our data first. The process of data transformation is made easier in **R** by using the **dplyr** package. We'll learn how to use only a few functions from **dplyr** to modify a dataset in several useful ways.
+While visualizing your data is useful for generating insights, it's not common that you'll initially have the data in exactly the form you need. It's far more likely that you first will have to create some new variables or generate some summaries before plotting the data. So, we'll get to visualization in the next section and learn all transforming our data first. The process of data transformation is made easier in **R** by using the **dplyr** package. We'll learn how to use only a few functions from **dplyr** to modify a dataset in several useful ways.
 
 ### The Main **dplyr** Functions
 
@@ -118,12 +127,12 @@ All these functions generally work the same, where
 
 Eventually we'll see that we can chain together multiple simple steps to achieve a complex result but, first, let's just see how each of these functions work in isolation.
 
-Through the rest of this chapter, let's work with **dplyr** in the context of an **R Markdown** document. In Listing 2.5, we'll create a new **R Markdown** document and include this **R** code chunk just after the YAML header.
+Through the rest of this section, let's work with **dplyr** in the context of an **R Markdown** document. In the following code listing, we'll create a new **R Markdown** document and include this **R** code chunk just after the YAML header.
 
 `r dspatterns::code_hints(
 "Loading the **tidyverse** and **dspatterns** packages.",
 c(
-"#A Loading the **tidyverse** package like this actually auto-loads all core **tidyverse** packages (this is almost everything we'll need for the entire book!.",
+"#A Loading the **tidyverse** package like this actually auto-loads all core **tidyverse** packages (this is almost everything we'll need for most analyses!).",
 "#B The **dspatterns** package is this book's namesake package. It has the datasets we need for all of the examples."
 ))`
 ```{r load-tidyverse-dspatterns, eval=FALSE}
@@ -151,7 +160,7 @@ We'll continue the practice of writing new **R** code chunks and running them in
 
 ### The `sw` Dataset and the Elements of a Table
 
-The dataset with the name `sw` is provided by the **dspatterns** package. That is, once **dspatterns** is loaded in the session with `library(dspatterns)`, the `sw` dataset will be available. **R** considers datasets to be important components of packages since they are valuable for testing out a package's functions. It may seem odd, but we can treat `sw` like a variable that doesn't have to be explicitly assigned by the user. In the followung code listing, we see that just by entering `sw` in the console, its output is provided.
+The dataset with the name `sw` is provided by the **dspatterns** package. That is, once **dspatterns** is loaded in the session with `library(dspatterns)`, the `sw` dataset will be available. **R** considers datasets to be important components of packages since they are valuable for testing out a package's functions. It may seem odd, but we can treat `sw` like a variable that doesn't have to be explicitly assigned by the user. In the following code listing, we see that just by entering `sw` in the console, its output is provided.
 
 `r dspatterns::code_hints(
 "The ~~sw~~ dataset can be printed to the console by using ~~sw~~.",
@@ -237,7 +246,7 @@ filter(sw, species == "Droid" | species == "Human")  #A
 
 The tibble that's printed shows that, at least in the first 6 rows, each character is either a Human or a Droid.
 
-Next, in Listing 2.11, we provide the better way to get the same result, which is to look for occurrences in a set (defined with the help of c()). So, instead of using species twice in our statement, we can use the %in% operator in a single expression.
+Next, we provide the better way to get the same result, which is to look for occurrences in a set (defined with the help of c()). So, instead of using species twice in our statement, we can use the %in% operator in a single expression.
 
 `r dspatterns::code_hints(
 "Get all Droid and Human characters (method 2 with ~~[colname %>% c(...)]~~ construction).",
@@ -535,8 +544,6 @@ bmi_sorted <-  #A
 ```
 
 The `%>%` operator, the pipe, makes the code easier to both write and read later on. The focus is now on the transformations. A good way to reason about the pipe operator is to think of `%>%` as meaning "then". Now we can imagine reading the above code as a series of imperative statements: **filter**, and then **mutate**, and then **group**, and then **summarize**, and then **arrange**. Let's rewrite the above statement as pseudocode to make clear that we have a series of imperative statements that can be read in a left-to-right manner:
-
-Listing 2.28. Using pseudocode to demonstrate the readability of the code in the previous listing.
 
 `r dspatterns::code_hints(
 "Using pseudocode to demonstrate the readability of the code in the previous listing.",

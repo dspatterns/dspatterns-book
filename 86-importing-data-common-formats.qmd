@@ -15,13 +15,13 @@ This section covers
 - Using the `read_csv()` function from the **readr** package
 - Reading **Excel** data into **R**
 
-Previously, we had used datasets available in the **dspatterns** package to get the data we needed. This is all fine and well for the purpose of learning to use data transformation and visualization functions. However, real world data won't often be found in **R** packages. You may encounter useful data in text files, **Excel** files, or on the web in myriad forms. While there are hundreds of ways data can be structured and stored, there are a few formats that are quite common and so the focus of this chapter will be on the methods for importing these common formats into **R** (as tibbles). These formats are CSV and **Excel** files.
+Previously, we had used datasets available in the **dspatterns** package to get the data we needed. This is all fine and well for the purpose of learning to use data transformation and visualization functions. However, real world data won't often be found in **R** packages. You may encounter useful data in text files, **Excel** files, or on the web in myriad forms. While there are hundreds of ways data can be structured and stored, there are a few formats that are quite common and so the focus of this section will be on the methods for importing these common formats into **R** (as tibbles). These formats are CSV and **Excel** files.
 
 The **dspatterns** package for its part will offer some custom functions to make the examples flow a bit better. We need some CSV and **Excel** files to import, so, a few functions from **dspatterns** will be available for spawning these files in our project directory.
 
 ## Writing a Sample CSV File
 
-To make things easy for us, the **dspatterns** package has a function that writes any **dspatterns**-based dataset to a CSV file: `dataset_to_csv()`. Remember that we need to load the **dspatterns** package first, and this can be done by executing `library(dspatterns)` in the **RStudio** console. The datasets you'll end up importing will be varied and will serve different purposes. Occasionally, you'll need a dataset that has data associated with your main subject of study. For examples in this chapter we will be experimenting with variations of a dataset called `us_cities` that has populations for cities in United States. Why would you need such a dataset in the real world? Well, suppose you are conducting a study that looks at sales by city. You might have a dataset with a listing of such sales but, sadly, you don't have the populations of these cities (which may help explain the sales figures). By obtaining an associated dataset on city populations, we can potentially combine the city populations with a summary of total sales by city. Before joining such datasets together, we first need to fully understand how to read in datasets from files.
+To make things easy for us, the **dspatterns** package has a function that writes any **dspatterns**-based dataset to a CSV file: `dataset_to_csv()`. Remember that we need to load the **dspatterns** package first, and this can be done by executing `library(dspatterns)` in the **RStudio** console. The datasets you'll end up importing will be varied and will serve different purposes. Occasionally, you'll need a dataset that has data associated with your main subject of study. For examples in this section we will be experimenting with variations of a dataset called `us_cities` that has populations for cities in United States. Why would you need such a dataset in the real world? Well, suppose you are conducting a study that looks at sales by city. You might have a dataset with a listing of such sales but, sadly, you don't have the populations of these cities (which may help explain the sales figures). By obtaining an associated dataset on city populations, we can potentially combine the city populations with a summary of total sales by city. Before joining such datasets together, we first need to fully understand how to read in datasets from files.
 
 The `us_cities` dataset inside the **dspatterns** package can be written as a CSV file like this:
 
@@ -32,10 +32,11 @@ The `us_cities` dataset inside the **dspatterns** package can be written as a CS
 dataset_to_csv(dataset = "us_cities")
 ```
 
-The following message appeared in my **R** console (your message, on your system, will likely provide a different file path).
+A message should appear in your **R** console, which goes something like this:
 
 ```
-#> The CSV file `us_cities.csv` was written to the working directory (`/Users/rich/Documents/R_projects/chapter5`)
+#> The CSV file `us_cities.csv` was written to the working directory
+#> ...
 ```
 
 Further information on the `us_cities` dataset can be found by executing `help(us_cities)` in the **RStudio** console.
@@ -55,7 +56,7 @@ While such variations in CSV formatting can't really be avoided, the *Tidyverse*
 
 ### Reading in Our Sample CSV file with the `read_csv()` Function
 
-Now that we have a sample CSV file on disk, let's read in that file into a tibble object. We can do this using the `read_csv()` function from the readr package. This package is available in the *Tidyverse* so we need to first execute `library(tidyverse)` before using that function. As before, we will illustrate our upcoming examples as **R Markdown** code chunks, so, the next listing will look familiar to us.
+Now that we have a sample CSV file on disk, let's read in that file into a tibble object. We can do this using the `read_csv()` function from the readr package. This package is available in the *Tidyverse* so we need to first execute `library(tidyverse)` before using that function. As before, we will illustrate our upcoming examples as **R Markdown** code chunks, so, the next code listing will look familiar to us.
 
 `r dspatterns::code_hints(
 "Loading the **tidyverse** and **dspatterns** packages.")`
@@ -92,7 +93,7 @@ So, the CSV was successfully read into the `city_table` variable as a tibble. We
 - `?`: guess the column type
 - `_`: skip the column entirely
 
-For the first three `character`-based columns of `us_cities.csv` (`city`, `state_id`, `state_name`) we would use three `c`'s and for the integer values in the last two columns, two `i`'s are needed. This makes the string for `col_types` become `"cccii"`. The next code listing rewrites the code in the previous listing, providing the `col_types` to the `read_csv()` function call and getting us the a tibble with our desired column types.
+For the first three `character`-based columns of `us_cities.csv` (`city`, `state_id`, `state_name`) we would use three `c`'s and for the integer values in the last two columns, two `i`'s are needed. This makes the string for `col_types` become `"cccii"`. The next code listing rewrites the code in the previous code listing, providing the `col_types` to the `read_csv()` function call and getting us the a tibble with our desired column types.
 
 `r dspatterns::code_hints(
 "Using the ~~read_csv()~~ with ~~us_cities.csv~~, specifying the exact column types in ~~col_types~~.",
@@ -144,7 +145,7 @@ create_excel_file()
 This function doesn't require any options. It will just write the **Excel** file that's stored in the **dspatterns** package to the working directory. You'll get a helpful message in the console that describes what happened:
 
 ```
-#> The Excel file `us_cities.xlsx` was written to the working directory (`/Users/rich/Documents/R_projects/chapter5`)
+#> The Excel file `us_cities.xlsx` was written to the working directory
 ```
 
 We can further verify that the file was written by looking for it in **RStudio**'s *Files* tab (lower-right pane). Only one type of file is generated from the `create_excel_file()` function and that's `us_cities.xlsx`.

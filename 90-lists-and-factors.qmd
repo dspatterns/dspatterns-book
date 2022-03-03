@@ -17,9 +17,9 @@ This section covers
 - Using factors successfully though inspection and transformation with base **R** functions and functions from the **forcats** package
 - Creating **ggplot** bar charts that make the best use of factor variables
 
-When working in **R** long enough, you'll encounter list objects again and again. You may bump into factors every now are again but try to side-step their use. However, these are very important and useful data structures and we ought to fully understand them. This chapter goes over lists, which we've seen before, in much more detail. We'll understand how to better create lists, how to access data from them, how to combine lists together, and how to go to and from lists and data frames. Factors will be introduced in the second part of this chapter. They shouldn't be something to be avoided as they are genuinely useful, especially in the context of plotting data with **ggplot**.
+When working in **R** long enough, you'll encounter list objects again and again. You may bump into factors every now are again but try to side-step their use. However, these are very important and useful data structures and we ought to fully understand them. This section goes over lists, which we've seen before, in much more detail. We'll understand how to better create lists, how to access data from them, how to combine lists together, and how to go to and from lists and data frames. Factors will be introduced in the second part of this section. They shouldn't be something to be avoided as they are genuinely useful, especially in the context of plotting data with **ggplot**.
 
-We'll use a dataset called `german_cities` (available in the **dspatterns** package) to work through examples that involve factors, eventually getting to nicer and nicer plots. The functions that we'll use throughout this chapter will be an even mix of base **R** functions and functions that are available in the *Tidyverse* packages **forcats** and **ggplot**.
+We'll use a dataset called `german_cities` (available in the **dspatterns** package) to work through examples that involve factors, eventually getting to nicer and nicer plots. The functions that we'll use throughout this section will be an even mix of base **R** functions and functions that are available in the *Tidyverse* packages **forcats** and **ggplot**.
 
 ## Lists in **R**
 
@@ -27,7 +27,7 @@ A list object in **R** is kind of like a container that can hold any type of **R
 
 ### Making Named Lists and Accessing Their Elements
 
-Just as we can create a tibble with **dplyr**'s `tibble()` function and a vector with `c()`, a list object can be produced by using the `list()` function. We saw an example of this earlier in *Chapter 7*. That was an example of a named list, where each element has a name (letters from `a` to `e`). Now, here's a question: why use a named list? The names can serve as easy-to-use, easy-to-understand identifiers for what to expect inside! For example, let's take a hypothetical list called `baseball_stats.` We might have names for elements called `"batting"`, `"pitching"`, and `"fielding"`. If we do, it's easy for the user handling that list to get batting statistics by simply using `baseball_stats$batting` in their code.
+Just as we can create a tibble with **dplyr**'s `tibble()` function and a vector with `c()`, a list object can be produced by using the `list()` function. We saw an example of this earlier. That was an example of a named list, where each element has a name (letters from `a` to `e`). Now, here's a question: why use a named list? The names can serve as easy-to-use, easy-to-understand identifiers for what to expect inside! For example, let's take a hypothetical list called `baseball_stats.` We might have names for elements called `"batting"`, `"pitching"`, and `"fielding"`. If we do, it's easy for the user handling that list to get batting statistics by simply using `baseball_stats$batting` in their code.
 
 Let's make a named list here with three wildly different elements: a numeric vector, a tibble, and a list.
 
@@ -322,7 +322,7 @@ The output looks good! Did you notice the use of the `c()` function within the b
 
 Factors as an **R** data type are used to represent categorical data. They are vectors that contain levels: integers that describe the ordering of the factor's values. They are often misunderstood and are largely avoided on account of that. The reasons for their non-use may stem from their non-intuitive behavior in functions or the perception that non-factor-based solutions work just as well. But they can be useful, and this section will try to prove that.
 
-The *Tidyverse* package **forcats** will be used here for handling factor values. We have an interesting dataset available in the **dspatterns** package called `german_cities.` It's a bit like the `us_cities` dataset we used in *Chapter 5* except it's smaller (only 79 rows) and has two factor columns (`name` and `state`). A dataset like this may be used by statisticians to analyze population trends, or, it might be used in combination with other domain-specific data (e.g., in advertising/marketing, scientific studies, etc.). Here is a printout of the `german_cities` tibble.
+The *Tidyverse* package **forcats** will be used here for handling factor values. We have an interesting dataset available in the **dspatterns** package called `german_cities.` It's a bit like the `us_cities` dataset we used previously except it's smaller (only 79 rows) and has two factor columns (`name` and `state`). A dataset like this may be used by statisticians to analyze population trends, or, it might be used in combination with other domain-specific data (e.g., in advertising/marketing, scientific studies, etc.). Here is a printout of the `german_cities` tibble.
 
 `r dspatterns::code_hints(
 "Printing out the ~~german_cities~~ dataset, which has two factor columns."
@@ -413,15 +413,17 @@ Speaking of plots, let's make one! This time: a bar plot. The `geom_bar()` funct
 `r dspatterns::code_hints(
 "Creating a barplot of the most populous German cities in the state of Bayern by using **ggplot** and its ~~geom_bar()~~ function."
 )`
-```{r barplot-bayern-1, fig.cap='(ref:barplot-bayern-1)'}
+```{r)'}
+#| label: fig-barplot-bayern-1
+#| fig.cap: "Our first bar plot made with **ggplot**. We really need to fix the ordering of the bars."
+
 ggplot(data = german_cities_bayern, aes(y = name, x = pop_2015)) +
   geom_bar(stat = "identity")
 ```
-(ref:barplot-bayern-1) Our first bar plot made with **ggplot**. We really need to fix the ordering of the bars.
 
-The resulting plot of *Figure \@ref(fig:barplot-bayern-1)* makes sense and is technically correct: the lengths of the bars do correspond to the city populations. However, it's also a bit disappointing as a visualization because the cities are arranged in reverse alphabetical order (moving from top to bottom), which is arbitrary with regard to population and doesn't give us an easy way to determine rank. This is where the usefulness of factors enters the picture. We can exploit factor levels to enforce the ordering of variables in **ggplot**. To do all this, we'll use a few functions from **forcats** to modify factor levels and serve our visualization needs.
+The resulting plot of @fig-barplot-bayern-1 makes sense and is technically correct: the lengths of the bars do correspond to the city populations. However, it's also a bit disappointing as a visualization because the cities are arranged in reverse alphabetical order (moving from top to bottom), which is arbitrary with regard to population and doesn't give us an easy way to determine rank. This is where the usefulness of factors enters the picture. We can exploit factor levels to enforce the ordering of variables in **ggplot**. To do all this, we'll use a few functions from **forcats** to modify factor levels and serve our visualization needs.
 
-The `fct_reorder()` function works wonders when you want to have the order of factor levels correspond to the order of a different variable. With the bar plot of cities (*Figure \@ref(fig:barplot-bayern-1)*) it was lamentable that the order of the bars did nothing to communicate the rank of cities by their population. Now, we can do something about it with **forcats**' `fct_reorder()`. The following code listing uses an indexing assignment approach (in contrast to the `mutate()` approach used earlier) to reorder the levels of the name variable on the basis of the city population (the `pop_2015` variable).
+The `fct_reorder()` function works wonders when you want to have the order of factor levels correspond to the order of a different variable. With the bar plot of cities (@fig-barplot-bayern-1) it was lamentable that the order of the bars did nothing to communicate the rank of cities by their population. Now, we can do something about it with **forcats**' `fct_reorder()`. The following code listing uses an indexing assignment approach (in contrast to the `mutate()` approach used earlier) to reorder the levels of the name variable on the basis of the city population (the `pop_2015` variable).
 	
 `r dspatterns::code_hints(
 "Using the ~~fct_reorder()~~ function to reorder the factor levels of the name variable to match the ordering of the ~~pop_2015~~ variable."
@@ -433,18 +435,20 @@ german_cities_bayern$name <-
 levels(german_cities_bayern$name)
 ```
 
-We checked our work by using the `levels()` function for manual inspection of the levels. We now get an ordering that is no longer alphanumeric. This is success! We'll really see it, though, when the bar plot is regenerated. We can re-run the plotting code and it'll give us a radically improved plot (*Figure \@ref(fig:barplot-bayern-2)*).
+We checked our work by using the `levels()` function for manual inspection of the levels. We now get an ordering that is no longer alphanumeric. This is success! We'll really see it, though, when the bar plot is regenerated. We can re-run the plotting code and it'll give us a radically improved plot (@fig-barplot-bayern-2).
 
 `r dspatterns::code_hints(
 "Regenerating the barplot of the most populous German cities in the state of Bayern (this is version 2)."
 )`
-```{r barplot-bayern-2, fig.cap='(ref:barplot-bayern-2)'}
+```{r}
+#| label: fig-barplot-bayern-2
+#| fig.cap: "An improvement on the bar plot of large cities in Bayern, Germany. Reordering factor levels in the name variable leads to a coherent ordering of cities by population."
+
 ggplot(data = german_cities_bayern, aes(y = name, x = pop_2015)) +
   geom_bar(stat = "identity")
 ```
-(ref:barplot-bayern-2) An improvement on the bar plot of large cities in Bayern, Germany. Reordering factor levels in the name variable leads to a coherent ordering of cities by population.
 
-Having the bars arranged in this way really helps. We can tell, in an instant, that Ingolstadt has a greater population than Würzburg. What if you wanted the bars in the reverse order? In that case, the `fct_rev()` function is what's needed. Let's use the function, inspect the factor levels with `levels()`, and re-plot as before (*Figure \@ref(fig:barplot-bayern-3)*).
+Having the bars arranged in this way really helps. We can tell, in an instant, that Ingolstadt has a greater population than Würzburg. What if you wanted the bars in the reverse order? In that case, the `fct_rev()` function is what's needed. Let's use the function, inspect the factor levels with `levels()`, and re-plot as before (@fig-barplot-bayern-3).
 
 `r dspatterns::code_hints(
 "Reversing the order of factor levels in the ~~name~~ variable with the ~~fct_rev()~~ function."
@@ -458,11 +462,13 @@ levels(german_cities_bayern$name)
 `r dspatterns::code_hints(
 "Regenerating the barplot of the most populous German cities in the state of Bayern (this is version 3)."
 )`
-```{r barplot-bayern-3, fig.cap='(ref:barplot-bayern-3)'}
+```{r}
+#| label: fig-barplot-bayern-3
+#| fig.cap: "The reversed order of bars in this plot was accomplished by reversing the factor levels of the name variable with `fct_rev()`."
+
 ggplot(data = german_cities_bayern, aes(y = name, x = pop_2015)) +
   geom_bar(stat = "identity")
 ```
-(ref:barplot-bayern-3) The reversed order of bars in this plot was accomplished by reversing the factor levels of the name variable with `fct_rev()`.
 
 Lastly, before moving on to more complex plots (all made possible by **forcats**), let's look at a few more functions for transforming factor levels. A great one is `fct_recode()`. If you ever wanted to change the values of the factor levels. Say, for instance, you didn't want the `ü` characters to appear in the city names of `"Fürth"`, `"Würzburg"`, and `"Nürnberg"` and would rather use `"Fuerth"`, `"Wuerzburg"`, and `"Nuernberg"`; then it's `fct_recode()` to the rescue:
 
@@ -480,45 +486,51 @@ german_cities_bayern$name <-
 levels(german_cities_bayern$name)
 ```
 
-Again, we need to plot this data to really believe that this use of `fct_recode()` will change the plot labels (*Figure \@ref(fig:barplot-bayern-4)*).
+Again, we need to plot this data to really believe that this use of `fct_recode()` will change the plot labels (@fig-barplot-bayern-4).
 
 `r dspatterns::code_hints(
 "Regenerating the barplot of the most populous German cities in the state of Bayern (this is version 4)."
 )`
-```{r barplot-bayern-4, fig.cap='(ref:barplot-bayern-4)'}
+```{r}
+#| label: fig-barplot-bayern-4
+#| fig.cap: "Thanks to selectively recoding factor values with `fct_recode()`, some of the city names have been slightly altered. The rest of the plot remains unchanged."
+
 ggplot(data = german_cities_bayern, aes(y = name, x = pop_2015)) +
   geom_bar(stat = "identity")
 ```
-(ref:barplot-bayern-4) Thanks to selectively recoding factor values with `fct_recode()`, some of the city names have been slightly altered. The rest of the plot remains unchanged.
 
 ### Plotting Data with More Advanced Treatments of Factors
 
-Let's take the same dataset, `german_cities`, and get a bar plot that indicates how many cities are in each state. The use of `geom_bar()` is now different than what was used earlier. This time we will use the `stat = "count"` option but, since that's the default for `geom_bar()`, we'll just omit that altogether. Have a look at the **ggplot** code and the resulting plot in *Figure \@ref(fig:barplot-count)*.
+Let's take the same dataset, `german_cities`, and get a bar plot that indicates how many cities are in each state. The use of `geom_bar()` is now different than what was used earlier. This time we will use the `stat = "count"` option but, since that's the default for `geom_bar()`, we'll just omit that altogether. Have a look at the **ggplot** code and the resulting plot in @fig-barplot-count.
 
 `r dspatterns::code_hints(
 "Creating a bar plot that is based on counts of cities in each state, which is mapped to the ~~y~~ aesthetic."
 )`
-```{r barplot-count, fig.cap='(ref:barplot-count)'}
+```{r}
+#| label: fig-barplot-count
+#| fig.cap: "A bar plot that shows the number of cities in the dataset that are part of each state. We need to order the bars, however, to make this a more effective visualization (it's hard to parse at present)."
+
 german_cities %>%
   ggplot(aes(y = state)) +
   geom_bar()
 ```
-(ref:barplot-count) A bar plot that shows the number of cities in the dataset that are part of each state. We need to order the bars, however, to make this a more effective visualization (it's hard to parse at present).
 
-The plot in *Figure \@ref(fig:barplot-count)* is, just like that of *Figure \@ref(fig:barplot-bayern-1)*, unsatisfactory as a visualization since the bars (corresponding to counts of cities in each state) are not ordered by their lengths. The **forcats** package offers a very useful function that assigns frequency values to factor levels: `fct_infreq()`. Let's use `fct_infreq()` in a `mutate()` statement along with `fct_rev()` as a way to reverse the levels, just as we've done before. In the next code listing the dataset is mutated with those factor adjustments and the table is then introduced to `ggplot()` via the `%>%`. The much-improved plot is shown in *Figure \@ref(fig:fct-infreq)*.
+The plot in @fig-barplot-count is, just like that of @fig-barplot-bayern-1, unsatisfactory as a visualization since the bars (corresponding to counts of cities in each state) are not ordered by their lengths. The **forcats** package offers a very useful function that assigns frequency values to factor levels: `fct_infreq()`. Let's use `fct_infreq()` in a `mutate()` statement along with `fct_rev()` as a way to reverse the levels, just as we've done before. In the next code listing the dataset is mutated with those factor adjustments and the table is then introduced to `ggplot()` via the `%>%`. The much-improved plot is shown in @fig-fct-infreq.
 
 `r dspatterns::code_hints(
 "Improving on the city count bar plot through use of the ~~fct_infreq()~~ and ~~fct_rev()~~ functions."
 )`
-```{r fct-infreq, fig.cap='(ref:fct-infreq)'}
+```{r}
+#| label: fig-fct-infreq
+#| fig.cap: "An improved bar plot that made use of the `fct_infreq()` function (to assign levels according to frequency) and, following that, the `fct_rev()` function (to reverse the order of levels)."
+
 german_cities %>%
   mutate(state = state %>% fct_infreq() %>% fct_rev()) %>%
   ggplot(aes(y = state)) +
   geom_bar()
 ```
-(ref:fct-infreq) An improved bar plot that made use of the `fct_infreq()` function (to assign levels according to frequency) and, following that, the `fct_rev()` function (to reverse the order of levels).
 
-The plot shown in *Figure \@ref(fig:fct-infreq)* is a great improvement over the previous one in *Figure \@ref(fig:barplot-count)*, proving yet again that factors, and the careful manipulation of them, are useful for controlling plot presentation.
+The plot shown in @fig-fct-infreq is a great improvement over the previous one in @fig-barplot-count, proving yet again that factors, and the careful manipulation of them, are useful for controlling plot presentation.
 
 Regarding the reordering of factor levels, there are two other **forcats** functions you should know about. One is the `fct_inorder()` function. Using that on a factor will assign levels based on the order in which values first appear. This function could be handy should you have a table arranged just so, and you wanted to preserve the order of factor values in a plot.
 
@@ -544,13 +556,15 @@ The example shown in the next code listing synthesizes a number of `fct_*()` fun
 `r dspatterns::code_hints(
 "Further refinement of the city count bar plot by incorporating the ~~fct_lump_n()~~ function (just before reversing levels)."
 )`
-```{r fct-lump-n, fig.cap='(ref:fct-lump-n)'}
+```{r}
+#| label: fig-fct-lump-n
+#| fig.cap: "This bar plot of states and the count of cities within them now has an 'Other' bar that represents the count of cities in all other states not in the highlighted five."
+
 german_cities %>%
   mutate(state = state %>% fct_infreq() %>% fct_lump_n(5) %>% fct_rev()) %>%
   ggplot(aes(y = state)) +
   geom_bar()
 ```
-(ref:fct-lump-n) This bar plot of states and the count of cities within them now has an 'Other' bar that represents the count of cities in all other states not in the highlighted five.
 
 While this exploration of factors, the functionality available in **forcats** for modifying them, and these bar plots is useful enough, there is so much more to explore. I strongly suggest looking at the website for **forcats**, which is at https://forcats.tidyverse.org/. There, you'll find a *Getting Started* article, a function *Reference* section, and, a *Cheetsheet* that succinctly shows how all the functions work and are tied together. Sure, factors can be a pain, but working toward understanding them better really does lead to better plots and that really makes it all worth the effort.
 

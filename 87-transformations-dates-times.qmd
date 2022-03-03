@@ -18,15 +18,15 @@ This section covers
 
 Working with dates and times (and both together as date-time values) is virtually unavoidable. Many event-based datasets will have a date/time element and there are many other examples of datasets with dates and/or times. Further to this, dates and times are often provided in less-than-desirable forms (not adhering to standards), so, we'll need to transform these data into more dependable formats. Once we gain some understanding of how dates and times can be used in tabular data, we are better situated to use the data and create data extracts, reports, and **ggplot** plots.
 
-The **dspatterns** package provides the dataset `nycweather`, which will be used throughout this chapter to illustrate the ways we can work with dates and times in **R**. It is similar in spirit to the `winniweather` dataset that we used in Chapter 4 but is significantly larger (i.e., it has an entire year of weather data). Be sure to check out the help file for the dataset by using `help(nycweather)` in the console, it has information on all of the different variables.
+The **dspatterns** package provides the dataset `nycweather`, which will be used throughout this section to illustrate the ways we can work with dates and times in **R**. It is similar in spirit to the `winniweather` dataset that we used in an earlier section but is significantly larger (i.e., it has an entire year of weather data). Be sure to check out the help file for the dataset by using `help(nycweather)` in the console, it has information on all of the different variables.
 
-Our goal in this chapter is to generate an interesting time series plot of temperature data for New York City in 2010, one that shows the trend of daily low and high temperatures in a single view. To get there, we need to transform the dates in `nycweather` dataset to a form that **ggplot** understands, and, we'll revisit techniques in mutating and summarizing data with **dplyr** and tidying data with **tidyr**. Only then will we have our data transformed such that plotting it with **ggplot** is problem free.
+Our goal in this section is to generate an interesting time series plot of temperature data for New York City in 2010, one that shows the trend of daily low and high temperatures in a single view. To get there, we need to transform the dates in `nycweather` dataset to a form that **ggplot** understands, and, we'll revisit techniques in mutating and summarizing data with **dplyr** and tidying data with **tidyr**. Only then will we have our data transformed such that plotting it with **ggplot** is problem free.
 
 ## Dates, Date-Times, and ISO 8601
 
 We have always dealt with dates and times in idiosyncratic ways. This is to say, they can and often are written in many different ways. It's always nice to have variety but the problem with all this is ambiguity. Inevitably, you'll find all sorts of date and time representations across the different datasets you'll encounter. The strategy then is then to adopt a standard format for your data analysis and attempt to convert any nonstandard dates/times to that standardized format. Want an example of an ambiguous date? Here's one: `05/09/2013`. Is the date actually May 9, 2013 or September 5, 2013? If we had to deal with such dates in our data, we could probably find ways to determine whether the date format is `MM/DD/YYYY` or `DD/MM/YYYY` and that would indeed be helpful. One thing we shouldn't do, however, is to create dates like that in our own output. It would make things harder for everyone, and there is indeed a better way.
 
-A format we should strive to use for all dates and times within **R** should adhere to the ISO 8601 standard (we'll call this ISO format for the rest of this chapter). The standard has date and time values ordered from the largest to the smallest time units. A date in ISO format is represented in the format `YYYY-MM-DD` (the year, the month, then the day), and so the date July 10, 2012 is written as `2012-07-10` in ISO format. It's important that the year always has 4 digits, and that the month and day components use 2 digits (with a leading zero as necessary). The standard allows for the omission of hyphens which means that `20120710` is acceptable (but the hyphens make for much easier reading).
+A format we should strive to use for all dates and times within **R** should adhere to the ISO 8601 standard (we'll call this ISO format for the rest of this section). The standard has date and time values ordered from the largest to the smallest time units. A date in ISO format is represented in the format `YYYY-MM-DD` (the year, the month, then the day), and so the date July 10, 2012 is written as `2012-07-10` in ISO format. It's important that the year always has 4 digits, and that the month and day components use 2 digits (with a leading zero as necessary). The standard allows for the omission of hyphens which means that `20120710` is acceptable (but the hyphens make for much easier reading).
 
 If we have a date and time (or date-time), it is written in the format `YYYY-MM-DD hh:mm`. The hours and minutes portion must have 2 digits each, the colon is optional (but recommended), and we must use 24-hour time. The date-time of July 10, 2012 at 6:04 PM becomes `2012-07-10 18:04` in ISO format. We can optionally incorporate seconds and decimal fractions of seconds as well, making the format look like: `YYYY-MM-DD hh:mm:ss[.ddd]`.
 
@@ -44,7 +44,7 @@ The **lubridate** package provides hope for working with dates and times in **R*
 
 Before getting to transformations of dates and times in tabular data, we'll start off by working with character-based dates and date-times and seeing how they are transformed to those pristine date/time-based **R** objects. In doing so, some of the most useful functions in **lubridate** will be demonstrated.
 
-We must remember to load the packages we need for this chapter! This will comprise three `library()` statements, one each for: tidyverse (which loads a lot of *Tidyverse* packages, including **dplyr** and **ggplot**), **lubridate** (not loaded by `library(tidyverse)`), and **dspatterns** (to get access to our datasets).
+We must remember to load the packages we need for this section! This will comprise three `library()` statements, one each for: tidyverse (which loads a lot of *Tidyverse* packages, including **dplyr** and **ggplot**), **lubridate** (not loaded by `library(tidyverse)`), and **dspatterns** (to get access to our datasets).
 
 `r dspatterns::code_hints(
 "Loading the **tidyverse**, **lubridate**, and **dspatterns** packages."
@@ -73,7 +73,7 @@ c(
 "#C ~~DD/MM/YYYY~~."
 ))`
 ```{r text-dates}
-ymd_chr <- "19950615"  #A
+ymd_chr <- "19950615"    #A
 mdy_chr <- "06/15/1995"  #B
 dmy_chr <- "15-06-1995"  #C
 ```
@@ -140,7 +140,7 @@ c(
 "#C DD/MM/YYYY hh:mm."
 ))`
 ```{r text-date-times}
-ymd_hm_chr <- "19950615 0800"  #A
+ymd_hm_chr <- "19950615 0800"     #A
 mdy_hm_chr <- "06/15/1995 08:00"  #B
 dmy_hm_chr <- "15-06-1995 08:00"  #C
 ```
@@ -205,16 +205,16 @@ Although the `nycweather` dataset has a column named time, the type of that colu
 c(
 "#A Use ~~geom_point()~~ to create a scatterplot."
 ))`
-```{r plot-nycweather-asis, fig.cap='(ref:plot-nycweather-asis)', eval=FALSE}
+```{r plot-nycweather-asis, eval=FALSE}
 ggplot(data = nycweather) +
   geom_point(aes(x = time, y = temp))  #A
 ```
 
-![](appendix-figures/87-transformations-dates-times/01-figure-plot_nycweather_asis.png){#fig:plot-nycweather-asis}
+![](appendix-figures/87-transformations-dates-times/01-figure-plot_nycweather_asis.png){#fig-plot-nycweather-asis}
 
-There are a few problems with the plot shown in *Figure \@ref(fig:plot-nycweather-asis)*. The first is that the *x* axis is severely messed up (essentially an overprinting of all the character-based date-times). The second problem is that the plot took a very long time to produce (try it!). There are a lot of data points (around 13,000) and this high amount of data is usually not necessary for this type of plot. Finally, though it's not obvious but incredibly important nonetheless, the data are evenly spaced in the *x* direction. This occurs for any character-based inputs to `x` or `y` in **ggplot**. Essentially, the time values in their present form have no meaning to **ggplot**.
+There are a few problems with the plot shown in @fig-plot-nycweather-asis. The first is that the *x* axis is severely messed up (essentially an overprinting of all the character-based date-times). The second problem is that the plot took a very long time to produce (try it!). There are a lot of data points (around 13,000) and this high amount of data is usually not necessary for this type of plot. Finally, though it's not obvious but incredibly important nonetheless, the data are evenly spaced in the *x* direction. This occurs for any character-based inputs to `x` or `y` in **ggplot**. Essentially, the time values in their present form have no meaning to **ggplot**.
 
-Just to drive that last point home, let's take the beginning and end of the dataset (i.e., temperatures in early January and also the temperatures in late December) and plot again in the same way. If the time data is meaningful (it's not), we should expect to see a large gap in the data points, with only the extremities showing data points. The code for this experiment is provided next and the resulting plot is given as *Figure \@ref(fig:plot-nycweather-start-end)*.
+Just to drive that last point home, let's take the beginning and end of the dataset (i.e., temperatures in early January and also the temperatures in late December) and plot again in the same way. If the time data is meaningful (it's not), we should expect to see a large gap in the data points, with only the extremities showing data points. The code for this experiment is provided next and the resulting plot is given as @fig-plot-nycweather-start-end.
 
 `r dspatterns::code_hints(
 "Plotting the beginning and end of ~~nycweather~~.",
@@ -222,7 +222,10 @@ c(
 "#A Take only the first and last 100 rows by combining the ~~head()~~ and ~~tail()~~ of nycweather.",
 "#B Use the same plotting code as before, this time using the ~~nycweather_start_end~~ object."
 ))`
-```{r plot-nycweather-start-end, fig.cap='(ref:plot-nycweather-start-end)'}
+```{r}
+#| label: fig-plot-nycweather-start-end
+#| fig.cap: "A revised plot that takes the first and last 100 rows of ~~nycweather~~. Very evenly spaced."
+
 nycweather_start_end <-
   dplyr::bind_rows(        
     head(nycweather, 100),  #A
@@ -232,7 +235,6 @@ nycweather_start_end <-
 ggplot(data = nycweather_start_end) +
   geom_point(aes(x = time, y = temp))  #B
 ```
-(ref:plot-nycweather-start-end) A revised plot that takes the first and last 100 rows of ~~nycweather~~. Very evenly spaced.
 
 We can, without any doubt, see that the 200 data points of time are equally distributed horizontally across the plot. No gap in the middle. For sure, those character-based time values have no significance to **ggplot**. However, dates and date-times of the **R** `Date` and `POSIXct` types do have significance to **ggplot**, which will make the appropriate time-based axis (and hence map the positions of the data points correctly). So, let's make that transformation already! We needd to use the `mutate()` function along with **lubridate**'s `as_datetime()` function to transform the column of character-based date-times (all in ISO 8601 format) to `POSIXct` values.
 
@@ -266,16 +268,18 @@ nycweather_a_samp
 
 The resulting table is now less than 1000 rows.
 
-The plot will use the same **ggplot** code, simply replacing the data value with `nycweather_a_samp`. We then get the plot shown in *Figure \@ref(fig:plot-with-sampled-data)*.
+The plot will use the same **ggplot** code, simply replacing the data value with `nycweather_a_samp`. We then get the plot shown in @fig-plot-with-sampled-data.
 
 `r dspatterns::code_hints(
 "Plotting a sample of the revised dataset."
 )`
-```{r plot-with-sampled-data, fig.cap='(ref:plot-with-sampled-data)'}
+```{r}
+#| label: fig-plot-with-sampled-data
+#| fig.cap: "A plot of the data with a proper date-time given as the ~~x~~ aesthetic. The x axis now looks reasonable."
+
 ggplot(data = nycweather_a_samp) +
   geom_point(aes(x = time, y = temp))
 ```
-(ref:plot-with-sampled-data) A plot of the data with a proper date-time given as the ~~x~~ aesthetic. The x axis now looks reasonable.
 
 The `nycweather` dataset has substantially more weather observations than hours in the measurement year (2010 has 8,760 hours whereas the dataset has 13,306 rows). For the purpose of thinning our data a bit, let's do some work to get a single observation per hour.
 
@@ -296,7 +300,7 @@ nycweather_b <-
   nycweather_a %>%
   filter(!is.na(temp)) %>%
   mutate(
-    date = date(time),  #A
+    date = date(time), #A
     hour = hour(time)  #B
   ) %>%
   group_by(date, hour) %>%
@@ -313,11 +317,13 @@ Let's plot this once again! This time we will plot the data as a line using **gg
 `r dspatterns::code_hints(
 "Plotting our hourly temperatures as a line."
 )`
-```{r plot-hourly-data-line, fig.cap='(ref:plot-hourly-data-line)'}
+```{r}
+#| label: fig-plot-hourly-data-line
+#| fig.cap: "A plot of the hourly temperature data for 2010 using a single line rather than dots."
+
 ggplot(data = nycweather_b) +
   geom_line(aes(x = time, y = temp))
 ```
-(ref:plot-hourly-data-line) A plot of the hourly temperature data for 2010 using a single line rather than dots.
 
 ### Further Transforming the Time Series Data to Make a New Plot
 
@@ -345,7 +351,7 @@ nycweather_c
 
 The resulting table is very compact! Only three columns and 365 rows.
 
-There is still an issue with the resultant table: it's not tidy. We need a single column for temperature values, and this is again (see *Chapter 4*) a job for **tidyr**'s `pivot_longer()` function. It can be hard to remember exactly how to formulate a `pivot_longer()` call. The best advice is to refer to its help page at `help(pivot_longer)`, or, have a look at this next code listing for a great example!
+There is still an issue with the resultant table: it's not tidy. We need a single column for temperature values, and this is again a job for **tidyr**'s `pivot_longer()` function. It can be hard to remember exactly how to formulate a `pivot_longer()` call. The best advice is to refer to its help page at `help(pivot_longer)`, or, have a look at this next code listing for a great example!
 
 `r dspatterns::code_hints(
 "Tidying the table to get one temperature value per row.",
@@ -374,7 +380,10 @@ Now that the data is in this tidy form, we can write some **ggplot**-based code 
 `r dspatterns::code_hints(
 "Plotting our daily minimum and maximum temperatures."
 )`
-```{r plot-daily-min-max-lines, fig.cap='(ref:plot-daily-min-max-lines)'}
+```{r}
+#| label: fig-plot-daily-min-max-lines
+#| fig.cap: "A plot of the daily minimum and maximum temperatures. The theme was changed to give us a more minimal look."
+
 ggplot(data = nycweather_d) +
   geom_line(aes(x = date, y = temp, color = type)) +
   scale_color_manual(values = c("red", "blue")) +
@@ -392,11 +401,10 @@ ggplot(data = nycweather_d) +
     y = "Temperature (degrees C)"
   )
 ```
-(ref:plot-daily-min-max-lines) A plot of the daily minimum and maximum temperatures. The theme was changed to give us a more minimal look.
 
 We added a few extra **ggplot** statements to further prettify the plot. With `scale_x_date()`, it's possible and relatively painless to specify the date breaks (how often date labels appear) and the minor breaks (how often vertical guidelines appear, without any text labels). With a single use of `theme_minimal()` the look of the plot is radically altered to something that is... minimal. There are other `theme_...()` functions you might also try, like `theme_bw()`, `theme_light()`, `theme_dark()`, `theme_classic()`, and `theme_linedraw()`. We use `theme()` to make a few tweaks to the legend: removing its title, and positioning it to the top left. Finally, we used `labs()` to add informative `title` and `subtitle` elements, and, to modify the x- and y-axis labels.
 
-The finalized plot of *Figure \@ref(fig:plot-daily-min-max-lines)* is something that could be useful as a data product, like a figure in a report or a presentation. It clearly shows us the trend of daily minimum and maximum temperatures for New York in 2010. If the plot were seen in isolation, we wouldn't have to guess what the plot is showing us. The text in the title and subtitle explains what's being shown. The *y*-axis label tells us that the temperature units are in degrees Celsius. The manual coloring of the plot lines (red for high temperatures, blue for low temperatures) was a nice aesthetic choice that aligns with our expectations for representative colors.
+The finalized plot of @fig-plot-daily-min-max-lines is something that could be useful as a data product, like a figure in a report or a presentation. It clearly shows us the trend of daily minimum and maximum temperatures for New York in 2010. If the plot were seen in isolation, we wouldn't have to guess what the plot is showing us. The text in the title and subtitle explains what's being shown. The *y*-axis label tells us that the temperature units are in degrees Celsius. The manual coloring of the plot lines (red for high temperatures, blue for low temperatures) was a nice aesthetic choice that aligns with our expectations for representative colors.
 
 When should we be more focused on aesthetics? Well, with exploratory plots we likely don't need to spend time on making such plots aesthetically pleasing. In that mode, we are primarily trying to understand the data; we'd like to iterate from data transformation to plot quickly to develop insight into the data. For presentation-type plots, we absolutely should make the effort to ensure that their purpose is clear, all labels are precise, and that they align with what is being communicated.
 

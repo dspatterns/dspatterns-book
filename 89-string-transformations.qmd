@@ -19,7 +19,7 @@ This section covers
 - Writing and using regular expressions to use as patterns for more advanced string-based applications
 - Using regex patterns with functions from the **stringr** package to work with strings and character vectors
 
-Text is set of characters, strung together, giving us the term *string*. Working with strings is something you might do in **R** over and over again. Because text may be very unstructured, working with it can be quite challenging. We need to understand the tools available for dealing with strings in base **R** and in the Tidyverse because strings play a big role in many data cleaning and preparation tasks. We'll use small and large examples of text in our lessons here. The **dspatterns** package provides a dataset for this chapter called `resto_reviews`. It's not a tibble this time but rather a character vector containing reviews for a restaurant. We will occasionally use it to practice with a collection of string-based **R** functions. Some of these functions will be base **R** functions and others will come from the **stringr** package from the Tidyverse.
+Text is set of characters, strung together, giving us the term *string*. Working with strings is something you might do in **R** over and over again. Because text may be very unstructured, working with it can be quite challenging. We need to understand the tools available for dealing with strings in base **R** and in the Tidyverse because strings play a big role in many data cleaning and preparation tasks. We'll use small and large examples of text in our lessons here. The **dspatterns** package provides a dataset for this section called `resto_reviews`. It's not a tibble this time but rather a character vector containing reviews for a restaurant. We will occasionally use it to practice with a collection of string-based **R** functions. Some of these functions will be base **R** functions and others will come from the **stringr** package from the Tidyverse.
 
 ## How Strings and Character Vectors Work in **R**
 
@@ -27,7 +27,7 @@ The characters that compose a string can include letters, numbers, and even symb
 
 ### Making Simple Strings and Character Vectors
 
-In one of our very first code listings in this book (in *Chapter 2*), we assigned a character string to an object. We did this by surrounding the text within double quotes (`" "`).
+In one of our very first code listings in this Appendix, we assigned a character string to an object. We did this by surrounding the text within double quotes (`" "`).
 
 `r dspatterns::code_hints(
 "Assigning a character string to ~~one_word~~.",
@@ -124,7 +124,7 @@ str(data_frame_2)
 
 The output from `str()` shows us that column `b` has the `"character"` class.
 
-We were warned about this behavior in *Chapter 7*, where the case for creating and using tibbles was made since tibbles don't convert strings to factors. Should data frames need to be made, however, please remember to use `stringsAsFactors = FALSE` if necessary (and most of the time, it is necessary). Just to remind us of how tibbles treat strings, the analogous statement that creates a tibble (`tibble(a = three_numbers, b = three_words)`) results in:
+We were warned about this behavior previously, where the case for creating and using tibbles was made since tibbles don't convert strings to factors. Should data frames need to be made, however, please remember to use `stringsAsFactors = FALSE` if necessary (and most of the time, it is necessary). Just to remind us of how tibbles treat strings, the analogous statement that creates a tibble (`tibble(a = three_numbers, b = three_words)`) results in:
 
 ```{r tibble-remind, echo=FALSE}
 tibble(a = three_numbers, b = three_words)

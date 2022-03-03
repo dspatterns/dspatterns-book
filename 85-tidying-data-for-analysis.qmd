@@ -15,9 +15,9 @@ This section covers
 - How to reshape a data table using the `pivot_longer()` function
 - Further tidying of data tables with the `na_if()` function
 
-The last two chapters introduced us to data transformation (using **dplyr**) and data visualization (using **ggplot**). We really learned a lot, and we just dove right in with example data tables that were furnished by the **dspatterns** package. The `sw` and `dmd` datasets from Chapters 2 and 3 were tidy datasets. We didn't have to think much about the arrangement of the data within those tables, there were used as is. They just worked. Quite often, however, the datasets you'll encounter and want to use will not be tidy. This can cause problems in your analyses, so we really need to make the effort to tidy them before performing any analysis. This chapter is all about recognizing the difference between tidy and untidy data, and then, using strategies to tidy that data before getting to the analysis stage.
+The last two sections introduced us to data transformation (using **dplyr**) and data visualization (using **ggplot**). We really learned a lot, and we just dove right in with example data tables that were furnished by the **dspatterns** package. The `sw` and `dmd` datasets from earlier were tidy datasets. We didn't have to think much about the arrangement of the data within those tables, there were used as is. They just worked. Quite often, however, the datasets you'll encounter and want to use will not be tidy. This can cause problems in your analyses, so we really need to make the effort to tidy them before performing any analysis. This section is all about recognizing the difference between tidy and untidy data, and then, using strategies to tidy that data before getting to the analysis stage.
 
-While the **dspatterns** package usually offers tidy datasets, there are a few untidy ones in there as well. We will use the untidy `winniweather` dataset in our examples for this chapter. The dataset contains temperature data (four times daily) for the City of Winnipeg during the month of February 2015. As ever, we get access to all of **dspatterns**'s datasets using `library(dspatterns)`. Once that statement is executed, the untidy `winniweather` table will be available. This is not a large dataset since it has merely 28 rows (one row per day of the study month) and the following six variables:
+While the **dspatterns** package usually offers tidy datasets, there are a few untidy ones in there as well. We will use the untidy `winniweather` dataset in our examples for this section. The dataset contains temperature data (four times daily) for the City of Winnipeg during the month of February 2015. As ever, we get access to all of **dspatterns**'s datasets using `library(dspatterns)`. Once that statement is executed, the untidy `winniweather` table will be available. This is not a large dataset since it has merely 28 rows (one row per day of the study month) and the following six variables:
 
 - `yearmonth`: a character string representing the year and the month; it's always `"2015-2"` in this dataset
 - `day`: an integer representing the day of the month
@@ -47,7 +47,7 @@ It's important to recognize untidy data when you get a new dataset. Detecting su
 4. Multiple pieces of data occupying a single cell
 5. Rows or columns that are entirely blank
 
-It can be difficult to both recognize when data is untidy and what the best course of action might be when untidiness is detected. The rest of this chapter will use the untidy `winniweather` dataset to point out some of the more common ways that data can be untidy. The lessons will also demonstrate some useful techniques for transforming the untidy dataset into a tidy and useful dataset. The big payoff will be the ability to plot all of the data points in the tidied version of winniweather with **ggplot** (which is not initially possible without severe complications).
+It can be difficult to both recognize when data is untidy and what the best course of action might be when untidiness is detected. The rest of this section will use the untidy `winniweather` dataset to point out some of the more common ways that data can be untidy. The lessons will also demonstrate some useful techniques for transforming the untidy dataset into a tidy and useful dataset. The big payoff will be the ability to plot all of the data points in the tidied version of winniweather with **ggplot** (which is not initially possible without severe complications).
 
 ## Using **tidyr** to Tidy Our Tables
 
@@ -86,9 +86,9 @@ c(
 winni_mod <- 
   winniweather %>%  #A
   pivot_longer(
-    starts_with("temp"),  #B
-    names_to = "hour",  #C
-    values_to = "temp"  #D
+    starts_with("temp"), #B
+    names_to = "hour",   #C
+    values_to = "temp"   #D
   )
 
 winni_mod
@@ -113,7 +113,7 @@ winni_mod <-
   mutate(hour = case_when(  #B
     hour == "temp00_00" ~ 0L,  #C
     hour == "temp06_00" ~ 6L,  #C
-    hour == "temp12_00" ~ 12L,  #C
+    hour == "temp12_00" ~ 12L, #C
     hour == "temp18_00" ~ 18L  #C
   ))
 
@@ -159,7 +159,7 @@ This table is now tidy! As a last thing to do we could arrange the rows to be in
 `r dspatterns::code_hints(
 "Using ~~arrange()~~ to put the observations in the correct order.",
 c(
-"#A The ~~arrange()~~ function from the **dplyr** package takes unquoted column names (or expressions with ~~desc()~~, not shown here but demonstrated in Chapter 2). The order is important. We are sorting first by ~~year~~, then ~~month~~, then ~~day~~, and finally by ~~hour~~."
+"#A The ~~arrange()~~ function from the **dplyr** package takes unquoted column names (or expressions with ~~desc()~~, not shown here but demonstrated earlier). The order is important. We are sorting first by ~~year~~, then ~~month~~, then ~~day~~, and finally by ~~hour~~."
 ))`
 ```{r weather-arrange, paged.print=FALSE}
 winni_tidy <- 
@@ -200,11 +200,13 @@ c(
 "#A The ~~ggplot()~~ function call begins the plotting process, where we provide the tidied ~~winni_tidy~~ table as the plot data.",
 "#B We use the ~~geom_point()~~ *geom* to indicate that we want a scatterplot. We are giving this function the minimally required aesthetics of ~~x~~ and ~~y~~ (the ~~iso_date~~ and ~~temp~~ columns in ~~winni_tidy~~)."
 ))`
-```{r winni-tidy-ggplot-1, fig.cap='(ref:winni-tidy-ggplot-1)'}
+```{r}
+#| label: fig-winni-tidy-ggplot-1
+#| fig.cap: "The scatterplot with all temperature data reveals a spurious data point."
+
 ggplot(data = winni_tidy) +  #A
   geom_point(aes(x = iso_date, y = temp))  #B
 ```
-(ref:winni-tidy-ggplot-1) The scatterplot with all temperature data reveals a spurious data point.
 
 The plot we obtain from this code might surprise us since there is a temperature value with an extremely high value (`9999`). Plots like these are easy to create and are very useful for finding anomalous values hiding in the dataset. In this case, we see a single spurious value. There is a logical explanation for why we have a very high temperature value in this dataset: it is actually missing value. In datasets you may obtain from different sources, the encoding of missing values can take various forms. Sometimes, the field is blank, there may be text (e.g., `"N/A"`, `"missing"`, `"-"`, etc.), or, in this case, it may be a value of the same type (`numeric`) but set to a physically improbable value (9999 degrees Celsius!). Once we know how missing values are encoded for any particular dataset, we can take action to re-encode as proper `NA` values. In this way, our tidy tools, such as **ggplot**, can better handle the data.
 
@@ -235,9 +237,9 @@ c(
 "#C The ~~summary()~~ function is very useful for getting simple summary statistics and validating one's assumptions of the data."
 ))`
 ```{r winni-temp-summary, paged.print=FALSE}
-winni_tidy %>%  #A
+winni_tidy %>%      #A
   select(temp) %>%  #B
-  summary()  #C
+  summary()         #C
 ```
 
 The output shows that the maximum value for `temp` is now `-3.30` and not `9999`, which is a huge improvement! Also, we now have a single `NA` value in the `temp` column (this was our doing).
@@ -251,27 +253,31 @@ Let's now plot this data again. The next bit of plotting code isn't different th
 c(
 "#A This **ggplot** code is unchanged from before, which just goes to show that **ggplot** code can be highly reusable."
 ))`
-```{r winni-tidy-ggplot-2, fig.cap='(ref:winni-tidy-ggplot-2)'}
+```{r}
+#| label: fig-winni-tidy-ggplot-2
+#| fig.cap: "The scatterplot with all temperature data after dealing with the spurious data point."
+
 ggplot(data = winni_tidy) +  #A
   geom_point(aes(x = iso_date, y = temp))
 ```
-(ref:winni-tidy-ggplot-2) The scatterplot with all temperature data after dealing with the spurious data point.
 
-This plot is much changed from the previous one. This plot is now usable, since the temperature value of `9999` has now been classified as an `NA` value (and `NA` values aren't plotted, of course). Let's make things interesting and facet the plot by the hour of day. We have that flexibility now since there is an `hour` column. We do this in **ggplot** with the `facet_wrap()` function, and the result is a plot with four facets (*Figure \@ref(fig:winni-tidy-ggplot-3)*).
+This plot is much changed from the previous one. This plot is now usable, since the temperature value of `9999` has now been classified as an `NA` value (and `NA` values aren't plotted, of course). Let's make things interesting and facet the plot by the hour of day. We have that flexibility now since there is an `hour` column. We do this in **ggplot** with the `facet_wrap()` function, and the result is a plot with four facets (@fig-winni-tidy-ggplot-3).
 
 `r dspatterns::code_hints(
 "Faceting the temperatures in winni_tidy by the time of day.",
 c(
 "#A We are using ~~facet_wrap()~~ to make a set of plots faceted by the four different hours that temperatures are available each day in this dataset. The ~~labeler = label_both~~ statement always provides useful information and is a nice touch."
 ))`
-```{r winni-tidy-ggplot-3, fig.cap='(ref:winni-tidy-ggplot-3)'}
+```{r}
+#| label: fig-winni-tidy-ggplot-3
+#| fig.cap: "A scatterplot with facets. Now possible with our tidy data."
+
 ggplot(data = winni_tidy) +
   geom_point(aes(x = iso_date, y = temp)) +
   facet_wrap(vars(hour), labeller = label_both)  #A
 ```
-(ref:winni-tidy-ggplot-3) A scatterplot with facets. Now possible with our tidy data.
 
-The plot of *Figure \@ref(fig:winni-tidy-ggplot-3)* couldn't be generated without our tidying transformations. Actually, none of these plots could be made with the same number of data points we have here. The data were effectively divided across four columns, and, we didn't have a date-time column. But now, we have the freedom to further transform the tidy data (e.g., filtering the data, converting temperature values to degrees Fahrenheit, etc.) and plot again with ease.
+The plot of @fig-winni-tidy-ggplot-3 couldn't be generated without our tidying transformations. Actually, none of these plots could be made with the same number of data points we have here. The data were effectively divided across four columns, and, we didn't have a date-time column. But now, we have the freedom to further transform the tidy data (e.g., filtering the data, converting temperature values to degrees Fahrenheit, etc.) and plot again with ease.
 
 ## Summary
 
