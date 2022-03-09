@@ -51,10 +51,18 @@ We sincerely hope that you find the book gives you the skills to become producti
 
 ## Assumptions about you
 
-We think you are familiar with a lot of the basics of using **R**, like installing it, using an IDE like RStudio, and making use of R packages. If you are not, we got you covered in the Appendices.
+We think you are familiar with a lot of the basics of using **R**, like installing it, using an IDE like RStudio, and making use of **R** packages. If you are not, we got you covered in the Appendices.
 
 #### About the Book {-}
 
 *A Data Science Pattern Language: Designing Projects with R* is written by [Alison Presmanes Hill](https://github.com/apreshill) and [Richard Iannone](https://github.com/rich-iannone). The book's development can be followed at the [**dspatterns/dspatterns** repository on **GitHub**](https://github.com/dspatterns/dspatterns). There are [*Issues*](https://github.com/dspatterns/dspatterns/issues) and [*Discussions*](https://github.com/dspatterns/dspatterns/discussions) sections in the repo so feel free to create an *Issue* or more casually share ideas about how to improve the book material.
+
+#### About the Authors
+
+**Alison Presmanes Hill**
+
+Alison started learning to code in **R** right after grad school. The  cost of an SAS license was the initial nudge toward **R** life. Alison found that **R** was a joy to learn! Also, she found it much easier (and more fun) to teach than SAS. During her professorship at OHSU, Alison developed and taught a popular statistics course. The initial goal was to improve the learning experience of stats at the department. The combination of stats and data visualization was a pairing that students loved. Even those that weren’t enrolled in the course were sitting in on the lectures. Given all that, goal achieved!
+
+Alison taught people within different organizations when part of the RStudio Education Team. She developed dozens of workshops and educational materials. This got the **R** community excited about using **R** for things aside from stats. Now at IBM’s AI Research Lab, Alison is now able to combine her teaching and product planning skills. Her focus there is creating engaging online experiences for community learning.
 
 This book was built with [**Quarto**](https://quarto.org).
