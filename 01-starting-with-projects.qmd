@@ -1,22 +1,16 @@
-# Starting with Projects and Files
+# New project patterns
 
-One of the hardest things about starting anything new is deciding where to start. So we will make this easy for you and for us. We are starting with projects.
-
-Depending on who you are, you may be thinking "ok, so what?" Or it may seem like quite the bold statement! You may be feeling like we just told you to prepare a thesis on a topic, and you feel like hitting the "panic" button on this book altogether. If that is you, stop right there! We are starting with a pep talk.
-
-If you are not panicking and instead feeling totally peppy about this new project, feel free to skip this pep talk.
-
-## Project pep-talk
+One of the hardest things about starting anything new is knowing where to start. So we will make this easy. Our first pattern is the "new project" pattern. 
 
 In this book, we want to help you cultivate healthy project habits. This includes knowing proper project hygiene, but it starts with having a small "p" project mindset.
 
-What does that mean? It means that you acknowledge and appreciate that a project is just a place to put things. To paraphrase a famous Dr. Seuss quote from "Horton Hears a Who":
+What does that mean? It means that you acknowledge and appreciate that a project is just a place on your computer to put things. To paraphrase a famous Dr. Seuss quote from "Horton Hears a Who":
 
 > "A project is a project, no matter how small."
 
 Say it with us: *A project is a project, no matter how small.*
 
-A project doesn't have to be a capital "P" Project! You don't need an objective, a hypothesis, or even a plan (yet). It can be as simple as a single Excel file with a handful of rows and columns.
+A project doesn't have to be a capital "P" Project. You don't need an objective, a hypothesis, or even a plan (yet). It can be as simple as a single Excel file with a handful of rows and columns.
 
 For the person tasked with doing anything with that file, you have a choice when you start:
 
@@ -63,7 +57,10 @@ Notes:
 ```
 ## Explore
 
-Our first pattern is the "new project" pattern. To explore this "new project" pattern, we need to explore our actual computer and where the project files should live.
+Imagine you are a researcher doing field work at the Palmer Station in Antarctica. You've been meticulously taking size measurements of three species of adult foraging penguins under pretty precarious circumstances. It's been a lot of hard work, but it shows when you analyze all the data you've collected. This project is your chance to share your work with your colleagues in the Long-term Ecological Research Network.
+
+
+To explore this "new project" pattern, we need to explore our actual computer and where the project files should live.
 
 In a nutshell, even the smallest of small projects gets its own folder (remember: "a project is a project, no matter how small!"). We recommend setting yourself up for success by having a dedicated folder on your computer to store all your projects.
 
@@ -86,6 +83,7 @@ Now, you'll use this folder to hold all your future data science projects. Right
 Here is a visual "file tree", if Dr. Seuss had three `ds-projects` to keep track of:
 
 ``` yaml
+Documents/
 ├── ds-projects/
 │   └── horton/
 │   └── grinch/
@@ -131,6 +129,7 @@ Now that we have a place to put our project things, let's create our first proje
 This step should create a "batteries included" project inside your `ds-projects` folder that has this file structure:
 
 ``` yaml
+Documents/
 ├── ds-projects/
 │   └── penguin-progress/
 │   │   ├── _quarto.yml
@@ -143,10 +142,12 @@ This step should create a "batteries included" project inside your `ds-projects`
 All three files are important ingredients for our project.
 
 1.  `_quarto.yml` is a configuration file for Quarto, a software system built for open-source scientific and technical publishing. This file will come in more handy when your projects grow, but for now, know that Quarto has a definition of "project" that works for us now, and will keep working for us later.
+
 2.  `penguin-progress.Rproj` is a configuration file for RStudio. You never need to open or edit this file, but when you want to open an existing project, you'll want to double-click on the `*.Rproj` file to open the project in RStudio properly.
+
 3.  `penguin-progress.qmd` is a Quarto markdown file. This is the main file you'll want to open and edit in this project. You can include narrative text using Markdown formatting, and you can also include code written with R or Python. We'll use R in this book.
 
-A note on `kebab-case`.
+A note on `kebab-case`: you may have noticed that we encourage you to use dashes as separators between words
 
 ### Key Takeaways
 
@@ -162,7 +163,17 @@ A note on `kebab-case`.
 
 ## Understand
 
-This section:
+Your project is unique. Of course! But it does not need to be unique in terms of its file structure. The file structure you set up for yourself helps you understand the shape of your project. 
+
+Having a "new project" pattern with a defined file structure has several benefits:
+
+1. It helps others to be able to jump into your project more easily. 
+
+1. It helps you jump back into your project more easily.
+
+1. It helps you switch between your own projects more easily.
+
+Here is a healthy file structure to help you understand a data science project:
 
 -   How to organize a project folder to help you understand the shape of your project
 
@@ -176,13 +187,29 @@ This section:
 
         -   some files can strange names; rename them sensibility (with iso dates and some words that indicate provenance)
 
+
+
+``` yaml
+Documents/
+├── ds-projects/
+│   └── penguin-progress/
+│   │   ├── _quarto.yml
+│   │   ├── penguin-progress.Rproj
+│   │   ├── penguin-progress.qmd
+│   │   ├── data-raw/
+│   │   ├── data-clean/
+│   │   └── README.md
+├── photos/
+└── recipes/
+```
+
 We can take a break from the exciting secret life of our file system to understand our data
 
 Add a data file
 
 Who are these penguins and why do they need a progress report?
 
-Imagine you are a researcher doing field work at the Palmer Station in Antarctica. You've been meticulously taking size measurements of three species of adult foraging penguins under pretty precarious circumstances. It's been a lot of hard work, but it shows when you analyze all the data you've collected. This report is your chance to share your work with your colleagues in the Long-term Ecological Research Network.
+
 
 Now you saved this file on a shared laptop while working in the field. But you need to get the file from this laptop out in the field to yourself, on a nice laptop in a warm place where you *actually* want to work.
 
@@ -216,3 +243,4 @@ Netlify drag and drop
 ## DIY
 
 -   use: https://alison.netlify.app/rls-plot-twist/#20
+-   OR babynames

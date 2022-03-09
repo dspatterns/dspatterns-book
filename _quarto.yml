@@ -26,6 +26,7 @@ book:
     - part: "Part 1: Starting out"
       chapters:
         - 01-starting-with-projects.qmd
+        - 01a-starting-with-github.qmd
         - 02-importing-data-first-time.qmd
         - 03-importing-data-next-time.qmd
     - part: "Part 2: Getting into it"
