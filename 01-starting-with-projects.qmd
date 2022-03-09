@@ -1,72 +1,246 @@
-# Starting with Projects
+# New project patterns
 
-Decision: start with Quarto projects
+One of the hardest things about starting anything new is knowing where to start. So we will make this easy. Our first pattern is the "new project" pattern. 
 
-``` {r setup, include=FALSE, echo=FALSE}
+In this book, we want to help you cultivate healthy project habits. This includes knowing proper project hygiene, but it starts with having a small "p" project mindset.
+
+What does that mean? It means that you acknowledge and appreciate that a project is just a place on your computer to put things. To paraphrase a famous Dr. Seuss quote from "Horton Hears a Who":
+
+> "A project is a project, no matter how small."
+
+Say it with us: *A project is a project, no matter how small.*
+
+A project doesn't have to be a capital "P" Project. You don't need an objective, a hypothesis, or even a plan (yet). It can be as simple as a single Excel file with a handful of rows and columns.
+
+For the person tasked with doing anything with that file, you have a choice when you start:
+
+1.  You could choose to fanny around with some files on your desktop, maybe adding some formulas or formatting to your Excel file, perhaps saving some of your work along the way.
+2.  Instead, we suggest- or rather implore- you to mentally and functionally start a project.
+
+How do you choose option 2? Read on.
+
+```{r setup, include=FALSE, echo=FALSE}
 ```
 
+```{=html}
+<!--
 This chapter covers
 
-- Understanding our learning path for this book
-- File organization basics; using Projects
-- How to organize a project folder
-  - raw data
-  - clean data
-  - each file should be named clearly (e.g., `...-raw.csv`)
-  - on naming incoming files from collaborators:
-    - some files can strange names; rename them sensibility (with iso dates and some words that indicate provenance)
-    - create a data-README file that has notes on where files came from; like a 'lab notebook'
-- GitHub:
-  - one repo per project (matching with local project paradigm)
-  - checking in data project with all files (including data) is totally fine and recommended
-  - if your data size is really big (~100 MB) then consider .gitignore-ing the data (problem is that the project won't be truly reproducible)
-  - use happygitwithr as an invaluable resource
-- Introduce Quarto
-  - test mechanics of Quarto (project relative paths)
-    - is there a new document flow and what should be used (HTML)
-      - easier to share and most portable/flexible format
-      - better features and looks better
-    - does moving the quarto file around into different subfolders cause issues
-- Where to go for help (in the appendix)
+-   Understanding our learning path for this book
+-   File organization basics; using Projects
+-   How to organize a project folder
+    -   raw data
+    -   clean data
+    -   each file should be named clearly (e.g., `...-raw.csv`)
+    -   on naming incoming files from collaborators:
+        -   some files can strange names; rename them sensibility (with iso dates and some words that indicate provenance)
+        -   create a data-README file that has notes on where files came from; like a 'lab notebook'
+-   GitHub:
+    -   one repo per project (matching with local project paradigm)
+    -   checking in data project with all files (including data) is totally fine and recommended
+    -   if your data size is really big (\~100 MB) then consider .gitignore-ing the data (problem is that the project won't be truly reproducible)
+    -   use happygitwithr as an invaluable resource
+-   Introduce Quarto
+    -   test mechanics of Quarto (project relative paths)
+        -   is there a new document flow and what should be used (HTML)
+            -   easier to share and most portable/flexible format
+            -   better features and looks better
+        -   does moving the quarto file around into different subfolders cause issues
+-   Where to go for help (in the appendix)
 
-Notes: 
- 
-- use this to develop a single project following the chapter pattern
-- show the Simpsons Paradox plot
-- draw from: https://apreshill.github.io/data-vis-labs-2018/slides.html for organization of this chapter
+Notes:
 
-We'll start with our first pattern. 
-
+-   use this to develop a single project following the chapter pattern
+-   show the Simpsons Paradox plot
+-   draw from: https://apreshill.github.io/data-vis-labs-2018/slides.html for organization of this chapter
+-->
+```
 ## Explore
 
-- explore file structure on your personal system
-- tie this into GitHub which is your remote system (almost like a sync)
-- When starting a new Quarto file, we recommend using a top-level `index.qmd` (better for sharing)
+Imagine you are a researcher doing field work at the Palmer Station in Antarctica. You've been meticulously taking size measurements of three species of adult foraging penguins under pretty precarious circumstances. It's been a lot of hard work, but it shows when you analyze all the data you've collected. This project is your chance to share your work with your colleagues in the Long-term Ecological Research Network.
 
-- Light data analysis (filler content mostly to be more instructive for learning Quarto):
-  - anatomy of a document (installed packages and using packages and the text and code chunks)
-  - we have the option to show the chunk output either inline (default) or in the Viewer/Plots pane (show option in settings)
-  - introduce the dataset (`penguins` from `palmerpenguins`) and inspect the data:
-    - `head()`, `tail()`, `dplyr::glimpse()`, `skimr::skim()` (let's avoid the `%>%` for now)
+
+To explore this "new project" pattern, we need to explore our actual computer and where the project files should live.
+
+In a nutshell, even the smallest of small projects gets its own folder (remember: "a project is a project, no matter how small!"). We recommend setting yourself up for success by having a dedicated folder on your computer to store all your projects.
+
+Do this right now:
+
+Create a folder on your computer - put it in a place where you will remember to look for it.
+
+That is it!
+
+Oddly enough, the last part of that step can be the hardest. We recommend creating a folder called `ds-projects`. Then, make a project-specific folder *inside* that one. Let's break this down.
+
+1.  Create a personal `Documents` folder, if you don't already have one. Use this folder as a container for other folders.
+
+2.  Add a folder inside the `Documents` folder and name it `ds-projects`.
+
+Now, you'll use this folder to hold all your future data science projects. Right? Right. It will look something like this:
+
+![Where to put your project](img/ds-projects.png){fig-alt="Make a folder for your projects called \"ds-projects\", and make folders for each project inside of this folder" fig-align="center"}
+
+Here is a visual "file tree", if Dr. Seuss had three `ds-projects` to keep track of:
+
+``` yaml
+Documents/
+├── ds-projects/
+│   └── horton/
+│   └── grinch/
+│   └── lorax/
+├── photos/
+└── recipes/
+```
+
+::: alison
+Obsessing about naming and organizing (and renaming and reorganizing) files/folders on your computer is an affliction we will call "project puttering." Puttering is [defined](https://www.dictionary.com/browse/putter) as "to move or go in a specified manner with ineffective action or little energy or purpose."
+
+Although naming and organizing files is important, it *can* often be a way to fuss and faff about with files to feel busy, without really doing all that much. Having a "new project" pattern can help you ward off project puttering.
+:::
+
+You may still be saying "But Alison and Rich, this does not qualify as a Project - I know I'll never need this file again."
+
+We believe you that you truly believe this, and believe us, we have both been in this same situation. Nine times out of ten though, dear reader, we have lived to regret those words. Nonetheless, we do offer an alternative recommendation.
+
+When you earnestly believe that you'll not need this particular project ever again, if it makes you feel better, you can create a folder called `ds-scratch` and put your project files in there. I do this locally and every month or so, I clear this folder out.
+
+There is a famous saying: "If you love something, set it free. If it comes back, it's yours. If not, it was never meant to be." This is how you can think of projects in your scratchpad. If you need to open that folder back up before it gets trashed, it graduates to `ds-projects`. Graduating just involves physically dragging and dropping the project folder from `ds-scratch` into `ds-projects`. This works if and only if you set up your projects right (i.e., which we will show you in this chapter).
+
+It looks like this:
+
+![Where to put your project scratchpad](img/ds-scratch.png){fig-alt="Create a folder for scratch projects called \"ds-scratch\" and clear it out regularly." fig-align="center"}
+
+Now that we have a place to put our project things, let's create our first project. Do the following:
+
+1.  Open up RStudio
+2.  In the top menu bar, go to: *File \> New Project... \> New Directory*
+3.  In the "New Project Wizard", select "Quarto Project" as the project type.
+4.  We'll be creating a penguin progress report as an example, so name the directory `penguin-progress`.
+5.  Make sure it is a subdirectory of your `ds-projects` folder (remember the task was to put it in a place where you will remember to look for it!)
+6.  Check the boxes to make this project a git repository (more on that in a second) and to open in a new session.
+7.  Click **Create Project** 🚀
+
+::: {layout-ncol="2"}
+![Create a new Quarto Project in the RStudio New Project Wizard](img/quarto-project.png)
+
+![Make a penguin progress report with Quarto](img/penguin-progress.png)
+:::
+
+This step should create a "batteries included" project inside your `ds-projects` folder that has this file structure:
+
+``` yaml
+Documents/
+├── ds-projects/
+│   └── penguin-progress/
+│   │   ├── _quarto.yml
+│   │   ├── penguin-progress.Rproj
+│   │   └── penguin-progress.qmd
+├── photos/
+└── recipes/
+```
+
+All three files are important ingredients for our project.
+
+1.  `_quarto.yml` is a configuration file for Quarto, a software system built for open-source scientific and technical publishing. This file will come in more handy when your projects grow, but for now, know that Quarto has a definition of "project" that works for us now, and will keep working for us later.
+
+2.  `penguin-progress.Rproj` is a configuration file for RStudio. You never need to open or edit this file, but when you want to open an existing project, you'll want to double-click on the `*.Rproj` file to open the project in RStudio properly.
+
+3.  `penguin-progress.qmd` is a Quarto markdown file. This is the main file you'll want to open and edit in this project. You can include narrative text using Markdown formatting, and you can also include code written with R or Python. We'll use R in this book.
+
+A note on `kebab-case`: you may have noticed that we encourage you to use dashes as separators between words
+
+### Key Takeaways
+
+-   A project is a project, no matter how small.
+
+-   Store all your projects inside a dedicated folder. We like `Documents/ds-projects` to start (but also give you permission to set up `Documents/ds-scratch` for projects you think you'll scrap).
+
+-   Each project gets a folder in a place on your computer where you will remember to look for it.
+
+-   Use "kebab-case" when naming files and folders like `penguin-progress`, which is a style that replaces spaces with dashes. Try to avoid punctuation, special characters like underscores, and uppercase letters if possible - this will simplify your project life. No SCREAMING-KEBABS-PLEASE.
+
+-   Start a new "batteries included" Quarto project using the RStudio New Project Wizard. Be intentional about creating new projects inside the right subdirectory (we like `ds-projects` to start, but you may create more elaborate subdirectory structures as you gain experience).
 
 ## Understand
 
-- review how projects fit in with the documents they contain and where they physically live
-- relationship between your local files and your remote files (in GitHub)
+Your project is unique. Of course! But it does not need to be unique in terms of its file structure. The file structure you set up for yourself helps you understand the shape of your project. 
+
+Having a "new project" pattern with a defined file structure has several benefits:
+
+1. It helps others to be able to jump into your project more easily. 
+
+1. It helps you jump back into your project more easily.
+
+1. It helps you switch between your own projects more easily.
+
+Here is a healthy file structure to help you understand a data science project:
+
+-   How to organize a project folder to help you understand the shape of your project
+
+    -   raw data
+
+    -   clean data
+
+    -   each file should be named clearly (e.g., \`...-raw.csv\`)
+
+    -   on naming incoming files from collaborators:
+
+        -   some files can strange names; rename them sensibility (with iso dates and some words that indicate provenance)
+
+
+
+``` yaml
+Documents/
+├── ds-projects/
+│   └── penguin-progress/
+│   │   ├── _quarto.yml
+│   │   ├── penguin-progress.Rproj
+│   │   ├── penguin-progress.qmd
+│   │   ├── data-raw/
+│   │   ├── data-clean/
+│   │   └── README.md
+├── photos/
+└── recipes/
+```
+
+We can take a break from the exciting secret life of our file system to understand our data
+
+Add a data file
+
+Who are these penguins and why do they need a progress report?
+
+
+
+Now you saved this file on a shared laptop while working in the field. But you need to get the file from this laptop out in the field to yourself, on a nice laptop in a warm place where you *actually* want to work.
+
+-   review how projects fit in with the documents they contain and where they physically live
+
+<!-- -->
+
+-   Light data analysis (filler content mostly to be more instructive for learning Quarto):
+
+    -   anatomy of a document (installed packages and using packages and the text and code chunks)
+    -   we have the option to show the chunk output either inline (default) or in the Viewer/Plots pane (show option in settings)
+    -   introduce the dataset (`penguins` from `palmerpenguins`) and inspect the data:
+        -   `head()`, `tail()`, `dplyr::glimpse()`, `skimr::skim()` (let's avoid the `%>%` for now)
 
 ## Explain
 
-- talking to yourself with Quarto
-- note that in Appendix there is a Markdown reference
+-   create a data-README file that has notes on where files came from; like a 'lab notebook'
 
-- add a `readme.md` to have general notes for the project
+<!-- -->
+
+-   talking to yourself with Quarto
+
+-   note that in Appendix there is a Markdown reference
+
+-   add a `readme.md` to have general notes for the project
 
 ## Share
 
-- with GitHub!
-- talking to others, if future thing doesn't pan out netlify drop
+Netlify drag and drop
 
 ## DIY
 
-- use: https://alison.netlify.app/rls-plot-twist/#20
-
+-   use: https://alison.netlify.app/rls-plot-twist/#20
+-   OR babynames
