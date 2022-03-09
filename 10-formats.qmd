@@ -1,0 +1,65 @@
+# Output formats
+
+```{r setup, include=FALSE, echo=FALSE}
+library(dspatterns)
+```
+
+
+Set the `output_format` argument of `render` to render your .Rmd file into any of R Markdown's supported formats. For example, the code below renders 1-example.Rmd to a Microsoft Word document. You can try it out [here](https://rstudio.cloud/project/181952) on RStudio Cloud. 
+
+```{r eval = FALSE}
+library(rmarkdown)
+render("1-example.Rmd", output_format = "word_document")
+```
+
+![](outputs-1-word.png)
+</br>
+
+If you do not select a format, R Markdown renders the file to its default format, which you can set in the `output` field of a .Rmd file's header. The header of 1-example.Rmd shows that it renders to an HTML file by default. 
+
+The RStudio IDE knit button renders a file to the first format listed in its `output` field. You can render to additional formats by clicking the dropdown menu beside the knit button:
+
+![](outputs-2-pdf.png)
+</br>
+
+The following output formats are available to use with R Markdown.
+
+## Documents
+
+* [html_notebook](https://bookdown.org/yihui/rmarkdown/notebook.html) - Interactive R Notebooks
+* [html_document](https://bookdown.org/yihui/rmarkdown/html-document.html) - HTML document w/ Bootstrap CSS
+* [pdf_document](https://bookdown.org/yihui/rmarkdown/pdf-document.html) - PDF document (via LaTeX template)
+* [word_document](https://bookdown.org/yihui/rmarkdown/word-document.html) - Microsoft Word document (docx)
+* [odt_document](https://bookdown.org/yihui/rmarkdown/opendocument-text-document.html) - OpenDocument Text document
+* [rtf_document](https://bookdown.org/yihui/rmarkdown/rich-text-format-document.html) - Rich Text Format document
+* [md_document](https://bookdown.org/yihui/rmarkdown/markdown-document.html) - Markdown document (various flavors)
+
+## Presentations (slides)
+
+* [ioslides_presentation](https://bookdown.org/yihui/rmarkdown/ioslides-presentation.html) - HTML presentation with ioslides
+* [revealjs::revealjs_presentation](https://bookdown.org/yihui/rmarkdown/revealjs.html) - HTML presentation with reveal.js
+* [slidy_presentation](https://bookdown.org/yihui/rmarkdown/slidy-presentation.html) - HTML presentation with W3C Slidy
+* [beamer_presentation](https://bookdown.org/yihui/rmarkdown/beamer-presentation.html) - PDF presentation with LaTeX Beamer
+* [powerpoint_presentation](https://bookdown.org/yihui/rmarkdown/powerpoint-presentation.html): PowerPoint presentation
+
+## More
+
+* [flexdashboard::flex_dashboard](/flexdashboard/) - Interactive dashboards
+* [tufte::tufte_handout](https://bookdown.org/yihui/rmarkdown/tufte-handouts.html) - PDF handouts in the style of Edward Tufte
+* [tufte::tufte_html](https://bookdown.org/yihui/rmarkdown/tufte-handouts.html) - HTML handouts in the style of Edward Tufte
+* [tufte::tufte_book](https://bookdown.org/yihui/rmarkdown/tufte-handouts.html) - PDF books in the style of Edward Tufte
+* [html_vignette](https://bookdown.org/yihui/rmarkdown/r-package-vignette.html) - R package vignette (HTML)
+* [github_document](/github_document_format.html) - GitHub Flavored Markdown document
+
+You can also build [books](https://bookdown.org/), [websites](https://bookdown.org/yihui/rmarkdown/rmarkdown-site.html), and [interactive documents](https://bookdown.org/yihui/rmarkdown/shiny-documents.html) with R Markdown.
+
+
+## Output Options
+
+Each output format is implemented as a function in R. You can customize the output by passing arguments to the function as sub-values of the `output` field. For example, [8-outputs.Rmd](https://rstudio.cloud/project/181952) would render with a floating table of contents.
+
+![](outputs-3-toc.png)
+</br>
+
+To learn which arguments a format takes, read the format's help page in R, e.g. `?html_document`.
+

@@ -4,6 +4,7 @@
 library(dspatterns)
 ```
 
+This is great for summary tables, since tidy data is better for analysis/plotting, but not so much for sharing.
 
 ## New Packages and Functions  
 
