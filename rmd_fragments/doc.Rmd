@@ -1,0 +1,23 @@
+---
+title: "Early words"
+output: html_document
+---
+
+```{r include=FALSE}
+library(paletteer)
+library(ggplot2)
+ggplot2::theme_set(theme_minimal())
+words <- read.csv("data/word_summary.csv")
+```
+
+Which words do children say, and at what age? We analyze data from the Stanford [wordbank](http://wordbank.stanford.edu/) database using the [wordbankr](http://langcog.github.io/wordbankr/) package to find out.
+
+We have data on children from `r min(words$age)` to `r max(words$age)` months of age.
+
+```{r message=FALSE, out.width='80%'}
+plot <- ggplot(words, aes(x = age, y = produces, color = lemma)) + 
+  geom_smooth(se = FALSE, lwd = .5) +
+  geom_point() 
+  
+plot + scale_color_paletteer_d("nationalparkcolors::Saguaro")
+```

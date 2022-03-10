@@ -23,34 +23,47 @@ book:
   chapters:
     - index.qmd
     - prereqs.qmd
-    - part: "Part 1: Starting out"
+    - part: "Part 1: Quarto"
       chapters:
-        - 01-starting-with-projects.qmd
-        - 01a-starting-with-github.qmd
-        - 02-importing-data-first-time.qmd
-        - 03-importing-data-next-time.qmd
-    - part: "Part 2: Getting into it"
+        - 01-source.qmd
+        - 02-coding.qmd
+        - 03-rendering.qmd
+        - 04-writing.qmd
+        - 05-how-it-works.qmd
+        - 06-chunks.qmd
+        - 07-figures.qmd
+        - 08-tables.qmd
+        - 09-options.qmd
+        - 10-formats.qmd
+    - part: "Part 2: Starting out"
       chapters:
-        - 04-careful-counting-patterns.qmd
-        - 05-rolling-up-data.qmd
-        - 06-slicing-and-dicing-data.qmd
-        - 07-making-datasets-longer.qmd
-        - 08-windows-of-data.qmd
-        - 09-making-datasets-wider.qmd
-        - 10-project-1.qmd
-    - part: "Part 3: Batch mode"
+        - 11-intro.qmd
+        - 12-starting-with-projects.qmd
+        - 13-starting-with-github.qmd
+        - 14-importing-data-first-time.qmd
+        - 15-importing-data-next-time.qmd
+    - part: "Part 3: Getting into it"
       chapters:
-        - 11-batch-style.qmd
-        - 12-batch-create.qmd
-        - 13-parameters.qmd
-        - 14-style-package.qmd
-        - 15-project-2.qmd
-    - part: "Part 4: Production mode"
+        - 16-careful-counting-patterns.qmd
+        - 17-rolling-up-data.qmd
+        - 18-slicing-and-dicing-data.qmd
+        - 19-making-datasets-longer.qmd
+        - 20-windows-of-data.qmd
+        - 21-making-datasets-wider.qmd
+        - 22-project-1.qmd
+    - part: "Part 4: Batch mode"
       chapters:
-        - 16-run-on-demand.qmd
-        - 17-run-on-schedule.qmd
-        - 18-run-on-conditions.qmd
-        - 19-project-3.qmd
+        - 23-batch-style.qmd
+        - 24-batch-create.qmd
+        - 25-parameters.qmd
+        - 26-style-package.qmd
+        - 27-project-2.qmd
+    - part: "Part 5: Production mode"
+      chapters:
+        - 28-run-on-demand.qmd
+        - 29-run-on-schedule.qmd
+        - 30-run-on-conditions.qmd
+        - 31-project-3.qmd
   appendices:
     - 81-installing-r.qmd
     - 82-starting-with-r.qmd

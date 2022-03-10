@@ -74,6 +74,7 @@ jobs:
          install.packages("stringr")
          install.packages("lubridate")
          install.packages("readr")
+         install.packages("babynames")
          remotes::install_github("dspatterns/dspatterns")
          remotes::install_github("apreshill/bakeoff")
         shell: Rscript {0}
