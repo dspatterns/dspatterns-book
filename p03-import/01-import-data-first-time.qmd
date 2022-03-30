@@ -31,7 +31,7 @@ We'll be working with an Excel file called `stickers.xlsx` in this chapter (the 
 
 Putting the problems aside for now, let's learn about where this dataset came from. It's a dataset from an experimental study where children played a variation of the dictator or ultimatum game, using stickers instead of money. The [study](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0138928) looked at how numerical context affects children's sharing behavior.    
 
-![The ultimatum game.](figures/02-importing-data-first-time/ultimatum-game.png){#fig:stickers-ultimatum-game}
+![The ultimatum game.](../figures/02-importing-data-first-time/ultimatum-game.png){#fig:stickers-ultimatum-game}
 
 The authors made that dataset freely available so we in turn get the chance to examine it in R. Let's read in the file with the **readxl** package (with the `read_excel()` function) and have a first look at the data table.
 

@@ -1,4 +1,4 @@
-# New project patterns
+# Projects
 
 One of the hardest things about starting anything new is knowing where to start. So we will make this easy. Our first pattern is the "new project" pattern. 
 

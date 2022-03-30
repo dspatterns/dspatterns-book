@@ -1,0 +1,50 @@
+# Help
+
+Ideas to add:
+
+1. Where/how to ask: 
+  - https://masalmon.eu/2018/07/22/wheretogethelp/
+  - https://sctyner.github.io/rhelp.html
+1. Community/asking questions (covered below)
+1. Reprex
+1. How to read a help page visual (this type of thing is great: https://socviz.co/appendix.html#a-little-more-about-r)
+1. Community - how to find your flock
+1. Stay up to date: https://masalmon.eu/2019/01/25/uptodate/
+
+> tl;dr: The best places to go for help when you inevitably get stuck with an **R** problem are *Stack Overflow* (via a search engine), *Twitter*, and *RStudio Community*.
+
+Getting help in an unfamiliar programming language is something you'll undoubtedly need to do quite regularly. *Google* (or any other leading search engine) will be indispensable for typing in keywords that relate to the problem at hand. At first, you may not know how to describe your problem. That's natural, so don't worry. A good strategy is to type in something descriptive using a few more words than usual. The search results may lead you to discover some terminology that more succinctly describes your problem. Chances are good that you'll get a few *Stack Overflow* (SO) pages. Stack Overflow (<https://stackoverflow.com>) really is a great resource for **R** questions and answers.
+  
+Take a look at a few of the SO pages and see if the original poster (OP) had the same problem as yourself. If you find that to be the case, take a look at some of the answers (usually text explanations and a block of code). Copy the code and try it out. It's should be self-contained and reproducible, meaning that the block should run from a simple copy and paste. You'll likely need to adapt that code to fit your problem but you're well on your way at this point.
+
+It may well be that you cannot find a question that matches your particular issue. This situation is a bit tougher to deal with and not uncommon. I suggest skimming through some of the search results for clues on how to search again. It may be a found phrase that comes closer to your issue or some terminology that seems to fit. Experiment with searching again using these variations, you may get search results (again, ideally *Stack Overflow* pages) closer to the mark.
+
+While *Stack Overflow* is quite effective, it's not the only way to get help. Far from it. You can also engage more directly with the **R** community through *Twitter*. It's an excellent way to interact with people that are both friendly and enthusiastic about **R**. The `#rstats` hashtag is often used in tweets focused on all things **R**. So, be not afraid: introduce yourself and ask away (again, use `#rstats` in your tweet for extra visibility). You might be surprised at how cordial and welcoming the community is!
+
+The *RStudio Community* website (<https://community.rstudio.com>) is also a great place to ask questions and get unstuck. It's quite active and you're sure to get a quick response. There is also the distinct advantage that for whatever you're searching for will be **R** related.
+
+It's hard to get a sense of how **R** can help you do before you get down to using it. Getting started is probably the hardest part but we have a defined learning path and, so long as **R** and **RStudio** are installed and using **Quarto** doesn't feel cryptic, we are well on our way!
+
+---
+
+The R community is a special one; useRs of all ranks welcome and support new beginners as well as each other. 
+
+# Get (and give) help
+
+[RStudio Community](https://community.rstudio.com/) is a warm and welcoming online discussion forum to ask (and answer!) any questions about using R. You'll need to learn how to make a reprex / insert datapasta gif
+
+# Stay up to date
+
+Following the online [R Weekly](https://rweekly.org/) newsletter is another way to keep up with the community. There you'll read about the latest package and event announcements, as well as new educational content like online tutorials and blog posts.
+
+# Find a local user group
+
+If you are looking to network and meet other useRs in person, try finding [your local R meet-up group](https://www.meetup.com/topics/r-project-for-statistical-computing/) and attending an event. 
+
+If you are a member of an underrepresented gender minority (including but not limited to cis/trans women, trans men, non-binary, genderqueer, agender), we strongly encourage you to join [R-Ladies](https://rladies.org/about-us/). There is an R-Ladies [community slack](https://rladies-community-slack.herokuapp.com/) to help you meet other members, and there are [local chapters](https://www.meetup.com/pro/rladies) that meet in person now in over 47 countries. If there is not a chapter near you, consider joining [R-Ladies remote](https://twitter.us18.list-manage.com/subscribe?u=2ea47051e532678beaba00ee9&id=0d53e23281).
+
+# Find your flock at `rstudio::conf`
+
+Each year at [`rstudio::conf`](https://www.rstudio.com/conference/), we set asign time and space for "Birds of a Feather" (BoF) sessions. These sessions are pretty casual- basically a time and a place to meet with other useRs and to foster relationships among people doing similar work. If you plan to attend the next conference, this is a great way to make more connections and meet folks in your field in person. You can see the 2019 [BoF sessions here](https://community.rstudio.com/t/birds-of-a-feather-bof-at-rstudio-conf-2019l/19328).
+
+

@@ -1,0 +1,25 @@
+# Packages
+
+> tl;dr: Installing packages from **CRAN** can be done with the `install.packages()` function whereas packages on **GitHub** can be installed with the `install_github()` function.
+
+Given that packages are central to learning in this book, we should learn how to install them and then load them up. It's very common to want to install and use different packages to address different problems. **R** Packages are usually installed from either **CRAN** or **GitHub**, so, there are two methods for installing packages since they can come from both locations. What's the difference? **CRAN** packages are often considered to be 'stable' versions and these can be installed using `install.packages()`. Packages from **GitHub** are considered to be the in-development versions, and these packages can be obtained with the `devtools::install_github()` function.
+
+We need to install the **tidyverse** package, which installs all of the *Tidyverse* packages (plus numerous other packages that are dependencies), and we can use `install.packages("tidyverse")` in the **R** console. This installs the **tidyverse** meta-package and all of the *Tidyverse* packages like **dplyr**, **ggplot2**, **readr**, and more.
+
+To actually load the packages in your **R** session, we need to use the `library()` function for each package. Each `library()` call typically goes on its own line at the top of an **R** script or **Quarto** document. We'll be reminded of `library()` quite often throughout this book.
+
+We can install packages from **GitHub** by using the `install_github()` function from the **devtools** package. Let's first install **devtools** from CRAN with `install.packages("devtools")`.
+
+Next, let's install the **GitHub** package that is essential for this book, **dspatterns**, by using `library(devtools)` and then `install_github("dspatterns/dspatterns")` in the **R** console. This package contains datasets, functions, and useful source files pertaining to this lesson and the lessons ahead.
+
+The reason that `library(devtools)` was used right before the `install_github()` statement is because this ensures that the `install_github()` function is loaded and available in the session before calling it in the next line.
+
+::: {.callout-tip}
+
+### Possible Installation Issues
+
+Do you have an older installation of **R** and/or **RStudio** and having some trouble installing packages? Try getting a newer version of both **R** and **RStudio** and then attempt installation after that. Package installation is usually a snap but older versions of **R** can sometimes pose this sort of problem.
+
+:::
+
+This book also has an **R** package called **dspatterns** that contains custom-made datasets and some **R** functions that will be used in examples and exercises. We'll make great use of this package to address those data analysis challenges that are common with real-world data. We'll learn to make use of the *Tidyverse* collection of **R** packages to gather, tidy, transform, and visualize data. **R**'s place in the field of data science is now well-established and these tools (and a few others in the ecosystem) will serve us well for effectively performing the core tasks of data analysis and reporting.
