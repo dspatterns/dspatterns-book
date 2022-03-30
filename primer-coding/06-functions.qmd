@@ -1,0 +1,74 @@
+# Functions
+
+```{r}
+library(babynames)
+library(tidyverse)
+```
+
+
+
+Sometimes abbreviated `funs` in documentation, which is a little ironic 😉.
+
+Functions can come from:
+
+- base R (these functions are "built in")
+- packages
+- you
+
+
+## Base R Functions
+
+```{r}
+seq(1, 12, 1) # base R
+```
+
+
+
+## Functions from Packages
+
+```{r}
+babynames %>% count(sex) # count is from dplyr
+```
+
+
+
+## Roll Your Own Functions
+
+```{r}
+greet <- function(name) {
+  glue::glue("Welcome to CS631, {name}!")
+}
+greet("Sloane")
+```
+
+
+
+
+## Function help
+
+```{r eval = FALSE}
+?seq
+?count
+```
+
+
+
+Pay attention to: 
+
+* Usage *(recipe)*
+
+* Arguments *(ingredients)*
+
+* Examples 
+
+
+
+## Read more
+
+- http://r4ds.had.co.nz/workflow-basics.html#calling-functions
+- http://socviz.co/appendix.html#a-little-more-about-r
+- http://stat545.com/block011_write-your-own-function-01.html
+- http://stat545.com/block011_write-your-own-function-02.html
+- http://stat545.com/block011_write-your-own-function-03.html
+
+

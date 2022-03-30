@@ -3,6 +3,7 @@ project:
   output-dir: docs
 
 book:
+  twitter-card: true
   title: "A Data Science Pattern Language"
   author: "Alison Presmanes Hill and Richard Iannone"
   repo-actions:
@@ -12,72 +13,77 @@ book:
     style: docked
     background: light
   search: true
-  description: |
-    A Data Science Pattern Language: Designing Projects with R* will get you up
-    and running with R. You'll learn many things in this book, with the
-    main goals of enabling you to explore data, perform analysis on it, and
-    communicate the results of that analysis. There are lots of little things
-    to learn to get to that stage, but we'll take a structured approach using
-    a collection of R packages.
+  # description: |
+  #   A Data Science Pattern Language: Designing Projects with R will get you up
+  #   and running with R. You'll learn many things in this book, with the
+  #   main goals of enabling you to explore data, perform analysis on it, and
+  #   communicate the results of that analysis. There are lots of little things
+  #   to learn to get to that stage, but we'll take a structured approach using
+  #   a collection of R packages.
   cover-image: cover.png
   chapters:
     - index.qmd
-    - prereqs.qmd
-    - part: "Part 1: Quarto"
+    - part: a01-prereq.qmd
+    - part: primer-coding/01-hello-r.qmd
+    - part: "Primer II: Quarto"
       chapters:
-        - 01-source.qmd
-        - 02-coding.qmd
-        - 03-rendering.qmd
-        - 04-writing.qmd
-        - 05-how-it-works.qmd
-        - 06-chunks.qmd
-        - 07-figures.qmd
-        - 08-tables.qmd
-        - 09-options.qmd
-        - 10-formats.qmd
-    - part: "Part 2: Starting out"
+        - primer-quarto/01-hello-quarto.qmd
+        - primer-quarto/02-source.qmd
+        - primer-quarto/03-coding.qmd
+        - primer-quarto/04-rendering.qmd
+        - primer-quarto/05-writing.qmd
+        - primer-quarto/06-how-it-works.qmd
+        - primer-quarto/07-chunks.qmd
+        - primer-quarto/08-figures.qmd
+        - primer-quarto/09-tables.qmd
+        - primer-quarto/10-options.qmd
+        - primer-quarto/11-formats.qmd
+    - part: "Part 1: MVPs"
       chapters:
-        - 11-intro.qmd
-        - 12-starting-with-projects.qmd
-        - 13-starting-with-github.qmd
-        - 14-importing-data-first-time.qmd
-        - 15-importing-data-next-time.qmd
-    - part: "Part 3: Getting into it"
+        - p01-mvp/01-dataframes.qmd
+        - p01-mvp/02-data-wrangling.qmd
+        - p01-mvp/03-data-viz.qmd
+        - p01-mvp/04-data-types.qmd
+    - part: "Part 2: Workflow patterns"
       chapters:
-        - 16-careful-counting-patterns.qmd
-        - 17-rolling-up-data.qmd
-        - 18-slicing-and-dicing-data.qmd
-        - 19-making-datasets-longer.qmd
-        - 20-windows-of-data.qmd
-        - 21-making-datasets-wider.qmd
-        - 22-project-1.qmd
-    - part: "Part 4: Batch mode"
+        - p02-workflow/01-projects.qmd
+        - p02-workflow/02-github.qmd
+    - part: "Part 3: Local data patterns"
       chapters:
-        - 23-batch-style.qmd
-        - 24-batch-create.qmd
-        - 25-parameters.qmd
-        - 26-style-package.qmd
-        - 27-project-2.qmd
-    - part: "Part 5: Production mode"
+        - p03-import/01-import-data-first-time.qmd
+        - p03-import/02-import-data-next-time.qmd
+        - p03-import/03-import-data-formats.qmd
+    - part: "Part 4: Aggregation patterns"
       chapters:
-        - 28-run-on-demand.qmd
-        - 29-run-on-schedule.qmd
-        - 30-run-on-conditions.qmd
-        - 31-project-3.qmd
+        - p04-aggregate/01-careful-counting.qmd
+        - p04-aggregate/02-rolling-up-data.qmd
+        - p04-aggregate/03-slicing-and-dicing-data.qmd
+        - p04-aggregate/04-making-datasets-longer.qmd
+        - p04-aggregate/05-windows-of-data.qmd
+        - p04-aggregate/06-making-datasets-wider.qmd
+        - p04-aggregate/07-project-1.qmd
+    - part: "Part 5: Batch mode"
+      chapters:
+        - p05-batch/01-batch-style.qmd
+        - p05-batch/02-batch-create.qmd
+        - p05-batch/03-parameters.qmd
+        - p05-batch/04-style-package.qmd
+        - p05-batch/05-project-2.qmd
+    - part: "Part 6: Production mode"
+      chapters:
+        - p06-production/01-run-on-demand.qmd
+        - p06-production/02-run-on-schedule.qmd
+        - p06-production/03-run-on-conditions.qmd
+        - p06-production/04-project-3.qmd
   appendices:
-    - 81-installing-r.qmd
-    - 82-starting-with-r.qmd
-    - 83-data-transformation-dplyr.qmd
-    - 84-data-visualization-ggplot.qmd
-    - 85-tidying-data-for-analysis.qmd
-    - 86-importing-data-common-formats.qmd
-    - 87-transformations-dates-times.qmd
-    - 88-closer-look-r-programming.qmd
-    - 89-string-transformations.qmd
-    - 90-lists-and-factors.qmd
-    - 91-more-ggplot-1.qmd
-    - 92-more-ggplot-2.qmd
-    - 93-making-presentation-tables.qmd
+    - appendix/85-tidying-data-for-analysis.qmd
+    - appendix/87-transformations-dates-times.qmd
+    - appendix/88-closer-look-r-programming.qmd
+    - appendix/89-string-transformations.qmd
+    - appendix/90-lists-and-factors.qmd
+    - appendix/91-more-ggplot-1.qmd
+    - appendix/92-more-ggplot-2.qmd
+    - appendix/93-making-presentation-tables.qmd
 
 format:
   html:
@@ -89,3 +95,5 @@ format:
     toc-depth: 2
     cover-image: cover.png
     code-link: true
+
+bibliography: references.bib

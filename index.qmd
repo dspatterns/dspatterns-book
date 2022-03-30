@@ -38,7 +38,7 @@ provide project in-roads to help others explore, touch, and feel the project the
 
 Our goal is to empower the next generation of people who work with data, not just data scientists or programmers, to design projects like this.
 
----
+
 
 
 *A Data Science Pattern Language: Designing Projects with R* will get you up and running with **R**. You'll learn many things in this book, with the main goals of enabling you to explore data, perform analysis on it, and communicate the results of that analysis. There are lots of little things to learn to get to that stage, but we'll take a patterned approach using a collection of **R** packages.
@@ -49,9 +49,15 @@ Throughout the book's chapter, you'll learn how to use **R** to gather, transfor
 
 We sincerely hope that you find the book gives you the skills to become productive with data using **R** (with a minimum of frustration). We always appreciate feedback and so you are encouraged to post any questions, comments, or suggestions you have about the book in the *Issues* section of the **dspatterns** repo. Your feedback is taken quite seriously and will be incredibly valuable for the development of this book.
 
-## Assumptions about you
+<!-- moving from previous appendix-->
 
-We think you are familiar with a lot of the basics of using **R**, like installing it, using an IDE like RStudio, and making use of **R** packages. If you are not, we got you covered in the Appendices.
+**R** is a great language for working with data. Have you ever used **Excel** for data analysis work and wished you could make better charts? Perhaps you came up against problems with working with larger amounts of data? The lessons in this book will help to address those common woes and much more. We'll tidy and summarize tabular data. We'll make beautiful charts. We'll also work toward making those trickier topics (like working with dates and times, joining datasets together, and publishing and distributing our work) less cumbersome and much more understandable.
+	
+**R** has really come a long way! The large and growing ecosystem of packages (i.e., collections of functions that help us work with data) and diverse user base has extended the language such that it's not just about doing only statistics. **R** is, in fact, now very useful for solving a wide range of data problems. It's great that you're picking up this book and learning about what **R** can help you accomplish. As it turns out, there's a good chance that your analytical problems can be solved with even just a little **R** knowledge.
+	
+
+Because of the many user-created packages, **R** is now widely used in academia, industry, and in other organizations. **R** can be integrated into analytical pipelines, it is useful for ad-hoc data analysis, and it's highly capable in producing automated, reproducible reporting. Its plotting abilities have made it possible for individuals and organizations to generate and publish beautiful data visualizations. Of course, there are alternatives to **R** for working with data. Other languages include **Python**, **Julia**, **Matlab**, and **SAS**. All of those languages can, of course, help you to work with data. However, I think some of the key strengths of **R** (e.g., ease of manipulating datasets, great plotting capabilities, expressive and readable syntax, approachable community, etc.) will make the investment in learning **R** a great choice.
+
 
 #### About the Book {-}
 

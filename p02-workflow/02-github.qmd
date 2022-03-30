@@ -1,5 +1,13 @@
 # Starting with GitHub
 
+## Prerequisites {.unnumbered}
+
+Get GitHub account.
+
+- https://iyo-rstudio-global.netlify.app/collection/prework/
+
+
+
 start by adding github from existing project:
 
 https://docs.github.com/en/desktop/contributing-and-collaborating-using-github-desktop/adding-and-cloning-repositories/adding-a-repository-from-your-local-computer-to-github-desktop

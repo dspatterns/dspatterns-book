@@ -1,0 +1,98 @@
+# Names
+
+```{r}
+library(babynames)
+```
+
+
+## `i_like_snake_case <-`
+
+
+RStudio Keyboard Shortcuts:
+
+OSX: `Option` + `-`
+
+Else: `Alt` + `-`
+
+*(the + means and, not the + key)*
+
+
+## Name your own objects
+
+
+```{r}
+us <- c("Steven", "Jackie", "Alison") # combine strings
+us
+```
+
+
+
+```{r}
+num_labs <- c(1:10) # combine numbers
+num_labs
+```
+
+
+
+```{r}
+mood <- rep("yippee", length(num_labs)) # replicate 10 times
+mood
+```
+
+
+
+## Re-name others' objects
+
+
+```{r}
+my_alpha <- letters # built-in, no package needed
+my_alpha
+```
+
+
+
+```{r}
+my_names <- babynames # from the babynames package
+my_names
+```
+
+
+
+## What to name objects?
+
+```{r eval=FALSE}
+?make.names
+```
+
+
+
+Object names cannot:
+
+- Start with a number
+- Contain a space
+- Contain ["reserved" words](http://stat.ethz.ch/R-manual/R-devel/library/base/html/Reserved.html)
+
+
+
+Object names must:
+
+- Start with a letter
+- Contain letters, numbers, `_` and `.`
+
+
+## Adopt a consistent naming style
+
+```{r eval = FALSE}
+i_use_snake_case # recommended
+otherPeopleUseCamelCase
+some.people.use.periods
+And_aFew.People_RENOUNCEconvention
+```
+
+From: http://r4ds.had.co.nz/workflow-basics.html#whats-in-a-name
+
+## Read more
+
+http://style.tidyverse.org/syntax.html#object-names
+
+
