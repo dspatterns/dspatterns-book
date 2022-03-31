@@ -2,15 +2,17 @@
 
 ```{r setup, include=FALSE, echo=FALSE}
 library(dspatterns)
+library(gt)
+library(dplyr)
 ```
 
 
-Everything that is not code in your `.Rmd` is called narrative text, and can be styled with Markdown. Markdown is a plain text formatting syntax, which means everything you see in the file itself can be typed with a normal keyboard. Below is an example:
+Everything that is not code in your `.qmd` is called narrative text, and can be styled with Markdown. Markdown is a plain text formatting syntax, which means everything you see in the file itself can be typed with a normal keyboard. Below is an example:
 
 
 ## Add structure
 
-You can use Markdown to organize your `.Rmd` file with headings. Headings are useful for organizing your document into sections, and with Markdown formatting you can have up to 6 types/sizes of headers. Use a hash symbol like `#` before the label to create a new header.
+You can use Markdown to organize your `.qmd` file with headings. Headings are useful for organizing your document into sections, and with Markdown formatting you can have up to 6 types/sizes of headers. Use a hash symbol like `#` before the label to create a new header.
 
 drop-down IDE navigator
 
@@ -18,7 +20,7 @@ outline pane
 
 ## Add formatting
 
-All narrative text in your `.Rmd` file can be formatted to add **bold**, *italics*, bulletted lists, numbered lists, superscripts<sup>1</sup>, and subscripts<sub>1</sub>.
+All narrative text in your `.qmd` file can be formatted to add **bold**, *italics*, bulletted lists, numbered lists, superscripts<sup>1</sup>, and subscripts<sub>1</sub>.
 
 ## Insert elements
 
@@ -37,6 +39,46 @@ this is markdown
 -   Markdown is a particular type of markup language.
 
 -   Markup languages are designed produce documents from plain text.
+
+## Quick reference
+
+```{r echo=FALSE}
+tribble(
+  ~a,                                         ~b,
+  "`Plain text`",                             "Plain text",
+  "`*italics* and **bold**`",                 "*italics* and **bold**",
+  "`verbatim code`",                          "`verbatim code`",
+  "`~~strikethrough~~`",
+  "<span style='text-decoration:line-through;'>strikethrough</span>",
+  "`subscript~2~ / superscript^2^`",          "subscript<sub>2</sub> / superscript<sup>2</sup>",
+  "`[link](https://www.rstudio.com)`",        "[link](https://www.rstudio.com)",
+  "`inline equation: $E=mc^2$`",              "inline equation: $E=mc^2$",
+  "`image: ![]()`",                           "image: ![]()",
+  "`# Biggest Heading`",                      "# Biggest Heading",
+  "`###### Smallest Heading`",                
+  "<span style='font-size:16px;'>Smallest Heading</span>",
+  "`> block quote`",                          
+  "<span style='padding-left:1rem;border-left-color:#999;border-left-style:solid;border-left-width:1px;'>block quote</span>",
+  "`* unordered list`<br>`* item 2`<br>`   + sub-item 1`<br>`   + sub-item 2`",
+  "* unordered list\n* item 2\n   + sub-item 1\n   + sub-item 2",
+  
+  "`1. ordered list`<br>`2. item 2`<br>`   + sub-item 1`<br>`   + sub-item 2`",
+  "1. ordered list\n2. item 2\n   + sub-item 1\n   + sub-item 2",
+) %>%
+  gt(caption = "Markdown Reference", id = "md_ref") %>%
+  fmt_markdown(columns = everything()) %>%
+  cols_label(
+    a = "Write this down as Markdown...",
+    b = "...get this in HTML form"
+  ) %>%
+  tab_options(table.width = pct(100)) %>%
+  opt_css(
+    css = "
+    #md_ref code {
+      color: #333333;
+    }"
+  )
+```
 
 ## Visual Markdown Editor
 
