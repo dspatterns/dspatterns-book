@@ -4,32 +4,30 @@
 library(dspatterns)
 ```
 
-{{< test-drive url="https://rstudio.cloud/project/181856" >}}
 
-R Markdown is designed to keep your source code separate from your output. Why? Because you will want to save your source code as a readable record of what you did. The source code can then be used to "play back" that record and (re-)produce the output. To be reproducible though, you have to first produce something---let's render this `.Rmd` to produce an output file.
+Quarto is designed to keep your source code separate from your output. Why? Because you will want to save your source code as a readable record of what you did. The source code can then be used to "play back" that record and (re-)produce the output. To be reproducible though, you have to first produce something---let's render this `.qmd` to produce an output file.
 
 ## Knitting the source file
 
-{{< columns class="twocols" >}}
-{{< column name="narrow-left" >}}
-![](rmarkdown_hedgehog.png)
-{{< /column >}}
-{{< column name="wide-right" >}}
-The file extension `.Rmd` makes your file **executable**, which means that this file can be used to both save *and* execute code. Here is a code chunk:
+::: {layout="[30,-10,60]"}
 
-````
-```{r}`r ''`
+![](img/rmarkdown_hedgehog.png)
+
+::: column
+The file extension `.qmd` makes your file **executable**, which means that this file can be used to both save *and* execute code. Here is a code chunk:
+
+
+```{r}
+#| fenced: true
 1 + 1
 ```
-````
 
-Any output your code produces like tables, plots, or other results can be included when you render your document. This process is called **knitting**, because you are executing code and knitting the output back into the document. There is a special button for it in RStudio that looks like this: ![](knit-button.png)
-{{< /column >}}
-{{< /columns  >}}
 
-<iframe src="https://drive.google.com/file/d/1YV-YZU9IBLNL0jtgXMIK9JbHFVhaVtwl/preview" width="640" height="480">
+Any output your code produces like tables, plots, or other results can be included when you render your document. This process is called **rendering**, because you are executing code and putting the output back into the document. There is a special button for it in RStudio that looks like this: ![](img/render-btn.png)
+:::
 
-</iframe>
+:::
+
 
 NOTE: You may also use keyboard shortcuts to knit:
 
@@ -38,43 +36,55 @@ NOTE: You may also use keyboard shortcuts to knit:
 
 ## The output file
 
-{{< columns class="twocols" >}}
-{{< column name="even-left" >}}
-When we knit, R Markdown generates a new file that now contains four elements: 
+::: {layout="[50,50]"}
+
+::: column
+
+When we render, Quarto generates a new file that now contains four elements: 
 
 -   Metadata at the top (we see the title)
+
 -   Narrative text
+
 -   A code chunk (but we only see one...)
+
 -   Results (a plot!) 
-{{< /column >}}
-{{< column name="even-right" >}}
-![](01-output.png)
-{{< /column >}}
-{{< /columns  >}}
+
+
+:::
+
+![](img/01-output.png)
+:::
+
+
 
 
 ## The output format
 
-{{< columns class="twocols" >}}
-{{< column name="even-left" >}}
+::: {layout="[50,50]"}
+
+::: column
+
 This output file is an HTML document. This is a type of output, which was stored in the document's metadata block:
 
 ```yaml
 ---
 title: "Early words"
-output: html_document
+format: html
 ---
 ```
 
-Output formats are one of the most versatile features of R Markdown&mdash;you can use them to build web pages like this one, Word documents, PDFs, multi-page websites, slides, and even write books.
-{{< /column >}}
-{{< column name="even-right" >}}
-![](hedgehog-projects.jpg)
-{{< /column >}}
-{{< /columns  >}}
+Output formats are one of the most versatile features of Quarto&mdash;you can use them to build web pages like this one, Word documents, PDFs, multi-page websites, slides, and even write books.
+
+
+:::
+
+![](img/hedgehog-projects.jpg)
+:::
+
 
 
 ## What's next?
 
-While this is a polished and shareable document as is, it is not likely that your work stops there---but it is a great place to start. Next, we'll show how to use R Markdown to develop your ideas alongside your code using narrative text.
+While this is a polished and shareable document as is, it is not likely that your work stops there---but it is a great place to start. Next, we'll show how to use Quarto to develop your ideas alongside your code using narrative text.
 
