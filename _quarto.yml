@@ -95,5 +95,6 @@ format:
     toc-depth: 2
     cover-image: cover.png
     code-link: true
+    code-line-numbers: true
 
 bibliography: references.bib
