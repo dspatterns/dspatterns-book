@@ -24,15 +24,14 @@ Start a Quarto project if you want to:
 
 ::: column
 Every Quarto project starts with a Quarto file that has the extension `.qmd`.
-
-
+\
+\
 This particular one analyzes children's early words, but every `.qmd` includes the same three basic elements inside:
-
+\
 
 - A block of metadata at the top, between two fences of `---`s. This is written in [YAML](https://learnxinyminutes.com/docs/yaml/). 
 - Narrative text, written in [Markdown](https://commonmark.org/help/tutorial/). 
 - Code chunks in gray between two fences of ```` ``` ````, written with R or another programming language.
-
 
 You can use all three elements to develop your code and ideas in one reproducible document.
 :::
@@ -49,28 +48,8 @@ Here is the plain text version of the same `.qmd` document, which you can copy a
 
 ## What is **Quarto**?
 
-**Quarto** helps you create dynamic documents that combine code, rendered output (such as figures), and markdown-formatted text. It was developed by software engineers at RStudio, so it works well with the RStudio IDE
+**Quarto** helps you create dynamic documents that combine code, rendered output (such as figures), and markdown-formatted text. It was developed by software engineers at RStudio, so it works well with the RStudio IDE, which is our IDE of choice for using Quarto with code written in R.
 
-{{< columns class="twocols" >}}
-{{< column name="narrow-left" >}}
-
-![](/css/images/hex/rmarkdown.png)
-
-{{< /column >}}
-{{< column name="wide-right" >}}
-
-The easiest way to install the **rmarkdown** package is from within the RStudio IDE, but you don’t need to explicitly install it or load it, as RStudio automatically does both when needed. 
-
-If you want to use the rmarkdown package outside of RStudio, you can install the package from CRAN as follows:
-
-```{r eval=FALSE}
-install.packages("rmarkdown")
-```
-
-{{< /column >}}
-{{< /columns  >}}
-
-If you are not using the RStudio IDE, please install Pandoc (http://pandoc.org). Instructions are available on the reference site (https://pandoc.org/installing.html).
 
 ## What's next?
 
