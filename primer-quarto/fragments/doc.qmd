@@ -4,7 +4,7 @@ format: html
 ---
 
 ```{r}
-#| include: FALSE
+#| include: false
 library(paletteer)
 library(ggplot2)
 ggplot2::theme_set(theme_minimal())
@@ -16,7 +16,7 @@ Which words do children say, and at what age? We analyze data from the Stanford 
 We have data on children from `r min(words$age)` to `r max(words$age)` months of age.
 
 ```{r}
-#| message: FALSE
+#| message: false
 #| out.width: '80%'
 plot <- ggplot(words, aes(x = age, y = produces, color = lemma)) + 
   geom_smooth(se = FALSE, lwd = .5) +
