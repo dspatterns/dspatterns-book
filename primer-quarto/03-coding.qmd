@@ -7,67 +7,60 @@ library(dspatterns)
 
 ## Develop code
 
-{{< columns class="twocols" >}}
-{{< column name="even-left" >}}
+::: {layout="[50,50]"}
 
-The code inside your R Markdown documents will often start small, then grow as you work. 
+::: column
+The code inside your Quarto documents will often start small, then grow as you work. 
+\
+\
+It is totally natural to use your `.qmd` as a scratchpad to develop code. Many users find that using `.qmd` files helps them "code while thinking."
+\
+\
+`.qmd` files are designed to be used interactively in RStudio. You can use RStudio to test your code one chunk at a time, which we'll show now.
+:::
 
-It is totally natural to use your `.Rmd` as a scratchpad to develop code. Many users find that using `.Rmd` files helps them "code while thinking."
+![Hedgehog developing a new Quarto file, art by Allison Horst](img/pattern.png)
+:::
 
-`.Rmd` files are designed to be used interactively in RStudio. You can use RStudio to test your code one chunk at a time, which we'll show now.
 
-{{< /column >}}
-{{< column name="even-right" >}}
-
-![](pattern.png)
-
-{{< /column >}}
-{{< /columns  >}}
 
 
 ## Run code chunks
 
-{{< columns class="twocols" >}}
-{{< column name="even-left" >}}
+::: {layout="[50,50]"}
 
-For every gray code chunk, you'll notice a green arrow on the right: ![](run-button.png)
+::: column
+For every gray code chunk, you'll notice a green arrow on the right: ![](img/run-button.png)
 
 
 When you click "Run Current Chunk", the code is sent straight to your console. 
 
 If you run the second chunk after the first, it also works! This is because RStudio is running your code chunks in your global environment, so it finds the `words` dataframe.
 
-Results like plots and tables are appear inline in your document- but don't get confused, your source `.Rmd` file still has not changed.
+Results like plots and tables are appear inline in your document- but don't get confused, your source `.qmd` file still has not changed.
+:::
 
-{{< /column >}}
-{{< column name="even-right" >}}
 
-<iframe src="https://drive.google.com/file/d/1z_eFA5HhZm9cM6UhOGtXWNar5Ym1I-tU/preview" width="540" height="480"></iframe>
+:::
 
-{{< /column >}}
-{{< /columns  >}}
 
 ## Add new code chunks
 
-{{< columns class="twocols" >}}
-{{< column name="even-left" >}}
+::: {layout="[50,50]"}
 
+::: column
 Now let's add a new code chunk. You can insert chunks any of three ways:
 
-+ use the Add Chunk ![](chunk-button.png) button in the editor toolbar
++ use the Add Chunk ![](img/chunk-button.png) button in the editor toolbar
 
 + use the keyboard shortcut **Ctrl + Alt + I** (OS X: **Cmd + Option + I**)
 
 + type ` ```{r} ` and ` ``` ` (the symbols are backticks)
+:::
 
 
-{{< /column >}}
-{{< column name="even-right" >}}
+:::
 
-<iframe src="https://drive.google.com/file/d/1a-TZaQCKrpP144Oeky-xqUzkqP_J6tsb/preview" width="540" height="480"></iframe>
-
-{{< /column >}}
-{{< /columns  >}}
 
 ## Edit code chunks
 
@@ -86,31 +79,31 @@ The main differences here are:
 
 ## Set up your panes
 
+::: {layout="[50,50]"}
 
-{{< columns class="twocols" >}}
-{{< column name="even-left" >}}
-
+::: column
 In RStudio, you can remove the inline preview in RStudio, and instead send your code output to the console. 
-
+\
+\
 This can be done as a global setting in RStudio by going to **RStudio > Preferences > R Markdown**.
-
+\
+\
 On that options page, uncheck the box shown on the right. 
-
+\
+\
 Scroll down and click the "Apply" button for this setting to take effect.
+:::
 
-{{< /column >}}
-{{< column name="even-right" >}}
+![](img/ide-inline.png)
+:::
 
-![](ide-inline.png)
 
-{{< /column >}}
-{{< /columns  >}}
 
 Your workspace in RStudio then would look something like this:
 
-![](ide-console.png)
+![](img/ide-console.png)
 
 ## What's next?
 
-In this section, we showed how you can develop R Markdown documents in RStudio, one code chunk at a time. An `.Rmd` file can be used to both save and execute code, and to create a reproducible record of what you did and how you did it. How to "knit" this record is up next.
+In this section, we showed how you can develop Quarto documents in RStudio, one code chunk at a time. A `.qmd` file can be used to both save and execute code, and to create a reproducible record of what you did and how you did it. How to "knit" this record is up next.
 
