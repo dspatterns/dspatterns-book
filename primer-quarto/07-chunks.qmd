@@ -4,20 +4,6 @@
 library(dspatterns)
 ```
 
-```{r include=FALSE}
-library(paletteer)
-library(ggplot2)
-words <- read.csv(here::here("rmd_fragments/word_summary.csv"))
-line <- ggplot(words, aes(x = age, y = produces, color = lemma)) + 
-  geom_smooth(se = FALSE, lwd = .5) +
-  geom_point(size = 2)  
-rose <- ggplot(words, 
-         aes(x = age, y = produces, fill = lemma)) +
-  geom_col(width = 2) +
-  coord_polar() + 
-  theme(axis.text.y = element_blank()) 
-```
-
 We just learned about how the **knitr** package is responsible for both executing code and knitting the output back into the document. The **knitr** package has some special code [chunk options](http://yihui.name/knitr/options/) to control how your code both works and looks. 
 
 ## Using chunk options

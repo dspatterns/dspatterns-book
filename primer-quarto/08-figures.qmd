@@ -9,12 +9,16 @@ library(dspatterns)
 library(paletteer)
 library(ggplot2)
 knitr::opts_chunk$set(warning=FALSE, message=FALSE)
-words <- read.csv(here::here("rmd_fragments/word_summary.csv"))
-line <- ggplot(words, aes(x = age, y = produces, color = lemma)) + 
+
+words <- read.csv(here::here("primer-quarto/data/word_summary.csv"))
+
+line <- 
+  ggplot(words, aes(x = age, y = produces, color = lemma)) + 
   geom_smooth(se = FALSE, lwd = .5) +
   geom_point(size = 2)  
-rose <- ggplot(words, 
-         aes(x = age, y = produces, fill = lemma)) +
+
+rose <- 
+  ggplot(words, aes(x = age, y = produces, fill = lemma)) +
   geom_col(width = 2) +
   coord_polar() + 
   theme(axis.text.y = element_blank()) 
