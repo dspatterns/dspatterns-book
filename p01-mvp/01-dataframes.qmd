@@ -1,5 +1,9 @@
 # Dataframes
 
+```{r setup, include=FALSE, echo=FALSE}
+library(tibble)
+```
+
 tibbles too
 tables too
 
