@@ -58,6 +58,7 @@ jobs:
 
       - name: Install R packages
         run: |
+         install.packages("knitr")
          install.packages("remotes")
          install.packages("tidyverse")
          install.packages("quarto")
