@@ -21,17 +21,14 @@ Start a Quarto project if you want to:
 ## What is a `.qmd` file?
 
 ::: {layout="[50,50]"}
-
 ::: column
-Every Quarto project starts with a Quarto file that has the extension `.qmd`.
+Every Quarto project starts with a Quarto file that has the extension `.qmd`.\
 \
-\
-This particular one analyzes children's early words, but every `.qmd` includes the same three basic elements inside:
-\
+This particular one analyzes children's early words, but every `.qmd` includes the same three basic elements inside:\
 
-- A block of metadata at the top, between two fences of `---`s. This is written in [YAML](https://learnxinyminutes.com/docs/yaml/). 
-- Narrative text, written in [Markdown](https://commonmark.org/help/tutorial/). 
-- Code chunks in gray between two fences of ```` ``` ````, written with R or another programming language.
+-   A block of metadata at the top, between two fences of `---`s. This is written in [YAML](https://learnxinyminutes.com/docs/yaml/).
+-   Narrative text, written in [Markdown](https://commonmark.org/help/tutorial/).
+-   Code chunks in gray between two fences of ```` ``` ````, written with R or another programming language.
 
 You can use all three elements to develop your code and ideas in one reproducible document.
 :::
@@ -49,7 +46,6 @@ Here is the plain text version of the same `.qmd` document, which you can copy a
 ## What is **Quarto**?
 
 **Quarto** helps you create dynamic documents that combine code, rendered output (such as figures), and markdown-formatted text. It was developed by software engineers at RStudio, so it works well with the RStudio IDE, which is our IDE of choice for using Quarto with code written in R.
-
 
 ## What's next?
 
