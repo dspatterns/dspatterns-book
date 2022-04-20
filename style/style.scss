@@ -94,3 +94,9 @@ main {
 .nav-page .nav-page-text {
   color: $pro-header;
 }
+
+
+/* make sidebar nav font all same size */
+.sidebar-navigation .sidebar-item {
+	font-size: 1.0rem;
+}
