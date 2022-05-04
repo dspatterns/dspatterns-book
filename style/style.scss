@@ -27,9 +27,19 @@ a {
   text-underline-offset: .15em;
 }
 
-/* increase padding around code blocks */
+/* decrease left padding in line-numbered code blocks (reduces distance between line numbers and statements) */
 pre.sourceCode.code-with-copy {
-  padding: 1rem 25px 1rem 1rem;
+  padding-left: 10px;
+}
+
+/* slightly move line numbering in code blocks to the left */
+pre.numberSource code > span > a:first-child::before {
+  left: -1.5em;
+}
+
+/* sligntly decrease font size of output cells */
+.cell-output-stdout {
+  font-size: 17px;
 }
 
 /* increase title letter spacing to lighten it up */
