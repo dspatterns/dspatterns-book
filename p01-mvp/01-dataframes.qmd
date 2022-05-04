@@ -1,8 +1,13 @@
-# Dataframes
+---
+title: "Introduction to Data Frames and Tibbles"
+---
 
 ```{r setup, include=FALSE, echo=FALSE}
+library(dspatterns)
+library(dplyr)
 library(tibble)
 ```
+
 
 tibbles too
 tables too
@@ -26,6 +31,9 @@ We haven't covered importing, but a foundational concept when working with small
 ## Share
 
 Creating your own tabular data can be really useful to share with another person, especially when de-bugging.
+
+
+## Creating Our Own Tabular Data
 
 The tables we often work with are called tibbles. **R** has a table type called a data frame and a tibble is a special implementation of a data frame that prints its data differently and behaves in a more consistent manner than data frames.
 
@@ -149,4 +157,3 @@ tribble(    #A
 ```
 
 The resulting tibble appears just as we laid out the values. As can be seen in the code listing, the table values aren't provided as vectors but instead are laid out as column names and values in manner that approximates the structure of a table. Importantly the column names are preceded by a tilde (`~`) character, and, commas separate all values. This way of building a simple tibble can be useful when having values side-by-side is important for minimizing the potential for error.
-
