@@ -68,14 +68,16 @@ For our examples, let's create some `character`-based dates. These dates embody 
 `r dspatterns::code_hints(
 "Examples of typical date formats with different orderings of year, month, and day (all for the same date).",
 c(
-"#A ~~YYYY/MM/DD~~ (ISO 8601).",
-"#B ~~MM/DD/YYYY~~.",
-"#C ~~DD/MM/YYYY~~."
+"L.1 ~~YYYY/MM/DD~~ (ISO 8601).",
+"L.2 ~~MM/DD/YYYY~~.",
+"L.3 ~~DD/MM/YYYY~~."
 ))`
-```{r text-dates}
-ymd_chr <- "19950615"    #A
-mdy_chr <- "06/15/1995"  #B
-dmy_chr <- "15-06-1995"  #C
+```{r}
+#| label: text-dates
+
+ymd_chr <- "19950615"
+mdy_chr <- "06/15/1995"
+dmy_chr <- "15-06-1995"
 ```
 
 With these example dates, the delimiters have some variation: `/`, `-`, or no delimiter at all! We shouldn't worry though, **lubridate** can handle this. Now, let's attempt to parse each of these character-based dates with the appropriate date-parsing functions from **lubridate**.
@@ -83,18 +85,20 @@ With these example dates, the delimiters have some variation: `/`, `-`, or no de
 `r dspatterns::code_hints(
 "Converting text-based dates to **R** ~~Date~~ objects.",
 c(
-"#A Parse each ~~character~~-based date value.",
-"#B Create a vector of ~~Date~~ objects.",
-"#C Print the vector to the console."
+"L.1 Parse each ~~character~~-based date value.",
+"L.5 Create a vector of ~~Date~~ objects.",
+"L.7 Print the vector to the console."
 ))`
-```{r to-date-objects}
-date_1 <- ymd(ymd_chr)  #A
-date_2 <- mdy(mdy_chr)            
-date_3 <- dmy(dmy_chr)            
+```{r}
+#| label: to-date-objects
 
-dates <- c(date_1, date_2, date_3)  #B
+date_1 <- ymd(ymd_chr)
+date_2 <- mdy(mdy_chr)
+date_3 <- dmy(dmy_chr)
 
-dates  #C
+dates <- c(date_1, date_2, date_3)
+
+dates
 ```
 
 We see that in the resulting vector, the same date appears three times: `"1995-06-15"`. This makes sense because the date was the same in the `ymd_chr`, `mdy_chr`, and `dmy_chr` variables (just with wildly different formatting). Moreover, those `ymd()`, `mdy()`, and `dmy()` functions did the trick! It's can be somewhat unsettling that in the printed vector, the dates look like character values. Let's sanity check this by using **R**'s `class()` function.
@@ -102,10 +106,12 @@ We see that in the resulting vector, the same date appears three times: `"1995-0
 `r dspatterns::code_hints(
 "Checking that we have a ~~Date~~ vector.",
 c(
-"#A Get the class of the dates vector with the ~~class()~~ function."
+"L.1 Get the class of the dates vector with the ~~class()~~ function."
 ))`
-```{r check-class-date}
-class(dates)  #A
+```{r}
+#| label: check-class-date
+
+class(dates)
 ```
 
 This returns the class of the dates object which is here is `"Date"` and is thus perfect for our needs. All of these **lubridate** date-parsing functions return a `Date` object if parsing is successful.
@@ -115,10 +121,12 @@ These specialized date-parsing functions are great for those dates that don't co
 `r dspatterns::code_hints(
 "Creating a ~~Date~~ object from a date string in ISO format.",
 c(
-"#A Now using ~~as_date()~~ instead of ~~ymd()~~."
+"L.1 Now using ~~as_date()~~ instead of ~~ymd()~~."
 ))`
-```{r as-date-function}
-as_date("19950615")  #A
+```{r}
+#| label: as-date-function
+
+as_date("19950615")
 ```
 
 The result, in the console, is the Date object as a single-length vector that contains `"1995-06-15"`.
@@ -135,14 +143,16 @@ Let's modify those dates that were used previously by providing a time of 8:00 A
 `r dspatterns::code_hints(
 "Typical date formats with an added time component.",
 c(
-"#A YYYY/MM/DD hh:mm (ISO 8601).",
-"#B MM/DD/YYYY hh:mm.",
-"#C DD/MM/YYYY hh:mm."
+"L.1 YYYY/MM/DD hh:mm (ISO 8601).",
+"L.2 MM/DD/YYYY hh:mm.",
+"L.3 DD/MM/YYYY hh:mm."
 ))`
-```{r text-date-times}
-ymd_hm_chr <- "19950615 0800"     #A
-mdy_hm_chr <- "06/15/1995 08:00"  #B
-dmy_hm_chr <- "15-06-1995 08:00"  #C
+```{r}
+#| label: text-date-times
+
+ymd_hm_chr <- "19950615 0800"
+mdy_hm_chr <- "06/15/1995 08:00"
+dmy_hm_chr <- "15-06-1995 08:00"
 ```
 
 These `character`-based date-times all have an hour and minute time resolution, so the appropriate date-time parsing functions would include those that end in `_hm`. In order of variable assignment the specific functions are `ymd_hm()`, `mdy_hm()`, and `dmy_hm()`. We'll use them next to give us a vector of the same three date-times.
@@ -150,18 +160,20 @@ These `character`-based date-times all have an hour and minute time resolution, 
 `r dspatterns::code_hints(
 "Converting text-based date-times to **R** ~~POSIXct~~ objects.",
 c(
-"#A Parse each ~~character~~-based date-time.",
-"#B Create a vector of ~~POSIXct~~ objects.",
-"#C Print the vector to the console."
+"L.1 Parse each ~~character~~-based date-time.",
+"L.5 Create a vector of ~~POSIXct~~ objects.",
+"L.7 Print the vector to the console."
 ))`
-```{r to-datetime-objects}
-datetime_1 <- ymd(ymd_hm_chr)  #A
-datetime_2 <- mdy(mdy_hm_chr)
-datetime_3 <- dmy(dmy_hm_chr)
+```{r}
+#| label: to-datetime-objects
 
-datetimes <- c(datetime_1, datetime_2, datetime_3)  #B
+datetime_1 <- ymd_hm(ymd_hm_chr)
+datetime_2 <- mdy_hm(mdy_hm_chr)
+datetime_3 <- dmy_hm(dmy_hm_chr)
 
-datetimes  #C
+datetimes <- c(datetime_1, datetime_2, datetime_3)
+
+datetimes
 ```
 
 Note that we get the default time zone of `"UTC"`. This is normally not a problem if we are dealing with dates and times from a single, known locale. Should a specific time zone be necessary for analysis, we can supply the time zone in the `tz` argument of any of **lubridate**'s parsing functions. Should you ever need them, proper names for time zones as input to `tz` can be found by using the `OlsenNames()` function.
@@ -171,10 +183,12 @@ The date-time vector we produced is a vector with the `POSIXct` class. We can ve
 `r dspatterns::code_hints(
 "Checking that we have a ~~POSIXct~~ vector.",
 c(
-"#A Get the class of the datetimes vector with the ~~class()~~ function."
+"L.1 Get the class of the datetimes vector with the ~~class()~~ function."
 ))`
 ```{r check-class-posixct}
-class(datetimes)  #A
+#| label: check-class-posixct
+
+class(datetimes)
 ```
 
 This returned a vector of classes containing `POSIXct` (as expected) and `POSIXt` class names. The latter is a pseudo class we normally don't need to concern ourselves with.
@@ -188,7 +202,10 @@ Let's take a look at the `nycweather` dataset, which is provided in the **dspatt
 `r dspatterns::code_hints(
 "The ~~nycweather~~ dataset."
 )`
-```{r print-nycweather, paged.print=FALSE}
+```{r}
+#| label: print-nycweather
+#| paged.print: false
+
 nycweather
 ```
 
@@ -203,11 +220,14 @@ Although the `nycweather` dataset has a column named time, the type of that colu
 `r dspatterns::code_hints(
 "Plotting the dataset (as is) with **ggplot**.",
 c(
-"#A Use ~~geom_point()~~ to create a scatterplot."
+"L.2 Use ~~geom_point()~~ to create a scatterplot."
 ))`
-```{r plot-nycweather-asis, eval=FALSE}
+```{r}
+#| label: plot-nycweather-asis
+#| eval: false
+
 ggplot(data = nycweather) +
-  geom_point(aes(x = time, y = temp))  #A
+  geom_point(aes(x = time, y = temp))
 ```
 
 ![](appendix-figures/87-transformations-dates-times/01-figure-plot_nycweather_asis.png){#fig-plot-nycweather-asis}
@@ -219,21 +239,21 @@ Just to drive that last point home, let's take the beginning and end of the data
 `r dspatterns::code_hints(
 "Plotting the beginning and end of ~~nycweather~~.",
 c(
-"#A Take only the first and last 100 rows by combining the ~~head()~~ and ~~tail()~~ of nycweather.",
-"#B Use the same plotting code as before, this time using the ~~nycweather_start_end~~ object."
+"L.3 Take only the first and last 100 rows by combining the ~~head()~~ and ~~tail()~~ of ~~nycweather~~.",
+"L.8 Use the same plotting code as before, this time using the ~~nycweather_start_end~~ object."
 ))`
 ```{r}
 #| label: fig-plot-nycweather-start-end
 #| fig.cap: "A revised plot that takes the first and last 100 rows of ~~nycweather~~. Very evenly spaced."
 
 nycweather_start_end <-
-  dplyr::bind_rows(        
-    head(nycweather, 100),  #A
-    tail(nycweather, 100)  
-  ) 
+  dplyr::bind_rows(
+    head(nycweather, 100),
+    tail(nycweather, 100)
+  )
 
 ggplot(data = nycweather_start_end) +
-  geom_point(aes(x = time, y = temp))  #B
+  geom_point(aes(x = time, y = temp))
 ```
 
 We can, without any doubt, see that the 200 data points of time are equally distributed horizontally across the plot. No gap in the middle. For sure, those character-based time values have no significance to **ggplot**. However, dates and date-times of the **R** `Date` and `POSIXct` types do have significance to **ggplot**, which will make the appropriate time-based axis (and hence map the positions of the data points correctly). So, let's make that transformation already! We needd to use the `mutate()` function along with **lubridate**'s `as_datetime()` function to transform the column of character-based date-times (all in ISO 8601 format) to `POSIXct` values.
@@ -241,7 +261,10 @@ We can, without any doubt, see that the 200 data points of time are equally dist
 `r dspatterns::code_hints(
 "Transforming character times to ~~POSIXct~~ date-times."
 )`
-```{r make-datetime-column, paged.print=FALSE}
+```{r}
+#| label: make-datetime-column
+#| paged.print: false
+
 nycweather_a <- 
   nycweather %>%
   mutate(time = as_datetime(time))
@@ -254,14 +277,17 @@ Now the time column in `nycweather_a` is a `POSIXct` column. This is succinctly 
 `r dspatterns::code_hints(
 "Using a sample of our dataset for quicker plotting.",
 c(
-"#A The size argument of ~~sample_n()~~ with a value of ~~1000~~ means we will get a random sample of 1000 rows from ~~nyc_weather_a~~.",
-"#B Using ~~!is.na(temp)~~ inside ~~filter()~~ means that we want only those rows where ~~temp~~ values don't have ~~NA~~ values."
+"L.3 The size argument of ~~sample_n()~~ with a value of ~~1000~~ means we will get a random sample of 1000 rows from ~~nyc_weather_a~~.",
+"L.4 Using ~~!is.na(temp)~~ inside ~~filter()~~ means that we want only those rows where ~~temp~~ values don't have ~~NA~~ values."
 ))`
-```{r downsample-for-plotting, paged.print=FALSE}
+```{r}
+#| label: downsample-for-plotting
+#| paged.print: false
+
 nycweather_a_samp <-
   nycweather_a %>%
-  sample_n(size = 1000) %>%  #A
-  filter(!is.na(temp))  #B
+  sample_n(size = 1000) %>%
+  filter(!is.na(temp))
 
 nycweather_a_samp
 ```
@@ -290,22 +316,25 @@ Once we have those columns, we use `group_by(date, hour)` to create groups of ro
 `r dspatterns::code_hints(
 "Reducing our dataset to get one measurement per hour.",
 c(
-"#A Create the ~~date~~ column by applying the ~~date()~~ function on the ~~time~~ column.",
-"#B Create the ~~hour~~ column by applying the ~~hour()~~ function on time.",
-"#C Keep only one record per group with the ~~slice()~~ function (and the value of ~~1~~).",
-"#D Because we used ~~group_by()~~ just before ~~slice()~~ we still have grouped data; it's often good practice to ~~ungroup()~~ just to be safe (otherwise we might later unintentionally use another function that operates on the existing grouping)."
+"L.5 Create the ~~date~~ column by applying the ~~date()~~ function on the ~~time~~ column.",
+"L.6 Create the ~~hour~~ column by applying the ~~hour()~~ function on time.",
+"L.9 Keep only one record per group with the ~~slice()~~ function (and the value of ~~1~~).",
+"L.10 Because we used ~~group_by()~~ just before ~~slice()~~ we still have grouped data; it's often good practice to ~~ungroup()~~ just to be safe (otherwise we might later unintentionally use another function that operates on the existing grouping)."
 ))`
-```{r one-per-hour, paged.print=FALSE}
+```{r}
+#| label: one-per-hour
+#| paged.print: false
+
 nycweather_b <-
   nycweather_a %>%
   filter(!is.na(temp)) %>%
   mutate(
-    date = date(time), #A
-    hour = hour(time)  #B
+    date = date(time),
+    hour = hour(time)
   ) %>%
   group_by(date, hour) %>%
-  slice(1) %>%  #C
-  ungroup()  #D
+  slice(1) %>%
+  ungroup()
 
 nycweather_b
 ```
@@ -334,10 +363,13 @@ We will use the `nycweather_b` table as a starting point, which has the time-bas
 `r dspatterns::code_hints(
 "Summarizing our data to get daily minimum and maximum temperatures.",
 c(
-"#A Grouping by ~~date~~ will ensure that the summary is one of daily values.",
-"#B The daily summary of is ~~min()~~ and ~~max()~~ temperature values."
+"L.3 Grouping by ~~date~~ will ensure that the summary is one of daily values.",
+"L.4 The daily summary of is ~~min()~~ and ~~max()~~ temperature values."
 ))`
-```{r get-daily-min-max, paged.print=FALSE}
+```{r}
+#| label: get-daily-min-max
+#| paged.print: false
+
 nycweather_c <-
   nycweather_b %>%
   group_by(date) %>%  #A
@@ -356,17 +388,20 @@ There is still an issue with the resultant table: it's not tidy. We need a singl
 `r dspatterns::code_hints(
 "Tidying the table to get one temperature value per row.",
 c(
-"#A We provide the column names that contain values that should be placed in the new temp column. It\'s okay to use bare column names (i.e., no quotes) inside of ~~c()~~ here.",
-"#B The ~~names_to~~ argument is given the name of the new column that will contain the type values (~~\"min\"~~ and ~~\"max\"~~).",
-"#C The ~~values_to~~ argument is given the name of the new column that will contain the values: ~~\"temp\"~~."
+"L.4 We provide the column names that contain values that should be placed in the new temp column. It\'s okay to use bare column names (i.e., no quotes) inside of ~~c()~~ here.",
+"L.5 The ~~names_to~~ argument is given the name of the new column that will contain the type values (~~\"min\"~~ and ~~\"max\"~~).",
+"L.6 The ~~values_to~~ argument is given the name of the new column that will contain the values: ~~\"temp\"~~."
 ))`
-```{r tidy-table, paged.print=FALSE}
-nycweather_d <- 
+```{r}
+#| label: tidy-table
+#| paged.print: false
+
+nycweather_d <-
   nycweather_c %>%
   pivot_longer(
-    cols = c(min, max),  #A
-    names_to = "type",   #B
-    values_to = "temp"   #C
+    cols = c(min, max),
+    names_to = "type",
+    values_to = "temp"
   ) %>%
   arrange(date)
 

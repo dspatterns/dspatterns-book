@@ -12,7 +12,7 @@ library(tibble)
 tibbles too
 tables too
 
-We haven't covered importing, but a foundational concept when working with small datasets in R are dataframes.
+We haven't covered importing, but an important concept when working with small datasets in R are dataframes.
 
 ## Explore
 
@@ -53,13 +53,16 @@ Let's have a look at a few examples of tibble-making first with `tibble()`, whic
 `r dspatterns::code_hints(
 "Using ~~tibble()~~ with equal-length vectors to make a tibble.",
 c(
-"#A This will become column ~~a~~.",
-"#B This is to be column ~~b~~."
+"L.2 This will become column ~~a~~.",
+"L.3 This is to be column ~~b~~."
 ))`
-```{r tibble-all-n, paged.print=FALSE}
+```{r}
+#| label: tibble-all-n
+#| paged.print: false
+
 tibble( 
-  a = c(3, 5, 2, 6),  #A
-  b = c("a", "b", "g", "b")  #B
+  a = c(3, 5, 2, 6),
+  b = c("a", "b", "g", "b")
 )
 ```
 
@@ -70,13 +73,16 @@ Let's make another tibble in a similar manner, but with a single value for `a` (
 `r dspatterns::code_hints(
 "Using ~~tibble()~~ with two vectors: one of length 1 and the other of length 4.",
 c(
-"#A Only one value for ~~a~~! That's okay, it will be repeated.",
-"#B This will become column ~~b~~, a column of ~~character~~-based values."
+"L.2 Only one value for ~~a~~! That's okay, it will be repeated.",
+"L.3 This will become column ~~b~~, a column of ~~character~~-based values."
 ))`
-```{r tibble-n-1, paged.print=FALSE}
+```{r}
+#| label: tibble-n-1
+#| paged.print: false
+
 tibble(
-  a = 3,  #A
-  b = c("a", "b", "g", "b")  #B
+  a = 3,
+  b = c("a", "b", "g", "b")
 )
 ```
 
@@ -89,13 +95,16 @@ We can also pass in `NA` (missing) values by including `NA`s in the appropriate 
 `r dspatterns::code_hints(
 " Using ~~tibble()~~ with two vectors that contain ~~NA~~ values.",
 c(
-"#A We intentionally placed an ~~NA~~ value among other values in column ~~a~~.",
-"#B There is also an ~~NA~~ value in the b column."
+"L.2 We intentionally placed an ~~NA~~ value among other values in column ~~a~~.",
+"L.3 There is also an ~~NA~~ value in the b column."
 ))`
-```{r tibble-na-vals, paged.print=FALSE}
+```{r}
+#| label: tibble-na-vals
+#| paged.print: false
+
 tibble(
-  a = c(3, 5, 2, NA),  #A
-  b = c("a", NA, "g", "b")  #B
+  a = c(3, 5, 2, NA),
+  b = c("a", NA, "g", "b")
   )
 ```
 
@@ -106,16 +115,17 @@ In the next code listing, an `NA` value is used in a vector of length 1. What wi
 `r dspatterns::code_hints(
 " Using a single-length vector with an ~~NA~~ value in ~~tibble()~~.",
 c(
-"#A Using a single ~~NA~~ (and nothing else) gives us a certain type of ~~NA~~: a ~~logical~~ ~~NA~~ (yes, there are different types)."
+"L.2 Using a single ~~NA~~ (and nothing else) gives us a certain type of ~~NA~~: a ~~logical~~ ~~NA~~ (yes, there are different types)."
 ))`
-```{r tibble-na-col, paged.print=FALSE}
+```{r}
+#| label: tibble-na-col
+#| paged.print: false
+
 tibble(
-  a = NA,  #A
+  a = NA,
   b = c("a", "b", "g", "b")
 )
 ```
-
-#A Using a single ~~NA~~ (and nothing else) gives us a certain type of ~~NA~~: a ~~logical~~ ~~NA~~ (yes, there are different types).
 
 Yes. The `NA` is repeated down the `a` column. We can see that column `a`'s type is `<lgl>`, or, `logical`.
 
@@ -124,11 +134,14 @@ Using just `NA` in a column does result in repeated `NA`s, however, the column i
 `r dspatterns::code_hints(
 "Using a single-length vector with an ~~NA_character_~~ value in ~~tibble()~~.",
 c(
-"#A We are now being specific about the type of ~~NA~~s we want (the ~~character~~ version)."
+"L.2 We are now being specific about the type of ~~NA~~s we want (the ~~character~~ version)."
 ))`
-```{r tibble-na-character, paged.print=FALSE}
+```{r}
+#| label: tibble-na-character
+#| paged.print: false
+
 tibble(
-  a = NA_character_,  #A
+  a = NA_character_,
   b = c("a", "b", "g", "b")
 )
 ```
@@ -142,17 +155,20 @@ We can use the `tribble()` function as an alternative constructor for tibble obj
 `r dspatterns::code_hints(
 "Creating a tibble using the ~~tribble()~~ function.",
 c(
-"#A As ~~tribble()~~ is very close in spelling to ~~tibble()~~, be a little careful here.",
-"#B The column names are prepended by the tilde character, and we don't use quotes.",
-"#C The last (hanging) comma here is fine to keep. It won't result in an error."
+"L.1 As ~~tribble()~~ is very close in spelling to ~~tibble()~~, be a little careful here.",
+"L.2 The column names are prepended by the tilde character, and we don't use quotes.",
+"L.6 The last (hanging) comma here is fine to keep. It won't result in an error."
 ))`
-```{r tribble-use, paged.print=FALSE}
-tribble(    #A
-  ~a, ~b,   #B
+```{r}
+#| label: tribble-use
+#| paged.print: false
+
+tribble(
+  ~a, ~b,
   3,  "a",
   5,  "b",
   2,  "g",
-  6,  "b",  #C
+  6,  "b",
 )
 ```
 

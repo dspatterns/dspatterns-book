@@ -15,7 +15,7 @@ This section covers
 - How to reshape a data table using the `pivot_longer()` function
 - Further tidying of data tables with the `na_if()` function
 
-The last two sections introduced us to data transformation (using **dplyr**) and data visualization (using **ggplot**). We really learned a lot, and we just dove right in with example data tables that were furnished by the **dspatterns** package. The `sw` and `dmd` datasets from earlier were tidy datasets. We didn't have to think much about the arrangement of the data within those tables, there were used as is. They just worked. Quite often, however, the datasets you'll encounter and want to use will not be tidy. This can cause problems in your analyses, so we really need to make the effort to tidy them before performing any analysis. This section is all about recognizing the difference between tidy and untidy data, and then, using strategies to tidy that data before getting to the analysis stage.
+In previus sections we were introduced to data transformation (using **dplyr**) and data visualization (using **ggplot**). We really learned a lot, and we just dove right in with example data tables that were furnished by the **dspatterns** package. The `sw` and `dmd` datasets from earlier were tidy datasets. We didn't have to think much about the arrangement of the data within those tables, there were used as is. They just worked. Quite often, however, the datasets you'll encounter and want to use will not be tidy. This can cause problems in your analyses, so we really need to make the effort to tidy them before performing any analysis. This section is all about recognizing the difference between tidy and untidy data, and then, using strategies to tidy that data before getting to the analysis stage.
 
 While the **dspatterns** package usually offers tidy datasets, there are a few untidy ones in there as well. We will use the untidy `winniweather` dataset in our examples for this section. The dataset contains temperature data (four times daily) for the City of Winnipeg during the month of February 2015. As ever, we get access to all of **dspatterns**'s datasets using `library(dspatterns)`. Once that statement is executed, the untidy `winniweather` table will be available. This is not a large dataset since it has merely 28 rows (one row per day of the study month) and the following six variables:
 
@@ -60,7 +60,10 @@ The `winniweather` dataset is available in the **dspatterns** package; let's loo
 `r dspatterns::code_hints(
 "The ~~winniweather~~ dataset, printed to the console."
 )`
-```{r winniweather-print}
+```{r}
+#| label: winniweather-print
+#| paged.print: false
+
 winniweather
 ```
 
@@ -77,18 +80,21 @@ Let's start to transform `winniweather` into a tidy dataset by first addressing 
 `r dspatterns::code_hints(
 "How to make data ~~pivot_longer()~~ and thus make it more tidy.",
 c(
-"#A We are piping the ~~winniweather~~ dataset to the ~~pivot_longer()~~ function.",
-"#B We start by supplying a set of columns that contain data to be put in a 'longer' format (i.e., one observation per row). The ~~starts_with()~~ function is familiar: it's also used in **dplyr**'s ~~select()~~ function.",
-"#C The ~~names_to~~ argument expects a name for a new column. This new column will contain the column names from the ~~starts_with()~~ selection.",
-"#D The ~~values_to~~ argument also expects a name (again, of your choosing) for a new column; this column will contain the values."
+"L.2 We are piping the ~~winniweather~~ dataset to the ~~pivot_longer()~~ function.",
+"L.4 We start by supplying a set of columns that contain data to be put in a 'longer' format (i.e., one observation per row). The ~~starts_with()~~ function is familiar: it's also used in **dplyr**'s ~~select()~~ function.",
+"L.5 The ~~names_to~~ argument expects a name for a new column. This new column will contain the column names from the ~~starts_with()~~ selection.",
+"L.6 The ~~values_to~~ argument also expects a name (again, of your choosing) for a new column; this column will contain the values."
 ))`
-```{r winni-pivot-longer, paged.print=FALSE}
+```{r}
+#| label: winni-pivot-longer
+#| paged.print: false
+
 winni_mod <- 
-  winniweather %>%  #A
+  winniweather %>%
   pivot_longer(
-    starts_with("temp"), #B
-    names_to = "hour",   #C
-    values_to = "temp"   #D
+    starts_with("temp"),
+    names_to = "hour",
+    values_to = "temp"
   )
 
 winni_mod
@@ -103,18 +109,21 @@ Although this is a great start, there is still some work to do to make the resul
 `r dspatterns::code_hints(
 "Modifying values in the hour column with ~~mutate()~~.",
 c(
-"#A We are piping the ~~winni_mod~~ object to **dplyr**'s ~~mutate()~~ function.",
-"#B The ~~hour~~ column already exists. We are essentially modifying values within the ~~hour~~ column on a case-by-case basis with the ~~case_when()~~ function.",
-"#C Each line represents a different possible case (~~hour~~ being equal to a specific string) and a replacement value (the integer-based hour of day in 24-hour time)."
+"L.2 We are piping the ~~winni_mod~~ object to **dplyr**'s ~~mutate()~~ function.",
+"L.3 The ~~hour~~ column already exists. We are essentially modifying values within the ~~hour~~ column on a case-by-case basis with the ~~case_when()~~ function.",
+"L.4-7 Each line represents a different possible case (~~hour~~ being equal to a specific string) and a replacement value (the integer-based hour of day in 24-hour time)."
 ))`
-```{r mutate-case-when, paged.print=FALSE}
+```{r}
+#| label: mutate-case-when
+#| paged.print: false
+
 winni_mod <- 
-  winni_mod %>%  #A
-  mutate(hour = case_when(  #B
-    hour == "temp00_00" ~ 0L,  #C
-    hour == "temp06_00" ~ 6L,  #C
-    hour == "temp12_00" ~ 12L, #C
-    hour == "temp18_00" ~ 18L  #C
+  winni_mod %>%
+  mutate(hour = case_when(
+    hour == "temp00_00" ~ 0L,
+    hour == "temp06_00" ~ 6L,
+    hour == "temp12_00" ~ 12L,
+    hour == "temp18_00" ~ 18L
   ))
 
 winni_mod
@@ -133,20 +142,23 @@ Using the `separate()` function effectively only requires a little planning, whi
 `r dspatterns::code_hints(
 "Separating the ~~yearmonth~~ column into ~~year~~ and ~~month~~ columns.",
 c(
-"#A The ~~winni_mod~~ object is piped into the ~~separate()~~ function, the result of that is stored as ~~winni_tidy~~.",
-"#B For the ~~col~~ argument, we should provide the column name that contains the string to separate into multiple columns (~~yearmonth~~). The column name shouldn't be in quotes because the column exists.",
-"#C The ~~into~~ argument lets us define column names for the split string. Since we are separating a string into two parts, we will provide two column names (in ~~c()~~): ~~year~~ and ~~month~~. These new names need to be in quotes because they don't yet exist.",
-"#D With ~~sep~~, we provide an instruction on how to separate the strings in ~~col~~. In this case, we are splitting on a hyphen (~~-~~): everything left of it will be put into the ~~year~~ column, everything to the right of the hyphen is placed in the ~~month~~ column.",
-"#E Using ~~convert = TRUE~~ will convert the new columns (~~year~~ and ~~month~~) to integer-type columns in this case."
+"L.1 The ~~winni_mod~~ object is piped into the ~~separate()~~ function, the result of that is stored as ~~winni_tidy~~.",
+"L.4 For the ~~col~~ argument, we should provide the column name that contains the string to separate into multiple columns (~~yearmonth~~). The column name shouldn't be in quotes because the column exists.",
+"L.5 The ~~into~~ argument lets us define column names for the split string. Since we are separating a string into two parts, we will provide two column names (in ~~c()~~): ~~year~~ and ~~month~~. These new names need to be in quotes because they don't yet exist.",
+"L.6 With ~~sep~~, we provide an instruction on how to separate the strings in ~~col~~. In this case, we are splitting on a hyphen (~~-~~): everything left of it will be put into the ~~year~~ column, everything to the right of the hyphen is placed in the ~~month~~ column.",
+"L.7 Using ~~convert = TRUE~~ will convert the new columns (~~year~~ and ~~month~~) to integer-type columns in this case."
 ))`
-```{r separate, paged.print=FALSE}
-winni_tidy <-  #A
-  winni_mod %>%                
+```{r}
+#| label: separate
+#| paged.print: false
+
+winni_tidy <-
+  winni_mod %>%
   separate(
-    col = yearmonth,  #B
-    into = c("year", "month"),  #C
-    sep = "-",  #D
-    convert = TRUE  #E
+    col = yearmonth,
+    into = c("year", "month"),
+    sep = "-",
+    convert = TRUE
   )
 
 winni_tidy
@@ -159,12 +171,15 @@ This table is now tidy! As a last thing to do we could arrange the rows to be in
 `r dspatterns::code_hints(
 "Using ~~arrange()~~ to put the observations in the correct order.",
 c(
-"#A The ~~arrange()~~ function from the **dplyr** package takes unquoted column names (or expressions with ~~desc()~~, not shown here but demonstrated earlier). The order is important. We are sorting first by ~~year~~, then ~~month~~, then ~~day~~, and finally by ~~hour~~."
+"L.3 The ~~arrange()~~ function from the **dplyr** package takes unquoted column names (or expressions with ~~desc()~~, not shown here but demonstrated earlier). The order is important. We are sorting first by ~~year~~, then ~~month~~, then ~~day~~, and finally by ~~hour~~."
 ))`
-```{r weather-arrange, paged.print=FALSE}
+```{r}
+#| label: weather-arrange
+#| paged.print: false
+
 winni_tidy <- 
   winni_tidy %>%
-  arrange(year, month, day, hour)  #A
+  arrange(year, month, day, hour)
 
 winni_tidy
 ```
@@ -180,7 +195,10 @@ We now have a single observation per row and, as far as we can tell, all observa
 `r dspatterns::code_hints(
 "A date-time column is necessary for **ggplot**-based time-series plots."
 )`
-```{r winni-iso-date, paged.print=FALSE}
+```{r}
+#| label: winni-iso-date
+#| paged.print: false
+
 winni_tidy <- 
   winni_tidy %>%
   mutate(iso_date = ISOdate(year, month, day, hour))
@@ -197,15 +215,15 @@ Now that we have the time data represented in a single column, a basic scatterpl
 `r dspatterns::code_hints(
 "A scatterplot of all observations in ~~winni_tidy~~ using **ggplot**.",
 c(
-"#A The ~~ggplot()~~ function call begins the plotting process, where we provide the tidied ~~winni_tidy~~ table as the plot data.",
-"#B We use the ~~geom_point()~~ *geom* to indicate that we want a scatterplot. We are giving this function the minimally required aesthetics of ~~x~~ and ~~y~~ (the ~~iso_date~~ and ~~temp~~ columns in ~~winni_tidy~~)."
+"L.1 The ~~ggplot()~~ function call begins the plotting process, where we provide the tidied ~~winni_tidy~~ table as the plot data.",
+"L.2 We use the ~~geom_point()~~ *geom* to indicate that we want a scatterplot. We are giving this function the minimally required aesthetics of ~~x~~ and ~~y~~ (the ~~iso_date~~ and ~~temp~~ columns in ~~winni_tidy~~)."
 ))`
 ```{r}
 #| label: fig-winni-tidy-ggplot-1
 #| fig.cap: "The scatterplot with all temperature data reveals a spurious data point."
 
-ggplot(data = winni_tidy) +  #A
-  geom_point(aes(x = iso_date, y = temp))  #B
+ggplot(data = winni_tidy) +
+  geom_point(aes(x = iso_date, y = temp))
 ```
 
 The plot we obtain from this code might surprise us since there is a temperature value with an extremely high value (`9999`). Plots like these are easy to create and are very useful for finding anomalous values hiding in the dataset. In this case, we see a single spurious value. There is a logical explanation for why we have a very high temperature value in this dataset: it is actually missing value. In datasets you may obtain from different sources, the encoding of missing values can take various forms. Sometimes, the field is blank, there may be text (e.g., `"N/A"`, `"missing"`, `"-"`, etc.), or, in this case, it may be a value of the same type (`numeric`) but set to a physically improbable value (9999 degrees Celsius!). Once we know how missing values are encoded for any particular dataset, we can take action to re-encode as proper `NA` values. In this way, our tidy tools, such as **ggplot**, can better handle the data.
@@ -217,12 +235,15 @@ The `winni_tidy` table that we worked hard to make tidy requires yet another cha
 `r dspatterns::code_hints(
 "Replacement of missing values with the ~~mutate()~~ and ~~na_if()~~ functions.",
 c(
-"#A The ~~na_if()~~ function is used inside of ~~mutate()~~ to modify the ~~temp~~ column. Inside ~~na_if()~~ we first supply the column name to modify, then, we supply the value that is considered to be an ~~NA~~ value."
+"L.3 The ~~na_if()~~ function is used inside of ~~mutate()~~ to modify the ~~temp~~ column. Inside ~~na_if()~~ we first supply the column name to modify, then, we supply the value that is considered to be an ~~NA~~ value."
 ))`
 ```{r winni-na-if, paged.print=FALSE}
-winni_tidy <-  
+#| label: winni-na-if
+#| paged.print: false
+
+winni_tidy <-
   winni_tidy %>%
-  mutate(temp = na_if(temp, 9999))  #A
+  mutate(temp = na_if(temp, 9999))
 ```
 
 The code that mutates the `winni_tidy` table writes over the previous version of `winni_tidy.` How do we verify that the change has been successful? After all, using `winni_tidy` by itself only shows us the first few rows of the table. We need a better way to inspect the modified table, so that we can sanity check our work.
@@ -232,14 +253,17 @@ A reasonable method involves both **dplyr**'s `select()` function and the base *
 `r dspatterns::code_hints(
 "Inspecting the data in a column (~~temp~~) to verify that the mutation had occurred.",
 c(
-"#A No reassignment back to ~~winni_tidy~~ here like in previous code listings, we just want to inspect the data.",
-"#B We are selecting the ~~temp~~ column to focus only on that column's summary statistics.",
-"#C The ~~summary()~~ function is very useful for getting simple summary statistics and validating one's assumptions of the data."
+"L.1 No reassignment back to ~~winni_tidy~~ here like in previous code listings, we just want to inspect the data.",
+"L.2 We are selecting the ~~temp~~ column to focus only on that column's summary statistics.",
+"L.3 The ~~summary()~~ function is very useful for getting simple summary statistics and validating one's assumptions of the data."
 ))`
-```{r winni-temp-summary, paged.print=FALSE}
-winni_tidy %>%      #A
-  select(temp) %>%  #B
-  summary()         #C
+```{r}
+#| label: winni-temp-summary
+#| paged.print: false
+
+winni_tidy %>%
+  select(temp) %>%
+  summary()
 ```
 
 The output shows that the maximum value for `temp` is now `-3.30` and not `9999`, which is a huge improvement! Also, we now have a single `NA` value in the `temp` column (this was our doing).
@@ -251,13 +275,13 @@ Let's now plot this data again. The next bit of plotting code isn't different th
 `r dspatterns::code_hints(
 "Another attempt at a scatterplot of all the observations in ~~winni_tidy~~ (the even tidier version).",
 c(
-"#A This **ggplot** code is unchanged from before, which just goes to show that **ggplot** code can be highly reusable."
+"L.1 This **ggplot** code is unchanged from before, which just goes to show that **ggplot** code can be highly reusable."
 ))`
 ```{r}
 #| label: fig-winni-tidy-ggplot-2
 #| fig.cap: "The scatterplot with all temperature data after dealing with the spurious data point."
 
-ggplot(data = winni_tidy) +  #A
+ggplot(data = winni_tidy) +
   geom_point(aes(x = iso_date, y = temp))
 ```
 
@@ -266,7 +290,7 @@ This plot is much changed from the previous one. This plot is now usable, since 
 `r dspatterns::code_hints(
 "Faceting the temperatures in winni_tidy by the time of day.",
 c(
-"#A We are using ~~facet_wrap()~~ to make a set of plots faceted by the four different hours that temperatures are available each day in this dataset. The ~~labeler = label_both~~ statement always provides useful information and is a nice touch."
+"L.3 We are using ~~facet_wrap()~~ to make a set of plots faceted by the four different hours that temperatures are available each day in this dataset. The ~~labeler = label_both~~ statement always provides useful information and is a nice touch."
 ))`
 ```{r}
 #| label: fig-winni-tidy-ggplot-3
@@ -274,7 +298,7 @@ c(
 
 ggplot(data = winni_tidy) +
   geom_point(aes(x = iso_date, y = temp)) +
-  facet_wrap(vars(hour), labeller = label_both)  #A
+  facet_wrap(vars(hour), labeller = label_both)
 ```
 
 The plot of @fig-winni-tidy-ggplot-3 couldn't be generated without our tidying transformations. Actually, none of these plots could be made with the same number of data points we have here. The data were effectively divided across four columns, and, we didn't have a date-time column. But now, we have the freedom to further transform the tidy data (e.g., filtering the data, converting temperature values to degrees Fahrenheit, etc.) and plot again with ease.

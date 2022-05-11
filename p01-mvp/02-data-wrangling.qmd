@@ -545,26 +545,26 @@ c(
 ```{r}
 #| label: dplyr-stmts
 #| paged.print: false
-humans <- filter(sw, species == "Human")  #A
+humans <- filter(sw, species == "Human")
 
-humans_bmi <-  #B
+humans_bmi <-
   mutate(
     humans,
     bmi = mass / (height / 100)^2
   )                  
 
-humans_bmi_by_homeworld <- group_by(humans_bmi, homeworld)  #C
+humans_bmi_by_homeworld <- group_by(humans_bmi, homeworld)
 
-humans_avg_bmi_by_homeworld <-  #D
+humans_avg_bmi_by_homeworld <-
   summarize(
     humans_bmi_by_homeworld,
     avg_bmi = mean(bmi, na.rm = TRUE)
   )      
 
 humans_avg_bmi_by_homeworld_sorted <-
-  arrange(humans_avg_bmi_by_homeworld, desc(avg_bmi))  #E
+  arrange(humans_avg_bmi_by_homeworld, desc(avg_bmi))
 
-humans_avg_bmi_by_homeworld_sorted  #F
+humans_avg_bmi_by_homeworld_sorted
 ```
 
 This output is fine but the code is more than a little frustrating to write because we have to give each intermediate table object a name. We're just going to use it as input to the next statement, so, we don't care much about it. As ever, naming things is hard and the process of thinking of meaningful and distinct names will invariably slow down our analysis.

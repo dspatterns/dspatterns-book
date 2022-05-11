@@ -6,6 +6,7 @@ title: "A Closer Look at the Programming Side of **R**"
 library(dspatterns)
 library(dplyr)
 library(lubridate)
+library(tidyverse)
 ```
 
 This section covers
@@ -32,10 +33,12 @@ An easy way to construct a vector is with the `c()` function, which stands for c
 `r dspatterns::code_hints(
 "Creating a numeric vector with the ~~c()~~ function.",
 c(
-"#A The ~~c()~~ function helps us create a numeric vector by virtue of providing only numbers to it (we didn't have to specify that this should be a numeric vector, **R** uses the input to determine the type)."
+"L.1 The ~~c()~~ function helps us create a numeric vector by virtue of providing only numbers to it (we didn't have to specify that this should be a numeric vector, **R** uses the input to determine the type)."
 ))`
-```{r vector-c}
-x <- c(1, 2, 3)                                            #A
+```{r}
+#| label: vector-c
+
+x <- c(1, 2, 3)
 ```
 
 There is a useful shortcut for specifying sequences of numbers: using the colon operator. With that, we can write `1:3` and get the vector defined before. There's yet another option, we can also elect to use the base function `seq()` as `seq(1, 3)` and we'll get the same result.
@@ -45,10 +48,12 @@ Vectors can be combined to make a new vector; our `x` vector can be used in anot
 `r dspatterns::code_hints(
 "Combining numeric vectors, again with ~~c()~~.",
 c(
-"#A Imagine that the ~~x~~ variables here in ~~c()~~ (included twice) are expanded to ~~[1, 2, 3]~~, joining the only number provided here (~~4~~)."
+"L.1 Imagine that the ~~x~~ variables here in ~~c()~~ (included twice) are expanded to ~~[1, 2, 3]~~, joining the only number provided here (~~4~~)."
 ))`
-```{r vector-c-vector}
-y <- c(x, 4, x)  #A
+```{r}
+#| label: vector-c-vector
+
+y <- c(x, 4, x)
 
 y
 ```
@@ -60,14 +65,16 @@ We've previously performed mathematical operations when using **dplyr** (mostly 
 `r dspatterns::code_hints(
 "Performing math operations and combining the results with ~~c()~~.",
 c(
-"#A The ~~5~~ times ~~2~~ operation happens first, then, ~~5~~ is added to that. This is BEDMAS/PEDMAS! So, the order of operations is brackets, exponents, division, multiplication, addition, and then subtraction.",
-"#B This looks similar to the previous except that we put in parentheses. The addition happens first, then the multiplication.",
-"#C While the outside set of parentheses is not strictly necessary, it's perfectly okay to use more parentheses to make the calculation clearer to yourself and to others."
+"L.1 The ~~5~~ times ~~2~~ operation happens first, then, ~~5~~ is added to that. This is BEDMAS/PEDMAS! So, the order of operations is brackets, exponents, division, multiplication, addition, and then subtraction.",
+"L.2 This looks similar to the previous except that we put in parentheses. The addition happens first, then the multiplication.",
+"L.3 While the outside set of parentheses is not strictly necessary, it's perfectly okay to use more parentheses to make the calculation clearer to yourself and to others."
 ))`
-```{r math-operations}
-math_1 <- 5 + 5 * 2  #A
-math_2 <- (5 + 5) * 2  #B
-math_3 <- ((5 + 5) / (5 - 10)) * 2^2  #C
+```{r}
+#| label: math-operations
+
+math_1 <- 5 + 5 * 2
+math_2 <- (5 + 5) * 2
+math_3 <- ((5 + 5) / (5 - 10)) * 2^2
 
 c(math_1, math_2, math_3)
 ```
@@ -79,10 +86,12 @@ Aside from the mathematical operators, there are also several functions that hel
 `r dspatterns::code_hints(
 "Using math functions and combining the results with ~~c()~~.",
 c(
-"#A Because of all of these function calls generate a number, we can safely include these inside ~~c()~~ and fully expect a numeric vector."
+"L.1 Because of all of these function calls generate a number, we can safely include these inside ~~c()~~ and fully expect a numeric vector."
 ))`
-```{r math-functions}
-c(sqrt(16), log(2.5), exp(2.5), abs(-5))  #A
+```{r}
+#| label: math-functions
+
+c(sqrt(16), log(2.5), exp(2.5), abs(-5))
 ```
 
 ### Doing Math with Vectors and Understanding Recycling
@@ -92,10 +101,12 @@ We can do math with vectors themselves. Taking the previously assigned numeric v
 `r dspatterns::code_hints(
 "Multiplying a numeric vector by a single number.",
 c(
-"#A The ~~y~~ variable was assigned previously, it has the values ~~[1, 2, 3, 4, 1, 2, 3]~~."
+"L.1 The ~~y~~ variable was assigned previously, it has the values ~~[1, 2, 3, 4, 1, 2, 3]~~."
 ))`
-```{r multiplying-y-by-2}
-y * 2  #A
+```{r}
+#| label: multiplying-y-by-2
+
+y * 2
 ```
 
 From this output, we see that indeed each resulting value is the original value multiplied by two. The math operations used to produce each value can be represented in this vector schematic:
@@ -109,10 +120,12 @@ We can also perform math across two equal-length vectors. Here, `y` is multiplie
 `r dspatterns::code_hints(
 "Multiplying two numeric vectors of the same length.",
 c(
-"#A We could alternatively write this as ~~y^2~~ if we're so inclined."
+"L.1 We could alternatively write this as ~~y^2~~ if we're so inclined."
 ))`
-```{r multiplying-y-by-y}
-y * y  #A
+```{r}
+#| label: multiplying-y-by-y
+
+y * y
 ```
 
 Using the vector schematic to represent the individual operations, both vectors (indeed, with the same vector values) are lined up perfectly because they are of the same length. So, the first element in each vector is multiplied, then the second element of each, and so on. The vector schematic for this makes it clearer:
@@ -124,15 +137,17 @@ What would happen if we were to multiply vectors of different lengths, say, leng
 `r dspatterns::code_hints(
 "Multiplying two numeric vectors of different lengths.",
 c(
-"#A This is a ~~numeric~~ vector of length ~~4~~.",
-"#B This is a ~~numeric~~ vector of length ~~2~~.",
-"#C While the order of the elements in ~~vec_1~~ and ~~vec_2~~ matters, the order of multiplication doesn't matter (i.e., we could write ~~vec_2 * vec_1~~ and expect the same answer but reversing ~~vec_1~~ with ~~rev()~~ would result in a different answer)."
+"L.1 This is a ~~numeric~~ vector of length ~~4~~.",
+"L.2 This is a ~~numeric~~ vector of length ~~2~~.",
+"L.4 While the order of the elements in ~~vec_1~~ and ~~vec_2~~ matters, the order of multiplication doesn't matter (i.e., we could write ~~vec_2 * vec_1~~ and expect the same answer but reversing ~~vec_1~~ with ~~rev()~~ would result in a different answer)."
 ))`
-```{r multiplying-different-length-vectors}
-vec_1 <- c(1, 2, 3, 4)  #A
-vec_2 <- c(3, 2)  #B
+```{r}
+#| label: multiplying-different-length-vectors
 
-vec_1 * vec_2  #C
+vec_1 <- c(1, 2, 3, 4)
+vec_2 <- c(3, 2)
+
+vec_1 * vec_2
 ```
 
 When given two vectors of the same length, **R** simply performs the specified arithmetic operation element-by-element. If the vectors are of different lengths, **R** recycles the shorter vector until it is the same length as the longer vector. Here is the vector schematic:
@@ -150,19 +165,21 @@ Let's have a look at the next bit of **R** code, which provides five examples of
 `r dspatterns::code_hints(
 "Subsetting the same vector five different ways.",
 c(
-"#A Getting element 5 of ~~y~~.",
-"#B Getting elements 1 and 2 of ~~y~~.",
-"#C Getting elements 5, then 1, and then 5 again (results in a vector of length ~~3~~).",
-"#D Getting elements 1, then 2, then 4 and 5.",
-"#E Getting elements 4, 5, and 6 of ~~y~~ (~~seq(4, 6)~~ evaluates to ~~4, 5, 6~~)."
+"L.2 Getting element 5 of ~~y~~.",
+"L.3 Getting elements 1 and 2 of ~~y~~.",
+"L.4 Getting elements 5, then 1, and then 5 again (results in a vector of length ~~3~~).",
+"L.5 Getting elements 1, then 2, then 4 and 5.",
+"L.6 Getting elements 4, 5, and 6 of ~~y~~ (~~seq(4, 6)~~ evaluates to ~~4, 5, 6~~)."
 ))`
-```{r list-of-5-y-subsets}
+```{r}
+#| label: list-of-5-y-subsets
+
 list(
-  a = y[5],  #A
-  b = y[1:2],  #B
-  c = y[c(5, 1, 5)],  #C
-  d = y[c(1, 2, 4:5)],  #D
-  e = y[seq(4, 6)]  #E
+  a = y[5],
+  b = y[1:2],
+  c = y[c(5, 1, 5)],
+  d = y[c(1, 2, 4:5)],
+  e = y[seq(4, 6)]
 )
 ```
 
@@ -173,10 +190,12 @@ We can also access values from a vector with an expression involving comparison 
 `r dspatterns::code_hints(
 "Subsetting a vector using comparison operators.",
 c(
-"#A This is a common idiom in **R** for vector subsetting: using a comparison inside ~~[ ]~~."
+"L.1 This is a common idiom in **R** for vector subsetting: using a comparison inside ~~[ ]~~."
 ))`
-```{r subset-with-comparison}
-y[y >= 3]  #A
+```{r}
+#| label: subset-with-comparison
+
+y[y >= 3]
 ```
 
 What's returned are those values from `y` that are indeed greater than or equal to `3`. And, the order is preserved: `3 4 3`.
@@ -186,10 +205,12 @@ What's going on here? The answer is partially found through just evaluating the 
 `r dspatterns::code_hints(
 "The result of a conditional statement.",
 c(
-"#A An expression with comparison operators and a vector should always return a ~~logical~~ vector with the same length as the vector used in the comparison. This is great because if we use that vector for subsetting inside ~~[ ]~~, there is no recycling!"
+"L.1 An expression with comparison operators and a vector should always return a ~~logical~~ vector with the same length as the vector used in the comparison. This is great because if we use that vector for subsetting inside ~~[ ]~~, there is no recycling!"
 ))`
-```{r eval-of-comparision-expr}
-y >= 3  #A        
+```{r}
+#| label: eval-of-comparision-expr
+
+y >= 3
 ```
 
 In the subsetting operation of `y[y >= 3]`, only the indices with `TRUE` will yield that value in the resulting vector. As seen from the above result, those indices are `3`, `4`, and `7`. If we consider any `FALSE` value for an index as effectively removing values from `y`, we get `[1, 2, 3, 4, 1, 2, 3]`, or, `[3, 4, 3]`.
@@ -213,18 +234,21 @@ We learned how to create our own tibbles (with dplyr's `tibble()` and `tribble()
 `r dspatterns::code_hints(
 "Creating a simple tibble with the ~~tibble()~~ function.",
 c(
-"#A Why this use of ~~dplyr::tibble()~~ instead of just ~~tibble()~~? Well, if we didn't use ~~library(tidyverse)~~ beforehand (or ~~library(dplyr)~~), we could use the form ~~[package]::[function]~~ to call a function without loading it into the namespace. This is sometimes called a fully-qualified function name and can be useful at times.",
-"#B The ~~col_1~~ column is going to be ~~numeric~~ (the vector created from the ~~1:10~~ shorthand is ~~numeric~~).",
-"#C The built-in constants called ~~letters~~ and ~~LETTERS~~ are character vectors with 26 elements that are lowercase or uppercase roman letters.",
-"#D The ~~col_2~~ column is going to be of the ~~character~~ class (with lowercase letters).",
-"#E The ~~col_3~~ column will be of the ~~character~~ class just like ~~col_2~~ (with uppercase letters)."
+"L.2 Why this use of ~~dplyr::tibble()~~ instead of just ~~tibble()~~? Well, if we didn't use ~~library(tidyverse)~~ beforehand (or ~~library(dplyr)~~), we could use the form ~~[package]::[function]~~ to call a function without loading it into the namespace. This is sometimes called a fully-qualified function name and can be useful at times.",
+"L.3 The ~~col_1~~ column is going to be ~~numeric~~ (the vector created from the ~~1:10~~ shorthand is ~~numeric~~).",
+"L.4-5 The built-in constants called ~~letters~~ and ~~LETTERS~~ are character vectors with 26 elements that are lowercase or uppercase roman letters.",
+"L.4 The ~~col_2~~ column is going to be of the ~~character~~ class (with lowercase letters).",
+"L.5 The ~~col_3~~ column will be of the ~~character~~ class just like ~~col_2~~ (with uppercase letters)."
 ))`
-```{r example-tibble, paged.print=FALSE}
+```{r}
+#| label: example-tibble
+#| paged.print: false
+
 example_tbl <-
-  dplyr::tibble(  #A
-    col_1 = 1:10,  #B
-    col_2 = letters[1:10],  #C,#D
-    col_3 = LETTERS[10:1]  #C,#E
+  dplyr::tibble(
+    col_1 = 1:10,
+    col_2 = letters[1:10],
+    col_3 = LETTERS[10:1]
   )
 
 example_tbl
@@ -235,10 +259,12 @@ Just as we've recently performed subsetting operations with vectors, we may want
 `r dspatterns::code_hints(
 "Extracting a vector from a tibble with ~~$~~.",
 c(
-"#A The ~~col_1~~ column is extracted as a numeric vector with this use of the ~~$~~ operator. This also works for data frames."
+"L.1 The ~~col_1~~ column is extracted as a numeric vector with this use of the ~~$~~ operator. This also works for data frames."
 ))`
-```{r tibble-extract-1}
-example_tbl$col_1  #A
+```{r}
+#| label: tibble-extract-1
+
+example_tbl$col_1
 ```
 
 The `[[` operator gives us the flexibility to use a name (this time in quotes) or a column index to extract the vector. Let's obtain the first column again as a vector with both approaches (in the next two code listings).
@@ -246,24 +272,28 @@ The `[[` operator gives us the flexibility to use a name (this time in quotes) o
 `r dspatterns::code_hints(
 "Extracting a vector from a tibble with ~~[[~~ and a column name.",
 c(
-"#A This ~~col_1~~ extraction to a vector requires the column name in quotes. If it weren't in quotes, then the expectation is that what's in the ~~[[~~ is an object (which could hold the name of a column, and that's fine)."
+"L.1 This ~~col_1~~ extraction to a vector requires the column name in quotes. If it weren't in quotes, then the expectation is that what's in the ~~[[~~ is an object (which could hold the name of a column, and that's fine)."
 ))`
-```{r tibble-extract-2}
-example_tbl[["col_1"]]  #A
+```{r}
+#| label: tibble-extract-2
+
+example_tbl[["col_1"]]
 ```
 
 `r dspatterns::code_hints(
 "Extracting a vector from a tibble with ~~[[~~ and a column index.",
 c(
-"#A The number inside ~~[[~~ could alternatively be replaced with an object that is a single number that, in turn, corresponds to a column number."
+"L.1 The number inside ~~[[~~ could alternatively be replaced with an object that is a single number that, in turn, corresponds to a column number."
 ))`
-```{r tibble-extract-3}
-example_tbl[[1]]  #A
+```{r}
+#| label: tibble-extract-3
+
+example_tbl[[1]]
 ```
 
 Both of these `[[` approaches return to us the vector of numbers from `1` to `10`, which is the same result as earlier:
 
-#> [1]  1  2  3  4  5  6  7  8  9 10
+`#> [1]  1  2  3  4  5  6  7  8  9 10`
 
 Why extract a vector from a data frame or tibble? There are lots of good reasons. Perhaps the extracted vector might be used in a test to check for, say, the existence of any values greater than `8`. If this sort of test is important for an analysis, here's an example scenario:
 
@@ -276,13 +306,15 @@ Here is the **R** code that does all of this, giving us a single `TRUE` as a res
 `r dspatterns::code_hints(
 "Extracting a vector and performing a check of the values.",
 c(
-"#A Piping to an expression inside ~~{ }~~ is a way to use comparison operators with the extracted vector. The dot (~~.~~) represents the extracted vector in the expression.",
-"#B The ~~any()~~ function takes a logical vector (i.e., a vector of ~~TRUE~~/~~FALSE~~ values) and returns ~~TRUE~~ if there is at least one ~~TRUE~~ value in that logical vector."
+"L.2 Piping to an expression inside ~~{ }~~ is a way to use comparison operators with the extracted vector. The dot (~~.~~) represents the extracted vector in the expression.",
+"L.3 The ~~any()~~ function takes a logical vector (i.e., a vector of ~~TRUE~~/~~FALSE~~ values) and returns ~~TRUE~~ if there is at least one ~~TRUE~~ value in that logical vector."
 ))`
-```{r tibble-extract-check}
+```{r}
+#| label: tibble-extract-check
+
 example_tbl$col_1 %>%
-  {. > 8} %>%  #A
-  any()  #B
+  {. > 8} %>%
+  any()
 ```
 
 ### Using the `summary()` Function with Tibbles and Vectors
@@ -292,10 +324,12 @@ A useful way to give us a sense of how our data are laid out, in a data frame or
 `r dspatterns::code_hints(
 "Getting a summary of a tibble.",
 c(
-"#A The ~~summary()~~ function displays output differently objects of different classes. For tibbles and data frames, the summary output is exactly the same but summaries for vectors and lists will be quite different."
+"L.1 The ~~summary()~~ function displays output differently objects of different classes. For tibbles and data frames, the summary output is exactly the same but summaries for vectors and lists will be quite different."
 ))`
-```{r summary-of-tibble}
-summary(example_tbl)  #A
+```{r}
+#| label: summary-of-tibble
+
+summary(example_tbl)
 ```
 
 The result is a summary print out for each column, where the information provided is specific to each column's data type.
@@ -323,32 +357,38 @@ The next three code listings show some uses of `<-`, `->`, `%in%`, and `assign()
 `r dspatterns::code_hints(
 "Examples: ~~<-~~ and ~~->~~.",
 c(
-"#A This is leftward assignment and is preferred.",
-"#B This is rightward assignment and, while pretty useful at the end of a piped statement, results in the lack of a ‘subject' (the assigned name) in written code.",
-"#C The two assigned objects are combined with ~~c()~~ and printed to the console."
+"L.1 This is leftward assignment and is preferred.",
+"L.2 This is rightward assignment and, while pretty useful at the end of a piped statement, results in the lack of a ‘subject' (the assigned name) in written code.",
+"L.3 The two assigned objects are combined with ~~c()~~ and printed to the console."
 ))`
-```{r example-assignment-arrows}
-some_letters <- letters[1:3]  #A
-letters[4:6] -> more_letters  #B
-c(some_letters, more_letters)  #C
+```{r}
+#| label: example-assignment-arrows
+
+some_letters <- letters[1:3]
+letters[4:6] -> more_letters
+c(some_letters, more_letters) 
 ```
 
 `r dspatterns::code_hints(
 "Example: ~~%in%~~ operator.",
 c(
-"#A The order here is important, and we can think of this as a question: \'is there a ~~\"d\"~~ in the vector that ~~letters[4:6]~~ makes?\' We get one logical answer (~~TRUE~~ here) because the object we are asking about is a vector with a length of one (~~length(\"d\")~~ is indeed ~~1~~, and it's a character vector). If we turned this around and used ~~letters[4:6] %in% \"d\"~~, we would get a logical vector of length ~~3~~."
+"L.1 The order here is important, and we can think of this as a question: \'is there a ~~\"d\"~~ in the vector that ~~letters[4:6]~~ makes?\' We get one logical answer (~~TRUE~~ here) because the object we are asking about is a vector with a length of one (~~length(\"d\")~~ is indeed ~~1~~, and it's a character vector). If we turned this around and used ~~letters[4:6] %in% \"d\"~~, we would get a logical vector of length ~~3~~."
 ))`
-```{r example-in-operator}
-"d" %in% letters[4:6]  #A
+```{r}
+#| label: example-in-operator
+
+"d" %in% letters[4:6]
 ```
 
 `r dspatterns::code_hints(
 "Example: ~~assign()~~.",
 c(
-"#A While we can assign the result of an expression with the ~~assign()~~ function, we shouldn't really do it in actual practice (stick to using ~~<-~~). The ~~assign()~~ function is more often used for specialized cases were we'd need to construct the variable name or assign the object to a different **R** environment."
+"L.1 While we can assign the result of an expression with the ~~assign()~~ function, we shouldn't really do it in actual practice (stick to using ~~<-~~). The ~~assign()~~ function is more often used for specialized cases were we'd need to construct the variable name or assign the object to a different **R** environment."
 ))`
-```{r example-assign-function}
-assign(x = "last_letters", letters[24:26])  #A
+```{r}
+#| label: example-assign-function
+
+assign(x = "last_letters", letters[24:26])
 last_letters
 ```
 
@@ -368,16 +408,18 @@ The following code listing provides examples for the `&` and `&&` operators (the
 `r dspatterns::code_hints(
 "Examples: ~~&~~ and ~~&&~~ operators.",
 c(
-"#A This is simply a character vector with the letters ~~a~~, ~~b~~, and ~~c~~.",
-"#B The preferred way to check multiple conditions with the AND operator is to use ~~&&~~ instead of ~~&~~. It \'short circuits\' when evaluating anything as ~~FALSE~~ (and it thus returns ~~FALSE~~). Evaluation is from left to right, so, ~~is.numeric(a_vector)~~ happens first. Because that\'s ~~FALSE~~, the ~~sum(a_vector) > 1~~ expression (that triggers an error) never gets evaluated.",
-"#C The analogous expression with ~~&~~ (and not ~~&&~~) results in an error because of the evaluation ~~sum(a_vector)~~ (we can't sum a ~~character~~ vector). This line is commented out with a leading ~~#~~ to prevent its evaluation and it simply demonstrates the advantage of using ~~&&~~ instead of ~&~ in conditional statements."
+"L.1 This is simply a character vector with the letters ~~a~~, ~~b~~, and ~~c~~.",
+"L.3 The preferred way to check multiple conditions with the AND operator is to use ~~&&~~ instead of ~~&~~. It \'short circuits\' when evaluating anything as ~~FALSE~~ (and it thus returns ~~FALSE~~). Evaluation is from left to right, so, ~~is.numeric(a_vector)~~ happens first. Because that\'s ~~FALSE~~, the ~~sum(a_vector) > 1~~ expression (that triggers an error) never gets evaluated.",
+"L.5 The analogous expression with ~~&~~ (and not ~~&&~~) results in an error because of the evaluation ~~sum(a_vector)~~ (we can't sum a ~~character~~ vector). This line is commented out with a leading ~~#~~ to prevent its evaluation and it simply demonstrates the advantage of using ~~&&~~ instead of ~&~ in conditional statements."
 ))`
-```{r example-and-operators, error=TRUE}
-a_vector <- letters[1:3]  # A
+```{r}
+#| label: example-and-operators
+#| error: true
+a_vector <- letters[1:3]
 
-long_and <- is.numeric(a_vector) && sum(a_vector) > 1  # B
+long_and <- is.numeric(a_vector) && sum(a_vector) > 1
 
-# is.numeric(a_vector) & sum(a_vector) > 1  # C
+# is.numeric(a_vector) & sum(a_vector) > 1
 
 long_and
 ```
@@ -385,24 +427,28 @@ long_and
 `r dspatterns::code_hints(
 "Example: ~~union()~~ function.",
 c(
-"#A The ~~letters_1~~ vector (very original, I know) has four unique letters as elements: ~~a~~, ~~b~~, ~~c~~, and ~~d~~.",
-"#B The ~~letters_2~~ vector... that also has four unique letters. The interesting (?) thing here is that it has two letters in common with ~~letters_1~~.",
-"#C The ~~union()~~ function uses the union set operation, returning the unique set of elements which are in ~~letters_1~~, in ~~letters_2~~, or both!"
+"L.1 The ~~letters_1~~ vector (very original, I know) has four unique letters as elements: ~~a~~, ~~b~~, ~~c~~, and ~~d~~.",
+"L.2 The ~~letters_2~~ vector... that also has four unique letters. The interesting (?) thing here is that it has two letters in common with ~~letters_1~~.",
+"L.4 The ~~union()~~ function uses the union set operation, returning the unique set of elements which are in ~~letters_1~~, in ~~letters_2~~, or both!"
 ))`
-```{r example-union-function}
-letters_1 <- c("a", "b", "c", "d")  #A
-letters_2 <- c("c", "d", "e", "f")  #B
+```{r}
+#| label: example-union-function
 
-union(letters_1, letters_2)  #C
+letters_1 <- c("a", "b", "c", "d")
+letters_2 <- c("c", "d", "e", "f")
+
+union(letters_1, letters_2)
 ```
 
 `r dspatterns::code_hints(
 "Example: ~~setdiff()~~ function.",
 c(
-"#A The ~~setdiff()~~ function finds the elements difference in the first set (~~letters_1~~) that are different from the elements in the second (~~letters_2~~). In this example, letters ~~a~~ and ~~b~~ from ~~letters_1~~ are different than any elements in ~~letters_2~~ (which has the letters ~~c~~, ~~d~~, ~~e~~, and ~~f~~)."
+"L.1 The ~~setdiff()~~ function finds the elements difference in the first set (~~letters_1~~) that are different from the elements in the second (~~letters_2~~). In this example, letters ~~a~~ and ~~b~~ from ~~letters_1~~ are different than any elements in ~~letters_2~~ (which has the letters ~~c~~, ~~d~~, ~~e~~, and ~~f~~)."
 ))`
-```{r example-setdiff-function}
-setdiff(letters_1, letters_2)  #A
+```{r}
+#| label: example-setdiff-function
+
+setdiff(letters_1, letters_2)
 ```
 
 ### Comparisons
@@ -421,27 +467,31 @@ The next two code listings demonstrate how the `is.na()`, and `all.equal()` func
 `r dspatterns::code_hints(
 "Example: ~~is.na()~~ function.",
 c(
-"#A The ~~mean()~~ function (along with ~~sum()~~, ~~min()~~, ~~max()~~, and several more) can trip people up in two ways: (1) it needs a vector of numeric values (we can\'t use the example above without ~~c()~~), and (2) if there are any ~~NA~~ values in the vector, the function will return ~~NA~~ unless we set ~~na.rm = TRUE~~. This function call will return ~~NA~~.",
-"#B The ~~is.na()~~ function will determine whether the result of the ~~mean()~~ call, ~~mean_of_vector~~, is an ~~NA~~ (we only ever get a single-length vector from ~~mean()~~. Because ~~na.rm = TRUE~~ wasn't part of the call, the value is ~~NA~~, and so the ~~is.na()~~ call gives us a ~~TRUE~~ result."
+"L.1 The ~~mean()~~ function (along with ~~sum()~~, ~~min()~~, ~~max()~~, and several more) can trip people up in two ways: (1) it needs a vector of numeric values (we can\'t use the example above without ~~c()~~), and (2) if there are any ~~NA~~ values in the vector, the function will return ~~NA~~ unless we set ~~na.rm = TRUE~~. This function call will return ~~NA~~.",
+"L.3 The ~~is.na()~~ function will determine whether the result of the ~~mean()~~ call, ~~mean_of_vector~~, is an ~~NA~~ (we only ever get a single-length vector from ~~mean()~~. Because ~~na.rm = TRUE~~ wasn't part of the call, the value is ~~NA~~, and so the ~~is.na()~~ call gives us a ~~TRUE~~ result."
 ))`
-```{r example-is-na-function}
-mean_of_vector <- mean(c(5.3, 8.2, 3.0, NA, 3.5, 7.7))  #A
+```{r}
+#| label: example-is-na-function
 
-is.na(mean_of_vector)  #B
+mean_of_vector <- mean(c(5.3, 8.2, 3.0, NA, 3.5, 7.7))
+
+is.na(mean_of_vector)
 ```
 
 `r dspatterns::code_hints(
 "Example: ~~all.equal()~~ function.",
 c(
-"#A The numbers of ~~numbers_1~~ are generated through some vector math. Each element in the ~~6:10~~ vector is subtracted by ~~5~~.",
-"#B A similar strategy is used to create ~~numbers_2~~ except that we are using addition, instead of subtraction. Spoiler Alert! ~~numbers_1~~ and ~~numbers_2~~ have the same numbers.",
-"#C Are all the numbers between ~~numbers_1~~ and ~~numbers_2~~ equal? Use ~~all.equal()~~ to find out!"
+"L.1 The numbers of ~~numbers_1~~ are generated through some vector math. Each element in the ~~6:10~~ vector is subtracted by ~~5~~.",
+"L.2 A similar strategy is used to create ~~numbers_2~~ except that we are using addition, instead of subtraction. Spoiler Alert! ~~numbers_1~~ and ~~numbers_2~~ have the same numbers.",
+"L.4 Are all the numbers between ~~numbers_1~~ and ~~numbers_2~~ equal? Use ~~all.equal()~~ to find out!"
 ))`
-```{r example-all-equal-function}
-numbers_1 <- 6:10 - 5  #A
-numbers_2 <- 0:4  + 1  #B
+```{r}
+#| label: example-all-equal-function
 
-all.equal(numbers_1, numbers_2)  #C
+numbers_1 <- 6:10 - 5
+numbers_2 <- 0:4  + 1
+
+all.equal(numbers_1, numbers_2)
 ```
 
 ### Math
@@ -463,13 +513,15 @@ While there are many mathematical functions and operators, we can only give a fe
 `r dspatterns::code_hints(
 "Example: ~~%%~~ operator.",
 c(
-"#A The numbers included in the ~~years~~ vector can be easily construed as years.",
-"#B This math subtracts the modulus (remainder of a year from ~~years~~ divided by ~~10~~ in this case) from ~~years.~~ This is done for each value of ~~years~~ (vector math FTW!). We end up with the decade year for each of the years."
+"L.1 The numbers included in the ~~years~~ vector can be easily construed as years.",
+"L.3 This math subtracts the modulus (remainder of a year from ~~years~~ divided by ~~10~~ in this case) from ~~years.~~ This is done for each value of ~~years~~ (vector math FTW!). We end up with the decade year for each of the years."
 ))`
-```{r example-modulo}
-years <- c(1995, 2009, 1979)  #A
+```{r}
+#| label: example-modulo
 
-years - years %% 10  #B
+years <- c(1995, 2009, 1979)
+
+years - years %% 10
 ```
 
 Here's a demonstration of the use of two rounding functions: `ceiling()` and `floor()`.
@@ -477,15 +529,19 @@ Here's a demonstration of the use of two rounding functions: `ceiling()` and `fl
 `r dspatterns::code_hints(
 "Examples: ~~ceiling()~~ and ~~floor()~~ functions.",
 c(
-"#A These numbers for ~~numeric_values~~ are chosen for their variety in decimal values. There's even an ~~NA~~ in there.",
-"#B The ~~ceiling()~~ function will round values up to the next one. That is, unless the number is ~~3.0~~; that one just stays put. That ~~NA~~ value? Still ~~NA~~.",
-"#C The ~~floor()~~ function is another extreme rounding function but it operates by rounding down (e.g., ~~7.7~~ goes down to ~~7.0~~). ~~NA~~s are again untouchable."
+"L.1 These numbers for ~~numeric_values~~ are chosen for their variety in decimal values. There's even an ~~NA~~ in there.",
+"L.4 The ~~ceiling()~~ function will round values up to the next one. That is, unless the number is ~~3.0~~; that one just stays put. That ~~NA~~ value? Still ~~NA~~.",
+"L.5 The ~~floor()~~ function is another extreme rounding function but it operates by rounding down (e.g., ~~7.7~~ goes down to ~~7.0~~). ~~NA~~s are again untouchable."
 ))`
-```{r example-ceiling-floor-function}
-numeric_values <- c(5.3, 8.2, 3.0, NA, 3.5, 7.7)  #A
+```{r}
+#| label: example-ceiling-floor-function
 
-ceiling(numeric_values)  #B
-floor(numeric_values)  #C
+numeric_values <- c(5.3, 8.2, 3.0, NA, 3.5, 7.7)
+
+list(
+  ceiling(numeric_values),
+  floor(numeric_values)
+)
 ```
 
 ### Vectors, Data Frames, and Lists
@@ -516,45 +572,55 @@ The next few code listings show how the `rep()`, `rev()`, `names()`, and `dim()`
 `r dspatterns::code_hints(
 "Example: ~~rep()~~ function.",
 c(
-"#A The ~~rep()~~ function repeats vectors. The vector is given first (~~5.6~~ in this example) and number of repetitions is given second. Here, the ~~5.6~~ value is repeated four times."
+"L.1 The ~~rep()~~ function repeats vectors. The vector is given first (~~5.6~~ in this example) and number of repetitions is given second. Here, the ~~5.6~~ value is repeated four times."
 ))`
-```{r example-rep-function}
-rep(5.6, 4)  #A
+```{r}
+#| label: example-rep-function
+
+rep(5.6, 4)
 ```
 
 `r dspatterns::code_hints(
 "Example: ~~rev()~~ function.",
 c(
-"#A The ~~numeric_values~~ vector was created earlier. We are printing it as is in this call, and reversing the vector in the next one (**R Markdown** code chunks allow us to multiple calls printed to the output at once).",
-"#B The ~~rev()~~ function will reverse the order of elements in a vector. The value ~~7.7~~ was once last and now it is first."
+"L.2 The ~~numeric_values~~ vector was created earlier. We are printing it as is in this call, and reversing the vector in the next one (**R Markdown** code chunks allow us to multiple calls printed to the output at once).",
+"L.3 The ~~rev()~~ function will reverse the order of elements in a vector. The value ~~7.7~~ was once last and now it is first."
 ))`
-```{r example-rev-function}
-numeric_values  #A
-rev(numeric_values)  #B
+```{r}
+#| label: example-rev-function
+
+list(
+  numeric_values,
+  rev(numeric_values)
+)
 ```
 
 `r dspatterns::code_hints(
 "Example: ~~names()~~ function.",
 c(
-"#A Elements of data structures such as vectors, data frames, tibbles, and lists can have names. This is an example of a named vector where every element in the numeric vector has a name.",
-"#B The ~~names()~~ function lets us get the names from a data structure. It results in a character vector of the extracted names. (The function also allows us to set names, but that's a lesson for later.)"
+"L.1 Elements of data structures such as vectors, data frames, tibbles, and lists can have names. This is an example of a named vector where every element in the numeric vector has a name.",
+"L.3 The ~~names()~~ function lets us get the names from a data structure. It results in a character vector of the extracted names. (The function also allows us to set names, but that's a lesson for later.)"
 ))`
-```{r example-names-function}
-named_vector <- c(first = 1.6, second = 8.9, third = NA)  #A
+```{r}
+#| label: example-names-function
 
-names(named_vector)  #B
+named_vector <- c(first = 1.6, second = 8.9, third = NA)
+
+names(named_vector)
 ```
 
 `r dspatterns::code_hints(
 "Example: ~~dim()~~ function.",
 c(
-"#A A tibble is created here using the fully-qualified function ~~dplyr::tibble()~~.",
-"#B We can get the dimensions of a data frame or tibble with the ~~dim()~~ function. For tabular objects like this, a numeric vector of two values is returned. The first number represents the number of rows and the second is the number of columns."
+"L.1 A tibble is created here using the fully-qualified function ~~dplyr::tibble()~~.",
+"L.3 We can get the dimensions of a data frame or tibble with the ~~dim()~~ function. For tabular objects like this, a numeric vector of two values is returned. The first number represents the number of rows and the second is the number of columns."
 ))`
-```{r example-dim-function}
-a_tibble <- dplyr::tibble(a = 1:5, b = LETTERS[4:8])  #A
+```{r}
+#| label: example-dim-function
 
-dim(a_tibble)  #B
+a_tibble <- dplyr::tibble(a = 1:5, b = LETTERS[4:8])
+
+dim(a_tibble)
 ```
 
 ### Control Flow
@@ -570,13 +636,15 @@ We provide an example of how the `ifelse()` function works in tandem with the mo
 `r dspatterns::code_hints(
 "Example: ~~ifelse()~~ function.",
 c(
-"#A This batch of numbers is a refreshing mix of even and odd numbers.",
-"#B The ~~ifelse()~~ function performs a test with a vector and we can use any expression that results in a logical vector. For every ~~TRUE~~ in this case, we get ~~\"even\"~~. For every ~~FALSE~~, we get ~~\"odd\"~~."
+"L.1 This batch of numbers is a refreshing mix of even and odd numbers.",
+"L.3 The ~~ifelse()~~ function performs a test with a vector and we can use any expression that results in a logical vector. For every ~~TRUE~~ in this case, we get ~~\"even\"~~. For every ~~FALSE~~, we get ~~\"odd\"~~."
 ))`
-```{r example-ifelse-function}
-numbers <- c(9, 4, 3, 12)  #A
+```{r}
+#| label: example-ifelse-function
 
-ifelse(numbers %% 2 == 0, "even", "odd")  #B
+numbers <- c(9, 4, 3, 12)
+
+ifelse(numbers %% 2 == 0, "even", "odd")
 ```
 
 ### Creating Functions
@@ -598,33 +666,42 @@ Most of these functions are typically used inside of functions. Prime examples a
 `r dspatterns::code_hints(
 "Example: ~~message()~~ function.",
 c(
-"#A A ~~message()~~ provides useful information but shouldn't be used when there is a more serious problem (the ~~warning()~~ function is better suited for that). The strings provided to ~~message()~~ will be automatically pasted together. The ~~\n~~ character inserts a linebreak, greatly enhancing readability of the message."
+"L.1 A ~~message()~~ provides useful information but shouldn't be used when there is a more serious problem (the ~~warning()~~ function is better suited for that). The strings provided to ~~message()~~ will be automatically pasted together. The ~~\n~~ character inserts a linebreak, greatly enhancing readability of the message."
 ))`
-```{r example-message-function, message=TRUE}
-message("This is a message\n", "Just some helpful info")  #A
+```{r}
+#| label: example-message-function
+#| message: true
+
+message("This is a message\n", "Just some helpful info")
 ```
 
 `r dspatterns::code_hints(
 "Example: ~~warning()~~ function.",
 c(
-"#A A ~~warning()~~ to a user signals that something is wrong but the function won't be stopped dead in its tracks. Just as with message(), the strings provided to ~~warning()~~ will be automatically pasted together.",
-"#B The ~~call.~~ argument (yes, there is a period at the end of it) is set to ~~FALSE~~ to not include the call itself as part of the warning message. Usually, it's a good to have this as ~~FALSE~~ because including the call doesn't usually provide much useful information."
+"L.1 A ~~warning()~~ to a user signals that something is wrong but the function won't be stopped dead in its tracks. Just as with message(), the strings provided to ~~warning()~~ will be automatically pasted together.",
+"L.4 The ~~call.~~ argument (yes, there is a period at the end of it) is set to ~~FALSE~~ to not include the call itself as part of the warning message. Usually, it's a good to have this as ~~FALSE~~ because including the call doesn't usually provide much useful information."
 ))`
-```{r example-warning-function, warning=TRUE}
-warning(  #A
+```{r}
+#| label: example-warning-function
+#| warning: true
+
+warning(
   "This is a warning\n",
   "Something is not quite right",
-  call. = FALSE  #B
+  call. = FALSE
 )
 ```
 
 `r dspatterns::code_hints(
 "Example: ~~stop()~~ function.",
 c(
-"#A A ~~stop()~~ results in forcing an error. The function just stops. This is good to use when user inputs are not valid (and the function might stop otherwise without this intervention)."
+"L.1 A ~~stop()~~ results in forcing an error. The function just stops. This is good to use when user inputs are not valid (and the function might stop otherwise without this intervention)."
 ))`
-```{r example-stop-function, error=TRUE}
-stop(  #A
+```{r}
+#| label: example-stop-function
+#| error: true
+
+stop(
   "The function execution has been stopped\n",
   "There is a serious problem",
   call. = FALSE
@@ -647,13 +724,15 @@ Functions for working with strings are covered in more depth in the section that
 `r dspatterns::code_hints(
 "Example: ~~strsplit()~~ function.",
 c(
-"#A The strings character vector contains strings with underscore characters. We\'ll use this vector with the ~~strsplit()~~ function.",
-"#B The ~~strsplit()~~ function takes a character vectors as its primary input. The ~~split~~ argument in this case is a single character (the underscore character). The splitting involves dividing up each string where the split match occurs (All underscore characters are removed in the end). The result of this whole operation is always a list since each splitting results in a variable length character vector."
+"L.1 The strings character vector contains strings with underscore characters. We\'ll use this vector with the ~~strsplit()~~ function.",
+"L.3 The ~~strsplit()~~ function takes a character vectors as its primary input. The ~~split~~ argument in this case is a single character (the underscore character). The splitting involves dividing up each string where the split match occurs (All underscore characters are removed in the end). The result of this whole operation is always a list since each splitting results in a variable length character vector."
 ))`
-```{r example-strsplit-function}
-strings <- c("part_1_of_2", "part_2_of_2")  #A
+```{r}
+#| label: example-strsplit-function
 
-strsplit(strings, split = "_")  #B
+strings <- c("part_1_of_2", "part_2_of_2")
+
+strsplit(strings, split = "_")
 ```
 
 ## Writing Our Own Functions
@@ -674,16 +753,18 @@ Let's start by writing a function that simply adds two numbers together. First, 
 `r dspatterns::code_hints(
 "A function that adds two values.",
 c(
-"#A The first line here has the function name and both of its arguments: ~~x~~ and ~~y~~. The opening curly brace is also very important to have after the argument list.",
-"#B The middle part contains a statement. It's taking ~~x~~ and ~~y~~, adding them, and assigning to answer. This is the only statement, it involves only the arguments, and it doesn't involve any other variables.",
-"#C The return statement (using the ~~return()~~ function) is necessary for the function to give us anything after calling it. Although... we strictly don't need to use the ~~return()~~ function if the last line has answer by itself."
+"L.1 The first line here has the function name and both of its arguments: ~~x~~ and ~~y~~. The opening curly brace is also very important to have after the argument list.",
+"L.3 The middle part contains a statement. It's taking ~~x~~ and ~~y~~, adding them, and assigning to answer. This is the only statement, it involves only the arguments, and it doesn't involve any other variables.",
+"L.5 The return statement (using the ~~return()~~ function) is necessary for the function to give us anything after calling it. Although... we strictly don't need to use the ~~return()~~ function if the last line has answer by itself."
 ))`
-```{r adding-function}
-add_2_numbers <- function(x, y) {  #A
+```{r}
+#| label: adding-function
 
-  answer <- x + y  #B
+add_2_numbers <- function(x, y) {
+
+  answer <- x + y
                           
-  return(answer)  #C
+  return(answer)
 }
 ```
 
@@ -692,10 +773,12 @@ A new function is assigned just like any other **R** object. Once assigned, the 
 `r dspatterns::code_hints(
 "Using our new function to get the sum of two numbers.",
 c(
-"#A We call the ~~add_2_numbers()~~ function and provide the two required values for ~~x~~ and ~~y~~. Both values need to be provided."
+"L.1 We call the ~~add_2_numbers()~~ function and provide the two required values for ~~x~~ and ~~y~~. Both values need to be provided."
 ))`
-```{r calling-add-2-numbers}
-add_2_numbers(x = 3, y = 4)  #A
+```{r}
+#| label: calling-add-2-numbers
+
+add_2_numbers(x = 3, y = 4)
 ```
 
 As you might expect, this gives us the number `7`. When we called the function `add_2_numbers()`, we supplied both the argument names and the values. We could also use the function without specifying the argument names (as in `add_2_numbers(3, 4)`) and the same result is provided. We have to be a bit careful in doing this since positional matching relies on binding the supplied values to the arguments in order. Typically, for very simple functions we can safely omit the argument names in function calls, otherwise, it's safer to include them whenever possible. As an added bonus, when specifying argument names with their values, you can use any order you'd like (the call `add_2_numbers(y = 4, x = 3)` is just fine).
@@ -705,10 +788,13 @@ Inside the body of a function, any number of statements can be executed, and all
 `r dspatterns::code_hints(
 "Using our new function and supplying a single value.",
 c(
-"#A Both arguments need values! This is not going to end well."
+"L.1 Both arguments need values! This is not going to end well."
 ))`
-```{r adding-1-number, error=TRUE}
-add_2_numbers(x = 3)  #A
+```{r}
+#| label: adding-1-number
+#| error: true
+
+add_2_numbers(x = 3)
 ```
 
 The function needs both values (`x` and `y`) to complete the operations in the function body. The error statement provides a clue that, perhaps, this function would be okay if only `y` had some default. Indeed, we can define default values when writing a function, and, it's actually quite useful in a lot of situations. Let's write a new function that includes a default value for one of the arguments.
@@ -716,13 +802,15 @@ The function needs both values (`x` and `y`) to complete the operations in the f
 `r dspatterns::code_hints(
 "A function with a default value.",
 c(
-"#A The ~~z~~ argument has a default value. If ~~3~~ for ~~z~~ is what you need, you don't have to specify it when calling this function.",
-"#B With the way it\'s written, we need to supply values for at least ~~x~~ and ~~y~~ when calling this function. The ~~z~~ is optional. If not supplied, the value of ~~3~~ will be used here."
+"L.1 The ~~z~~ argument has a default value. If ~~3~~ for ~~z~~ is what you need, you don't have to specify it when calling this function.",
+"L.3 With the way it\'s written, we need to supply values for at least ~~x~~ and ~~y~~ when calling this function. The ~~z~~ is optional. If not supplied, the value of ~~3~~ will be used here."
 ))`
-```{r function-with-a-default}
-multiply_three <- function(x, y, z = 3) {  #A
+```{r}
+#| label: function-with-a-default
 
-  answer <- x * y * z  #B
+multiply_three <- function(x, y, z = 3) {
+
+  answer <- x * y * z
   return(answer)
 }
 ```
@@ -740,7 +828,10 @@ Oftentimes you'll have a working bit of code in an **R** script or **R Markdown*
 
 This hypothetical bit of code is ripe for getting the function treatment. Let's explore an example of working code that gets some key values for shop sales on a particular day. We'll use the `sales` dataset that's provided by the **dspatterns** package for our remaining examples. The `sales` tibble is a ledger of hypothetical orders placed and items sold. Here is a snippet of the `sales` dataset (more information on this dataset is available by using `?sales` in **RStudio**).
 
-```{r sales-print, paged.print=FALSE}
+```{r}
+#| label: sales-print
+#| paged.print: false
+
 sales
 ```
 
@@ -749,26 +840,28 @@ The next code listing has some working code (not yet a function) that gets the o
 `r dspatterns::code_hints(
 "Code to get sales data on a particular day.",
 c(
-"#A We are loading the **tidyverse** and **dspatterns** packages here because we need **dplyr** functions and access to the sales dataset in ~~dspatterns~~.",
-"#B This is a date string in ISO-8601 format (~~YYYY-MM-DD~~).",
-"#C This statement obtains only the rows from ~~sales~~ where the date matches our ~~date_str~~.",
-"#D The first bit of summary data needed for the day of ~~\"2019-01-15\"~~ is the count of orders placed. We are applying what we learned here. The vector of ~~order_id~~ values is taken from the tibble, then the vector is made ~~unique()~~ (because each row is a unique sale of something, not a unique ~~order_id~~), and then we get the ~~length()~~ of the vector.",
-"#E The items sold on ~~\"2019-01-15\"~~? That's the number of rows in the filtered dataset, obtained by ~~nrow()~~.",
-"#F The price column gives the selling price. Getting that column as a vector and then using ~~sum()~~ gives us the total revenue."
+"L.1-2 We are loading the **tidyverse** and **dspatterns** packages here because we need **dplyr** functions and access to the sales dataset in ~~dspatterns~~.",
+"L.4 This is a date string in ISO-8601 format (~~YYYY-MM-DD~~).",
+"L.6 This statement obtains only the rows from ~~sales~~ where the date matches our ~~date_str~~.",
+"L.10 The first bit of summary data needed for the day of ~~\"2019-01-15\"~~ is the count of orders placed. We are applying what we learned here. The vector of ~~order_id~~ values is taken from the tibble, then the vector is made ~~unique()~~ (because each row is a unique sale of something, not a unique ~~order_id~~), and then we get the ~~length()~~ of the vector.",
+"L.11 The items sold on ~~\"2019-01-15\"~~? That's the number of rows in the filtered dataset, obtained by ~~nrow()~~.",
+"L.12 The price column gives the selling price. Getting that column as a vector and then using ~~sum()~~ gives us the total revenue."
 ))`
-```{r get-sales-data-script}
-library(tidyverse)  #A
+```{r}
+#| label: get-sales-data-script
+
+library(tidyverse)
 library(dspatterns)
 
-date_str <- "2019-01-15"  #B
+date_str <- "2019-01-15"
 
-sales_day <-  #C
-  sales %>% 
+sales_day <-
+  sales %>%
   filter(date == date_str)
 
-order_count <- unique(sales_day$order_id) %>% length()  #D
-items_sold <- nrow(sales_day)  #E
-total_revenue <- sales_day$price %>% sum()  #F
+order_count <- unique(sales_day$order_id) %>% length()
+items_sold <- nrow(sales_day)
+total_revenue <- sales_day$price %>% sum()
 ```
 
 The values for `order_count`, the `items_sold`, and the `total_revenue` turn out to be `62`, `123`, and `1523.55`. Each of these is accessed separately by printing to console, and each day of sales data is determined by changing the value of `date_str` and re-running the lines of code. While this is okay in a pinch, this manual process of obtaining these key data values can be made simpler and be put in a form that provides clearer reporting.
@@ -778,22 +871,24 @@ Let's start improving all of this by transforming the lines of code above to a f
 `r dspatterns::code_hints(
 "Putting the code into a function.",
 c(
-"#A This is a function called ~~sales_on_day()~~. The only requirement is the ~~day~~ (which was ~~date_str~~ previously).",
-"#B The four objects made (~~sales_day~~, ~~order_count~~, ~~items_sold~~, and ~~total_revenue~~) are the same in the script of the previous code listing.",
-"#C We are now making a one-row tibble with ~~day~~, ~~order_count~~, ~~items_sold~~, and ~~total_revenue~~."
+"L.1 This is a function called ~~sales_on_day()~~. The only requirement is the ~~day~~ (which was ~~date_str~~ previously).",
+"L.3 The four objects made (~~sales_day~~, ~~order_count~~, ~~items_sold~~, and ~~total_revenue~~) are the same in the script of the previous code listing.",
+"L.11 We are now making a one-row tibble with ~~day~~, ~~order_count~~, ~~items_sold~~, and ~~total_revenue~~."
 ))`
-```{r sales-on-day-function}
-sales_on_day <- function(day) {  #A
+```{r}
+#| label: sales-on-day-function
+
+sales_on_day <- function(day) {
     
-  sales_day <-  #B
-    sales %>% 
+  sales_day <-
+    sales %>%
     filter(date == day)
   
   order_count <- unique(sales_day$order_id) %>% length()
   items_sold <- nrow(sales_day)
   total_revenue <- sales_day$price %>% sum()
   
-  sales_day_tbl <-  #C
+  sales_day_tbl <-
     tibble(
       date = day,
       order_count = order_count,
@@ -810,10 +905,13 @@ Not too bad but... does it work? We can find out quickly by calling the newly cr
 `r dspatterns::code_hints(
 "Calling the new function to see if it works as expected.",
 c(
-"#A This call of ~~sales_on_day()~~ uses the same date from before."
+"L.1 This call of ~~sales_on_day()~~ uses the same date from before."
 ))`
-```{r call-sales-on-day}
-sales_on_day(day = "2019-01-15")  #A
+```{r}
+#| label: call-sales-on-day
+#| paged.print: false
+
+sales_on_day(day = "2019-01-15")
 ```
 
 First of all, the function worked! Output was provided and there thankfully wasn't an error message. This gives us a single row tibble, putting all the pertinent data in one place. Yes, it's a great improvement!
@@ -825,13 +923,15 @@ You might see this output and think, "why not include a summary of every day goi
 `r dspatterns::code_hints(
 "Improving the function to summarize all the days.",
 c(
-"#A The revised function (~~daily_sales()~~) now summarizes all days with the same variables. This time, we are asking for the dataset with the sales_table argument.",
-"#B This single, piped statement takes the input table data (probably ~~sales~~), groups it by date, and summarizes to get the order count, the items sold, and the total revenue by day. Finally, it arranges the summary by descending date. If that isn't enough, the resulting summary table is also returned by the function since it's the last statement in the function body!"
+"L.1 The revised function (~~daily_sales()~~) now summarizes all days with the same variables. This time, we are asking for the dataset with the sales_table argument.",
+"L.3 This single, piped statement takes the input table data (probably ~~sales~~), groups it by date, and summarizes to get the order count, the items sold, and the total revenue by day. Finally, it arranges the summary by descending date. If that isn't enough, the resulting summary table is also returned by the function since it's the last statement in the function body!"
 ))`
-```{r daily-sales-function}
-daily_sales <- function(sales_table) {  #A
+```{r}
+#| label: daily-sales-function
+
+daily_sales <- function(sales_table) {
   
-  sales_table %>%  #B
+  sales_table %>%
     group_by(date) %>%
     summarize(
       order_count = n_distinct(order_id),
@@ -847,10 +947,13 @@ While this new function (with a new name: `daily_sales()`) looks like a radical 
 `r dspatterns::code_hints(
 "Getting the complete sales summary.",
 c(
-"#A The ~~daily_sales()~~ function is called and is supplied with the ~~sales~~ dataset."
+"L.1 The ~~daily_sales()~~ function is called and is supplied with the ~~sales~~ dataset."
 ))`
-```{r call-daily-sales, paged.print=FALSE}
-daily_sales(sales_table = sales)  #A
+```{r}
+#| label: call-daily-sales
+#| paged.print: false
+
+daily_sales(sales_table = sales)
 ```
 
 Now this is a super useful function! And while it does work, business needs change all the time. What if you wanted the option to get a slice of the complete summary data? Perhaps the daily summary data needs to be for specified days, or, a range of days? Let's add an optional argument (i.e., has a default value) in the function signature and modify the function body to take advantage of an optional input of dates.
@@ -858,18 +961,20 @@ Now this is a super useful function! And while it does work, business needs chan
 `r dspatterns::code_hints(
 "Adding an option to filter the summary to specified days.",
 c(
-"#A Using the ~~<arg> = NULL~~ pattern for optional values is great for decision points in the function. Some extra bit of information can be supplied by the user and that would result in some extra operation. If it isn't supplied, that's fine too.",
-"#B This entire statement is the same as what was in the previous version of the function. Here, it's assigned to the ~~summary_tbl~~ object because we may do something more with the summary table.",
-"#C This ~~if~~ statement reads as: if the date arg isn't still ~~NULL~~ (i.e., the user supplied a value), then evaluate the statements inside the curly braces.",
-"#D This transformation of dates with ~~as.Date()~~ ensures that if string-based dates are provided, they are upgraded to dates of the ~~Date~~ class. This is important for the upcoming use of dates in the ~~filter()~~ call.",
-"#E The ~~filter()~~ statement will filter the ~~summary_tbl~~ to only those rows with the specified dates.",
-"#F The summary table needs to be returned on the last line. We don't really need the ~~return()~~ function to do this though (so it was left out)."
+"L.2 Using the ~~<arg> = NULL~~ pattern for optional values is great for decision points in the function. Some extra bit of information can be supplied by the user and that would result in some extra operation. If it isn't supplied, that's fine too.",
+"L.4 This entire statement is the same as what was in the previous version of the function. Here, it's assigned to the ~~summary_tbl~~ object because we may do something more with the summary table.",
+"L.14 This ~~if~~ statement reads as: if the date arg isn't still ~~NULL~~ (i.e., the user supplied a value), then evaluate the statements inside the curly braces.",
+"L.16 This transformation of dates with ~~as.Date()~~ ensures that if string-based dates are provided, they are upgraded to dates of the ~~Date~~ class. This is important for the upcoming use of dates in the ~~filter()~~ call.",
+"L.18 The ~~filter()~~ statement will filter the ~~summary_tbl~~ to only those rows with the specified dates.",
+"L.23 The summary table needs to be returned on the last line. We don't really need the ~~return()~~ function to do this though (so it was left out)."
 ))`
-```{r daily-sales-function_2}
+```{r}
+#| label: daily-sales-function_2
+
 daily_sales <- function(sales_table,
-                        dates = NULL) {  #A
+                        dates = NULL) {
   
-  summary_tbl <-  #B
+  summary_tbl <-
     sales_table %>%
     group_by(date) %>%
     summarize(
@@ -879,16 +984,16 @@ daily_sales <- function(sales_table,
     ) %>%
     arrange(desc(date))
   
-  if (!is.null(dates)) {  #C
+  if (!is.null(dates)) {
     
-    dates <- as.Date(dates)  #D
+    dates <- as.Date(dates)
 
-    summary_tbl <-  #E
+    summary_tbl <-
       summary_tbl %>%
       filter(date %in% dates)
   }
   
-  summary_tbl  #F
+  summary_tbl
 }
 ```
 
@@ -899,12 +1004,15 @@ As we always should, we should test the function. The next code listing is a tes
 `r dspatterns::code_hints(
 "Getting only a partial sales summary (by choice).",
 c(
-"#A Calling ~~daily_sales()~~ with an optional vector of dates. In this case, it's a character vector of string-based dates (which is okay, the function will handle that)."
+"L.3 Calling ~~daily_sales()~~ with an optional vector of dates. In this case, it's a character vector of string-based dates (which is okay, the function will handle that)."
 ))`
-```{r call-daily-sales-2, paged.print=FALSE}
+```{r}
+#| label: call-daily-sales-2
+#| paged.print: false
+
 daily_sales(
   sales_table = sales,
-  dates = c("2019-01-15", "2019-01-25")  #A
+  dates = c("2019-01-15", "2019-01-25")
 )
 ```
 
@@ -919,20 +1027,22 @@ The `daily_sales()` function is, without doubt, a great step up over the `sales_
 `r dspatterns::code_hints(
 "How to stop the function if inputs are invalid.",
 c(
-"#A This is a validation of the input for ~~sales_table~~. The logic is essentially: \"If sales_table doesn't have the data.frame class (i.e., it isn't a data frame or tibble), stop the function here with a message\".",
-"#B The ~~stopifnot()~~ function contains a series of predicate statements (these are statements that result in a ~~TRUE~~ or ~~FALSE~~ value). The first statement that triggers a ~~FALSE~~ will result in a stopping of the function.",
-"#C This OR statement is asking whether any one of these statements is ~~TRUE~~ (dates being a ~~character~~ vector, or, dates being a vector of ~~Date~~ values). If both are ~~FALSE~~ then the function will stop.",
-"#D This ~~grepl()~~ statement is determining whether dates is formatted correctly (as ISO-8601, with the form ~~YYYY-MM-DD~~)."
+"L.4 This is a validation of the input for ~~sales_table~~. The logic is essentially: \"If sales_table doesn't have the data.frame class (i.e., it isn't a data frame or tibble), stop the function here with a message\".",
+"L.20 The ~~stopifnot()~~ function contains a series of predicate statements (these are statements that result in a ~~TRUE~~ or ~~FALSE~~ value). The first statement that triggers a ~~FALSE~~ will result in a stopping of the function.",
+"L.21 This OR statement is asking whether any one of these statements is ~~TRUE~~ (dates being a ~~character~~ vector, or, dates being a vector of ~~Date~~ values). If both are ~~FALSE~~ then the function will stop.",
+"L.22 This ~~grepl()~~ statement is determining whether dates is formatted correctly (as ISO-8601, with the form ~~YYYY-MM-DD~~)."
 ))`
-```{r daily-sales-function-3}
+```{r}
+#| label: daily-sales-function-3
+
 daily_sales <- function(sales_table,
                         dates = NULL) {
   
-  if (!inherits(sales_table, "data.frame")) {  #A
+  if (!inherits(sales_table, "data.frame")) {
     stop("The `sales_table` object should be a data frame.")
   }
   
-  summary_tbl <- 
+  summary_tbl <-
     sales_table %>%
     group_by(date) %>%
     summarize(
@@ -944,14 +1054,14 @@ daily_sales <- function(sales_table,
   
   if (!is.null(dates)) {
     
-    stopifnot(  #B
-      is.character(dates) | inherits(dates, "Date"),  #C
-      grepl("[0-9]{4}-[0-9]{2}-[0-9]{2}", dates)  #D
+    stopifnot(
+      is.character(dates) | inherits(dates, "Date"),
+      grepl("[0-9]{4}-[0-9]{2}-[0-9]{2}", dates)
     )
     
     dates <- as.Date(dates)
     
-    summary_tbl <- 
+    summary_tbl <-
       summary_tbl %>%
       filter(date %in% dates)
   }
@@ -971,15 +1081,24 @@ Whenever adding `stop()` or `stopifnot()` statements to a function, it needs to 
 `r dspatterns::code_hints(
 "Several tests of the ~~daily_sales()~~ function that result in the function stopping.")`
 
-```{r test-daily-sales-stop-1, error=TRUE}
+```{r}
+#| label: test-daily-sales-stop-1
+#| error: true
+
 daily_sales(sales_table = c("2019-01-15", "2019-01-25"))
 ```
 
-```{r test-daily-sales-stop-2, error=TRUE}
+```{r}
+#| label: test-daily-sales-stop-2
+#| error: true
+
 daily_sales(sales_table = sales, dates = c(20190115, 20190125))
 ```
 
-```{r test-daily-sales-stop-3, error=TRUE}
+```{r}
+#| label: test-daily-sales-stop-3
+#| error: true
+
 daily_sales(sales_table = sales, dates = c("209-01-15", "2019-01-25"))
 ```
 
