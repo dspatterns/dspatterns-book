@@ -119,9 +119,15 @@
     },
     "bakeoff": {
       "Package": "bakeoff",
-      "Version": "0.1.0.9000",
-      "Source": "unknown",
-      "Hash": "f02e44e45406ee0329a6f1e412a227b6",
+      "Version": "0.2.0",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteRepo": "bakeoff",
+      "RemoteUsername": "apreshill",
+      "RemoteRef": "HEAD",
+      "RemoteSha": "fc645a0294918fdea6b18b2a6ac7d23f3996dd04",
+      "Hash": "8d0c51a7e5b267410f520980d171e68c",
       "Requirements": []
     },
     "base64enc": {
@@ -245,31 +251,6 @@
         "stringr",
         "tibble",
         "tidyr"
-      ]
-    },
-    "bslib": {
-      "Package": "bslib",
-      "Version": "0.3.1",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "56ae7e1987b340186a8a5a157c2ec358",
-      "Requirements": [
-        "htmltools",
-        "jquerylib",
-        "jsonlite",
-        "rlang",
-        "sass"
-      ]
-    },
-    "cachem": {
-      "Package": "cachem",
-      "Version": "1.0.6",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "648c5b3d71e6a37e3043617489a0a0e9",
-      "Requirements": [
-        "fastmap",
-        "rlang"
       ]
     },
     "callr": {
@@ -474,22 +455,6 @@
         "vctrs"
       ]
     },
-    "dspatterns": {
-      "Package": "dspatterns",
-      "Version": "0.0.0.9000",
-      "Source": "unknown",
-      "Remotes": "gadenbuie/regexplain",
-      "Hash": "a4df150726a56480e8f52b2862d557e2",
-      "Requirements": [
-        "commonmark",
-        "here",
-        "htmltools",
-        "palmerpenguins",
-        "readr",
-        "regexplain",
-        "shiny"
-      ]
-    },
     "dtplyr": {
       "Package": "dtplyr",
       "Version": "1.2.1",
@@ -556,18 +521,6 @@
       "Repository": "CRAN",
       "Hash": "77bd60a6157420d4ffa93b27cf6a58b8",
       "Requirements": []
-    },
-    "fontawesome": {
-      "Package": "fontawesome",
-      "Version": "0.2.2.9000",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "b51bd19b3479b7276c8c69c96856a6e3",
-      "Requirements": [
-        "htmltools",
-        "rlang",
-        "rstudioapi"
-      ]
     },
     "forcats": {
       "Package": "forcats",
@@ -851,19 +804,6 @@
         "yaml"
       ]
     },
-    "httpuv": {
-      "Package": "httpuv",
-      "Version": "1.6.5",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "97fe71f0a4a1c9890e6c2128afa04bc0",
-      "Requirements": [
-        "R6",
-        "Rcpp",
-        "later",
-        "promises"
-      ]
-    },
     "httr": {
       "Package": "httr",
       "Version": "1.4.2",
@@ -1062,23 +1002,6 @@
       "Repository": "CRAN",
       "Hash": "18e9c28c1d3ca1560ce30658b22ce104",
       "Requirements": []
-    },
-    "miniUI": {
-      "Package": "miniUI",
-      "Version": "0.1.1.1",
-      "Source": "CRAN",
-      "Repository": "CRAN",
-      "RemoteType": "standard",
-      "RemotePkgRef": "miniUI",
-      "RemoteRef": "miniUI",
-      "RemoteRepos": "https://cran.rstudio.com/",
-      "RemotePkgType": "macos",
-      "RemoteSha": "0.1.1.1",
-      "Hash": "fec5f52652d60615fdb3957b3d74324a",
-      "Requirements": [
-        "htmltools",
-        "shiny"
-      ]
     },
     "modelr": {
       "Package": "modelr",
@@ -1383,30 +1306,6 @@
         "tibble"
       ]
     },
-    "regexplain": {
-      "Package": "regexplain",
-      "Version": "0.2.2.9000",
-      "Source": "GitHub",
-      "RemoteType": "github",
-      "RemoteHost": "api.github.com",
-      "RemoteRepo": "regexplain",
-      "RemoteUsername": "gadenbuie",
-      "RemotePkgRef": "gadenbuie/regexplain",
-      "RemoteRef": "HEAD",
-      "RemoteSha": "34131ab4bcfd3658366a9fb409b89dcbbd1c2c5d",
-      "Hash": "3015dc8d5349b24b667ee7b67bb672f1",
-      "Requirements": [
-        "dplyr",
-        "htmltools",
-        "knitr",
-        "miniUI",
-        "purrr",
-        "rlang",
-        "rstudioapi",
-        "shiny",
-        "stringi"
-      ]
-    },
     "rematch": {
       "Package": "rematch",
       "Version": "1.0.1",
@@ -1576,35 +1475,6 @@
         "stringr"
       ]
     },
-    "shiny": {
-      "Package": "shiny",
-      "Version": "1.7.1",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "00344c227c7bd0ab5d78052c5d736c44",
-      "Requirements": [
-        "R6",
-        "bslib",
-        "cachem",
-        "commonmark",
-        "crayon",
-        "ellipsis",
-        "fastmap",
-        "fontawesome",
-        "glue",
-        "htmltools",
-        "httpuv",
-        "jsonlite",
-        "later",
-        "lifecycle",
-        "mime",
-        "promises",
-        "rlang",
-        "sourcetools",
-        "withr",
-        "xtable"
-      ]
-    },
     "skimr": {
       "Package": "skimr",
       "Version": "2.1.4",
@@ -1643,20 +1513,6 @@
         "stringi",
         "stringr"
       ]
-    },
-    "sourcetools": {
-      "Package": "sourcetools",
-      "Version": "0.1.7",
-      "Source": "CRAN",
-      "Repository": "CRAN",
-      "RemoteType": "standard",
-      "RemotePkgRef": "sourcetools",
-      "RemoteRef": "sourcetools",
-      "RemoteRepos": "https://cran.rstudio.com/",
-      "RemotePkgType": "macos",
-      "RemoteSha": "0.1.7",
-      "Hash": "947e4e02a79effa5d512473e10f41797",
-      "Requirements": []
     },
     "stringi": {
       "Package": "stringi",
@@ -1932,20 +1788,6 @@
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "40682ed6a969ea5abfd351eb67833adc",
-      "Requirements": []
-    },
-    "xtable": {
-      "Package": "xtable",
-      "Version": "1.8-4",
-      "Source": "CRAN",
-      "Repository": "CRAN",
-      "RemoteType": "standard",
-      "RemotePkgRef": "xtable",
-      "RemoteRef": "xtable",
-      "RemoteRepos": "https://cran.rstudio.com/",
-      "RemotePkgType": "macos",
-      "RemoteSha": "1.8-4",
-      "Hash": "b8acdf8af494d9ec19ccb2481a9b11c2",
       "Requirements": []
     },
     "yaml": {
