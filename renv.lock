@@ -685,10 +685,10 @@
     },
     "gt": {
       "Package": "gt",
-      "Version": "0.6.0.9000",
+      "Version": "0.6.0",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "45ebbc5539ac913b6c2e15d2da694795",
+      "Hash": "842059d3f71b14e812500b23eeea765e",
       "Requirements": [
         "base64enc",
         "bitops",
