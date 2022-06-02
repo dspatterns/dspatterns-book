@@ -56,31 +56,6 @@ jobs:
           sysreqs=$(Rscript -e "cat(sysreqs::sysreq_commands('DESCRIPTION'))")
           sudo -s eval "$sysreqs"
 
-      - name: Install R packages
-        run: |
-         install.packages("knitr")
-         install.packages("remotes")
-         install.packages("tidyverse")
-         install.packages("quarto")
-         install.packages("palmerpenguins")
-         install.packages("gt")
-         install.packages("DT")
-         install.packages("ggridges")
-         install.packages("skimr")
-         install.packages("pointblank")
-         install.packages("readxl")
-         install.packages("janitor")
-         install.packages("forcats")
-         install.packages("tidyr")
-         install.packages("stringr")
-         install.packages("lubridate")
-         install.packages("readr")
-         install.packages("babynames")
-         install.packages("paletteer")
-         remotes::install_github("dspatterns/dspatterns")
-         remotes::install_github("apreshill/bakeoff")
-        shell: Rscript {0}
-
       - name: Install Quarto
         uses: quarto-dev/quarto-actions/install-quarto@v1
         with:
