@@ -1143,10 +1143,10 @@
     },
     "pointblank": {
       "Package": "pointblank",
-      "Version": "0.10.0.9000",
+      "Version": "0.10.0",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "10be0ca808f256c6f50cbbffbff62ae5",
+      "Hash": "a22ca2e0b68f084a0c9191525eba9ada",
       "Requirements": [
         "DBI",
         "base64enc",
