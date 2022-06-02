@@ -83,11 +83,11 @@ jobs:
 
       - name: Install Quarto
         uses: quarto-dev/quarto-actions/install-quarto@v1
-        # with:
+        with:
+          version: 0.9.504
           # To install LaTeX to build PDF book
           # tinytex: true
           # uncomment below and fill to pin a version
-          # version: 0.9.105
 
       - name: Print Quarto version
         # Add any command line argument needed
