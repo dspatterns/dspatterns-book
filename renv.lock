@@ -474,6 +474,22 @@
         "vctrs"
       ]
     },
+    "dspatterns": {
+      "Package": "dspatterns",
+      "Version": "0.0.0.9000",
+      "Source": "unknown",
+      "Remotes": "gadenbuie/regexplain",
+      "Hash": "a4df150726a56480e8f52b2862d557e2",
+      "Requirements": [
+        "commonmark",
+        "here",
+        "htmltools",
+        "palmerpenguins",
+        "readr",
+        "regexplain",
+        "shiny"
+      ]
+    },
     "dtplyr": {
       "Package": "dtplyr",
       "Version": "1.2.1",
@@ -1047,6 +1063,23 @@
       "Hash": "18e9c28c1d3ca1560ce30658b22ce104",
       "Requirements": []
     },
+    "miniUI": {
+      "Package": "miniUI",
+      "Version": "0.1.1.1",
+      "Source": "CRAN",
+      "Repository": "CRAN",
+      "RemoteType": "standard",
+      "RemotePkgRef": "miniUI",
+      "RemoteRef": "miniUI",
+      "RemoteRepos": "https://cran.rstudio.com/",
+      "RemotePkgType": "macos",
+      "RemoteSha": "0.1.1.1",
+      "Hash": "fec5f52652d60615fdb3957b3d74324a",
+      "Requirements": [
+        "htmltools",
+        "shiny"
+      ]
+    },
     "modelr": {
       "Package": "modelr",
       "Version": "0.1.8",
@@ -1303,21 +1336,6 @@
         "rlang"
       ]
     },
-    "quarto": {
-      "Package": "quarto",
-      "Version": "1.1",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "8eea03d347a0002455feba966306307b",
-      "Requirements": [
-        "jsonlite",
-        "later",
-        "processx",
-        "rmarkdown",
-        "rstudioapi",
-        "yaml"
-      ]
-    },
     "rappdirs": {
       "Package": "rappdirs",
       "Version": "0.3.3",
@@ -1363,6 +1381,30 @@
         "cellranger",
         "progress",
         "tibble"
+      ]
+    },
+    "regexplain": {
+      "Package": "regexplain",
+      "Version": "0.2.2.9000",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteRepo": "regexplain",
+      "RemoteUsername": "gadenbuie",
+      "RemotePkgRef": "gadenbuie/regexplain",
+      "RemoteRef": "HEAD",
+      "RemoteSha": "34131ab4bcfd3658366a9fb409b89dcbbd1c2c5d",
+      "Hash": "3015dc8d5349b24b667ee7b67bb672f1",
+      "Requirements": [
+        "dplyr",
+        "htmltools",
+        "knitr",
+        "miniUI",
+        "purrr",
+        "rlang",
+        "rstudioapi",
+        "shiny",
+        "stringi"
       ]
     },
     "rematch": {
