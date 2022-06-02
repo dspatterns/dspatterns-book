@@ -12,7 +12,9 @@ library(tibble)
 tibbles too
 tables too
 
-We haven't covered importing, but an important concept when working with small datasets in R are dataframes.
+When you're working with data, quite often it'll be structured data in the form of tables. Tabular data is usually a joy to work with: there's regularity in its shape (rectangular!), the rules for working with tables are widely known, and we can also take proactive steps to shape the data in a way that's even more convenient for data analysis.
+
+Tables come in all shapes and sizes. Some are very small, filling maybe a screen or two with data; some are in between, requiring querying and summarization to really make sense of the data; and some are huge, necessitating more efficient tools for transforming, querying, and summarizing the data. Here, we'll start small and learn how to explore tables of the small variety. In **R**, tabular data is often stored in data structures known as data frames. It's part of *base R* and you don't need any extra packages to use data frames. Some packages supercharge data frames and we'll be using some of those to take advantage of the extra features and conveniences that they offer.
 
 ## Explore
 
