@@ -43,6 +43,12 @@ jobs:
           r-version: 'release'
           use-public-rspm: true
 
+      - name: Install Packages
+        run: |
+          install.packages("jsonlite")
+        shell: Rscript {0}
+
+
       - name: Render book to all format
         # Add any command line argument needed
         run: |
