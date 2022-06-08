@@ -58,6 +58,7 @@ jobs:
           install.packages("jsonlite")
           install.packages("htmltools")
           install.packages("knitr")
+          install.packages("rmarkdown")
         shell: Rscript {0}
 
       - name: Render book
