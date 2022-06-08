@@ -57,6 +57,7 @@ jobs:
 
       - name: Install Packages
         run: |
+          install.packages("remotes")
           install.packages("jsonlite")
           install.packages("htmltools")
         shell: Rscript {0}
