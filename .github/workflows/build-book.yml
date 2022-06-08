@@ -46,8 +46,8 @@ jobs:
       - name: Install Packages
         run: |
           install.packages("jsonlite")
+          install.packages("htmltools")
         shell: Rscript {0}
-
 
       - name: Render book to all format
         # Add any command line argument needed
