@@ -46,6 +46,19 @@ jobs:
           r-version: 'release'
           use-public-rspm: true
 
+      - name: Query dependencies
+        run: |
+          install.packages('remotes')
+          saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)
+        shell: Rscript {0}
+
+      - name: Install Packages
+        run: |
+          install.packages("remotes")
+          install.packages("jsonlite")
+          install.packages("htmltools")
+        shell: Rscript {0}
+
       - name: Install system dependencies
         if: runner.os == 'Linux'
         env:
@@ -55,15 +68,7 @@ jobs:
           sysreqs=$(Rscript -e "cat(sysreqs::sysreq_commands('DESCRIPTION'))")
           sudo -s eval "$sysreqs"
 
-      - name: Install Packages
-        run: |
-          install.packages("remotes")
-          install.packages("jsonlite")
-          install.packages("htmltools")
-        shell: Rscript {0}
-
-      - name: Render book to all format
-        # Add any command line argument needed
+      - name: Render book
         run: |
           quarto render
 
