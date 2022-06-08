@@ -555,14 +555,13 @@
     },
     "fontawesome": {
       "Package": "fontawesome",
-      "Version": "0.2.2.9000",
+      "Version": "0.2.2",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "b51bd19b3479b7276c8c69c96856a6e3",
+      "Hash": "55624ed409e46c5f358b2c060be87f67",
       "Requirements": [
         "htmltools",
-        "rlang",
-        "rstudioapi"
+        "rlang"
       ]
     },
     "forcats": {
