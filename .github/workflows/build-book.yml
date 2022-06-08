@@ -24,6 +24,9 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v2
 
+      - name: Setup pandoc
+        uses: r-lib/actions/setup-pandoc@v2
+
       - name: Install Quarto
         uses: quarto-dev/quarto-actions/install-quarto@v1
         with:
