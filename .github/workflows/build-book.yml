@@ -57,6 +57,7 @@ jobs:
           install.packages("remotes")
           install.packages("jsonlite")
           install.packages("htmltools")
+          install.packages("knitr")
         shell: Rscript {0}
 
       - name: Render book
