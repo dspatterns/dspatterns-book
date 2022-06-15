@@ -1,6 +1,6 @@
 {
   "R": {
-    "Version": "4.1.0",
+    "Version": "4.2.0",
     "Repositories": [
       {
         "Name": "CRAN",
@@ -467,15 +467,15 @@
       "Package": "dspatterns",
       "Version": "0.0.0.9000",
       "Source": "GitHub",
-      "Remotes": "gadenbuie/regexplain",
       "RemoteType": "github",
+      "Remotes": "gadenbuie/regexplain",
       "RemoteHost": "api.github.com",
       "RemoteRepo": "dspatterns",
       "RemoteUsername": "dspatterns",
       "RemotePkgRef": "dspatterns/dspatterns",
       "RemoteRef": "HEAD",
       "RemoteSha": "8790b071a2475e86417ca3595fa31485e6e78053",
-      "Hash": "4d9429a7fe7dcca547b44787234af57e",
+      "Hash": "d2b2a08e5de68835d67cbd400a146708",
       "Requirements": [
         "commonmark",
         "here",
