@@ -95,6 +95,7 @@ jobs:
             babynames
             dspatterns/dspatterns
             gt
+            paletteer
             any::sessioninfo
           dependencies: '"hard"'
 
