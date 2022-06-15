@@ -1,3 +1,31 @@
+# This workflow works best if you use the `freeze` capability on all of your
+# blog posts and render them ahead of time. Then all quarto has to do is convert
+# the frozen assets into the site, and push that to Netlify.
+#
+# This workflow requires that you add two environment variables to your repo.
+# You can add these secrets on GitHub by going to your repo and navigating to:
+# Settings -> Secrets -> Actions -> New repository secret.
+# - NETLIFY_AUTH_TOKEN: Generated on Netlify through User Settings ->
+#   Applications -> Personal Access Tokens
+# - NETLIFY_SITE_ID: On Netlify, click on your site, then click
+#   Site Settings -> General -> Site information -> Site ID
+#
+# There are 3 notable features of the Netlify action:
+# - enable-commit-status: This will create a "check" that links to a deploy
+#   preview for a successful commit. This shows up in pull requests and when
+#   you commit straight to the main branch. This is likely the most useful
+#   feature. Defaults to `true`.
+# - enable-pull-request-comment: This will comment on your pull request with a
+#   link to a deploy preview. Redundant with `enable-commit-status`.
+#   Defaults to `false`.
+# - enable-commit-comment: This will comment on your commit with a link to a
+#   deploy preview. Redundant with `enable-commit-status` and extremely noisy
+#   if you get GitHub notifications. Defaults to `false`.
+#
+# Note that when the site is deployed within a pull request, it is not
+# deployed to "production". Instead, a deploy preview is created. When you
+# merge the pull request, a production site will be built.
+
 on:
   push:
     branches:
@@ -46,30 +74,50 @@ jobs:
           r-version: 'release'
           use-public-rspm: true
 
-      - name: Query dependencies
-        run: |
-          install.packages('remotes')
-          saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)
-        shell: Rscript {0}
+      - uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          # withr
+          #  Required by downlit but not listed as a dependency right now
+          #  https://github.com/r-lib/downlit/pull/141
+          # xml2
+          #  Suggested dependency of downlit that is required to run downlit
+          #  on HTML files
+          # rmarkdown
+          #  Required by quarto itself to run the script that calls downlit
+          # sessioninfo
+          #  For nice lockfile printing in the action
+          packages: |
+            downlit
+            withr
+            xml2
+            rmarkdown
+            any::sessioninfo
+          dependencies: '"hard"'
 
-      - name: Install system dependencies
-        if: runner.os == 'Linux'
-        env:
-          RHUB_PLATFORM: linux-x86_64-ubuntu-gcc
-        run: |
-          Rscript -e "remotes::install_github('r-hub/sysreqs')"
-          sysreqs=$(Rscript -e "cat(sysreqs::sysreq_commands('DESCRIPTION'))")
-          sudo -s eval "$sysreqs"
-
-      - name: Install Packages
-        run: |
-          install.packages("remotes")
-          install.packages("jsonlite")
-          install.packages("htmltools")
-          install.packages("knitr")
-          install.packages("rmarkdown")
-          install.packages("tidyverse")
-        shell: Rscript {0}
+      # - name: Query dependencies
+      #   run: |
+      #     install.packages('remotes')
+      #     saveRDS(remotes::dev_package_deps(dependencies = TRUE), ".github/depends.Rds", version = 2)
+      #   shell: Rscript {0}
+      #
+      # - name: Install system dependencies
+      #   if: runner.os == 'Linux'
+      #   env:
+      #     RHUB_PLATFORM: linux-x86_64-ubuntu-gcc
+      #   run: |
+      #     Rscript -e "remotes::install_github('r-hub/sysreqs')"
+      #     sysreqs=$(Rscript -e "cat(sysreqs::sysreq_commands('DESCRIPTION'))")
+      #     sudo -s eval "$sysreqs"
+      #
+      # - name: Install Packages
+      #   run: |
+      #     install.packages("remotes")
+      #     install.packages("jsonlite")
+      #     install.packages("htmltools")
+      #     install.packages("knitr")
+      #     install.packages("rmarkdown")
+      #     install.packages("tidyverse")
+      #   shell: Rscript {0}
 
       - name: Render book
         run: |
@@ -86,8 +134,7 @@ jobs:
           deploy-message:
             'Deploy from GHA: ${{ github.event.pull_request.title || github.event.head_commit.message }} (${{ github.sha }})'
           # these all default to 'true'
-          enable-pull-request-comment: false
-          enable-commit-comment: false
-          # enable-commit-status: true
-          # overwrites-pull-request-comment: true
+          enable-pull-request-comment: true
+          enable-commit-comment: true
+          enable-commit-status: true
         timeout-minutes: 1
