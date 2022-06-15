@@ -91,6 +91,7 @@ jobs:
             withr
             xml2
             rmarkdown
+            tidyverse
             any::sessioninfo
           dependencies: '"hard"'
 
