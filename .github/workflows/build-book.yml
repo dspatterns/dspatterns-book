@@ -97,6 +97,7 @@ jobs:
             gt
             paletteer
             janitor
+            pointblank
             any::sessioninfo
           dependencies: '"hard"'
 
