@@ -92,6 +92,7 @@ jobs:
             xml2
             rmarkdown
             tidyverse
+            babynames
             any::sessioninfo
           dependencies: '"hard"'
 
