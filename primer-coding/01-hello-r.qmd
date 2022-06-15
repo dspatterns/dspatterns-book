@@ -1,12 +1,15 @@
-# Primer I: Quick Start {-}
 
-This primer will lead you through the steps to make a simple plot (maybe your first!) with R, a free and open-source software environment for statistical computing and graphics. You can read more about it here <https://www.r-project.org>.
-
-```{r load-packages, include = FALSE}
+```{r setup, include=FALSE}
 library(tidyverse)
 library(babynames)
 ```
 
+# Primer I: Quick Start {-}
+
+This primer will lead you through the steps to make a simple plot (maybe your first!) with R, a free and open-source software environment for statistical computing and graphics. You can read more about it here <https://www.r-project.org>.
+
+```{r ref.label="setup", eval=FALSE, echo=TRUE}
+```
 
 Our end goal is to get you looking at a screen like this:
 
