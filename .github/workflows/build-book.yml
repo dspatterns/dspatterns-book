@@ -93,6 +93,7 @@ jobs:
             rmarkdown
             tidyverse
             babynames
+            gt
             any::sessioninfo
           dependencies: '"hard"'
 
