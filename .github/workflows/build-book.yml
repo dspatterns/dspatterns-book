@@ -96,6 +96,7 @@ jobs:
             dspatterns/dspatterns
             gt
             paletteer
+            janitor
             any::sessioninfo
           dependencies: '"hard"'
 
