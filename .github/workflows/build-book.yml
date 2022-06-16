@@ -94,6 +94,7 @@ jobs:
             tidyverse
             babynames
             dspatterns/dspatterns
+            apreshill/bakeoff
             gt
             paletteer
             janitor
