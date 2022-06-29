@@ -96,6 +96,7 @@ jobs:
             dspatterns/dspatterns
             apreshill/bakeoff
             gt
+            ggridges
             paletteer
             janitor
             skimr
