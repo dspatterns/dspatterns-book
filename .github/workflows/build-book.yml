@@ -95,6 +95,7 @@ jobs:
             babynames
             dspatterns/dspatterns
             apreshill/bakeoff
+            DT
             gt
             ggridges
             paletteer
