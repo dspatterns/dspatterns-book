@@ -6,17 +6,54 @@ title: "Introduction to Data Frames and Tibbles"
 library(dspatterns)
 library(dplyr)
 library(tibble)
+library(bakeoff)
 ```
 
 
-tibbles too
-tables too
-
 When you're working with data, quite often it'll be structured data in the form of tables. Tabular data is usually a joy to work with: there's regularity in its shape (rectangular!), the rules for working with tables are widely known, and we can also take proactive steps to shape the data in a way that's even more convenient for data analysis.
 
-Tables come in all shapes and sizes. Some are very small, filling maybe a screen or two with data; some are in between, requiring querying and summarization to really make sense of the data; and some are huge, necessitating more efficient tools for transforming, querying, and summarizing the data. Here, we'll start small and learn how to explore tables of the small variety. In **R**, tabular data is often stored in data structures known as data frames. It's part of *base R* and you don't need any extra packages to use data frames. Some packages supercharge data frames and we'll be using some of those to take advantage of the extra features and conveniences that they offer.
+Tables come in all shapes and sizes. Some are very small, filling maybe a screen or two with data; some are in between, requiring querying and summarization to really make sense of the data; and some are huge, necessitating more efficient tools for transforming, querying, and summarizing the data. Here, we'll start small and learn how to explore tables of the small variety. In **R**, tabular data is often stored in data structures known as data frames. It's part of *base R* and you don't need any extra packages to use data frames.
+
+We also have another variety of tables which are called *tibbles*. A tibble is a special implementation of a data frame that prints its data differently and behaves in a more consistent manner than data frames.
+
+In this chapter we'll take a look at a number of great ways to work with tables (whether they are data frames or tibbles). It's really hard to read all of the data in a large table so we can make use of many functions that provide different views of a table of interest. We will explore a handful of different packages that expressly deal with data frame exploration and summarization for better understanding.
 
 ## Explore
+
+Let's look at some data from `episodes` dataset in the **dspatterns** package. It serves as a highly quantitative episode guide. Before we start, we'll load in the necessary packages, namely the **tidyverse** and **dspatterns** packages (the latter will load the **bakeoff** package).
+
+`r dspatterns::code_hints(
+"Loading the **tidyverse** and **dspatterns** packages.",
+c(
+"L.1 Loading the **tidyverse** package like this actually auto-loads all core **tidyverse** packages (this is almost everything we'll need for most analyses!).",
+"L.2 The **dspatterns** package is this book's namesake package. It has the datasets we need for all of the examples."
+))`
+```{r}
+#| label: load-tidyverse-dspatterns
+#| eval: false
+library(tidyverse)
+library(dspatterns)
+```
+
+Now let's look at the `episodes` dataset by printing it out:
+
+```{r}
+#| paged.print: false
+episodes
+```
+
+It provides a lot of information, but, it doesn't overload the console with multiple screenfuls of information. Because the **tidyverse** packages are loaded, the tibble version of the dataset is what's given during printing. At any rate we can see some of the data (10 rows) in the first few columns of the `episodes` dataset.
+
+If you wanted few rows, you could use the `head()` function like this:
+
+```{r}
+#| paged.print: false
+head(episodes)
+```
+
+and the above is great if you have extremely limited space, or, if you are dealing with data frames (which will print out many, many more rows).
+
+Something else that's very useful during the *exploration* phase of  
 
 - head / tail / View() / names() / dim() / summary()
 - https://milesmcbain.github.io/datapasta/ (e.g. https://en.wikipedia.org/wiki/The_Great_British_Bake_Off_(series_1)#Bakers)
@@ -32,12 +69,9 @@ Tables come in all shapes and sizes. Some are very small, filling maybe a screen
 
 ## Share
 
-Creating your own tabular data can be really useful to share with another person, especially when de-bugging.
+Creating your own tabular data can be really useful for sharing with another person (especially when you need to create a particular one for debugging something).
 
 
-## Creating Our Own Tabular Data
-
-The tables we often work with are called tibbles. **R** has a table type called a data frame and a tibble is a special implementation of a data frame that prints its data differently and behaves in a more consistent manner than data frames.
 
 It's very useful to learn how to make our own tibbles from scratch. Although we customarily get our data from other sources (e.g., CSV files, database tables, **Excel** files, etc.), there are a few good reasons for wanting to handcraft our own tibble objects:
 
