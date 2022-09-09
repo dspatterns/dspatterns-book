@@ -5,6 +5,7 @@ library(tidyverse)
 library(gt)
 ```
 
+https://jthomasmock.github.io/quarto-2hr-webinar/
 
 > tl;dr: - **Quarto** is a way to run **R** code and create a report from a combination of prose and code.
 
