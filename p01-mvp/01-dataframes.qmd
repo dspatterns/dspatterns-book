@@ -42,14 +42,49 @@ Now let's look at the `episodes` dataset by printing it out:
 episodes
 ```
 
-It provides a lot of information, but, it doesn't overload the console with multiple screenfuls of information. Because the **tidyverse** packages are loaded, the tibble version of the dataset is what's given during printing. At any rate we can see some of the data (10 rows) in the first few columns of the `episodes` dataset.
+It provides a lot of information, but, it doesn't overload the console with tons of information. Because the **tidyverse** packages are loaded, the *tibble* version of the dataset is what's provided during printing. At any rate we can see some of the data (10 rows), the dimensions of the table (`94` rows by `10` columns), and, a useful tip to use `print(n = ...)` to see more rows. Let's try that:
 
-If you wanted few rows, you could use the `head()` function like this:
+```{r}
+#| paged.print: false
+print(episodes, n = 20)
+```
+
+Being able to print an exact number of rows with `print()` is sometimes useful if you have a generally small table and you need to see more of it.
+
+WARNING
+
+When using `print()` to specify the number of rows displayed, we have to be sure that the table object is a tibble. This won't work with data frames and using `print(mtcars, n = 5)` 
+
+WARNING END
+
+If you wanted just a few rows, you could use the `head()` function like this:
 
 ```{r}
 #| paged.print: false
 head(episodes)
 ```
+
+
+- head / tail / View() / names() / dim() / summary()
+
+If you wanted smaller, more focused output on what's in the table then the `names()` and `dim()` functions will yield vectors of column names and the dimensions of the table.
+
+```{r}
+names(episodes)
+```
+
+```{r}
+dim(episodes)
+```
+
+Take notes that the convention for table dimensions in **R** is first the number of rows (`94`) and then the number of variables or columns (`10`). If you're using the RStudio IDE, then the special `View()` function will put a table into a spreadsheet-like view:
+
+```{r}
+#| eval: false
+
+View(episodes)
+```
+
 
 and the above is great if you have extremely limited space, or, if you are dealing with data frames (which will print out many, many more rows).
 
