@@ -85,12 +85,24 @@ Take notes that the convention for table dimensions in **R** is first the number
 View(episodes)
 ```
 
+Please note that if you're using Quarto or R Markdown, having `View()` in a chunk is generally not a good idea if you're intending on rendering the document for distribution (since the effect of `View()` is to provide a secondary 'view' of your data). It's best to use it in only an interactive context. 
 
-and the above is great if you have extremely limited space, or, if you are dealing with data frames (which will print out many, many more rows).
+Something else that's very useful during the *exploration* phase of data work is the `summary()` function. It'll break down each column of data into their own summaries.
 
-Something else that's very useful during the *exploration* phase of  
+```{r}
+summary(episodes)
+```
 
-- head / tail / View() / names() / dim() / summary()
+For columns that are numeric, the `summary()` function automatically calculates the following summary statistics for each column of the table:
+
+- `Min`: The minimum value
+- `1st Qu`: The first quartile value (25th percentile)
+- `Median`: The median value
+- `3rd Qu`: The third quartile value (75th percentile)
+- `Max`: The maximum value
+
+There are a few `character` columns in the `episodes` dataset (e.g., `sb_name`, etc.) and `summary()` doesn't do much with those other than state that they are indeed of the `character` class. If there were to be any `NA` values, `summary()` would report how many on a column-by-column basis. 
+
 - https://milesmcbain.github.io/datapasta/ (e.g. https://en.wikipedia.org/wiki/The_Great_British_Bake_Off_(series_1)#Bakers)
 
 ## Understand
@@ -100,7 +112,7 @@ Something else that's very useful during the *exploration* phase of
 ## Explain
 
 - gt_preview()
-- tibble package (as_tibble() )
+- tibble package (as_tibble())
 
 ## Share
 
