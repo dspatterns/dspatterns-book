@@ -65,8 +65,6 @@ head(episodes)
 ```
 
 
-- head / tail / View() / names() / dim() / summary()
-
 If you wanted smaller, more focused output on what's in the table then the `names()` and `dim()` functions will yield vectors of column names and the dimensions of the table.
 
 ```{r}
@@ -103,9 +101,27 @@ For columns that are numeric, the `summary()` function automatically calculates 
 
 There are a few `character` columns in the `episodes` dataset (e.g., `sb_name`, etc.) and `summary()` doesn't do much with those other than state that they are indeed of the `character` class. If there were to be any `NA` values, `summary()` would report how many on a column-by-column basis. 
 
-- https://milesmcbain.github.io/datapasta/ (e.g. https://en.wikipedia.org/wiki/The_Great_British_Bake_Off_(series_1)#Bakers)
 
 ## Understand
+
+Sometimes we need more. Much more. While inspecting rows of your raw data isn't always the best thing it could be useful for quickly understanding how the different variables fit together. The `glimpse()` function (accessible from the **dplyr** package) allows you to have a look at the first few records of a dataset. This is somewhat like the `head()` function seen earlier but turned sideways:
+
+```{r}
+glimpse(episodes)
+```
+
+Unlike the tibble view (with `head()` or not), you get to see all of the columns in the data table. The interesting thing about `glimpse()` is that it invisibly returns the data that's given to it. Because of that, you can have safely have one or several `glimpse()` calls in a data transformation pipeline and each of those will print the state of the data at different junctures.
+
+```{r}
+episodes %>%
+  glimpse() %>%
+  select(series, episode, winner_name) %>%
+  filter(!is.na(winner_name)) %>%
+  glimpse()
+```
+
+As can be seen above, the original dataset was printed with `glimpse()` and it was also passed to `select()` and `filter()` statements just before a final glimpse call (to see the transformed data). The output is two `glimpse()` outputs stacked atop each other.
+
 
 - glimpse() / skimr::skim()
 
