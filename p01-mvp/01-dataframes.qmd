@@ -39,14 +39,18 @@ library(dspatterns)
 Now let's look at the `episodes` dataset by printing it out:
 
 ```{r}
+#| label: print-episodes
 #| paged.print: false
+
 episodes
 ```
 
 It provides a lot of information, but, it doesn't overload the console with tons of information. Because the **tidyverse** packages are loaded, the *tibble* version of the dataset is what's provided during printing. At any rate we can see some of the data (10 rows), the dimensions of the table (`94` rows by `10` columns), and, a useful tip to use `print(n = ...)` to see more rows. Let's try that:
 
 ```{r}
+#| label: use-of-print-fn
 #| paged.print: false
+
 print(episodes, n = 20)
 ```
 
@@ -61,24 +65,30 @@ WARNING END
 If you wanted just a few rows, you could use the `head()` function like this:
 
 ```{r}
+#| label: use-of-head-fn
 #| paged.print: false
+
 head(episodes)
 ```
-
 
 If you wanted smaller, more focused output on what's in the table then the `names()` and `dim()` functions will yield vectors of column names and the dimensions of the table.
 
 ```{r}
+#| label: use-of-names-fn
+
 names(episodes)
 ```
 
 ```{r}
+#| label: use-of-dim-fn
+
 dim(episodes)
 ```
 
-Take notes that the convention for table dimensions in **R** is first the number of rows (`94`) and then the number of variables or columns (`10`). If you're using the RStudio IDE, then the special `View()` function will put a table into a spreadsheet-like view:
+Take note that the convention for table dimensions in **R** is first the number of rows (`94`) and then the number of variables or columns (`10`). If you're using the RStudio IDE, then the special `View()` function will put a table into a spreadsheet-like view:
 
 ```{r}
+#| label: use-of-view-fn
 #| eval: false
 
 View(episodes)
@@ -89,6 +99,8 @@ Please note that if you're using Quarto or R Markdown, having `View()` in a chun
 Something else that's very useful during the *exploration* phase of data work is the `summary()` function. It'll break down each column of data into their own summaries.
 
 ```{r}
+#| label: use-of-summary-fn
+
 summary(episodes)
 ```
 
@@ -102,18 +114,21 @@ For columns that are numeric, the `summary()` function automatically calculates 
 
 There are a few `character` columns in the `episodes` dataset (e.g., `sb_name`, etc.) and `summary()` doesn't do much with those other than state that they are indeed of the `character` class. If there were to be any `NA` values, `summary()` would report how many on a column-by-column basis. 
 
-
 ## Understand
 
 Sometimes we need more. Much more. While inspecting rows of your raw data isn't always the best thing it could be useful for quickly understanding how the different variables fit together. The `glimpse()` function (accessible from the **dplyr** package) allows you to have a look at the first few records of a dataset. This is somewhat like the `head()` function seen earlier but turned sideways:
 
 ```{r}
+#| label: use-of-glimpse-fn
+
 glimpse(episodes)
 ```
 
 Unlike the tibble view (with `head()` or not), you get to see all of the columns in the data table. The interesting thing about `glimpse()` is that it invisibly returns the data that's given to it. Because of that, you can have safely have one or several `glimpse()` calls in a data transformation pipeline and each of those will print the state of the data at different junctures.
 
 ```{r}
+#| label: use-of-multiple-glimpse-in-pipeline
+
 episodes %>%
   glimpse() %>%
   select(series, episode, winner_name) %>%
@@ -123,8 +138,7 @@ episodes %>%
 
 As can be seen above, the original dataset was printed with `glimpse()` and it was also passed to `select()` and `filter()` statements just before a final glimpse call (to see the transformed data). The output is two `glimpse()` outputs stacked atop each other.
 
-
-- glimpse() / skimr::skim()
+- skimr::skim()
 
 ## Explain
 
@@ -133,11 +147,7 @@ As can be seen above, the original dataset was printed with `glimpse()` and it w
 
 ## Share
 
-Creating your own tabular data can be really useful for sharing with another person (especially when you need to create a particular one for debugging something).
-
-
-
-It's very useful to learn how to make our own tibbles from scratch. Although we customarily get our data from other sources (e.g., CSV files, database tables, **Excel** files, etc.), there are a few good reasons for wanting to handcraft our own tibble objects:
+Creating your own tabular data can be really useful for sharing (especially when you need to create a particular one for debugging something) and other purposes. To that end, we'll learn how to make our own tibbles from scratch. Although we customarily get our data from other sources (e.g., CSV files, database tables, **Excel** files, etc.), there are a few good reasons for wanting to handcraft our own tibble objects:
 
 1. To have simple tables for experimentation with functions that operate on tabular data
 2. To reduce the need to use **Excel** or some other data entry systems (for small enough data)
