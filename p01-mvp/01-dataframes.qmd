@@ -147,7 +147,15 @@ episodes %>%
 
 As can be seen above, the original dataset was printed with `glimpse()` and it was also passed to `select()` and `filter()` statements just before a final glimpse call (to see the transformed data). The output is two `glimpse()` outputs stacked atop each other.
 
-- skimr::skim()
+For a more comprehensive look at a dataset, the `skim()` function from the **skimr** offers a report that is broken down by variable type. Using `skim()` with the `episodes` dataset from **bakeoff** will give us an overall data summary, information for the `character` variables (`sb_name`, `winner_name`, and `eliminated`) such as `n_missing`, `complete_rate`, and, summary statistics for the `numeric` variables.
+
+```{r}
+#| label: use-of-multiple-glimpse-in-pipeline
+#| class-output: "html sourceCode"
+#| paged.print: false
+
+skim(episodes)
+```
 
 ## Explain
 
