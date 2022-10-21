@@ -31,6 +31,7 @@ c(
 ))`
 ```{r}
 #| label: load-tidyverse-dspatterns
+#| class-output: "html sourceCode"
 #| eval: false
 library(tidyverse)
 library(dspatterns)
@@ -40,6 +41,7 @@ Now let's look at the `episodes` dataset by printing it out:
 
 ```{r}
 #| label: print-episodes
+#| class-output: "html sourceCode"
 #| paged.print: false
 
 episodes
@@ -49,6 +51,7 @@ It provides a lot of information, but, it doesn't overload the console with tons
 
 ```{r}
 #| label: use-of-print-fn
+#| class-output: "html sourceCode"
 #| paged.print: false
 
 print(episodes, n = 20)
@@ -56,16 +59,16 @@ print(episodes, n = 20)
 
 Being able to print an exact number of rows with `print()` is sometimes useful if you have a generally small table and you need to see more of it.
 
-WARNING
+::: callout-warning
 
-When using `print()` to specify the number of rows displayed, we have to be sure that the table object is a tibble. This won't work with data frames and using `print(mtcars, n = 5)` 
-
-WARNING END
+When using `print()` to specify the number of rows displayed, we have to be sure that the table object is a tibble. This won't work with data frames and using `print(mtcars, n = 5)`
+:::
 
 If you wanted just a few rows, you could use the `head()` function like this:
 
 ```{r}
 #| label: use-of-head-fn
+#| class-output: "html sourceCode"
 #| paged.print: false
 
 head(episodes)
@@ -75,12 +78,14 @@ If you wanted smaller, more focused output on what's in the table then the `name
 
 ```{r}
 #| label: use-of-names-fn
+#| class-output: "html sourceCode"
 
 names(episodes)
 ```
 
 ```{r}
 #| label: use-of-dim-fn
+#| class-output: "html sourceCode"
 
 dim(episodes)
 ```
@@ -89,6 +94,7 @@ Take note that the convention for table dimensions in **R** is first the number 
 
 ```{r}
 #| label: use-of-view-fn
+#| class-output: "html sourceCode"
 #| eval: false
 
 View(episodes)
@@ -100,6 +106,7 @@ Something else that's very useful during the *exploration* phase of data work is
 
 ```{r}
 #| label: use-of-summary-fn
+#| class-output: "html sourceCode"
 
 summary(episodes)
 ```
@@ -120,6 +127,7 @@ Sometimes we need more. Much more. While inspecting rows of your raw data isn't 
 
 ```{r}
 #| label: use-of-glimpse-fn
+#| class-output: "html sourceCode"
 
 glimpse(episodes)
 ```
@@ -128,6 +136,7 @@ Unlike the tibble view (with `head()` or not), you get to see all of the columns
 
 ```{r}
 #| label: use-of-multiple-glimpse-in-pipeline
+#| class-output: "html sourceCode"
 
 episodes %>%
   glimpse() %>%
@@ -168,6 +177,7 @@ c(
 ))`
 ```{r}
 #| label: tibble-all-n
+#| class-output: "html sourceCode"
 #| paged.print: false
 
 tibble( 
@@ -188,6 +198,7 @@ c(
 ))`
 ```{r}
 #| label: tibble-n-1
+#| class-output: "html sourceCode"
 #| paged.print: false
 
 tibble(
@@ -210,6 +221,7 @@ c(
 ))`
 ```{r}
 #| label: tibble-na-vals
+#| class-output: "html sourceCode"
 #| paged.print: false
 
 tibble(
@@ -229,6 +241,7 @@ c(
 ))`
 ```{r}
 #| label: tibble-na-col
+#| class-output: "html sourceCode"
 #| paged.print: false
 
 tibble(
@@ -248,6 +261,7 @@ c(
 ))`
 ```{r}
 #| label: tibble-na-character
+#| class-output: "html sourceCode"
 #| paged.print: false
 
 tibble(
@@ -271,6 +285,7 @@ c(
 ))`
 ```{r}
 #| label: tribble-use
+#| class-output: "html sourceCode"
 #| paged.print: false
 
 tribble(
