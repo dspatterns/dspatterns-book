@@ -92,10 +92,12 @@ Documents/
 └── recipes/
 ```
 
-::: alison
+:::{.alison}
+
 Obsessing about naming and organizing (and renaming and reorganizing) files/folders on your computer is an affliction we will call "project puttering." Puttering is [defined](https://www.dictionary.com/browse/putter) as "to move or go in a specified manner with ineffective action or little energy or purpose."
 
 Although naming and organizing files is important, it *can* often be a way to fuss and faff about with files to feel busy, without really doing all that much. Having a "new project" pattern can help you ward off project puttering.
+
 :::
 
 You may still be saying "But Alison and Rich, this does not qualify as a Project - I know I'll never need this file again."

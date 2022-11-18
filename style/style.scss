@@ -111,7 +111,7 @@ main {
 	font-size: 1.0rem;
 }
 
-/*div#rich{
+div .alison {
   border: 4px #aed6d963;
   border-style: dashed solid;
   padding: 1em;
@@ -122,20 +122,24 @@ main {
   background-position: 15px center;
   min-height: 120px;
   color: #2ea8b3;
-  background-color: #fcfcfc;
+  background-color: #fdfdfd;
+  background-image: url("style/illo_alison.png");
 }
 
-
-div #rich {
+div .rich {
+  border: 4px #aed6d963;
+  border-style: dashed solid;
+  padding: 1em;
+  margin: 1em 0;
+  padding-left: 100px;
+  background-size: 70px;
+  background-repeat: no-repeat;
+  background-position: 15px center;
+  min-height: 120px;
+  color: #2ea8b3;
+  background-color: #fdfdfd;
   background-image: url("style/illo_rich.png");
 }
-
-div #alison {
-  background-image: url("style/illo_alison.png");
-}*/
-
-
-
 
 /* Background color for author illustrations
 /* #D49CE7
