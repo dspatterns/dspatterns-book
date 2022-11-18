@@ -1,0 +1,31 @@
+---
+title: "Importing Parquet"
+---
+
+```{r setup, include=FALSE, echo=FALSE}
+library(dspatterns)
+library(arrow)
+library(dplyr)
+```
+
+This section covers
+
+- Read in a single Parquet file
+- Read in a folder of data files in one line using Arrow Dataset
+
+## Explore
+
+`glimpse()`
+
+## Understand
+
+maybe use `tictoc()`
+
+## Explain
+
+making your own database with data on disk
+
+## Share
+
+- Writing file
+- Writing partioned file

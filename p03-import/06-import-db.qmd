@@ -1,0 +1,26 @@
+---
+title: "Importing from a Database"
+---
+
+```{r setup, include=FALSE, echo=FALSE}
+library(dspatterns)
+library(arrow)
+library(dplyr)
+```
+
+This section covers
+
+- Reading in files from a database, using DuckDB
+
+## Explore
+
+
+## Understand
+
+
+## Explain
+
+
+## Share
+
+
