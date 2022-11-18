@@ -88,9 +88,9 @@ one_word
 
 The console output shown above consists of all values in `one_word`: `#> [1] "hello"`.
 
-A good way to check that the variables were actually defined is to look at the *Environment* tab in the top-right pane of **RStudio** (@fig-environment-tab). The names of the variables will appear here as they are assigned, and, you also get an indication of the value attached to the variable.
+A good way to check that the variables were actually defined is to look at the *Environment* tab in the top-right pane of **RStudio**. The names of the variables will appear here as they are assigned, and, you also get an indication of the value attached to the variable.
 
-![The *Environment* tab in **RStudio** is a great way to quickly see which variables have been assigned and what their values are.](appendix-figures/83-data-transformation-dplyr/01-figure-environment-tab.png){#fig:environment-tab}
+![The *Environment* tab in **RStudio** is a great way to quickly see which variables have been assigned and what their values are.](../appendix-figures/83-data-transformation-dplyr/01-figure-environment-tab.png){#fig:environment-tab}
 
 We can overwrite any variable currently assigned. This is done by assigning a value to any variable name that was previously assigned. In the next example, we'll overwrite the `one_word` variable with `"hi"` and inspect the variable by printing it.
 
@@ -265,7 +265,7 @@ The tibble that's printed shows that, at least in the first 6 rows, each charact
 Next, we provide the better way to get the same result, which is to look for occurrences in a set (defined with the help of c()). So, instead of using species twice in our statement, we can use the %in% operator in a single expression.
 
 `r dspatterns::code_hints(
-"Get all Droid and Human characters (method 2 with ~~[colname %>% c(...)]~~ construction).",
+"Get all Droid and Human characters (method 2 with ~~[colname |> c(...)]~~ construction).",
 c(
 "L.1 This statement gets us exactly the same output as before. It might be an easier statement to write out and to reason about. We can think of it as 'the column must contain any of this set of values to be kept'."
 ))`
@@ -528,7 +528,7 @@ summarize(
 
 This yields four columns as we may have expected. The `summarize()` function has an interface consistent with `mutate()`, easily allowing for multiple expressions (separated by commas) where the names we provide on the LHS are the names of the new columns.
 
-### Bringing All of This Together with the Pipe (`%>%`)
+### Bringing All of This Together with the Pipe (`|>`)
 
 Imagine that we want to get a ranking of average BMI values for the human characters across the different home worlds. Using what you know about **dplyr**, you might write code like this
 
@@ -569,15 +569,15 @@ humans_avg_bmi_by_homeworld_sorted
 
 This output is fine but the code is more than a little frustrating to write because we have to give each intermediate table object a name. We're just going to use it as input to the next statement, so, we don't care much about it. As ever, naming things is hard and the process of thinking of meaningful and distinct names will invariably slow down our analysis.
 
-There is another way! It involves using the pipe operator (`%>%`). In the next code listing, we can take a similar set of statements as above and rewrite them in a much more succinct manner (and the final table is exactly the same as before). 
+There is another way! It involves using the pipe operator (`|>`). In the next code listing, we can take a similar set of statements as above and rewrite them in a much more succinct manner (and the final table is exactly the same as before). 
 
 `r dspatterns::code_hints(
 "Bringing it all together with multiple **dplyr** functions: this time using the pipe operator.",
 c(
 "L.1 Just one name to think about for the assignment!",
-"L.2 We begin the statement with the data (~~sw~~) and pass it into the next function with the pipe (~~%>%~~).",
+"L.2 We begin the statement with the data (~~sw~~) and pass it into the next function with the pipe (~~|>~~).",
 "L.3 The ~~filter()~~ statement is the first transformation step. We don't need to specify the data, ~~filter()~~ already has it thanks to the pipe.",
-"L.4 The filtered data is given to ~~mutate()~~, because we used ~~%>%~~ just before.",
+"L.4 The filtered data is given to ~~mutate()~~, because we used ~~|>~~ just before.",
 "L.5 The mutated table is now grouped by ~~homeworld~~.",
 "L.6 This is the summarization step. We are passing in a grouped table to ~~summarize()~~.",
 "L.7 Our summary table (now with two columns) is now sorted by descending values of ~~avg_bmi~~ with the ~~arrange()~~ function."
@@ -586,15 +586,15 @@ c(
 #| label: dplyr-piped
 #| paged.print: false
 bmi_sorted <-
-  sw %>%
-  filter(species == "Human") %>%
-  mutate(bmi = mass / (height / 100)^2) %>%
-  group_by(homeworld) %>%
-  summarize(avg_bmi = mean(bmi, na.rm = TRUE)) %>%
+  sw |>
+  filter(species == "Human") |>
+  mutate(bmi = mass / (height / 100)^2) |>
+  group_by(homeworld) |>
+  summarize(avg_bmi = mean(bmi, na.rm = TRUE)) |>
   arrange(desc(avg_bmi))
 ```
 
-The `%>%` operator, the pipe, makes the code easier to both write and read later on. The focus is now on the transformations. A good way to reason about the pipe operator is to think of `%>%` as meaning "then". Now we can imagine reading the above code as a series of imperative statements: **filter**, and then **mutate**, and then **group**, and then **summarize**, and then **arrange**. Let's rewrite the above statement as pseudocode to make clear that we have a series of imperative statements that can be read in a left-to-right manner:
+The `|>` operator, the pipe, makes the code easier to both write and read later on. The focus is now on the transformations. A good way to reason about the pipe operator is to think of `|>` as meaning "then". Now we can imagine reading the above code as a series of imperative statements: **filter**, and then **mutate**, and then **group**, and then **summarize**, and then **arrange**. Let's rewrite the above statement as pseudocode to make clear that we have a series of imperative statements that can be read in a left-to-right manner:
 
 `r dspatterns::code_hints(
 "Using pseudocode to demonstrate the readability of the code in the previous listing.",
@@ -625,7 +625,7 @@ This pseudocode should roughly map to what we should be thinking when writing ou
 
 Your data may not have exactly what you'd like to plot. It's a reality that's all too common but we can do something about since we learned the basics of **dplyr**. We will make some transformations to the `dmd` table to make a plot we otherwise couldn't before. Before showing the actual transformation statements, let's have a look at the plan and rationale for the work. 
 
-Suppose we would like to have a new measure that provides the value of a diamond by weight. This is a simple calculation that divides the price of a diamond by its number of carats (`price` / `carats`). The new cost per carat variable (`cpc`) can be easily added to the `dmd` table by using **dplyr**'s `mutate()` function by taking `dmd` and piping it to `mutate()`: `dmd %>% mutate(cpc = price / carats)`.
+Suppose we would like to have a new measure that provides the value of a diamond by weight. This is a simple calculation that divides the price of a diamond by its number of carats (`price` / `carats`). The new cost per carat variable (`cpc`) can be easily added to the `dmd` table by using **dplyr**'s `mutate()` function by taking `dmd` and piping it to `mutate()`: `dmd |> mutate(cpc = price / carats)`.
 
 Now that we have the `cpc` variable, taken as a better measure of the worth of a diamond based on its qualities, we can divide the entire set of diamonds into two price classes: those with higher `cpc` than the median `cpc` value, and those that are lower. We won't describe in detail how to get the median `cpc` value, so we'll accept that it is around $3,460 per carat. Within our second `mutate()` statement, we will use `ifelse()` to get a new `price_class` variable. The next code listing takes the `dmd` dataset and applies both `mutate()` statements to `dmd` and assigns the result to `dmd_mod`.
 
@@ -638,8 +638,8 @@ c(
 ```{r}
 #| label: dmd-modified-dplyr-1
 dmd_mod <- 
-  dmd %>%
-  mutate(cpc = price / carats) %>%
+  dmd |>
+  mutate(cpc = price / carats) |>
   mutate(price_class = ifelse(
     cpc >= 3460, "Above Median", "Below Median")
   )
@@ -657,12 +657,12 @@ c(
 ```{r}
 #| label: dmd-modified-dplyr-2
 dmd_mod <- 
-  dmd %>%
-  mutate(cpc = price / carats) %>%
+  dmd |>
+  mutate(cpc = price / carats) |>
   mutate(price_class = ifelse(
     cpc >= 3460, "Above Median", "Below Median"
     )
-  ) %>%
+  ) |>
   mutate(quality = ifelse(
     cut == "The Best" & clarity == "The Best",
     "Top Drawer", "The Rest"
@@ -685,12 +685,12 @@ c(
 #| fig.cap: "Modifying data with **dplyr**; plotting it with **ggplot**."
 
 dmd_mod <-
-  dmd %>%
-  mutate(cpc = price / carats) %>%
+  dmd |>
+  mutate(cpc = price / carats) |>
   mutate(price_class = ifelse(
     cpc >= 3460, "Above Median", "Below Median"
     )
-  ) %>%
+  ) |>
   mutate(quality = ifelse(
     cut == "The Best" & clarity == "The Best",
     "Top Drawer", "The Rest"
@@ -712,7 +712,7 @@ Moving between data transformation activities and plotting with **ggplot** like 
 
 - We learned how to assign values to variables using the `<-` operator
 - Transforming a dataset can be done with these five **dplyr** functions: `filter()`, `arrange()`, `select()`, `mutate()`, and `summarize()` (with `group_by()`)
-- The pipe operator (`%>%`) (which was used with the **dplyr** functions) improved the composition and readability of our **R** statements
+- The pipe operator (`|>`) (which was used with the **dplyr** functions) improved the composition and readability of our **R** statements
 - Transforming data with **dplyr** and visualizing data with **ggplot** is often something that's done hand in hand
 - We can use the `tibble()` and `tribble()` functions to create our own data tables 
 
@@ -752,11 +752,11 @@ Moving between data transformation activities and plotting with **ggplot** like 
 
 17. How many columns are available in the table generated by the statement `summarize(group_by(sw, species), avg_mass = mean(mass))`?
 
-18. What's one helpful thing that the **magrittr** pipe (`%>%`) does?
+18. What's one helpful thing that the pipe (`|>`) does?
 
-19. How would you rewrite the statement in Q17 with the use of the `%>%` operator?
+19. How would you rewrite the statement in Q17 with the use of the `|>` operator?
 
-20. When using the piped statements of `sw %>% filter(species == "Human") %>% mutate(bmi = mass / (height / 100)^2) %>% group_by(homeworld)`, what extra information do you get in the tibble printout?
+20. When using the piped statements of `sw |> filter(species == "Human") |> mutate(bmi = mass / (height / 100)^2) |> group_by(homeworld)`, what extra information do you get in the tibble printout?
 
 ## Possible Answers
 
@@ -794,8 +794,8 @@ Moving between data transformation activities and plotting with **ggplot** like 
 
 17. When using the statement `summarize(group_by(sw, species), avg_mass = mean(mass))`, we get back a summary table with two columns: `species` (the grouping column) and `avg_mass` (the column we define in the `summarize()` function call).
 
-18. The magrittr pipe (`%>%`) is helpful because: (1) it eliminates to need to create intermediate object names for functions that work well with the pipe, and (2) it can be more readable than nested function calls.
+18. The pipe (`|>`) is helpful because: (1) it eliminates to need to create intermediate object names for functions that work well with the pipe, and (2) it can be more readable than nested function calls.
 
-19. The Q17 statement can be rewritten with the pipe as: `sw %>% group_by(species) %>% summarize(avg_mass = mean(mass))`.
+19. The Q17 statement can be rewritten with the pipe as: `sw |> group_by(species) |> summarize(avg_mass = mean(mass))`.
 
 20. In the tibble printout, we get information on the groups we made from the `group_by()` statement. It provides the number of groups and lists the group names alongside that.
