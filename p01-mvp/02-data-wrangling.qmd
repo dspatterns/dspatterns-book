@@ -621,7 +621,6 @@ c(
 
 This pseudocode should roughly map to what we should be thinking when writing out **dplyr** statements. With a bit of practice, the process of transforming tabular data starts to become natural and the idea of a grammar of data manipulation begins to make more sense.
 
-
 ## Getting Back to Diamonds and Combining Data Transformation with Plotting
 
 Your data may not have exactly what you'd like to plot. It's a reality that's all too common but we can do something about since we learned the basics of **dplyr**. We will make some transformations to the `dmd` table to make a plot we otherwise couldn't before. Before showing the actual transformation statements, let's have a look at the plan and rationale for the work. 
