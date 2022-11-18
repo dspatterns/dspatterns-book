@@ -31,17 +31,6 @@ Counting things in our data is super important. It allows us to account for thin
 
 We'll make extensive use of the **bakeoff** package. It's a package that contains datasets based on the Great British Bake Off television show. In particular, the `bakers` dataset will be used for many of the examples.
 
-As far as packages requirements, we will need **bakeoff**, **tidyverse**, **gt**, and **pointblank**.
-
-This chapter's pattern:
-
--   Explore: glimpse / head / tail / skimr
--   Understand:
-    -   tables + viz (distinct / count / geom_col janitor::tabyl)
-    -   from exploratory plots (confirms or disproves your assumptions about the data) gain an intuition and develop that ability
--   Explain: nrow/ncol + combine with glue for inline code? / epoxy
--   Share (Collaborate/Communicate): use pointblank; gt for tables?
-
 ## Explore
 
 We are going to explore a few datasets from the **bakeoff** package. It's primarily a *dataset* package but it has a few handy functions as well. Let's begin with **bakeoff**'s `bakers` dataset. We know nothing about it at this point so we'll use `glimpse()` to inspect the structure of the data table (plus some of row content).
@@ -84,7 +73,7 @@ By default, we get a lot of information very quickly. The printed info gives us:
 
 The `skim()` function is certainly something to keep in your toolbelt, and quite handy when you get a new dataset to look at for the first time.
 
-Another option is the `scan_data()` function from the **pointblank** package. It's a lot like `skim()` in principle, except it provides even more information and does so in a strictly-HTML-based report. Let's look at `bakers` via `scan_data()`
+Another option is the `scan_data()` function from the **pointblank** package. It's a lot like `skim()` in principle, except it provides even more information but does so in a strictly-HTML-based report. Here's what the top of the table scan for `bakers` looks like.
 
 ![Table Scan for bakers](../figures/04-careful-counting-patterns/scan-data-bakers.png){#fig:scan-data-bakers}
 
@@ -184,7 +173,7 @@ episode_summary <-
   pivot_wider(names_from = episode, values_from = n) %>%
   gt(rowname_col = "series") %>%
   tab_spanner(label = "Episode", columns = matches("[0-9]*")) %>%
-  fmt_missing(columns = everything()) %>%
+  sub_missing(columns = everything()) %>%
   cols_width(1 ~ "60px", everything() ~ "40px") %>%
   tab_stubhead(label = "Series")
 
@@ -195,9 +184,8 @@ This is good and presents exact numbers per episode (important if someone needs 
 
 ## Share
 
-pointblank::scan_data() pointblank::draft_validation_report()
+The reporting obtained from **pointblank**'s `scan_data()` can be shared in multiple ways. Some examples include publication on Quarto Pub or on a Connect instance, or, distributing an HTML document produced by R Markdown or Quarto. If you want to send the bare HTML from the table scan, that can be done with **pointblank**'s `export_report()` function. It's even possible to take the HTML file produced from that function and work it into a Shiny app.
 
--   This chapter really ought to be an intro vis / data inspection/exploration section with multiple packages
 
 -   use some code from course material that uses bakeoff
 
@@ -209,17 +197,17 @@ pointblank::scan_data() pointblank::draft_validation_report()
 
 -   goals: making exploratory bar charts and histograms (useful for initial understanding of the data)
 
-## Project Ideas
+Project Ideas
 
 (should have a fully working set of Rmd templates, presented in the form of a project template - this can be prepped for the reader with a function call)
 
 The moma dataset (https://apreshill.github.io/data-vis-labs-2018/02-moma.html) would be great for a project - explore using the lisa palette from paletteer
 
-### Packages Needed
+Packages Needed
 
 -   installation details (script with `library()` calls)
 -   possibly use: https://github.com/rstudio4edu/rmd4edu/blob/master/R/lesson.R
 
-## DIY
+DIY
 
 -   dataset:
