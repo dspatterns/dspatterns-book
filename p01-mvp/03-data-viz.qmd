@@ -70,7 +70,7 @@ The plot indeed now has data points thanks to the use of `geom_point()`! There a
 
 ::: {.callout-tip}
 
-Note: In the plotting code for @fig-gg-empty and @fig-dmd-carats-price, notice that the two statements are joined by a `+`. This is different than the pipe operator (`%>%`) that was used to join together, or pipe, the **dplyr** statements in the last lesson. This is sometimes a point of confusion so always try to remember that **ggplot** exclusively uses `+` whereas every other package of the *Tidyverse* (and beyond) uses `%>%`.
+Note: In the plotting code for @fig-gg-empty and @fig-dmd-carats-price, notice that the two statements are joined by a `+`. This is different than the pipe operator (`|>`) that was used to join together, or pipe, the **dplyr** statements in the last lesson. This is sometimes a point of confusion so always try to remember that **ggplot** exclusively uses `+` whereas every other package of the *Tidyverse* (and beyond) uses `|>`.
 
 :::
 
@@ -474,7 +474,7 @@ In this example code, there are still labels defined for the nonexistent legend 
 
 Your data may not have exactly what you'd like to plot. It's a reality that's all too common but we can do something about since we learned the basics of **dplyr**. We will make some transformations to the `dmd` table to make a plot we otherwise couldn't before. Before showing the actual transformation statements, let's have a look at the plan and rationale for the work. 
 
-Suppose we would like to have a new measure that provides the value of a diamond by weight. This is a simple calculation that divides the price of a diamond by its number of carats (`price` / `carats`). The new cost per carat variable (`cpc`) can be easily added to the `dmd` table by using **dplyr**'s `mutate()` function by taking `dmd` and piping it to `mutate()`: `dmd %>% mutate(cpc = price / carats)`.
+Suppose we would like to have a new measure that provides the value of a diamond by weight. This is a simple calculation that divides the price of a diamond by its number of carats (`price` / `carats`). The new cost per carat variable (`cpc`) can be easily added to the `dmd` table by using **dplyr**'s `mutate()` function by taking `dmd` and piping it to `mutate()`: `dmd |> mutate(cpc = price / carats)`.
 
 Now that we have the `cpc` variable, taken as a better measure of the worth of a diamond based on its qualities, we can divide the entire set of diamonds into two price classes: those with higher `cpc` than the median `cpc` value, and those that are lower. We won't describe in detail how to get the median `cpc` value, so we'll accept that it is around $3,460 per carat. Within our second `mutate()` statement, we will use `ifelse()` to get a new price_class variable. The next listing provides the code that takes the dataset and applies both `mutate()` statements to `dmd` and assigns the result to `dmd_mod`.
 
@@ -489,8 +489,8 @@ c(
 #| paged.print: false
 
 dmd_mod <- 
-  dmd %>%
-  mutate(cpc = price / carats) %>%
+  dmd |>
+  mutate(cpc = price / carats) |>
   mutate(price_class = ifelse(cpc >= 3460, "Above Median", "Below Median"))
 
 dmd_mod
@@ -510,11 +510,11 @@ c(
 #| paged.print: false
 
 dmd_mod <- 
-  dmd %>%
-  mutate(cpc = price / carats) %>%
+  dmd |>
+  mutate(cpc = price / carats) |>
   mutate(price_class = ifelse(
     cpc >= 3460, "Above Median", "Below Median")
-  ) %>%
+  ) |>
   mutate(quality = ifelse(
     cut == "The Best" & clarity == "The Best",
     "Top Drawer", "The Rest"
