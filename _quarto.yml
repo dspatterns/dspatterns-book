@@ -43,7 +43,6 @@ book:
         - p01-mvp/01-dataframes.qmd
         - p01-mvp/02-data-wrangling.qmd
         - p01-mvp/03-data-viz.qmd
-        - p01-mvp/04-data-types.qmd
     - part: "Part 2: Workflow patterns"
       chapters:
         - p02-workflow/01-projects.qmd
