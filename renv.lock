@@ -975,10 +975,10 @@
     },
     "knitr": {
       "Package": "knitr",
-      "Version": "1.40.1",
+      "Version": "1.41",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "8b6eb33ae05ef6ce94042773750041ad",
+      "Hash": "6d4971f3610e75220534a1befe81bc92",
       "Requirements": [
         "evaluate",
         "highr",
