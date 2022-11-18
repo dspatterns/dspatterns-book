@@ -225,7 +225,7 @@ Once the data dictionary has been produced for `stickers`, we can look at it in 
 stickers_dd
 ```
 
-![A data dictionary for the `stickers` dataset.](figures/02-importing-data-first-time/stickers_dd.png){#fig:stickers-data-dictionary}
+![A data dictionary for the `stickers` dataset.](../figures/02-importing-data-first-time/stickers_dd.png){#fig:stickers-data-dictionary}
 
 ## Explain
 

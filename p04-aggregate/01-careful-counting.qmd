@@ -86,7 +86,7 @@ The `skim()` function is certainly something to keep in your toolbelt, and quite
 
 Another option is the `scan_data()` function from the **pointblank** package. It's a lot like `skim()` in principle, except it provides even more information and does so in a strictly-HTML-based report. Let's look at `bakers` via `scan_data()`
 
-![Table Scan for bakers](figures/04-careful-counting-patterns/scan-data-bakers.png){#fig:scan-data-bakers}
+![Table Scan for bakers](../figures/04-careful-counting-patterns/scan-data-bakers.png){#fig:scan-data-bakers}
 
 The report is **huge** and highly interactive. The graphic above shows a bit of what you'll find in the report. The reason this would be useful is that anomalies in the data (especially egregious ones) are easily discovered by looking through the report. For that reason, it's a great idea to use this functionality whenever encountering either
 
