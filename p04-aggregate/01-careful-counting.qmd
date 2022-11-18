@@ -51,14 +51,60 @@ There's no shortage of ways to preview a tabular dataset. We can even use the **
 gt_preview(bakers)
 ```
 
-<br />
-
 This table presents really nicely and so it's great for sharing a preview of the dataset (e.g., in static R Markdown documents).
 
 Sometimes, however, you need more. You need some stats. Descriptive statistics can better aid in the understanding of a dataset. You'll get a sense of numerical ranges (for numerical columns), if there are missing values in certain columns, and the degree of uniqueness across columns (or variables). There are multiple great solutions for this in **R**. One of them in the `skim()` function provided by the **skimr** package:
 
-```{r}
-skimr::skim(bakers)
+```r
+skim(bakers)
+```
+
+```
+─ Data Summary ────────────────────────
+                           Values
+Name                       bakers
+Number of rows             120   
+Number of columns          24    
+_______________________          
+Column type frequency:           
+  character                6     
+  Date                     4     
+  numeric                  14    
+________________________         
+Group variables            None  
+
+── Variable type: character ───────────────────────────────────────────────────────────────────────────────
+  skim_variable n_missing complete_rate min max empty n_unique whitespace
+1 baker                 0             1   3  10     0      107          0
+2 baker_full            0             1   9  23     0      120          0
+3 occupation            0             1   5  42     0      106          0
+4 hometown              0             1   5  41     0       96          0
+5 baker_last            0             1   3  17     0      117          0
+6 baker_first           0             1   3  10     0      107          0
+
+── Variable type: Date ────────────────────────────────────────────────────────────────────────────────────
+  skim_variable       n_missing complete_rate min        max        median     n_unique
+1 first_date_appeared        25         0.792 2010-08-17 2017-08-29 2014-08-06        8
+2 last_date_appeared         25         0.792 2010-08-17 2017-10-31 2014-08-06       72
+3 first_date_us             120         0     Inf        -Inf       NA                0
+4 last_date_us              120         0     Inf        -Inf       NA                0
+
+── Variable type: numeric ─────────────────────────────────────────────────────────────────────────────────
+   skim_variable             n_missing complete_rate    mean     sd   p0  p25  p50   p75 p100 hist 
+ 1 series                            0         1      5.6     2.86   1    3    6     8     10 ▇▇▇▇▇
+ 2 star_baker                        0         1      0       0      0    0    0     0      0 ▁▁▇▁▁
+ 3 technical_winner                  0         1      0.775   0.991  0    0    0     1      5 ▇▂▁▁▁
+ 4 technical_top3                    0         1      2.33    2.31   0    0    2     4      8 ▇▃▂▂▁
+ 5 technical_bottom                  0         1      3.48    1.68   0    2    3     5      7 ▃▂▇▃▂
+ 6 technical_highest                 1         0.992  3.26    3.26   1    1    2     4.5   13 ▇▂▁▁▁
+ 7 technical_lowest                  1         0.992  8.92    2.05   4    7    9    10.5   13 ▂▅▇▇▂
+ 8 technical_median                  1         0.992  5.64    2.72   1.5  3.5  5     7     13 ▇▇▃▃▂
+ 9 series_winner                     0         1      0.0833  0.278  0    0    0     0      1 ▇▁▁▁▁
+10 series_runner_up                  0         1      0       0      0    0    0     0      0 ▁▁▇▁▁
+11 total_episodes_appeared           0         1      5.92    3.09   1    3    6     9     10 ▅▅▆▅▇
+12 percent_episodes_appeared         0         1     62.4    31.3   10   33.3 64.6 100    100 ▃▃▃▃▇
+13 percent_technical_top3            0         1     30.5    25.4    0    0   33.3  50     80 ▇▃▅▆▂
+14 age                               0         1     37.4    12.9   17   28.8 34    45     71 ▃▇▃▂▂
 ```
 
 By default, we get a lot of information very quickly. The printed info gives us:
@@ -91,7 +137,7 @@ To get an even greater understanding of our data, we'll want to ask several ques
 Suppose we have the question: are the contestants unique across all of the rows? Well, we could find that out by knowing that there are `120` rows in the dataset and that using the `distinct()` function (from the **dplyr** package) should give us the same number of rows when used just on the `baker_full` column (full names for each contestant). Let's take a look at that in action:
 
 ```{r, paged.print=FALSE}
-bakers %>% distinct(baker_full)
+bakers |> distinct(baker_full)
 ```
 
 Yes! This one-column table gives us 120 rows as well. This proves that every contestant appeared once per season. If a person appeared in multiple seasons then the resulting table would have less than 120 rows (since duplicate entries for `baker_full` would be removed).
@@ -99,27 +145,27 @@ Yes! This one-column table gives us 120 rows as well. This proves that every con
 Here's another question: what's the most common first name for a contestant on the show? To get this, we'd have to focus on the `baker_first` column (first names for each and every contestant).
 
 ```{r, paged.print=FALSE}
-bakers %>% distinct(baker_first)
+bakers |> distinct(baker_first)
 ```
 
 The row count here is `107` and this is less than the `120` row count for the complete dataset. From this, we now know there are some first names shared amongst the contestants. Let's change up our strategy and instead use the `count()` function (from **dplyr**) to count the first names (in the `baker_first` column):
 
 ```{r, paged.print=FALSE}
-bakers %>% count(baker_first)
+bakers |> count(baker_first)
 ```
 
 The table we get now has counts that go along with each of the first names! But the names are sorted alphabetically and it's hard to determine what the most common name is. This can be entired remedied by using the `sort` option in `count()`. With `sort = TRUE`, the sorting of the `n` column will be from high to low.
 
 ```{r, paged.print=FALSE}
-bakers %>% count(baker_first, sort = TRUE)
+bakers |> count(baker_first, sort = TRUE)
 ```
 
 This is exactly what we need and it's now plain to see that the most common first name is Kate (with three *different* contestants having that name). Should you want to visualize this, it can be done very quickly with **ggplot** and the `geom_col()` function. Here, we will do that, but only include those names that are shared with others.
 
 ```{r}
-bakers %>%
-  count(baker_first, sort = TRUE) %>%
-  filter(n > 1) %>%
+bakers |>
+  count(baker_first, sort = TRUE) |>
+  filter(n > 1) |>
   ggplot() +
   geom_col(aes(x = n, y = baker_first))
 ```
@@ -127,7 +173,7 @@ bakers %>%
 On to another question we might ask of the dataset: was there any series where two contestants shared the same first name? We can find that out by getting a count of contestants' first names by series. Still using `count()` to do this except now we must provide *two* grouping variables (`baker_first` and `series`).
 
 ```{r, paged.print=FALSE}
-bakers %>% count(series, baker_first, sort = TRUE)
+bakers |> count(series, baker_first, sort = TRUE)
 ```
 
 It seems like this is not the case. All `n` values are `1` and the total row count in this output table is the same as that of the original table (`120`). This follows the original order of the table (series increasing). Note that if you reverse the groups (specifying `baker_first` and then `series`) then the sorting order becomes an alphabetical sorting of all bakers' first names (since `n` is `1` all the way down).
@@ -135,7 +181,7 @@ It seems like this is not the case. All `n` values are `1` and the total row cou
 Can we figure out if any bakers are from the same hometown? How about from the same hometown and the same series? Sure. Use the groups `hometown` and `series` and then ensure that `sort = TRUE` as before.
 
 ```{r, paged.print=FALSE}
-bakers %>% count(hometown, series, sort = TRUE)
+bakers |> count(hometown, series, sort = TRUE)
 ```
 
 We can see that we had fellow townies in series `8` and four Londoners in series `9`. For sure, this `count()` function from **dplyr** is incredibly powerful.
@@ -143,14 +189,14 @@ We can see that we had fellow townies in series `8` and four Londoners in series
 We can extend this line of thinking to get a count of contestants per episode across all series. Again, `count()` is your friend here and all we need to do is choose the right grouping variables. In this case, those variables are `series` and `episode`. Here it is:
 
 ```{r, paged.print=FALSE}
-episodes %>% count(series, episode)
+episodes |> count(series, episode)
 ```
 
 We see that the counts of contestants across episodes in each series decreases, which is to be expected from shows where participants are routinely eliminated. This is plottable and, crucially, we can facet the plots by `series`.
 
 ```{r}
-episodes %>% 
-  count(series, episode) %>%
+episodes |> 
+  count(series, episode) |>
   ggplot() +
   geom_col(aes(x = episode, y = n)) +
   facet_wrap(~series)
@@ -168,13 +214,13 @@ Perhaps the last plot of contestant counts per episode per series might be bette
 
 ```{r}
 episode_summary <- 
-  episodes %>% 
-  count(series, episode) %>%
-  pivot_wider(names_from = episode, values_from = n) %>%
-  gt(rowname_col = "series") %>%
-  tab_spanner(label = "Episode", columns = matches("[0-9]*")) %>%
-  sub_missing(columns = everything()) %>%
-  cols_width(1 ~ "60px", everything() ~ "40px") %>%
+  episodes |> 
+  count(series, episode) |>
+  pivot_wider(names_from = episode, values_from = n) |>
+  gt(rowname_col = "series") |>
+  tab_spanner(label = "Episode", columns = matches("[0-9]*")) |>
+  sub_missing(columns = everything()) |>
+  cols_width(1 ~ "60px", everything() ~ "40px") |>
   tab_stubhead(label = "Series")
 
 episode_summary
