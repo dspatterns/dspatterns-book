@@ -165,10 +165,10 @@ Unlike the tibble view (with `head()` or not), you get to see all of the columns
 #| label: use-of-multiple-glimpse-in-pipeline
 #| class-output: "html sourceCode"
 
-episodes %>%
-  glimpse() %>%
-  select(series, episode, winner_name) %>%
-  filter(!is.na(winner_name)) %>%
+episodes |>
+  glimpse() |>
+  select(series, episode, winner_name) |>
+  filter(!is.na(winner_name)) |>
   glimpse()
 ```
 
