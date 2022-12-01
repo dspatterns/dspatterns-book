@@ -95,6 +95,7 @@ jobs:
             babynames
             dspatterns/dspatterns
             apreshill/bakeoff
+            rich-iannone/intendo
             DT
             gt
             ggridges
