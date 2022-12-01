@@ -1,27 +1,86 @@
 # Batch creation of tables and plots
 
 ```{r setup, include=FALSE, echo=FALSE}
-library(dspatterns)
+library(intendo)
+library(pointblank)
+library(gt)
 ```
 
 - Creating a function to make a table with different variables / filtered by values (using curly curly)
 - See programming with dplyr: https://dplyr.tidyverse.org/articles/programming.html#how-tos-1
 - Want to do something repetitively 
 - Creating a function to make a plot (time series great example)
-- Good dataset: Intendo
+- Good dataset: intendo
 - Intro functions like `add_house_style()`
 - R Markdown video for good looping pattern within doc for batch creation: https://www.youtube.com/watch?v=WkF7nqEYF1E
 
 
-Examples:
-https://stat545.com/join-cheatsheet.html
-https://github.com/rstudio-education/stat545/edit/master/15_join-tibbles.Rmd
 
-## New Packages and Functions  
 
 ## This Chapter's Pattern
 
+We want to take changing data and dependably make great looking tables and plots that might be part of a larger data sharing workflow. 
+
 ## Explore
+
+Get some data from the intendo package
+
+```{r}
+all_revenue <- intendo::all_revenue()
+```
+
+Use **pointblank**'s table transform functions to get slices of that `all_revenue` table.
+
+```{r}
+#| label: slice-all-revenue
+#| paged.print: false
+
+all_rev_jan_segment <- 
+  all_revenue |>
+  tt_time_slice(
+    time_column = "session_start",
+    slice_point = "2015-01-15",
+    keep = "left"
+  ) |>
+  tt_time_slice(
+    time_column = "session_start",
+    slice_point = "2015-01-10",
+    keep = "right"
+  )
+  
+all_rev_jan_segment
+```
+
+A quick check for whether the slicing worked is to use **gt**'s `gt_preview()`, which provides the first five rows and the last row in a small table:
+
+```{r}
+#| label: all-revenue-gt-preview
+
+gt_preview(all_rev_jan_segment)
+```
+
+This looks good as we can see early morning values on `"2015-01-10"` and near-midnight values on `"2015-01-15"` (in the `session_start` column). We might want to do a few more data validation checks, just to be sure what we're starting with is of high enough quality. We'll use **pointblank** for that and introduce the `all_rev_jan_segment` to these three basic data quality checks:
+
+1. Do all rows have `session_start` values within the expected time range?
+2. Are all rows distinct from each other?
+3. Are all rows complete (i.e., having no missing values anywhere)?
+
+```{r}
+#| label: check-slice-all-revenue
+#| paged.print: false
+
+all_rev_jan_segment |>
+  col_vals_between(
+    columns = session_start,
+    left = lubridate::ymd_hms("2015-01-10 00:00:00"),
+    right = lubridate::ymd_hms("2015-01-15 11:59:59")
+  ) |>
+  rows_complete() |>
+  rows_distinct()
+```
+
+Because the table was returned with no errors reported, all of the data validation checks passed with flying colors! There are of course many more data checks that could potentially be performed but even just a few basic checks are valuable and we could move forward, feeling a bit more confident about the input data.
+
 
 ## Understand
 
