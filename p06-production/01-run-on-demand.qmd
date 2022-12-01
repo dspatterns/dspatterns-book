@@ -4,8 +4,6 @@
 library(dspatterns)
 ```
 
-Pattern: you want what you see to update automatically online based on any change you push. You care about keeping the link up to date with your local work.
-
 --> pointblank validation
 
 - Ideal focus: single docs, presentations, book in Quarto
@@ -16,7 +14,14 @@ Pattern: you want what you see to update automatically online based on any chang
 
 ## This Chapter's Pattern
 
+You want what you typically see to update online automatically based on any change you push. You care about keeping the link up to date with your local work.
+
 ## Explore
+
+If you updating data and generating reporting on that changing data on an ad hoc basis, you'll probably want a simple system for pushing new data, generating an updated report, and ensuring that things didn't break and everything is still looking generally top notch.
+
+When data changes (with updated records and/or with modified records) you'll be faced with a fair amount of uncertainty. And, since the data will have an impact on their reporting, we have to eliminate that source of uncertainty as much as possible.
+
 
 ## Understand
 
