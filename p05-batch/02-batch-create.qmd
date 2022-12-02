@@ -18,11 +18,9 @@ library(glue)
 - R Markdown video for good looping pattern within doc for batch creation: https://www.youtube.com/watch?v=WkF7nqEYF1E
 
 
-
-
 ## This Chapter's Pattern
 
-We want to take changing data and dependably make great looking tables and plots that might be part of a larger data sharing workflow. 
+We want to take changing data (and changing requirements) and dependably make great looking tables and plots that might be part of a larger data sharing workflow. 
 
 ## Explore
 
@@ -115,6 +113,8 @@ daily_revenue_top5
 Making a **gt** table from this summary makes for a very presentable deliverable.
 
 ```{r}
+#| label: daily-revenue-top5-gt-table
+
 daily_revenue_top5 |>
   gt(rowname_col = "item_name", groupname_col = "date") |>
   fmt_currency(columns = revenue) |>
@@ -138,12 +138,87 @@ This looks pretty nice. And things are set up for even more flexibility. I mean,
 
 1. Give me the top 10 items per day, going back 4 days from today
 2. I'd like to see the best performing ad types
-3. Can you break this down by country?
 4. This would be much better with the company colors applied somewhere
 
 To make this all possible we can generate a function. The ultimate function for getting a table of revenue figures really. 
 
 ## Understand
+
+We have three basic components to making that reporting table:
+
+1. Data acquisition
+2. Data transformation and summarization
+3. Data tabulation for presentation
+
+If we are to make a single, dependable function, it would be acceptable (and easier for you) to get all these components into that function. Let's start with a name and call this function `get_sales_tbl()`.
+
+Now let's think of what's needed in terms of options. We know we should allow for some variation and flexibilty. We don't want *too much* of that because it could result in a lot of code that could get brittle and harder to maintain. The art in this sort of thing is finding a middle ground and extended later as necessity warrants. Let's start by popping in all the R code we used before into this function, with zero options:
+
+```{r}
+#| label: daily-revenue-top5-first-function
+
+get_sales_tbl <- function() {
+  
+  initial_date <- "2015-01-10"
+  ending_date  <- "2015-01-15"
+  end_m1_date  <- "2015-01-14"
+
+  all_rev_jan_segment <- 
+    all_revenue |>
+    tt_time_slice(
+      time_column = "session_start",
+      slice_point = ending_date,
+      keep = "left"
+    ) |>
+    tt_time_slice(
+      time_column = "session_start",
+      slice_point = initial_date,
+      keep = "right"
+    )
+  
+  daily_revenue_top5 <-
+    all_rev_jan_segment |>
+    filter(item_type == "iap") |>
+    mutate(date = as.Date(time)) |>
+    group_by(date, item_name) |>
+    summarize(
+      revenue = sum(item_revenue),
+      .groups = "drop"
+    ) |>
+    arrange(desc(date), desc(revenue)) |>
+    group_by(date) |>
+    filter(row_number() %in% 1:5) |>
+    mutate(rank = 1:5) %>%
+    ungroup()
+  
+  daily_revenue_top5 |>
+  gt(rowname_col = "item_name", groupname_col = "date") |>
+  fmt_currency(columns = revenue) |>
+  cols_width(everything() ~ px(200)) |>
+  fmt_roman(column = rank) |>
+  cols_merge(columns = c(item_name, rank), pattern = "{2}. {1}") |>
+  tab_header(
+    title = "Daily Top Five IAPs",
+    subtitle = md(glue("Data from `{initial_date}` to `{end_m1_date}`."))
+  ) |>
+  tab_options(column_labels.hidden = TRUE) |>
+  opt_all_caps() |>
+  opt_vertical_padding(scale = 0.5) |>
+  tab_style(
+    style = cell_text(align = "center"),
+    locations = cells_row_groups()
+  )
+}
+```
+
+What was made was a function that's not too functional. It has no arguments (y'know, options). It'll give you the same table every single time. Obviously, not what anyone wants but it's a good starting point because everything is here. We just need to make this usable for the real-world now. 
+
+In terms of design constraints, let's make it this is always some sort of daily ranking of something from the source table. In terms of options, we want these three:
+
+1. A way to modify the date range
+2. Option to modify the number of items in the ranking.
+3. Two styling options: basic and company-themed
+
 
 ## Explain
 
