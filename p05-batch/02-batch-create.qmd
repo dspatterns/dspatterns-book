@@ -4,13 +4,16 @@
 library(intendo)
 library(pointblank)
 library(gt)
+library(dplyr)
+library(tidyr)
+library(glue)
 ```
 
+- Good dataset: intendo
 - Creating a function to make a table with different variables / filtered by values (using curly curly)
 - See programming with dplyr: https://dplyr.tidyverse.org/articles/programming.html#how-tos-1
 - Want to do something repetitively 
 - Creating a function to make a plot (time series great example)
-- Good dataset: intendo
 - Intro functions like `add_house_style()`
 - R Markdown video for good looping pattern within doc for batch creation: https://www.youtube.com/watch?v=WkF7nqEYF1E
 
@@ -35,16 +38,20 @@ Use **pointblank**'s table transform functions to get slices of that `all_revenu
 #| label: slice-all-revenue
 #| paged.print: false
 
+initial_date <- "2015-01-10"
+ending_date  <- "2015-01-15"
+end_m1_date  <- "2015-01-14"
+
 all_rev_jan_segment <- 
   all_revenue |>
   tt_time_slice(
     time_column = "session_start",
-    slice_point = "2015-01-15",
+    slice_point = ending_date,
     keep = "left"
   ) |>
   tt_time_slice(
     time_column = "session_start",
-    slice_point = "2015-01-10",
+    slice_point = initial_date,
     keep = "right"
   )
   
@@ -81,6 +88,60 @@ all_rev_jan_segment |>
 
 Because the table was returned with no errors reported, all of the data validation checks passed with flying colors! There are of course many more data checks that could potentially be performed but even just a few basic checks are valuable and we could move forward, feeling a bit more confident about the input data.
 
+Let's generate a summary of the top-five selling items in each day of this abbreviated dataset using functions from **dplyr**.
+
+```{r}
+#| label: get-basic-summary
+#| paged.print: false
+
+daily_revenue_top5 <-
+  all_rev_jan_segment |>
+  filter(item_type == "iap") |>
+  mutate(date = as.Date(time)) |>
+  group_by(date, item_name) |>
+  summarize(
+    revenue = sum(item_revenue),
+    .groups = "drop"
+  ) |>
+  arrange(desc(date), desc(revenue)) |>
+  group_by(date) |>
+  filter(row_number() %in% 1:5) |>
+  mutate(rank = 1:5) %>%
+  ungroup()
+
+daily_revenue_top5
+```
+
+Making a **gt** table from this summary makes for a very presentable deliverable.
+
+```{r}
+daily_revenue_top5 |>
+  gt(rowname_col = "item_name", groupname_col = "date") |>
+  fmt_currency(columns = revenue) |>
+  cols_width(everything() ~ px(200)) |>
+  fmt_roman(column = rank) |>
+  cols_merge(columns = c(item_name, rank), pattern = "{2}. {1}") |>
+  tab_header(
+    title = "Daily Top Five IAPs",
+    subtitle = md(glue("Data from `{initial_date}` to `{end_m1_date}`."))
+  ) |>
+  tab_options(column_labels.hidden = TRUE) |>
+  opt_all_caps() |>
+  opt_vertical_padding(scale = 0.5) |>
+  tab_style(
+    style = cell_text(align = "center"),
+    locations = cells_row_groups()
+  )
+```
+
+This looks pretty nice. And things are set up for even more flexibility. I mean, you might get asked for all sorts modifications of this summary table. Some examples:
+
+1. Give me the top 10 items per day, going back 4 days from today
+2. I'd like to see the best performing ad types
+3. Can you break this down by country?
+4. This would be much better with the company colors applied somewhere
+
+To make this all possible we can generate a function. The ultimate function for getting a table of revenue figures really. 
 
 ## Understand
 
