@@ -219,6 +219,23 @@ In terms of design constraints, let's make it this is always some sort of daily 
 2. Option to modify the number of items in the ranking.
 3. Two styling options: basic and company-themed
 
+Let's put that into the function's *signature*, along with some defaults:
+
+```r
+get_sales_tbl <- function(
+    data,
+    final_day = lubridate::today() - lubridate::days(2),
+    start_day = lubridate::today() - lubridate::days(6),
+    days_back = NULL,
+    n = 5,
+    styling = c("basic", "company")
+) {
+
+...
+
+}
+```
+
 
 ## Explain
 
