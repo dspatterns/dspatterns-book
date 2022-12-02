@@ -104,7 +104,7 @@ daily_revenue_top5 <-
   arrange(desc(date), desc(revenue)) |>
   group_by(date) |>
   filter(row_number() %in% 1:5) |>
-  mutate(rank = 1:5) %>%
+  mutate(rank = 1:5) |>
   ungroup()
 
 daily_revenue_top5
@@ -188,26 +188,26 @@ get_sales_tbl <- function() {
     arrange(desc(date), desc(revenue)) |>
     group_by(date) |>
     filter(row_number() %in% 1:5) |>
-    mutate(rank = 1:5) %>%
+    mutate(rank = 1:5) |>
     ungroup()
   
   daily_revenue_top5 |>
-  gt(rowname_col = "item_name", groupname_col = "date") |>
-  fmt_currency(columns = revenue) |>
-  cols_width(everything() ~ px(200)) |>
-  fmt_roman(column = rank) |>
-  cols_merge(columns = c(item_name, rank), pattern = "{2}. {1}") |>
-  tab_header(
-    title = "Daily Top Five IAPs",
-    subtitle = md(glue("Data from `{initial_date}` to `{end_m1_date}`."))
-  ) |>
-  tab_options(column_labels.hidden = TRUE) |>
-  opt_all_caps() |>
-  opt_vertical_padding(scale = 0.5) |>
-  tab_style(
-    style = cell_text(align = "center"),
-    locations = cells_row_groups()
-  )
+    gt(rowname_col = "item_name", groupname_col = "date") |>
+    fmt_currency(columns = revenue) |>
+    cols_width(everything() ~ px(200)) |>
+    fmt_roman(column = rank) |>
+    cols_merge(columns = c(item_name, rank), pattern = "{2}. {1}") |>
+    tab_header(
+      title = "Daily Top Five IAPs",
+      subtitle = md(glue("Data from `{initial_date}` to `{end_m1_date}`."))
+    ) |>
+    tab_options(column_labels.hidden = TRUE) |>
+    opt_all_caps() |>
+    opt_vertical_padding(scale = 0.5) |>
+    tab_style(
+      style = cell_text(align = "center"),
+      locations = cells_row_groups()
+    )
 }
 ```
 
@@ -236,6 +236,110 @@ get_sales_tbl <- function(
 }
 ```
 
+The `data` argument is the dataset. This is the data frame or tibble that first gets processed by the **dplyr** code. The pairing of `final_day` and `start_day` allow for input of dates. The defaults make it so that the system's clock time is involved, getting a start day and a final day two days back from the present day. As an additional option, the `start_day` input could be overridden by providing a `days_back` number (good if you don't really want to do any calendar-based calculations for larger ranges of days). The `n` argument is for the number of ranked items to include in each day. Finally, `styling` allows for choosing a theme for the **gt**-based table output.
+
+The new function, after incorporation of the options, might look something like this:
+
+```{r}
+#| label: daily-revenue-revised-function
+
+get_sales_tbl <- function(
+    data,
+    final_day = lubridate::today() - lubridate::days(2),
+    start_day = lubridate::today() - lubridate::days(6),
+    days_back = NULL,
+    n = 5,
+    styling = c("basic", "company")
+) {
+  
+  styling <- match.arg(styling)
+
+  final_day <- as.Date(final_day)
+  
+  if (!is.null(days_back) && is.numeric(days_back)) {
+    start_day <- final_day - lubridate::days(days_back)
+  } else {
+    start_day <- as.Date(start_day)
+  }
+  
+  days <- seq(start_day, final_day, by = "days")
+
+  filtered_data <- 
+    data |>
+    dplyr::mutate(sale_day = as.Date(time)) |>
+    dplyr::filter(sale_day %in% days)
+  
+  .top_n_sequence <- seq(1, n)
+  
+  daily_revenue_ranked <-
+    filtered_data |>
+    filter(item_type == "iap") |>
+    mutate(date = as.Date(time)) |>
+    group_by(date, item_name) |>
+    summarize(
+      revenue = sum(item_revenue),
+      .groups = "drop"
+    ) |>
+    arrange(desc(date), desc(revenue)) |>
+    group_by(date) |>
+    filter(row_number() %in% .top_n_sequence) |>
+    mutate(rank = .top_n_sequence) |>
+    ungroup()
+  
+  output_tbl <-
+    daily_revenue_ranked |>
+    gt(rowname_col = "item_name", groupname_col = "date") |>
+    fmt_currency(columns = revenue) |>
+    cols_width(everything() ~ px(200)) |>
+    fmt_roman(column = rank) |>
+    cols_merge(columns = c(item_name, rank), pattern = "{2}. {1}") |>
+    tab_header(
+      title = "Daily Top Sales Items",
+      subtitle = md(glue("Data from `{start_day}` to `{final_day}`."))
+    ) |>
+    tab_options(column_labels.hidden = TRUE) |>
+    opt_all_caps() |>
+    opt_vertical_padding(scale = 0.5) |>
+    tab_style(
+      style = cell_text(align = "center"),
+      locations = cells_row_groups()
+    )
+  
+  if (styling == "company") {
+    
+    output_tbl <-
+      output_tbl |>
+      tab_options(
+        table.background.color = adjust_luminance("beige", steps = 1.5),
+        table.border.bottom.width = px(3),
+        table.border.top.width = px(3),
+        table.border.bottom.color = "black",
+        table.border.top.color = "black",
+        row_group.background.color = "gray98",
+        source_notes.background.color = "darkorange"
+      ) |>
+      tab_style(
+        style = cell_fill(color = "palegreen"),
+        locations = cells_body(columns = revenue)
+      ) |>
+      tab_source_note(
+        source_note = md("**NOTE:** This document is for internal use only and should not to be distributed to external parties.") 
+      )
+  }
+  
+  output_tbl
+}
+```
+
+This shiny new function is now flexible and it really works! Always test your custom-built functions with a lot of sensible input combinations. The more important the function is, the more robust and well-tested it should become. If we use `get_sales_tbl()` with the dataset above and the `final_day = "2015-06-30"` and `days_back = 2` options, we do get a nice-looking table:
+
+```{r}
+#| label: daily-revenue-revised-function-invoke
+
+get_sales_tbl(all_revenue, final_day = "2015-06-30", days_back = 2)
+```
+
+However, if we use the default options (i.e., by invoking `get_sales_tbl(all_revenue)`) we get an error. Turns out the dataset obtained from using `intendo::all_revenue()` only contains data from 2015. So, the defaults are optimized for data that continuously updating to the present day. This is great in practice for that common scenario but not so good with a historical data extract like we have here.
 
 ## Explain
 
