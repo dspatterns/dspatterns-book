@@ -249,7 +249,7 @@ get_sales_tbl <- function(
     start_day = lubridate::today() - lubridate::days(6),
     days_back = NULL,
     n = 5,
-    styling = c("basic", "company")
+    styling = c("company", "basic")
 ) {
   
   styling <- match.arg(styling)
@@ -336,7 +336,11 @@ This shiny new function is now flexible and it really works! Always test your cu
 ```{r}
 #| label: daily-revenue-revised-function-invoke
 
-get_sales_tbl(all_revenue, final_day = "2015-06-30", days_back = 2)
+get_sales_tbl(
+  all_revenue,
+  final_day = "2015-06-30",
+  days_back = 2
+)
 ```
 
 However, if we use the default options (i.e., by invoking `get_sales_tbl(all_revenue)`) we get an error. Turns out the dataset obtained from using `intendo::all_revenue()` only contains data from 2015. So, the defaults are optimized for data that continuously updating to the present day. This is great in practice for that common scenario but not so good with a historical data extract like we have here.
