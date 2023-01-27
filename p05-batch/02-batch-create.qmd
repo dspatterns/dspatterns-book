@@ -21,7 +21,7 @@ We're going to get some data from the **intendo** package. This data package con
 all_revenue <- intendo::all_revenue()
 ```
 
-It's good to have a glimpse of the data, if only to see what's there before we do anything substantial with the dataset:
+It's good to have a glimpse of the data, if only to see what's there before doing anything substantial with the dataset:
 
 ```{r}
 dplyr::glimpse(all_revenue)
