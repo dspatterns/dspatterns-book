@@ -372,14 +372,14 @@ What we generally have is the function name and six different arguments. That ma
 
 ```r
 # Get a table of top sales data from our revenue table for a span of time
-
+#
 # Arguments:
 # data - daily revenue data that is extracted from our database revenue table
 # final_day - the end of the time period, default is 2 days before today
 # start_day - the start of the time period, default is 6 days before today
 # days_back - an option to choose a span of time that starts n days before today
 # n - the number of items to include in the ranking
-# styling - either basic styling or company styling (for presentations, reports)
+# styling - either 'basic' styling or 'company' styling (presentations, reports)
 
 get_sales_tbl <- function(
     data,
@@ -395,9 +395,28 @@ get_sales_tbl <- function(
 }
 ```
 
+Providing these basic bits of documentation shouldn't take very long and the payoff is a lasting reference for yourself and for others you might want to share the code with.
+
 ## Share
 
-## DIY
+Given that you have a useful function that suits a business need, one could hypothetically use it whenever it's necessary to generate a table of data. However, the people do need to actually see the table and it probably won't often be on your personal machine. The good news is that tables produced by **gt** can be shared in HTML documents (i.e., in web pages, emails, even standalone HTML files), as PDF documents, or in presentations.
 
-- dataset: ``
+Let's suppose you want to put the table in a presentation slide. There are a few ways to fit this into your existing presentation workflow. Perhaps you're using Powerpoint, Google Slides, or Keynote and you really just need a graphic. If that's the case, **gt** enables one to produce a PNG file with the `gtsave()` function. Just give it a filename that ends in `.png`, like this:
 
+```r
+revenue_mid_aug <-
+  get_sales_tbl(
+    all_revenue,
+    final_day = "2015-08-15",
+    days_back = 2,
+    styling = "company"
+  )
+
+gtsave(revenue_mid_aug, filename = "revenue_mid_aug.png")
+```
+
+This will indeed generate the `"revenue_mid_aug.png"` file which is a table graphic at high resolution (the text is crisp and so zooming in for presentation purposes will be totally acceptable). If you do the same thing with the insertion of plots, this won't be much different from that practice.
+
+If you want to publish a report, then R Markdown and Quarto are good choices for that. A table made by the `get_sales_tbl()` function should work just fine within those environments. Of course, you'll need to have that function available before using it. If you're keeping pieces of code for reporting lightweight, that probably meaning having a stable of R scripts at the ready. In such a scenario, you can source the R script containing the `get_sales_tbl()` function with the `source()` function. Just do that before calling the function; a good place to put `source()` calls is right below all `library()` statements, preferably in a `setup` chunk.
+
+In a real-world setting, this sort of strategy for making useful functions that interact with your data, placing them in R scripts, and sourcing them into your reports is quite viable and will get you pretty far!
