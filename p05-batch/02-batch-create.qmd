@@ -9,14 +9,9 @@ library(tidyr)
 library(glue)
 ```
 
-- Creating a function to make a table with different variables / filtered by values
-- Want to do something repetitively 
-- Creating a function to make a plot (time series great example)
-- Intro functions like `add_house_style()`
-
 ## This Chapter's Pattern
 
-We want to take changing data (and changing requirements) and dependably make great looking tables and plots that might be part of a larger data sharing workflow. 
+We want to take changing data and dependably make great looking tables and plots that might be part of a larger data sharing workflow. We'll first explore a dataset and try out some data manipulation that gets us close to what we need. That working code will be developed into a reusable function and some documentation will be written to explain what that function does and how we can use it. Finally, we'll take a look at basic some ways that function could be stored and used for generating a graphic that could be used in a report or presentation.
 
 ## Explore
 
