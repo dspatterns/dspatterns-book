@@ -69,44 +69,42 @@ Let's walk through a simple example of how to use **Quarto** in RStudio. You pro
 
 <hr>
 
-![](appendix-figures/82-starting-with-r/column-rmarkdown_walkthrough_1.png)
+![](../appendix-figures/82-starting-with-r/column-rmarkdown_walkthrough_1.png)
 **STEP 1**. The first thing to do is create a new **Quarto** document. This is conveniently done through the *New File* dropdown button (top left of IDE). A new **Quarto** document is the third choice from the top.
 
 <hr>
 
-![](appendix-figures/82-starting-with-r/column-rmarkdown_walkthrough_2.png)
+![](../appendix-figures/82-starting-with-r/column-rmarkdown_walkthrough_2.png)
 
 **STEP 2**. You'll be presented with a dialog box and some options. The default option of HTML is what we want for this walkthrough, so hit Enter or the *OK* button. A new, untitled **Quarto** document will appear in the Source pane (the top-left pane).
 
 <hr>
 
-![](appendix-figures/82-starting-with-r/column-rmarkdown_walkthrough_3.png)
+![](../appendix-figures/82-starting-with-r/column-rmarkdown_walkthrough_3.png)
 
 **STEP 3**. We should delete everything in this default document except for the useful YAML Front Matter (i.e., the text enclosed by three hyphens). Then save the document as an .Rmd file. Saving is necessary before rendering and is generally considered a good practice (though RStudio will always keep your unsaved documents across sessions).
   
 <hr>
 
-![](appendix-figures/82-starting-with-r/column-rmarkdown_walkthrough_4.png)
+![](../appendix-figures/82-starting-with-r/column-rmarkdown_walkthrough_4.png)
 
 **STEP 4**. Now, place the insertion point in the document below the YAML and insert two **R** code chunks. This can be done through the *Insert Code Chunk* button or the handy keyboard shortcut `Command` + `Option` + `I` (`Control` + `Alt` + `I` on Windows). You'll see two text areas enclosed by backticks and the language of the code in curly braces: `{r}`.
 
 <hr>
 
-![](appendix-figures/82-starting-with-r/column-rmarkdown_walkthrough_5.png)
+![](../appendix-figures/82-starting-with-r/column-rmarkdown_walkthrough_5.png)
 
 **STEP 5**. Now we can do some writing of code. Place the insertion point inside the first **R** code chunk and type `summary(airquality)` (this is a built-in **R** dataset and is always available). Then, run the code in that chunk by pressing the green run button, or, with the keyboard shortcut: `Control` + `Enter`. You'll see a summary of data appear below! Running the code and verifying the output matches expectations is a great practice (although running each code chunk is not necessary for rendering the **Quarto** document). We'll do something similar in the second code chunk. First type in this plotting code.
-
 
 ```{r eval=FALSE}
 plot(x = airquality$Temp, y = airquality$Ozone)
 ```
 
-
 After running this code chunk, we'll see a plot showing the effect of temperature on ground level ozone concentrations (conveniently right below the code chunk).
 
 <hr>
 
-![](appendix-figures/82-starting-with-r/column-rmarkdown_walkthrough_6.png)
+![](../appendix-figures/82-starting-with-r/column-rmarkdown_walkthrough_6.png)
 
 **STEP 6**. To make this document function as a report, let's add some text above and below the **R** code chunks. Here is the Markdown text that could be put in above:
 
@@ -126,6 +124,6 @@ Inside the IDE, this just looks like plaintext with some highlighting applied wh
 
 That will produce an HTML document with the same name as the **Quarto** document (in the directory where the .Rmd file was saved) and the process opens a preview window with the HTML report (@fig:rmarkdown-html-output).
 
-![The rendered HTML document based on the **Quarto** document. The preview window provides a way to easily look over the output initiated by a *Knit*.](appendix-figures/82-starting-with-r/figure-rmarkdown-html-output.png){#fig:rmarkdown-html-output}
+![The rendered HTML document based on the **Quarto** document. The preview window provides a way to easily look over the output initiated by a *Knit*.](../appendix-figures/82-starting-with-r/figure-rmarkdown-html-output.png){#fig:rmarkdown-html-output}
 
 It's here where you can see that the Markdown elements become things like bold and italicized text. That rendered text appears above and below the code and the outputs, just as it was in the **Quarto** document. It's also here where its more apparent that **Quarto** is indeed useful for working with data and also for creating reports.
