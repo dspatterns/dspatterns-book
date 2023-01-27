@@ -230,7 +230,7 @@ ggplot(data = nycweather) +
   geom_point(aes(x = time, y = temp))
 ```
 
-![](appendix-figures/87-transformations-dates-times/01-figure-plot_nycweather_asis.png){#fig-plot-nycweather-asis}
+![](../appendix-figures/87-transformations-dates-times/01-figure-plot_nycweather_asis.png){#fig-plot-nycweather-asis}
 
 There are a few problems with the plot shown in @fig-plot-nycweather-asis. The first is that the *x* axis is severely messed up (essentially an overprinting of all the character-based date-times). The second problem is that the plot took a very long time to produce (try it!). There are a lot of data points (around 13,000) and this high amount of data is usually not necessary for this type of plot. Finally, though it's not obvious but incredibly important nonetheless, the data are evenly spaced in the *x* direction. This occurs for any character-based inputs to `x` or `y` in **ggplot**. Essentially, the time values in their present form have no meaning to **ggplot**.
 
@@ -266,7 +266,7 @@ We can, without any doubt, see that the 200 data points of time are equally dist
 #| paged.print: false
 
 nycweather_a <- 
-  nycweather %>%
+  nycweather |>
   mutate(time = as_datetime(time))
 
 nycweather_a
@@ -285,8 +285,8 @@ c(
 #| paged.print: false
 
 nycweather_a_samp <-
-  nycweather_a %>%
-  sample_n(size = 1000) %>%
+  nycweather_a |>
+  sample_n(size = 1000) |>
   filter(!is.na(temp))
 
 nycweather_a_samp
@@ -326,14 +326,14 @@ c(
 #| paged.print: false
 
 nycweather_b <-
-  nycweather_a %>%
-  filter(!is.na(temp)) %>%
+  nycweather_a |>
+  filter(!is.na(temp)) |>
   mutate(
     date = date(time),
     hour = hour(time)
-  ) %>%
-  group_by(date, hour) %>%
-  slice(1) %>%
+  ) |>
+  group_by(date, hour) |>
+  slice(1) |>
   ungroup()
 
 nycweather_b
@@ -371,9 +371,9 @@ c(
 #| paged.print: false
 
 nycweather_c <-
-  nycweather_b %>%
-  group_by(date) %>%  #A
-  summarize(  #B
+  nycweather_b |>
+  group_by(date) |>
+  summarize(
     min = min(temp),
     max = max(temp)
   ) 
@@ -397,12 +397,12 @@ c(
 #| paged.print: false
 
 nycweather_d <-
-  nycweather_c %>%
+  nycweather_c |>
   pivot_longer(
     cols = c(min, max),
     names_to = "type",
     values_to = "temp"
-  ) %>%
+  ) |>
   arrange(date)
 
 nycweather_d
