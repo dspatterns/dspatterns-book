@@ -111,7 +111,7 @@ y * 2
 
 From this output, we see that indeed each resulting value is the original value multiplied by two. The math operations used to produce each value can be represented in this vector schematic:
 
-![](appendix-figures/88-closer-look-r-programming/01-figure-multiplying_by_a_single_number.png){#fig:multiplying-by-a-single-number}
+![](../appendix-figures/88-closer-look-r-programming/01-figure-multiplying_by_a_single_number.png){#fig:multiplying-by-a-single-number}
 
 That was an example of performing a mathematical operation across vectors of different sizes. The `y` vector has a length of `7`, and the unnamed vector with the single value of `2` has a length of `1`.
 
@@ -130,7 +130,7 @@ y * y
 
 Using the vector schematic to represent the individual operations, both vectors (indeed, with the same vector values) are lined up perfectly because they are of the same length. So, the first element in each vector is multiplied, then the second element of each, and so on. The vector schematic for this makes it clearer:
 
-![](appendix-figures/88-closer-look-r-programming/02-figure-multiplying_by_two_of_same_length.png){#fig:multiplying-by-two-of-same-length}
+![](../appendix-figures/88-closer-look-r-programming/02-figure-multiplying_by_two_of_same_length.png){#fig:multiplying-by-two-of-same-length}
 
 What would happen if we were to multiply vectors of different lengths, say, lengths `4` and `2`? Let's try that and see what happens:
 
@@ -152,7 +152,7 @@ vec_1 * vec_2
 
 When given two vectors of the same length, **R** simply performs the specified arithmetic operation element-by-element. If the vectors are of different lengths, **R** recycles the shorter vector until it is the same length as the longer vector. Here is the vector schematic:
 
-![](appendix-figures/88-closer-look-r-programming/03-figure-multiplying_by_different_lengths.png){#fig:multiplying-by-different-lengths}
+![](../appendix-figures/88-closer-look-r-programming/03-figure-multiplying_by_different_lengths.png){#fig:multiplying-by-different-lengths}
 
 If the length of the shorter vector does not divide evenly into the length of the longer vector, **R** will still do its recycling, but it will also provide us with warning to inform us that this non-clean recycling is happening.
 
