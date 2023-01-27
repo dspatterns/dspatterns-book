@@ -9,14 +9,10 @@ library(tidyr)
 library(glue)
 ```
 
-- Good dataset: intendo
-- Creating a function to make a table with different variables / filtered by values (using curly curly)
-- See programming with dplyr: https://dplyr.tidyverse.org/articles/programming.html#how-tos-1
+- Creating a function to make a table with different variables / filtered by values
 - Want to do something repetitively 
 - Creating a function to make a plot (time series great example)
 - Intro functions like `add_house_style()`
-- R Markdown video for good looping pattern within doc for batch creation: https://www.youtube.com/watch?v=WkF7nqEYF1E
-
 
 ## This Chapter's Pattern
 
@@ -24,13 +20,21 @@ We want to take changing data (and changing requirements) and dependably make gr
 
 ## Explore
 
-Get some data from the intendo package
+We're going to get some data from the **intendo** package. This data package contains synthetic datasets that deal with activity and revenue from an online game. The dataset we want for our examples is called `all_revenue` and that's accessed by using the `all_revenue()` function.
 
 ```{r}
 all_revenue <- intendo::all_revenue()
 ```
 
-Use **pointblank**'s table transform functions to get slices of that `all_revenue` table.
+It's good to have a glimpse of the data, if only to see what's there before we do anything substantial with the dataset:
+
+```{r}
+dplyr::glimpse(all_revenue)
+```
+
+This dataset has revenue data encompassing an entire year (`2015`) but, for the purpose of an initial look at the data, we only want a slice of the data. We're going to get a slice that corresponds to an arbitrary range of days. 
+
+Let's use **pointblank**'s `tt_time_slice()` function to get slices of that `all_revenue` table. We'll first define the initial date and the ending date for the range of data, and pass those date-time strings to separate invocations of `tt_time_slice()`. The `end_m1_date` represents the final full day of data, needed later for a friendly labeling of the date range.
 
 ```{r}
 #| label: slice-all-revenue
@@ -56,7 +60,7 @@ all_rev_jan_segment <-
 all_rev_jan_segment
 ```
 
-A quick check for whether the slicing worked is to use **gt**'s `gt_preview()`, which provides the first five rows and the last row in a small table:
+A quick check for whether the slicing worked can involve using **gt**'s `gt_preview()`, which provides the first five rows and the last row in a small table:
 
 ```{r}
 #| label: all-revenue-gt-preview
@@ -119,7 +123,7 @@ daily_revenue_top5 |>
   gt(rowname_col = "item_name", groupname_col = "date") |>
   fmt_currency(columns = revenue) |>
   cols_width(everything() ~ px(200)) |>
-  fmt_roman(column = rank) |>
+  fmt_roman(columns = rank) |>
   cols_merge(columns = c(item_name, rank), pattern = "{2}. {1}") |>
   tab_header(
     title = "Daily Top Five IAPs",
@@ -195,7 +199,7 @@ get_sales_tbl <- function() {
     gt(rowname_col = "item_name", groupname_col = "date") |>
     fmt_currency(columns = revenue) |>
     cols_width(everything() ~ px(200)) |>
-    fmt_roman(column = rank) |>
+    fmt_roman(columns = rank) |>
     cols_merge(columns = c(item_name, rank), pattern = "{2}. {1}") |>
     tab_header(
       title = "Daily Top Five IAPs",
@@ -291,7 +295,7 @@ get_sales_tbl <- function(
     gt(rowname_col = "item_name", groupname_col = "date") |>
     fmt_currency(columns = revenue) |>
     cols_width(everything() ~ px(200)) |>
-    fmt_roman(column = rank) |>
+    fmt_roman(columns = rank) |>
     cols_merge(columns = c(item_name, rank), pattern = "{2}. {1}") |>
     tab_header(
       title = "Daily Top Sales Items",
@@ -343,7 +347,7 @@ get_sales_tbl(
 )
 ```
 
-However, if we use the default options (i.e., by invoking `get_sales_tbl(all_revenue)`) we get an error. Turns out the dataset obtained from using `intendo::all_revenue()` only contains data from 2015. So, the defaults are optimized for data that continuously updating to the present day. This is great in practice for that common scenario but not so good with a historical data extract like we have here.
+However, if we use the default options (i.e., by invoking `get_sales_tbl(all_revenue)`) we get an error. Turns out that the dataset obtained from using `intendo::all_revenue()` only contains data from 2015. So, the defaults are optimized for data that continuously updating to the present day. This is great in practice for that common scenario but not so good with a historical data extract like we have here. There is always the possibility to further tune the function to work with data extracts that have hard time boundaries. Sure it would add some complexity to both the function body and to the interface but if that is valid use case then that's something that should be done!
 
 ## Explain
 
