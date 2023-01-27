@@ -43,27 +43,27 @@ The first thing we'll do is create a summarized dataset based on `nycweather`. T
 )`
 ```{r nyc-highlow-temps, paged.print=FALSE}
 nyc_highlow_temps <- 
-  nycweather %>%
+  nycweather |>
   mutate(
     month = lubridate::month(time, label = TRUE, abbr = FALSE),
     day = lubridate::day(time)
-  ) %>%
-  group_by(month, day) %>%
+  ) |>
+  group_by(month, day) |>
   summarize(
     min_temp_d = min(temp, na.rm = TRUE),
     max_temp_d = max(temp, na.rm = TRUE)
-  ) %>%
-  group_by(month) %>%
+  ) |>
+  group_by(month) |>
   summarize(
     min_temp = min(min_temp_d),
     median_min_temp = median(min_temp_d, na.rm = TRUE),
     median_max_temp = median(max_temp_d, na.rm = TRUE),
     max_temp = max(max_temp_d)
-  ) %>%
-  pivot_longer(cols = ends_with("temp")) %>%
+  ) |>
+  pivot_longer(cols = ends_with("temp")) |>
   mutate(
-    month = month %>% fct_rev(),
-    name = name %>% fct_relevel(c(
+    month = month |> fct_rev(),
+    name = name |> fct_relevel(c(
       "min_temp", "median_min_temp",
       "median_max_temp", "max_temp"
     )))
@@ -80,8 +80,8 @@ Now that the `nyc_highlow_temps` table is ready to use, let's make a lollipop pl
 #| label: fig-lollipop-max
 #| fig.cap: "A basic lollipop plot using temperature data."
 
-nyc_highlow_temps %>%
-  dplyr::filter(name == "max_temp") %>%
+nyc_highlow_temps |>
+  dplyr::filter(name == "max_temp") |>
   ggplot() +
   geom_segment(aes(x = 0, xend = value, y = month, yend = month), color = "gray75") +
   geom_point(aes(x = value, y = month), color = "red")
@@ -98,12 +98,12 @@ Let's try making another lollipop plot, this time with positive and negative val
 #| label: fig-lollipop-min
 #| fig.cap: "A lollipop plot that demonstrates different colors for values that cross a threshold."
 
-nyc_highlow_temps %>%
-  dplyr::filter(name == "min_temp") %>%
+nyc_highlow_temps |>
+  dplyr::filter(name == "min_temp") |>
   mutate(
-    side = if_else(value <= 0, "negative", "positive") %>% 
+    side = if_else(value <= 0, "negative", "positive") |> 
       as.factor()
-  ) %>%
+  ) |>
   ggplot() +
   geom_segment(
     aes(x = 0, xend = value, y = month, yend = month),
@@ -132,7 +132,7 @@ Now it's time to make a Cleveland dot plot. We'll actually make two: one with ju
 #| label: fig-cleveland-plot-1
 #| fig.cap: "A Cleveland dot plot that incorporates four dots per line."
 
-nyc_highlow_temps %>%
+nyc_highlow_temps |>
   ggplot(aes(x = value, y = month)) +
   geom_line(color = "gray75") +
   geom_point(aes(color = name)) +
@@ -148,13 +148,13 @@ We can see from the plot, this Cleveland dot plot, that all the dots are arrange
 #| label: fig-cleveland-plot-final
 #| fig.cap: "A finalized version of a Cleveland dot that is presentation ready."
 
-nyc_highlow_temps %>%
+nyc_highlow_temps |>
   mutate(color = case_when(
     name == "min_temp" ~ "blue",
     name == "median_min_temp" ~ "deepskyblue",
     name == "median_max_temp" ~ "coral",
     name == "max_temp" ~ "red"
-  )) %>%
+  )) |>
   ggplot(aes(x = value, y = month)) +
   geom_line(color = "gray75") +
   geom_point(aes(color = color)) +
@@ -210,8 +210,8 @@ Let's make a scatter plot with the `imdb` data. There are a few metrics that can
 #| label: fig-imdb-plot-linear-y
 #| fig.cap: "A basic scatter plot that uses movie revenue versus IDMB ratings."
 
-imdb %>%
-  filter(year %in% 2005:2015) %>%
+imdb |>
+  filter(year %in% 2005:2015) |>
   ggplot(aes(x = score, y = gross)) +
   geom_point()
 ```
@@ -225,9 +225,9 @@ In terms of plot quality, there's an awful lot of overplotting. Not only that, b
 )`
 ```{r imdb-filtered, paged.print=FALSE}
 imdb_filtered <- 
-  imdb %>%
-  filter(year %in% 2005:2015) %>%
-  mutate(year = as.factor(year) %>% fct_rev())
+  imdb |>
+  filter(year %in% 2005:2015) |>
+  mutate(year = as.factor(year) |> fct_rev())
 
 imdb_filtered
 ```
@@ -241,7 +241,7 @@ Let's take a slightly different approach in our second scatter plot. The year va
 #| label: fig-imdb-plot-log-y
 #| fig.cap: "A scatter plot that uses a log scale in the *y* axis."
 
-imdb_filtered %>%
+imdb_filtered |>
   ggplot(aes(x = score, y = gross)) +
   geom_point(aes(color = year)) +
   scale_color_grey() +
@@ -275,7 +275,7 @@ Something else we'll do is add some jitter. What it does is slightly move all da
 #| label: fig-imdb-final-plot
 #| fig.cap: "A finalized scatter plot that contains median lines and annotations."
 
-imdb_filtered %>%
+imdb_filtered |>
   ggplot(aes(x = score, y = gross)) +
   geom_point(aes(color = year), alpha = 0.5, position = "jitter") +
   scale_color_grey() +
@@ -382,7 +382,7 @@ ggplot(pitchfork) +
   facet_wrap(vars(year))
 ```
 
-From the facets of histograms shown in @fig-pitchfork-histogram-facets, we see that it took until 2003 for reviews to ramp up to 1000 a year (this is verifiable with `pitchfork %>% group_by(year) %>% count()` instead of eyeballing the plot). In 2003 and 2004 we can see slightly more favorable reviews in the `'8'` bin compared to the `'7'` bin. Though, there is a long tail of low scores in those early years of Pitchfork.
+From the facets of histograms shown in @fig-pitchfork-histogram-facets, we see that it took until 2003 for reviews to ramp up to 1000 a year (this is verifiable with `pitchfork |> group_by(year) |> count()` instead of eyeballing the plot). In 2003 and 2004 we can see slightly more favorable reviews in the `'8'` bin compared to the `'7'` bin. Though, there is a long tail of low scores in those early years of Pitchfork.
 
 ### Box Plots
 
@@ -395,8 +395,8 @@ Histograms are nice, but how about box plots? Will they tell me more? Let's find
 #| label: fig-pitchfork-boxplot
 #| fig.cap: "Box plots containing `pitchfork` score values over all available years."
 
-pitchfork %>%
-  mutate(year = factor(year)) %>%
+pitchfork |>
+  mutate(year = factor(year)) |>
   ggplot() +
   geom_boxplot(aes(x = year, y = score))
 ```
@@ -412,8 +412,8 @@ Some people don't like that box plots hide the underlying data. This is a very v
 #| label: fig-pitchfork-boxplot-points
 #| fig.cap: "A box plot using `pitchfork` score data overlaid with jittered data points."
 
-pitchfork %>%
-  mutate(year = factor(year)) %>%
+pitchfork |>
+  mutate(year = factor(year)) |>
   ggplot(aes(x = year, y = score)) +
   geom_boxplot(outlier.shape = NA, color = "steelblue") +
   geom_point(position = "jitter", color = "purple", size = 0.2, alpha = 0.25)
@@ -436,8 +436,8 @@ Let's use the pitchfork data with the `geom_violin()` *geom* function. We'll cho
 #| label: fig-pitchfork-violin-plot
 #| fig.cap: "A violin plot using pitchfork score data over all available years."
 
-pitchfork %>%
-  mutate(year = factor(year)) %>%
+pitchfork |>
+  mutate(year = factor(year)) |>
   ggplot() +
   geom_violin(
     aes(x = year, y = score, fill = year),
@@ -502,12 +502,12 @@ Let's modify the `dmd` dataset a bit to incorporate the `dollars_carat` column, 
 )`
 ```{r dmd-mutated, paged.print=FALSE}
 dmd_mutated <-
-  dmd %>%
+  dmd |>
   mutate(
     dollars_carat = price / carats,
-    color = color %>% fct_rev(),
-    cut = cut %>% as.factor(),
-    clarity = clarity %>% as.factor()
+    color = color |> fct_rev(),
+    cut = cut |> as.factor(),
+    clarity = clarity |> as.factor()
   )
 
 dmd_mutated
@@ -594,8 +594,8 @@ The IMDB ratings plot of @fig-imdb-ggridges allows us to easily compare the shap
 #| label: fig-pitchfork-ggridges
 #| fig.cap: "A ridgeline plot based on the pitchfork dataset."
 
-pitchfork %>%
-  filter(year <= 2015) %>%
+pitchfork |>
+  filter(year <= 2015) |>
   ggplot(aes(x = score, y = year, group = year)) +
   geom_density_ridges(
     scale = 3, rel_min_height = 0.01, 
@@ -629,12 +629,12 @@ For the last ridgeline plot, the `nycweather` dataset will be used. In this case
 #| label: fig-nycweather-ggridges
 #| fig.cap: "A ridgeline plot based on the `nycweather` dataset."
 
-nycweather %>%
-  filter(!is.na(temp)) %>%
+nycweather |>
+  filter(!is.na(temp)) |>
   mutate(
     month = lubridate::month(time, label = TRUE, abbr = FALSE),
     tempf = (temp * 9/5) + 32
-  ) %>%
+  ) |>
   ggplot(aes(x = tempf, y = month, fill = stat(x))) +
   geom_density_ridges_gradient(
     scale = 2, rel_min_height = 0.01, 
