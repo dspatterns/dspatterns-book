@@ -104,7 +104,7 @@ First, let's get a subset of the employment data using **dplyr**'s `slice_tail()
 #| label: fig-employ-recent-two-lines
 #| fig.cap: "A line graph consisting of two lines in separate layers."
 
-employ_recent <- employment %>% slice_tail(n = 10)
+employ_recent <- employment |> slice_tail(n = 10)
 
 ggplot(employ_recent, aes(x = year, y = employed)) +
   geom_line() +
@@ -128,16 +128,16 @@ One thing we tend to miss out on when using separate columns is the automatic dr
 )`
 ```{r create-employ-recent-tidy, paged.print=FALSE}
 employ_recent_tidy <- 
-  employment %>%
-  select(year, population, employed, unemployed) %>%
-  slice_tail(n = 10) %>%
+  employment |>
+  select(year, population, employed, unemployed) |>
+  slice_tail(n = 10) |>
   pivot_longer(
     cols = population:unemployed,
     names_to = "type",
     values_to = "n"
-  ) %>%
+  ) |>
   mutate(
-    type = factor(type) %>% 
+    type = factor(type) |> 
       fct_relevel(c("population", "employed", "unemployed"))
   )
 
@@ -334,17 +334,17 @@ We need to do some tidying work on `rainfall`. The problem is something we've se
 )`
 ```{r rainfall-recent-tidy, paged.print=FALSE}
 rainfall_recent_tidy <- 
-  rainfall %>%
-  slice_head(n = 3) %>%
+  rainfall |>
+  slice_head(n = 3) |>
   pivot_longer(
     cols = starts_with("r"),
     names_to = "city",
     names_prefix = "r_",
     values_to = "precip"
-  ) %>%
+  ) |>
   mutate(
-    city = factor(city) %>% fct_inorder(),
-    year = factor(year) %>% fct_inseq()
+    city = factor(city) |> fct_inorder(),
+    year = factor(year) |> fct_inseq()
   )
 
 rainfall_recent_tidy
@@ -462,7 +462,7 @@ As in the previous set of examples on clustered bar plots, an iterative, stepwis
 #| label: stacked-bar-plot-1
 #| fig.cap: "A failed attempt at a stacked bar plot. The legend is too big."
 
-german_cities %>%
+german_cities |>
   ggplot(aes(x = pop_2015, y = state, fill = name)) +
   geom_col(aes(fill = name))
 ```
@@ -476,7 +476,7 @@ Really, a legend like this one in @fig-stacked-bar-plot-1 is useless. We don't a
 #| label: stacked-bar-plot-2
 #| fig.cap: "A basic stacked bar plot with no legend."
 
-german_cities %>%
+german_cities |>
   ggplot(aes(x = pop_2015, y = state, fill = name)) +
   geom_col(aes(fill = name)) +
   theme(legend.position = "none")
@@ -491,15 +491,15 @@ To get this process underway, we need to work on transforming the `german_cities
 )`
 ```{r german-cities-totals, paged.print=FALSE}
 german_cities_totals <- 
-  german_cities %>%
-  group_by(state) %>%
-  arrange(desc(pop_2015)) %>%
-  mutate(total_pop = sum(pop_2015)) %>%
-  ungroup() %>%
+  german_cities |>
+  group_by(state) |>
+  arrange(desc(pop_2015)) |>
+  mutate(total_pop = sum(pop_2015)) |>
+  ungroup() |>
   mutate(
-    state = state %>% fct_reorder(total_pop),
-    name = name %>% fct_reorder(pop_2015, .desc = TRUE)
-  ) %>%
+    state = state |> fct_reorder(total_pop),
+    name = name |> fct_reorder(pop_2015, .desc = TRUE)
+  ) |>
   select(-pop_2011)
 
 german_cities_totals
@@ -516,7 +516,7 @@ In the third attempt at making the stacked bar plot, we use the `german_cities_t
 #| label: stacked-bar-plot-3
 #| fig.cap: "A stacked bar plot with bars ordered by length."
 
-german_cities_totals %>%
+german_cities_totals |>
   ggplot(aes(x = pop_2015, y = state, fill = name)) +
   geom_col() +
   coord_cartesian(xlim = c(0, 9E6)) +
@@ -548,11 +548,11 @@ These requirements are all possible but first we need an extra data table that c
 )`
 ```{r german-cities-largest-n, paged.print=FALSE}
 german_cities_largest <-
-  german_cities_totals %>% 
-  group_by(state) %>% 
-  arrange(desc(pop_2015)) %>%
-  mutate(n = n()) %>%
-  slice(1) %>% 
+  german_cities_totals |> 
+  group_by(state) |> 
+  arrange(desc(pop_2015)) |>
+  mutate(n = n()) |>
+  slice(1) |> 
   select(-pop_2015)
 
 german_cities_largest
@@ -567,7 +567,7 @@ Now that we have the `german_cities_largest` table, we can address requirements 
 #| label: stacked-bar-plot-final
 #| fig.cap: "A stacked bar plot that is complete and presentation ready."
 
-german_cities_totals %>%
+german_cities_totals |>
   ggplot(aes(x = pop_2015, y = state, fill = name)) +
   geom_col(color = "white", size = 0.2) +
   scale_fill_grey(end = 0.7, start = 0.1) +
