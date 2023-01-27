@@ -15,7 +15,7 @@ This section covers
 - How to reshape a data table using the `pivot_longer()` function
 - Further tidying of data tables with the `na_if()` function
 
-In previus sections we were introduced to data transformation (using **dplyr**) and data visualization (using **ggplot**). We really learned a lot, and we just dove right in with example data tables that were furnished by the **dspatterns** package. The `sw` and `dmd` datasets from earlier were tidy datasets. We didn't have to think much about the arrangement of the data within those tables, there were used as is. They just worked. Quite often, however, the datasets you'll encounter and want to use will not be tidy. This can cause problems in your analyses, so we really need to make the effort to tidy them before performing any analysis. This section is all about recognizing the difference between tidy and untidy data, and then, using strategies to tidy that data before getting to the analysis stage.
+In previous sections we were introduced to data transformation (using **dplyr**) and data visualization (using **ggplot**). We really learned a lot, and we just dove right in with example data tables that were furnished by the **dspatterns** package. The `sw` and `dmd` datasets from earlier were tidy datasets. We didn't have to think much about the arrangement of the data within those tables, there were used as is. They just worked. Quite often, however, the datasets you'll encounter and want to use will not be tidy. This can cause problems in your analyses, so we really need to make the effort to tidy them before performing any analysis. This section is all about recognizing the difference between tidy and untidy data, and then, using strategies to tidy that data before getting to the analysis stage.
 
 While the **dspatterns** package usually offers tidy datasets, there are a few untidy ones in there as well. We will use the untidy `winniweather` dataset in our examples for this section. The dataset contains temperature data (four times daily) for the City of Winnipeg during the month of February 2015. As ever, we get access to all of **dspatterns**'s datasets using `library(dspatterns)`. Once that statement is executed, the untidy `winniweather` table will be available. This is not a large dataset since it has merely 28 rows (one row per day of the study month) and the following six variables:
 
@@ -90,7 +90,7 @@ c(
 #| paged.print: false
 
 winni_mod <- 
-  winniweather %>%
+  winniweather |>
   pivot_longer(
     starts_with("temp"),
     names_to = "hour",
@@ -118,7 +118,7 @@ c(
 #| paged.print: false
 
 winni_mod <- 
-  winni_mod %>%
+  winni_mod |>
   mutate(hour = case_when(
     hour == "temp00_00" ~ 0L,
     hour == "temp06_00" ~ 6L,
@@ -153,7 +153,7 @@ c(
 #| paged.print: false
 
 winni_tidy <-
-  winni_mod %>%
+  winni_mod |>
   separate(
     col = yearmonth,
     into = c("year", "month"),
@@ -178,7 +178,7 @@ c(
 #| paged.print: false
 
 winni_tidy <- 
-  winni_tidy %>%
+  winni_tidy |>
   arrange(year, month, day, hour)
 
 winni_tidy
@@ -200,7 +200,7 @@ We now have a single observation per row and, as far as we can tell, all observa
 #| paged.print: false
 
 winni_tidy <- 
-  winni_tidy %>%
+  winni_tidy |>
   mutate(iso_date = ISOdate(year, month, day, hour))
 
 winni_tidy
@@ -208,7 +208,7 @@ winni_tidy
 
 The `winni_tidy` table now indeed contains a new column called `iso_date`. The `iso_date` column appears to have a type with the `<dttm>` (date-time) abbreviation in the tibble print out. The object type of `iso_date` is not `character` or `numeric` but instead `POSIXct`. It's a convenient way to store accurate date-time values in a single column of a table.
 
-About `POSIXct`: Under the hood, the `POSIXct` data type contains the number of seconds since the start of January 1, 1970. Positive numbers represent the number of seconds after this time, and negative numbers represent the number of seconds beforehand. Try using the `Sys.time()` function (which gives you a `POSIXct` object with the current date-time) with `as.numeric()` in the **R** console like this: `Sys.time() %>% as.numeric()`. You'll get the number of seconds after `1970-01-01 00:00:00`. 
+About `POSIXct`: Under the hood, the `POSIXct` data type contains the number of seconds since the start of January 1, 1970. Positive numbers represent the number of seconds after this time, and negative numbers represent the number of seconds beforehand. Try using the `Sys.time()` function (which gives you a `POSIXct` object with the current date-time) with `as.numeric()` in the **R** console like this: `Sys.time() |> as.numeric()`. You'll get the number of seconds after `1970-01-01 00:00:00`. 
 
 Now that we have the time data represented in a single column, a basic scatterplot in **ggplot** requires only two statements: the `ggplot()` call followed by defining a layer of points with the `geom_point()` function.
 
@@ -242,7 +242,7 @@ c(
 #| paged.print: false
 
 winni_tidy <-
-  winni_tidy %>%
+  winni_tidy |>
   mutate(temp = na_if(temp, 9999))
 ```
 
@@ -261,8 +261,8 @@ c(
 #| label: winni-temp-summary
 #| paged.print: false
 
-winni_tidy %>%
-  select(temp) %>%
+winni_tidy |>
+  select(temp) |>
   summary()
 ```
 
@@ -331,8 +331,8 @@ The plot of @fig-winni-tidy-ggplot-3 couldn't be generated without our tidying t
 
 3. The `ISOdate()` function has defaults for the time parts (`hour = 12`, `min = 0`, `sec = 0`) and for the time zone (`tz = "GMT"`) whereas `ISOdatetime()` has no such default values. As our data did not have minute or second time components, we would have to specify our own values for those.
 
-4. The easiest way to do this is to use **dplyr**'s `select()` function: `winni_tidy %>% select(-empty)`.
+4. The easiest way to do this is to use **dplyr**'s `select()` function: `winni_tidy |> select(-empty)`.
 
-5. The `drop_na()` function from **tidyr** allows us to remove entirely or partially empty rows. One or more entirely empty rows in `winni_tidy` can be removed with `winni_tidy %>% drop_na()`.
+5. The `drop_na()` function from **tidyr** allows us to remove entirely or partially empty rows. One or more entirely empty rows in `winni_tidy` can be removed with `winni_tidy |> drop_na()`.
 
-6. One possible, alternate method is to use **dplyr**'s `filter()` function to check for both an `NA` and for a `9999` value in the temp column: `winni_tidy %>% filter(is.na(temp) | temp == 9999)`. Success looks like a single row with an `NA` in the temp column.
+6. One possible, alternate method is to use **dplyr**'s `filter()` function to check for both an `NA` and for a `9999` value in the temp column: `winni_tidy |> filter(is.na(temp) | temp == 9999)`. Success looks like a single row with an `NA` in the temp column.
