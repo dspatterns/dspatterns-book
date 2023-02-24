@@ -23,8 +23,8 @@ book:
   cover-image: cover.png
   chapters:
     - index.qmd
-    - part: a01-prereq.qmd
-    - part: primer-coding/01-hello-r.qmd
+    - a01-prereq.qmd
+    - primer-coding/01-hello-r.qmd
     - part: "Primer II: Quarto"
       chapters:
         - primer-quarto/01-hello-quarto.qmd
