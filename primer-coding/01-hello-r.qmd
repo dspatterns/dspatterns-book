@@ -1,14 +1,11 @@
-
-```{r setup, include=FALSE}
-library(tidyverse)
-library(babynames)
-```
-
-# Primer I: Quick Start {-}
+# Primer I: Quick Start {.unnumbered}
 
 This primer will lead you through the steps to make a simple plot (maybe your first!) with R, a free and open-source software environment for statistical computing and graphics. You can read more about it here <https://www.r-project.org>.
 
-```{r ref.label="setup", eval=FALSE, echo=TRUE}
+```{r setup}
+#| message: false
+library(tidyverse)
+library(babynames)
 ```
 
 Our end goal is to get you looking at a screen like this:
@@ -21,95 +18,94 @@ The version of R that you just downloaded is considered base R, which provides y
 
 R packages can live in one of two places:
 
-* They may be carefully curated by **CRAN** (<https://cran.r-project.org/>). **CRAN** stands for the "Comprehensive R Archive Network", which involves a thorough submission and review process for R packages. Packages that go through this process and are accepted by CRAN are easy to install from your R console using: 
+-   They may be carefully curated by **CRAN** (<https://cran.r-project.org/>). **CRAN** stands for the "Comprehensive R Archive Network", which involves a thorough submission and review process for R packages. Packages that go through this process and are accepted by CRAN are easy to install from your R console using:
 
-    ```{r eval=FALSE}
+    ``` {{r}}
     install.packages("name_of_package")
     ```
-    
+
     In your R console, let's install the **remotes** package:
-    
-    ```{r eval=FALSE}
+
+    ``` {{r}}
     install.packages("remotes")
     ```
 
+-   Alternatively, they may be available via GitHub. Sometimes, a package is available in both places. Many R packages use GitHub for development, and submit new versions occasionally to **CRAN**. **CRAN** packages are often considered to be 'stable' versions. Packages from **GitHub** are considered to be the in-development versions.
 
-* Alternatively, they may be available via GitHub. Sometimes, a package is available in both places. Many R packages use GitHub for development, and submit new versions occasionally to **CRAN**. **CRAN** packages are often considered to be 'stable' versions. Packages from **GitHub** are considered to be the in-development versions.
+    To download an R package from GitHub, you first need to install the **remotes** package from **CRAN**, which we just did! Then you can run this code in your R console:
 
-  To download an R package from GitHub, you first need to install the **remotes** package from **CRAN**, which we just did! Then you can run this code in your R console:
-
-    ```{r remotes, eval = FALSE}
+    ``` {{r}}
     library(remotes)                   # load the remotes package
     install_github("username/repo")    # use a function from remotes
     ```
-    
+
     The `install_github()` statement is a function, and the part in quotes (`"username/repo"`) refers to URL for the R package on GitHub. For example, we made a package for this book that you can find at <https://github.com/dspatterns/dspatterns>. To install that package, run the following code in your R console:
-    
-    ```{r remotes-for-real, eval = FALSE}
+
+    ``` {{r}}
     library(remotes)                   
     install_github("dspatterns/dspatterns")    
     ```
 
-
 Place your cursor in the console again (where you last typed `x` and `[4]` printed on the screen). You can use the first method to install the following packages directly from CRAN, all of which we will use:
 
-  * [`dplyr`,](http://dplyr.tidyverse.org)
-  * [`ggplot2`,](http://ggplot2.tidyverse.org)
-  * [`babynames`](https://github.com/hadley/babynames)
+-   [`dplyr`,](http://dplyr.tidyverse.org)
+-   [`ggplot2`,](http://ggplot2.tidyverse.org)
+-   [`babynames`](https://github.com/hadley/babynames)
 
 Mind your use of quotes carefully with packages.
 
-* To *install* a package, you put the name of the package in quotes as in `install.packages("name_of_package")`. 
-* To *use* an already installed package, you must load it first, as in `library(name_of_package)`, leaving the name of the package bare. You only need to do this once per RStudio session.
-* If you want the *citation* for a package (and you should give credit where credit is due), ask R as in `citation("name_of_package")`.
+-   To *install* a package, you put the name of the package in quotes as in `install.packages("name_of_package")`.
+-   To *use* an already installed package, you must load it first, as in `library(name_of_package)`, leaving the name of the package bare. You only need to do this once per RStudio session.
+-   If you want the *citation* for a package (and you should give credit where credit is due), ask R as in `citation("name_of_package")`.
 
-```{r show_dplyr, eval = FALSE}
+``` {{r}}
 install.packages("dplyr", dependencies = TRUE)
 library(dplyr)
 ```
 
-```{r help_dplyr}
+```{r}
 citation("ggplot2")
 ```
 
+Two good rules of thumb when working with packages in R:
 
-Two good rules of thumb when working with packages in R: 
+1.  Install packages once per workstation/machine. Always use the console to `install.packages()`.
 
-1. Install packages once per workstation/machine. Always use the console to `install.packages()`.
+2.  Load packages once per work session. Each `library()` call typically goes on its own line when we put our code in an **R** script or **Quarto** document.
 
-2. Load packages once per work session. Each `library()` call typically goes on its own line when we put our code in an **R** script or **Quarto** document.
-
-  
 You can download all of these at once, too:
 
-```{r c_install, eval = FALSE}
+``` {{r}}
 install.packages(c("dplyr", "ggplot2", "babynames"), 
                  dependencies = TRUE)
 ```
 
-<p class="text-info"> __Heads up:__ We should formally introduce the combine command, [`c()`](http://stat.ethz.ch/R-manual/R-patched/library/base/html/c.html), used above. You will use this often- any time you want to combine things into a vector.</p>
+::: callout-tip
+## Heads up
 
-```{r c_demo}
+We should formally introduce the combine command, [`c()`](http://stat.ethz.ch/R-manual/R-patched/library/base/html/c.html), used above. You will use this often- any time you want to combine things into a vector.
+:::
+
+```{r}
 c("hello", "my", "name", "is", "alison")
 c(1:3, 20, 50)
 ```
 
+::: callout-tip
+## Heads up
 
+R is **case-sensitive**, so `?dplyr` works but `?Dplyr` will not. Likewise, a variable called `A` is different from `a`.
+:::
 
-
-<p class="text-info"> __Heads up:__ R is **case-sensitive**, so `?dplyr` works but `?Dplyr` will not. Likewise, a variable called `A` is different from `a`.</p>
-
-
-Open a new R script in RStudio by going to `File --> New File --> R Script`. For this first foray into R, we'll give you the code, so sit back and relax—feel free to copy and paste our code in with some small tweaks.
+Open a new R script in RStudio by going to `File --> New File --> R Script`. For this first foray into R, we'll give you the code, so sit back and relax---feel free to copy and paste our code in with some small tweaks.
 
 First load the packages:
 
-```{r show-packages, eval = FALSE}
+``` {{r}}
 library(babynames)  # contains the actual data
 library(dplyr)      # for manipulating data
 library(ggplot2)    # for plotting data
 ```
-
 
 ## Functions
 
@@ -122,7 +118,6 @@ tail(babynames) # same
 names(babynames) # same
 ```
 
-
 If you have done the above and produced sane-looking output, you are ready for the next step. We'll use the code below to create a new data frame called `alison`.
 
 ```{r manipulate_name_data}
@@ -131,11 +126,11 @@ alison <- babynames %>%
   filter(sex == "F") 
 ```
 
-* The first bit makes a new dataset called `alison` that is a copy of the `babynames` dataset- the `%>%` tells you we are doing some other stuff to it later.
+-   The first bit makes a new dataset called `alison` that is a copy of the `babynames` dataset- the `%>%` tells you we are doing some other stuff to it later.
 
-* The second bit `filters` our `babynames` to only keep rows where the `name` is equal to "Alison" (read `==` as _"exactly equal to"_) *or* "Allison" (read `|` as _"or"_.) 
+-   The second bit `filters` our `babynames` to only keep rows where the `name` is equal to "Alison" (read `==` as *"exactly equal to"*) *or* "Allison" (read `|` as *"or"*.)
 
-* The third bit applies another `filter` to keep only those where sex is female.
+-   The third bit applies another `filter` to keep only those where sex is female.
 
 Let's check out the data.
 
@@ -164,15 +159,14 @@ plot
 
 Edit my code above to create a new dataset. Pick 2 names to compare how popular they each are (these could be different spellings of your own name, like I did, but you can choose any 2 names that are present in the dataset). Make the new plot, changing the name of the first argument `alison` in `ggplot()` to the name of your new dataset.
 
-
-## Save and share 
+## Save and share
 
 Save your work so you can share your favorite plot with us. You will not like the looks of your plot if you mouse over to `Export` and save it. Instead, use `ggplot2`'s command for saving a plot with sensible defaults:
 
-```{r eval = FALSE}
+``` {{r}}
 help(ggsave)
 ```
 
-```{r eval = F}
+``` {{r}}
 ggsave("alison_hill.pdf", plot) # please make the filename unique!
 ```
