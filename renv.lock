@@ -1,6 +1,6 @@
 {
   "R": {
-    "Version": "4.2.2",
+    "Version": "4.2.0",
     "Repositories": [
       {
         "Name": "CRAN",
@@ -909,6 +909,14 @@
         "uuid"
       ]
     },
+    "intendo": {
+      "Package": "intendo",
+      "Version": "0.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "3749ac95bdca3cfd6a190e00d97b882a",
+      "Requirements": []
+    },
     "isoband": {
       "Package": "isoband",
       "Version": "0.2.7",
@@ -972,7 +980,7 @@
       "Version": "0.1.0",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "4e7a947368c6e9bffaf6ef398bb0de3b",
+      "Hash": "3bcd11943da509341838da9399e18bce",
       "Requirements": [
         "V8"
       ]
