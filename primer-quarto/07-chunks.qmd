@@ -10,38 +10,40 @@ We just learned about how the **knitr** package is responsible for both executin
 
 All **knitr** chunk options are placed between the curly braces `{}` on the first line of each code chunk. This line is called the chunk header, and it must be a single line without line breaks.
 
-{{< columns class="twocols" >}}
-{{< column name="even-left" >}}
+::: {layout="[50,50]"}
+
+::: column
 The option name goes on the left, with the value on the right. You may include spaces around the equal sign if you wish.
+:::
 
-{{< /column >}}
-{{< column name="even-right" >}}
-
+::: column
 ````
 ```{r echo=FALSE}`r ''`
 ...code goes here...
 ```
 ````
+:::
+
+:::
 
 
-{{< /column >}}
-{{< /columns >}}
 
-{{< columns class="twocols" >}}
-{{< column name="even-left" >}}
+::: {layout="[50,50]"}
 
+::: column
 Multiple options can be separated by commas. You may include or exclude extra spaces around the comma, too.
+:::
 
-{{< /column >}}
-{{< column name="even-right" >}}
-
+::: column
 ````
 ```{r echo=FALSE, error=TRUE}`r ''`
 ...code goes here...
 ```
 ````
-{{< /column >}}
-{{< /columns >}}
+:::
+
+:::
+
 
 Careful! The `r` part is the code engine. While other engines are possible, when you edit the chunk header, be sure not to touch the code engine.
 
@@ -80,16 +82,15 @@ The rest is scrap work.
 
 It can get repetitive to reset chunk options individually, when sometimes you'd like to override the default values for a whole `.Rmd` document. To set global options that apply to every chunk in an `.Rmd`, call `knitr::opts_chunk$set` in a code chunk. 
 
-{{< columns class="twocols" >}}
-{{< column name="even-left" >}}
+::: {layout="[50,50]"}
 
+::: column
 The `setup` code chunk affects all code chunks in the same `.Rmd` document. It is called a global chunk option for that reason. 
 
 The chunk option for the `setup` chunk itself is typically `include=FALSE` so that no one sees it but you.
+:::
 
-{{< /column >}}
-{{< column name="even-right" >}}
-
+::: column
 ````
 ```{r setup, include = FALSE}`r ''`
 knitr::opts_chunk$set(
@@ -101,9 +102,10 @@ knitr::opts_chunk$set(
 )
 ```
 ````
+:::
 
-{{< /column >}}
-{{< /columns >}}
+:::
+
 
 Knitr will treat each option that you pass to `knitr::opts_chunk$set` as a global default that can be overwritten in individual chunk headers. You can (and should) use individual chunk options too, but setting up some nice ones that apply to all code chunks can save you time and can lessen your cognitive load as you develop your code.
 

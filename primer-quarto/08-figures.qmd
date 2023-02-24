@@ -39,38 +39,38 @@ also covered:
 
 ## Figure placement
 
-{{< columns class="side-by-side" >}}
-{{< column name="side1" >}}
+::: {layout="[50,50]"}
 
+::: column
 By default, plots show up immediately after the code that prints them. 
 
 For example, the following line plot created with the **ggplot2** package will be inserted when you knit.
+:::
 
-{{< /column >}}
-{{< column name="side2" >}}
-
+::: column
 ```{r}
 ggplot(words, aes(x = age, y = produces, color = lemma)) + 
   geom_smooth(se = FALSE, lwd = .5) +
   geom_point(size = 2)
 ```
+:::
 
-{{< /column >}}
-{{< /columns  >}}
+:::
 
 
-{{< columns class="side-by-side" >}}
-{{< column name="side1" >}}
 
+::: {layout="[50,50]"}
+
+::: column
 By contrast, the code chunk on the right will create a plot object named `line`.
 
 If you ran this code in your console, it would not print the plot until you call the `line` object by name. The same will be true when you knit.
 
 + `fig.align = 'center' / 'left' / 'right'` aligns the figure in the output
 + `fig.show = 'hide' / 'hold'` hides plots entirely, or holds printing until end of a chunk
+:::
 
-{{< /column >}}
-{{< column name="side2" >}}
+::: column
 
 ```{r}
 line <- 
@@ -82,9 +82,10 @@ line <-
 ```{r}
 line
 ```
+:::
 
-{{< /column >}}
-{{< /columns  >}}
+:::
+
 
 
 
@@ -120,21 +121,4 @@ rose
 + `fig.alt = "Informative alt text"` produces alt text for a figure, meant for screen readers.
 
 
-{{< columns class="split" >}}
-{{< column name="split1" >}}
-  hello
-{{< /column >}}
-{{< column name="split2" >}}
-  goodbye
-{{< /column >}}
-{{< /columns  >}}
-
-{{< columns class="side-by-side" >}}
-{{< column name="side1" >}}
-  hello
-{{< /column >}}
-{{< column name="side2" >}}
-  goodbye
-{{< /column >}}
-{{< /columns  >}}
 
