@@ -18,6 +18,7 @@ We want to take changing data and dependably make great looking tables that migh
 We're going to get some data from the **intendo** package. This data package contains synthetic datasets that deal with activity and revenue from an online game. The dataset we want for our examples is called `all_revenue` and that's accessed by using the `all_revenue()` function.
 
 ```{r}
+#| output: false
 all_revenue <- intendo::all_revenue()
 ```
 
