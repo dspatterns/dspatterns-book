@@ -1,6 +1,9 @@
 ## Hello **Quarto**
 
 ```{r}
+#| code-line-numbers: true
+#| warning: false
+#| message: false
 library(tidyverse)
 library(gt)
 ```
