@@ -1,21 +1,65 @@
-# Batch styling
-
+# Batch styling of plots
 
 ```{r setup, include=FALSE, echo=FALSE}
-library(dspatterns)
+library(intendo)
+library(pointblank)
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(glue)
 ```
-
-How to style a table AND reuse that style later in same document (basic function, not in a package)
-
-how to style a ggplot and reuse that style later in same document
-
-## New Packages and Functions  
 
 ## This Chapter's Pattern
 
+We want to apply styling to different tables and plots, but do it in a way that doesn't require us to type out all the different options each and every time. We'll do this by making styling functions that work with **gt** and **ggplot2**. To get this going, a dataset will be explored and we'll arbitrarily try out different forms of styling. Once we have plots that look good, the code will be developed into a reusable function. We want to be able to use that function consistently in our workflow, so, documentation will be written to explain what that function does and, importantly, how it is used.
+
 ## Explore
 
-- dataset: ``
+We're going to get some data from the **intendo** package. This data package contains synthetic datasets that deal with activity and revenue from an online game. The dataset we want for our examples is called `all_sessions` and that's accessed by using the `all_sessions()` function.
+
+```{r}
+#| output: false
+all_sessions <- intendo::all_sessions()
+```
+
+Let's have a quick look at the dataset using **dplyr**'s `glimpse()` function. This gives us an idea of what's contained in the dataset, even though we only see a small portion of it:
+
+```{r}
+dplyr::glimpse(all_sessions)
+```
+
+This dataset has lots of information on player sessions for an entire year. We want to several variables from this dataset. Because there is so much data that can be plotted we will summarize to daily means of `session_duration`, revenue from in-app purchases (`rev_iap`), and revenue from ad views (`rev_ads`). This will be done with a little bit of **dplyr**:
+
+```{r}
+#| paged.print: false
+
+session_revenue_summary <-
+  all_sessions |>
+  select(session_start, session_duration, rev_iap, rev_ads) |>
+  mutate(day = lubridate::as_date(session_start)) |>
+  group_by(day) |>
+  summarize(
+    mean_duration = mean(session_duration),
+    mean_rev_iap = mean(rev_iap),
+    mean_rev_ads = mean(rev_ads)
+  )
+
+session_revenue_summary
+```
+
+We want to develop a plot that shows the changes in these daily average over the entire `2015` year. We can start the process by making a basic plot with each of these variables having their own line:
+
+```{r}
+session_revenue_summary |>
+  ggplot() +
+  geom_line(aes(x = day, y = mean_duration)) +
+  geom_line(aes(x = day, y = mean_rev_iap)) +
+  geom_line(aes(x = day, y = mean_rev_ads))
+```
+
+While this is definitely not what we'd want as a final plot, it's certainly a good exploratory plot. Two things are important to note: (1) duration and revenue lines shouldn't belong on the same *y* axis, and (2) the lowest of the three lines (representing `mean_rev_ads`) is small and probably insignificant. Knowing this, we ought to split the visualization to show two plots: one for session duration and the other for daily revenue. Since ad revenue is small compared to revenue from in-app purchases (and fairly constant), we could safely omit that from the plot.
+
+The *x* axis *is* common to both the `mean_duration` and `mean_rev_iap` values that we'll carry forward. Owing to that, it makes sense to stack the plots vertically so that we can easily compare session duration and revenue values for the same time range. How do we do this? One great solution involves using the **patchwork** package.
 
 ## Understand
 
