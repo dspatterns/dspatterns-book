@@ -56,7 +56,7 @@ jobs:
         uses: r-lib/actions/setup-pandoc@v2
 
       - name: Install Quarto
-        uses: quarto-dev/quarto-actions/install-quarto@v1
+        uses: quarto-dev/quarto-actions/install-quarto@v2
         with:
           version: 0.9.504
           # To install LaTeX to build PDF book
