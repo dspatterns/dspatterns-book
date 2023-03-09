@@ -2,6 +2,8 @@
 title: "Importing Data From Common Formats"
 ---
 
+{{< include ../_patterns.qmd >}}
+
 ```{r setup, include=FALSE, echo=FALSE}
 library(dspatterns)
 library(readxl)

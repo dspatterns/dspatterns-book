@@ -1,5 +1,7 @@
 # Windows of Data
 
+{{< include ../_patterns.qmd >}}
+
 ```{r setup, include=FALSE, echo=FALSE}
 library(dspatterns)
 ```

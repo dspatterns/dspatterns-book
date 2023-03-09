@@ -1,5 +1,7 @@
 # Projects
 
+{{< include ../_patterns.qmd >}}
+
 One of the hardest things about starting anything new is knowing where to start. So we will make this easy. Our first pattern is the "new project" pattern. 
 
 In this book, we want to help you cultivate healthy project habits. This includes knowing proper project hygiene, but it starts with having a small "p" project mindset.

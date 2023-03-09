@@ -1,5 +1,7 @@
 # Starting with GitHub
 
+{{< include ../_patterns.qmd >}}
+
 ## Prerequisites {.unnumbered}
 
 Get GitHub account.

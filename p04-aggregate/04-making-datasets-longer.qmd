@@ -1,5 +1,7 @@
 # Making Datasets Longer
 
+{{< include ../_patterns.qmd >}}
+
 
 ```{r setup, include=FALSE, echo=FALSE}
 library(dspatterns)

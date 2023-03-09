@@ -1,5 +1,7 @@
 # Run on demand
 
+{{< include ../_patterns.qmd >}}
+
 ```{r setup, include=FALSE, echo=FALSE}
 library(dspatterns)
 ```

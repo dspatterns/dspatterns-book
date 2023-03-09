@@ -1,5 +1,7 @@
 # Importing data for the next time
 
+{{< include ../_patterns.qmd >}}
+
 ```{r setup, include=FALSE, echo=FALSE}
 library(dspatterns)
 library(tidyverse)

@@ -2,6 +2,8 @@
 title: "Introductory Data Transformation with **dplyr**"
 ---
 
+{{< include ../_patterns.qmd >}}
+
 ```{r setup, include=FALSE, echo=FALSE}
 library(dspatterns)
 library(dplyr)
