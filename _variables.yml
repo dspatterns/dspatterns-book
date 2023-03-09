@@ -1,0 +1,32 @@
+quarto:
+  docs: "[Quarto](<https://quarto.org>)"
+  proj: "[Quarto project](<https://quarto.org/docs/projects/quarto-projects.html>)"
+  book: "[Quarto book-flavored website](<https://quarto.org/docs/books/>)"
+  config: "Our Quarto config file: <https://github.com/dspatterns/dspatterns-book/blob/main/_quarto.yml>"
+  ide: "[RStudio IDE](<http://www.rstudio.com/ide/>)"
+  editor: "[RStudio visual markdown editor](<https://rstudio.github.io/visual-markdown-editing/>)"
+  markdown: "[Pandoc's markdown](<https://pandoc.org/MANUAL.html#pandocs-markdown>)"
+  engine: "[Knitr engine](<https://yihui.name/knitr>)"
+
+gh:
+  docs: "[GitHub](<https://docs.github.com/>)"
+  repo: "[our GitHub repository](<https://github.com/dspatterns/dspatterns>)"
+  client: "[GitHub Desktop](<https://desktop.github.com/>)"
+  discussions: "[our GitHub Discussions](<https://github.com/dspatterns/dspatterns-book/discussions>)"
+
+gha:
+  docs: "[GitHub Actions (GHA)](<https://github.com/features/actions>)"
+  config: "Our GHA workflow file: <https://github.com/dspatterns/dspatterns-book/blob/main/.github/workflows/build-book.yml>"
+  runs: "Our GHA workflow runs: <https://github.com/dspatterns/dspatterns-book/actions/workflows/build-book.yml>"
+
+web:
+  docs: "[Quarto GitHub Actions](<https://github.com/quarto-dev/quarto-actions/tree/main/publish>)"
+  url: "<https://dspatterns.netlify.app/>"
+  host: "[Netlify](<https://www.netlify.com>)"
+  config: ""
+  status: "Our deploy status link: <https://app.netlify.com/sites/dspatterns/deploys>"
+
+renv:
+  pkg: "[**renv** package](<https://rstudio.github.io/renv/>)"
+  docs: "[**renv** with Quarto docs](<https://quarto.org/docs/projects/virtual-environments.html>)"
+  lock: "Our **renv** lock file: <https://github.com/dspatterns/dspatterns-book/blob/main/renv.lock>"
