@@ -23,7 +23,14 @@ book:
   cover-image: cover.png
   chapters:
     - index.qmd
-    - a01-prereq.qmd
+    - "---"
+    - part: "Onboarding patterns"
+      chapters:
+        - onboarding/patterns.qmd
+        - onboarding/book.qmd
+        - onboarding/authors.qmd
+        - onboarding/tools.qmd
+    - "---"
     - primer-coding/01-hello-r.qmd
     - "---"
     - part: "Primer II: Quarto"
@@ -104,5 +111,8 @@ format:
     code-link: true
     code-line-numbers: false
     code-annotations: below
+
+execute:
+  collapse: true
 
 bibliography: references.bib
