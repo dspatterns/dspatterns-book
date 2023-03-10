@@ -27,6 +27,7 @@ book:
     - part: "Onboarding patterns"
       chapters:
         - onboarding/patterns.qmd
+        - onboarding/chapters.qmd
         - onboarding/book.qmd
         - onboarding/authors.qmd
         - onboarding/tools.qmd

@@ -38,7 +38,11 @@ session$packages |>
 
 ## Understand
 
+::: {layout-ncol="2"}
 Want to know what goes into the sausage? Here is an overview of our book tech stack.
+
+![](img/sausage.jpeg){fig-align="right"}
+:::
 
 ### Writing tools
 
@@ -66,7 +70,6 @@ Want to know what goes into the sausage? Here is an overview of our book tech st
 
     -   ***this.***
 
-
 ### Collaboration tools
 
 -   To collaborate on the book, we used {{< var gh.docs >}}. The source code for the book can found at {{< var gh.repo >}}.
@@ -85,24 +88,22 @@ Pretty soon we realized that we should set up an automated build for our book.
 
     {{< var gha.config >}}
 
-    {{< var gha.runs >}}
+The combination of {{< var gha.docs >}} and {{< var web.host >}} means that the book is automatically updated after every commit to the `main` branch on GitHub.[^book-3]
 
-The combination of {{< var gha.docs >}} and {{< var web.host >}} means that the book is automatically updated after every commit to the `main` branch on GitHub.[^longnote]
-
-[^longnote]: Every GitHub Action workflow has a link to view logs for workflow runs.
+[^book-3]: Every GitHub Action workflow has a link to view logs for workflow runs.
 
     {{< var gha.runs >}}
 
 ### Hygiene tools
 
-- Rich made us a snazzy {{< var data.pkg >}} so we weren't lugging all of our data files around locally.
+-   Rich made us a snazzy {{< var data.pkg >}} so we weren't lugging all of our data files around locally.
 
-- Finally, we introduced {{< var renv.pkg >}} to our stack, following {{< var renv.docs >}}.[^book-4] This ensured that we were both working on and building the book locally with the exact same versions for all of our R packages.
+-   Finally, we introduced {{< var renv.pkg >}} to our stack, following {{< var renv.docs >}}.[^book-4] This ensured that we were both working on and building the book locally with the exact same versions for all of our R packages.
 
 [^book-4]: Every **renv** project includes a "lock" file.
 
     {{< var renv.lock >}}
-  
+
 ## Explain
 
 OK, but how exactly is the sausage *actually* made though?
@@ -113,17 +114,17 @@ We also (coincidentally!) discovered that we both have [Apple Music](https://www
 
 Since we automated a lot of things, our everyday workflow after getting all the initial pieces in place involved:
 
-- Doing a fresh pull from the `main` branch in GitHub using {{< var gh.client >}}
+-   Doing a fresh pull from the `main` branch in GitHub using {{< var gh.client >}}
 
-- Opening up the {{< var quarto.ide >}} 
+-   Opening up the {{< var quarto.ide >}}
 
-- Running `renv::status()` then `renv::restore()`, if needed, to install any new packages
+-   Running `renv::status()` then `renv::restore()`, if needed, to install any new packages
 
-- Writing using the {{< var quarto.editor >}}
+-   Writing using the {{< var quarto.editor >}}
 
-- Running `renv::snapshot()` if we added any new packages so that we updated {{< var renv.lock >}}
+-   Running `renv::snapshot()` if we added any new packages to update {{< var renv.lock >}}
 
-- Pushing our work back up to GitHub using {{< var gh.client >}}
+-   Pushing our work back up to GitHub using {{< var gh.client >}}
 
 ## Share
 
