@@ -98,7 +98,7 @@ The combination of {{< var gha.docs >}} and {{< var web.host >}} means that the 
 
 -   Rich made us a snazzy {{< var data.pkg >}} so we weren't lugging all of our data files around locally.
 
--   Finally, we introduced {{< var renv.pkg >}} to our stack, following {{< var renv.docs >}}.[^book-4] This ensured that we were both working on and building the book locally with the exact same versions for all of our R packages.
+-   We introduced {{< var renv.pkg >}} to our stack[^book-4], following {{< var renv.docs >}}. This ensured that we were both working on and building the book locally with the exact same versions for all of our R packages.
 
 [^book-4]: Every **renv** project includes a "lock" file.
 
