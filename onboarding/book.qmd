@@ -16,8 +16,7 @@ This version of the book was built with:
 #| echo: false
 all_pkgs <- renv::dependencies() |> 
   dplyr::pull(Package) 
-session <- devtools::session_info(pkgs = all_pkgs)
-session$platform
+sessioninfo::platform_info()
 ```
 
 Along with these packages:
@@ -26,7 +25,7 @@ Along with these packages:
 #| message: false
 #| warning: false
 #| echo: false
-session$packages |>
+sessioninfo::package_info() |> 
   dplyr::select(package, loadedversion, date, source) |> 
   DT::datatable(rownames = FALSE,
                 class = 'cell-border stripe',
