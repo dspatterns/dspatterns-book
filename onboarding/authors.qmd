@@ -2,9 +2,19 @@
 
 {{< include ../_patterns.qmd >}}
 
-**Alison Presmanes Hill**
+:::{.alison}
 
 Alison started learning to code in **R** right after grad school. The cost of an SAS license was the initial nudge toward **R** life. Alison found that **R** was a joy to learn! Also, she found it much easier (and more fun) to teach than SAS. During her professorship at OHSU, Alison developed and taught a popular statistics course. The initial goal was to improve the learning experience of stats at the department. The combination of stats and data visualization was a pairing that students loved. Even those that weren’t enrolled in the course were sitting in on the lectures. Given all that, goal achieved!
 
 Alison taught people within different organizations when part of the RStudio Education Team. She developed dozens of workshops and educational materials. This got the **R** community excited about using **R** for things aside from stats. Now at Voltron Data, Alison is now able to combine her teaching and product planning skills. Her focus there is creating engaging online experiences for community learning.
+
+:::
+
+:::{.rich}
+
+is awesome :) I'll fill this in more later.
+
+:::
+
+
 
