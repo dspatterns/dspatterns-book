@@ -10,35 +10,6 @@ We think of each data science project as a patchwork quilt: each project is a un
 
 In this book, you will learn about common data science patterns. These are patterns that we have seen repeat in our own careers, across many different types of projects and datasets. In the past, Rich and Alison have needed to call on our memory, our colleagues, help forums, and sometimes our own past code (thank you version control!) to help us re-approach the same problem. Over the years, we have developed a healthy bank of pernicious patterns, and we have developed our own opinionated good practices for handling them. You will find these patterns and practices organized by chapter, which we have broken down into our own chapter pattern. This pattern is meant to help you see the forest for the trees, even if you feel deep in the weeds grappling with a data science or a coding problem.
 
-## Our chapter pattern
-
-**Explore**: The first steps with a new pattern (e.g., get info you need, take stock, smell checks).
-
-**Understand**: Learning anything can involve asking questions (what kinds? How to actually translate to code? Interpreting outputs personally, may lead to more exploration).
-
-**Explain**: How do we take the answers and rationalize with the investigations? That's covered in this pattern. How to document to oneself, programmatic text for resilient reporting. This is really about talking to yourself, in a way.
-
-**Share**: Communication and collaboration. We'll show you ways you can make everything presentable and create outputs in a format that allows for easy consumption and feedback. An example: reordering plots or tables to make them easier to interpret.
-
-## A brief history of pattern languages {-}
-
-The notion of a pattern language was introduced in a now classic book on architecture written in 1977 called ["A Pattern Language: Towns, Buildings, Construction."](https://en.wikipedia.org/wiki/A_Pattern_Language) In that book, a team of expert architects presented a series of design patterns like a promenade, street cafe, bus stop, and row houses. When pieced together, the patterns form a language that ordinary people could use to design better built environments for themselves and their communities. The pattern language imparted readers with not just the vocabulary, but also the deeper practical wisdom, to solve their unique design problems on their own, in their own way.
-
-Since then, [pattern languages](https://en.wikipedia.org/wiki/Pattern_language) have cropped up in other domains too, and we think data science as a field is ripe for a pattern language of its own. Similar to our [inspiration book](https://en.wikipedia.org/wiki/A_Pattern_Language), at the core of this book is the idea that people should design for themselves their own data science projects. Some of the most meaningful and delightful data science projects are built not by "trained" R programmers or expert statisticians, but by people who work with data and design good data science projects. Yes, they will use data and code to answer questions and share insights, like most good data scientists. But most importantly, they design projects that: 
-
-+ provide a nice home to work from. Good project homes have a firm foundation (file structure), strong support beams (clear links between files), comfy sitting areas to stay awhile (and code), and easy ways to move around from one room to the next (easy to add data, switch tasks, ). The project itself helps them do their work everyday. It helps them be efficient and effective, and ultimately to have more confidence in the quality of their own work.
-
-+ provide pleasant paths into the project. Good project homes are not only pleasant to work from, but also ones that help you welcome others in, whether you are welcoming a new collaborator, or you need to communicate to your boss or team, or you need to broadcast to an external audience.  
-
-+ helps you to see out better. Good project homes helps them let other people in, to touch and feel and engage with the project, when they need to at the level they need to. The project is flexible and extensible, making it easier to share it with other people, whether that is for collaborating or communicating. 
-
---> it is like the garden paths and windows into the home- pleasant for visitors looking in, but also for you looking out.
-
-provide project in-roads to help others explore, touch, and feel the project themselves. the help other people connect the project and provide touchpoints to lead the way to 
-
-Our goal is to empower the next generation of people who work with data, not just data scientists or programmers, to design projects like this.
-
-
 
 
 *A Data Science Pattern Language: Designing Projects with R* will get you up and running with **R**. You'll learn many things in this book, with the main goals of enabling you to explore data, perform analysis on it, and communicate the results of that analysis. There are lots of little things to learn to get to that stage, but we'll take a patterned approach using a collection of **R** packages.
@@ -59,16 +30,6 @@ We sincerely hope that you find the book gives you the skills to become producti
 Because of the many user-created packages, **R** is now widely used in academia, industry, and in other organizations. **R** can be integrated into analytical pipelines, it is useful for ad-hoc data analysis, and it's highly capable in producing automated, reproducible reporting. Its plotting abilities have made it possible for individuals and organizations to generate and publish beautiful data visualizations. Of course, there are alternatives to **R** for working with data. Other languages include **Python**, **Julia**, **Matlab**, and **SAS**. All of those languages can, of course, help you to work with data. However, I think some of the key strengths of **R** (e.g., ease of manipulating datasets, great plotting capabilities, expressive and readable syntax, approachable community, etc.) will make the investment in learning **R** a great choice.
 
 
-#### About the Book {-}
 
-*A Data Science Pattern Language: Designing Projects with R* is written by [Alison Presmanes Hill](https://github.com/apreshill) and [Richard Iannone](https://github.com/rich-iannone). The book's development can be followed at the [**dspatterns/dspatterns** repository on **GitHub**](https://github.com/dspatterns/dspatterns). There are [*Issues*](https://github.com/dspatterns/dspatterns/issues) and [*Discussions*](https://github.com/dspatterns/dspatterns/discussions) sections in the repo so feel free to create an *Issue* or more casually share ideas about how to improve the book material.
 
-#### About the Authors
 
-**Alison Presmanes Hill**
-
-Alison started learning to code in **R** right after grad school. The cost of an SAS license was the initial nudge toward **R** life. Alison found that **R** was a joy to learn! Also, she found it much easier (and more fun) to teach than SAS. During her professorship at OHSU, Alison developed and taught a popular statistics course. The initial goal was to improve the learning experience of stats at the department. The combination of stats and data visualization was a pairing that students loved. Even those that weren’t enrolled in the course were sitting in on the lectures. Given all that, goal achieved!
-
-Alison taught people within different organizations when part of the RStudio Education Team. She developed dozens of workshops and educational materials. This got the **R** community excited about using **R** for things aside from stats. Now at Voltron Data, Alison is now able to combine her teaching and product planning skills. Her focus there is creating engaging online experiences for community learning.
-
-This book was built with [**Quarto**](https://quarto.org).

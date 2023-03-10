@@ -1,0 +1,135 @@
+# About the Book {.unnumbered}
+
+{{< include ../_patterns.qmd >}}
+
+## Explore
+
+An online version of this book is available at `<insert link here>`.
+
+We are writing this book right now! Please feel free to explore, but also please be mindful that all of the content is undergoing active iteration. We are still forming our own ideas and opinions as we work.
+
+This version of the book was built with:
+
+```{r}
+#| message: false
+#| warning: false
+#| echo: false
+all_pkgs <- renv::dependencies() |> 
+  dplyr::pull(Package) 
+session <- devtools::session_info(pkgs = all_pkgs)
+session$platform
+```
+
+Along with these packages:
+
+```{r}
+#| message: false
+#| warning: false
+#| echo: false
+session$packages |>
+  dplyr::select(package, loadedversion, date, source) |> 
+  DT::datatable(rownames = FALSE,
+                class = 'cell-border stripe',
+                filter = list(position = 'top'),
+                options = list(autoWidth = TRUE,
+                           bInfo = FALSE,
+                           paging = TRUE))
+```
+
+## Understand
+
+Want to know what goes into the sausage? Here is an overview of our book tech stack.
+
+### Writing tools
+
+-   The book is built with {{< var quarto.docs >}}. It is a {{< var quarto.proj >}} because the actual book is a collection of chapters, where each chapter is an individual Quarto file (`*.qmd`).[^book-1]
+
+[^book-1]: Every Quarto project includes a configuration ("config") file.
+
+    {{< var quarto.config >}}
+
+::: {.content-visible when-format="html"}
+-   The HTML version of the book you are currently reading is a {{< var quarto.book >}}.
+:::
+
+-   We used the {{< var quarto.ide >}} for writing and coding locally.
+
+-   A lot of the time, we used the {{< var quarto.editor >}} as we were writing. It is a [WYSIWYG ("what you see is what you get") editor](https://en.wikipedia.org/wiki/WYSIWYG) so there are less surprises as you write.
+
+-   Quarto supports {{< var quarto.markdown >}} flavor, so we used that for:
+
+    -   *formatting*
+
+    -   **text**
+
+        -   *like*
+
+    -   ***this.***
+
+
+### Collaboration tools
+
+-   To collaborate on the book, we used {{< var gh.docs >}}. The source code for the book can found at {{< var gh.repo >}}.
+
+-   We both used {{< var gh.client >}} to push and pull work locally.
+
+### Automation tools
+
+Pretty soon we realized that we should set up an automated build for our book.
+
+-   We used {{< var gha.docs >}} for the automated build.[^book-2]
+
+-   Since we had an HTML version of the book, we also needed each new build to be deployed automatically. That way we could be sure that the website always stayed in sync with the source in our `main` branch. We used {{< var web.host >}} for hosting.
+
+[^book-2]: Every GitHub Action includes a workflow configuration file.
+
+    {{< var gha.config >}}
+
+    {{< var gha.runs >}}
+
+The combination of {{< var gha.docs >}} and {{< var web.host >}} means that the book is automatically updated after every commit to the `main` branch on GitHub.[^longnote]
+
+[^longnote]: Every GitHub Action workflow has a link to view logs for workflow runs.
+
+    {{< var gha.runs >}}
+
+### Hygiene tools
+
+- Rich made us a snazzy {{< var data.pkg >}} so we weren't lugging all of our data files around locally.
+
+- Finally, we introduced {{< var renv.pkg >}} to our stack, following {{< var renv.docs >}}.[^book-4] This ensured that we were both working on and building the book locally with the exact same versions for all of our R packages.
+
+[^book-4]: Every **renv** project includes a "lock" file.
+
+    {{< var renv.lock >}}
+  
+## Explain
+
+OK, but how exactly is the sausage *actually* made though?
+
+We (Alison and Rich) wrote this book together. We wrote separately for the most part, but we did write for at least one hour a week together. We did this over [Zoom](https://zoom.us/).
+
+We also (coincidentally!) discovered that we both have [Apple Music](https://www.apple.com/apple-music/). So we would make fun playlists and share audio while we wrote. Here are the [Zoom instructions for playing music without sharing your screen](https://support.zoom.us/hc/en-us/articles/201362643-Sharing-computer-sound-in-a-screen-share#h_01GBXFC4HB7B83C4T81Y5RRR38).
+
+Since we automated a lot of things, our everyday workflow after getting all the initial pieces in place involved:
+
+- Doing a fresh pull from the `main` branch in GitHub using {{< var gh.client >}}
+
+- Opening up the {{< var quarto.ide >}} 
+
+- Running `renv::status()` then `renv::restore()`, if needed, to install any new packages
+
+- Writing using the {{< var quarto.editor >}}
+
+- Running `renv::snapshot()` if we added any new packages so that we updated {{< var renv.lock >}}
+
+- Pushing our work back up to GitHub using {{< var gh.client >}}
+
+## Share
+
+We are excited that you are excited about our book! We'll update here when the book is ready to be shared. In the meantime, you are welcome to start a conversation over at {{< var gh.discussions >}}.
+
+```{r}
+#| include: false
+cli:::ruler()
+```
