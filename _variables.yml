@@ -23,8 +23,10 @@ web:
   docs: "[Quarto GitHub Actions](<https://github.com/quarto-dev/quarto-actions/tree/main/publish>)"
   url: "<https://dspatterns.netlify.app/>"
   host: "[Netlify](<https://www.netlify.com>)"
-  config: ""
   status: "Our deploy status link: <https://app.netlify.com/sites/dspatterns/deploys>"
+
+data:
+  pkg: "[**dspatterns** data package](<https://github.com/dspatterns/dspatterns>)"
 
 renv:
   pkg: "[**renv** package](<https://rstudio.github.io/renv/>)"
