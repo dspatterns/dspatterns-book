@@ -1,5 +1,7 @@
 # Batch styling of plots
 
+{{< include ../_patterns.qmd >}}
+
 ```{r setup, include=FALSE, echo=FALSE}
 library(intendo)
 library(pointblank)

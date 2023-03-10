@@ -1,5 +1,7 @@
 # Project 1
 
+{{< include ../_patterns.qmd >}}
+
 ```{r setup, include=FALSE, echo=FALSE}
 library(dspatterns)
 ```

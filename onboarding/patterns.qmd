@@ -1,0 +1,19 @@
+# A brief history of pattern languages {-}
+
+{{< include ../_patterns.qmd >}}
+
+The notion of a pattern language was introduced in a now classic book on architecture written in 1977 called ["A Pattern Language: Towns, Buildings, Construction."](https://en.wikipedia.org/wiki/A_Pattern_Language) In that book, a team of expert architects presented a series of design patterns like a promenade, street cafe, bus stop, and row houses. When pieced together, the patterns form a language that ordinary people could use to design better built environments for themselves and their communities. The pattern language imparted readers with not just the vocabulary, but also the deeper practical wisdom, to solve their unique design problems on their own, in their own way.
+
+Since then, [pattern languages](https://en.wikipedia.org/wiki/Pattern_language) have cropped up in other domains too, and we think data science as a field is ripe for a pattern language of its own. Similar to our [inspiration book](https://en.wikipedia.org/wiki/A_Pattern_Language), at the core of this book is the idea that people should design for themselves their own data science projects. Some of the most meaningful and delightful data science projects are built not by "trained" R programmers or expert statisticians, but by people who work with data and design good data science projects. Yes, they will use data and code to answer questions and share insights, like most good data scientists. But most importantly, they design projects that: 
+
++ provide a nice home to work from. Good project homes have a firm foundation (file structure), strong support beams (clear links between files), comfy sitting areas to stay awhile (and code), and easy ways to move around from one room to the next (easy to add data, switch tasks, ). The project itself helps them do their work everyday. It helps them be efficient and effective, and ultimately to have more confidence in the quality of their own work.
+
++ provide pleasant paths into the project. Good project homes are not only pleasant to work from, but also ones that help you welcome others in, whether you are welcoming a new collaborator, or you need to communicate to your boss or team, or you need to broadcast to an external audience.  
+
++ helps you to see out better. Good project homes helps them let other people in, to touch and feel and engage with the project, when they need to at the level they need to. The project is flexible and extensible, making it easier to share it with other people, whether that is for collaborating or communicating. 
+
+--> it is like the garden paths and windows into the home- pleasant for visitors looking in, but also for you looking out.
+
+provide project in-roads to help others explore, touch, and feel the project themselves. the help other people connect the project and provide touchpoints to lead the way to 
+
+Our goal is to empower the next generation of people who work with data, not just data scientists or programmers, to design projects like this.

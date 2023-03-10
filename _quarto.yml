@@ -23,8 +23,17 @@ book:
   cover-image: cover.png
   chapters:
     - index.qmd
-    - a01-prereq.qmd
+    - "---"
+    - part: "Onboarding patterns"
+      chapters:
+        - onboarding/patterns.qmd
+        - onboarding/chapters.qmd
+        - onboarding/book.qmd
+        - onboarding/authors.qmd
+        - onboarding/tools.qmd
+    - "---"
     - primer-coding/01-hello-r.qmd
+    - "---"
     - part: "Primer II: Quarto"
       chapters:
         - primer-quarto/01-hello-quarto.qmd
@@ -38,20 +47,24 @@ book:
         - primer-quarto/09-tables.qmd
         - primer-quarto/10-options.qmd
         - primer-quarto/11-formats.qmd
+    - "---"
     - part: "Part 1: MVPs"
       chapters:
         - p01-mvp/01-dataframes.qmd
         - p01-mvp/02-data-wrangling.qmd
         - p01-mvp/03-data-viz.qmd
+    - "---"
     - part: "Part 2: Workflow patterns"
       chapters:
         - p02-workflow/01-projects.qmd
         - p02-workflow/02-github.qmd
+    - "---"
     - part: "Part 3: Local data patterns"
       chapters:
         - p03-import/01-import-data-first-time.qmd
         - p03-import/02-import-data-next-time.qmd
         - p03-import/03-import-data-formats.qmd
+    - "---"
     - part: "Part 4: Aggregation patterns"
       chapters:
         - p04-aggregate/01-careful-counting.qmd
@@ -61,6 +74,7 @@ book:
         - p04-aggregate/05-windows-of-data.qmd
         - p04-aggregate/06-making-datasets-wider.qmd
         - p04-aggregate/07-project-1.qmd
+    - "---"
     - part: "Part 5: Batch mode"
       chapters:
         - p05-batch/01-batch-style.qmd
@@ -68,12 +82,14 @@ book:
         - p05-batch/03-parameters.qmd
         - p05-batch/04-style-package.qmd
         - p05-batch/05-project-2.qmd
+    - "---"
     - part: "Part 6: Production mode"
       chapters:
         - p06-production/01-run-on-demand.qmd
         - p06-production/02-run-on-schedule.qmd
         - p06-production/03-run-on-conditions.qmd
         - p06-production/04-project-3.qmd
+    - "---"
   appendices:
     - appendix/85-tidying-data-for-analysis.qmd
     - appendix/87-transformations-dates-times.qmd
@@ -96,5 +112,8 @@ format:
     code-link: true
     code-line-numbers: false
     code-annotations: below
+
+execute:
+  collapse: true
 
 bibliography: references.bib
