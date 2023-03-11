@@ -9,9 +9,6 @@ book:
   repo-actions:
     - source
   repo-url: "https://github.com/dspatterns/dspatterns-book"
-  sidebar:
-    style: docked
-    background: light
   search: true
   # description: |
   #   A Data Science Pattern Language: Designing Projects with R will get you up
@@ -21,6 +18,7 @@ book:
   #   to learn to get to that stage, but we'll take a structured approach using
   #   a collection of R packages.
   cover-image: cover.png
+  page-navigation: true
   chapters:
     - index.qmd
     - "---"
@@ -110,10 +108,10 @@ format:
     toc-depth: 2
     cover-image: cover.png
     code-link: true
-    code-line-numbers: false
     code-annotations: below
+    callout-appearance: simple
 
 execute:
-  collapse: true
+  collapse: false
 
 bibliography: references.bib
