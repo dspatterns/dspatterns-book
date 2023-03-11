@@ -1,115 +1,58 @@
 /*-- scss:defaults --*/
 
-/* bootstrap variables */
-$primary: #6B2084;                    /* amethyst */
-$code-color: #702459;                 /* constrast ratio: 8.94 */
-$link-color: darken($primary, 8%);
-$link-hover-color: darken($link-color, 8%);
-$body-color: #404040;                 /* rstudio dark gray, matches rstudio.com */
+// custom palette
+$color-tamarind: #2f0f24;
+$color-seashell: #fbf5f3;
+$color-floral: #fff7f4;
+$color-royal: #814c9e;
+$color-amethyst: #6B2084;
+$color-port: #702459;
+$color-violet: #c096ca;
+$color-highlight: #fce533;
+$color-highlight-alt: #f7df1e;
+$color-blue: #363b8f;
+$color-blue-alt: #d8d9f1;
+$color-red: #e20a39;
+$color-red-alt: #f8e6ea;
+$color-green: #cee0dc;
+$color-green-alt: #073429;
+$color-gold: #f4d06f;
+$color-gold-alt: #4c3906;
+
+// colors
+// $border-color-left: #eecdde !default;
+$primary: $color-amethyst;
+$background-color: #bfe4eb !default;
+$body-color: lighten(black, 20%);
+$link-color: $body-color;
+$link-hover-color: black;
+$code-color: $color-port;                 /* constrast ratio: 8.94 */
 $navbar-light-hover-color: #000;
-$navbar-light-brand-color: #404040;   /* rstudio dark gray, matches rstudio.com */
-$headings-color: $primary;            /* rstudio dark gray, matches rstudio.com */
-$border-color: lighten($primary, 50%);
-/*$border-width: 5rem; seems to throw a quarto error */
-/*$navbar-light-color: lighten($navbar-light-hover-color, 40%); seems to throw a quarto error*/
+$navbar-light-brand-color: #404040;
+$headings-color: $primary;
+$border-color: $color-tamarind;
+
+// code
+$code-block-bg: $color-seashell;
+$code-block-border-left: $color-highlight;
+$code-block-border-left-size: 5px;
+
+// callouts
+$callout-color-note: $color-tamarind;
+$callout-color-tip: $color-blue;
+$callout-color-warning: $color-red;
+$callout-border-width: 5px;
+
 
 /* workbench variables */
 $pro-header: #4D4D4D;                /* rstudio logo gray, contrast: 8.45 */
 $pro-header-border: lighten($pro-header, 50%);
 
 
+
 /*-- scss:rules --*/
 
-/*-- the following all aim to increase visible whitespace *--/
-/* styling underlined links */
-a {
-  text-decoration-thickness: .05em;
-  text-underline-offset: .15em;
-}
-
-/* decrease left padding in line-numbered code blocks (reduces distance between line numbers and statements) */
-pre.sourceCode.code-with-copy {
-  padding-left: 10px;
-}
-
-/* slightly move line numbering in code blocks to the left */
-pre.numberSource code > span > a:first-child::before {
-  left: -1.5em;
-}
-
-/* sligntly decrease font size of output cells */
-.cell-output-stdout {
-  font-size: 17px;
-}
-
-/* increase title letter spacing to lighten it up */
-.navbar-brand {
-  letter-spacing: .05rem;
-}
-
-/* increase padding around navbar links so less squished */
-.navbar-expand-lg .navbar-nav .nav-link {
-  padding: 0rem 1rem;
-}
-
-/* increase padding above the page nav */
-main {
-  margin-bottom: 5rem;
-}
-
-/* increase padding above ALL content */
-.sidebar {
-  padding-top: 50px;
-}
-.sidebar-menu-container {
-  padding-top: 25px;
-}
-main {
-  padding-top: 28px;
-}
-
-/* increase padding between sidebar nav items */
-.sidebar-navigation .sidebar-section.depth1 {
-  padding-bottom: .2rem; /* double the default */
-}
-
-/* Navbar */
-
-/* should be able to use navbar-bg for this */
-.bg-primary {
-  background-color: #ffffff !important;
-}
-
-#quarto-header {
-  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
-}
-
-/* Logo */
-
-.navbar-brand img {
-    width: 3rem;
-    height: 3rem;
-    margin-right: 0rem;
-    margin-bottom: .3125rem; /* align the logo with text */
-}
-
-/* Sidebar */
-
-#quarto-sidebar [class*="overflow-scroll"] {
-  background-color: #ffffff;
-}
-
-/* darken nav page text */
-
-.nav-page .nav-page-text {
-  color: $pro-header;
-}
-
-
-/* make sidebar nav font all same size */
-.sidebar-navigation .sidebar-item a {
-	font-size: 1.0rem;
-}
+/* custom divs--------------------------------------------------------------- */
 
 div .alison {
   border: 4px #aed6d963;
@@ -141,5 +84,45 @@ div .rich {
   background-image: url("style/illo_rich.png");
 }
 
-/* Background color for author illustrations
-/* #D49CE7
+// styling links
+a {
+  text-decoration-color: #edd;
+  text-decoration-thickness: .075em;
+  text-underline-offset: .25em;
+}
+
+a:hover {
+  text-underline-offset: .3em;
+  text-decoration-color: $link-hover-color;
+}
+
+/* code blocks--------------------------------------------------------------- */
+
+// code blocks are square
+div.sourceCode {
+  border-radius: 0rem;
+}
+
+// code output (not blocks) has diff bg and no border
+.cell-output-stdout .sourceCode {
+  background: #fdfcf4;
+  border-left: 0px;
+}
+
+/* Background color for author illustrations */
+/* #D49CE7 */
+
+/* callouts------------------------------------------------------------------ */
+
+/* square */
+.callout {
+  border-radius: 0rem;
+  background: #fbf5f3ff; //#fcf7fa
+  border: #eecdde;
+  border-left-color: $border-color;
+  border-left-width: 5rem;
+}
+
+.callout.callout-style-simple {
+  border-left: 1px solid #dfb6ed !important;
+}
