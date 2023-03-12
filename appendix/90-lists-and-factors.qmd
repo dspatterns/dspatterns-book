@@ -413,7 +413,7 @@ Speaking of plots, let's make one! This time: a bar plot. The `geom_bar()` funct
 `r dspatterns::code_hints(
 "Creating a barplot of the most populous German cities in the state of Bayern by using **ggplot** and its ~~geom_bar()~~ function."
 )`
-```{r)'}
+```{r}
 #| label: fig-barplot-bayern-1
 #| fig.cap: "Our first bar plot made with **ggplot**. We really need to fix the ordering of the bars."
 
