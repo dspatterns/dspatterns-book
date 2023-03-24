@@ -49,4 +49,4 @@ Here is the plain text version of the same `.qmd` document, which you can copy a
 
 ## What's next?
 
-In the rest of this primer, we'll focus on using **Quarto** to create `.qmd` documents that integrate narrative text, code, and its output. While **Quarto** allows for many different kinds of output, we will use HTML documents. But the possibilities are endless 😃 In fact, this book was also written in **Quarto**, and its full source is publicly available in the GitHub repository: <https://github.com/dspatterns/dspatterns-book>
+In the rest of this primer, we'll focus on using **Quarto** to create `.qmd` documents that integrate narrative text, code, and its output. While **Quarto** allows for many different kinds of output, we will use HTML documents. But the possibilities are endless 😃 In fact, this book was also written in **Quarto**, and its full source is publicly available in the GitHub repository: <https://github.com/dspatterns/dspatterns-book>.
