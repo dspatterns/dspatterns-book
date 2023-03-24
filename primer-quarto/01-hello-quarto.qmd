@@ -64,7 +64,7 @@ tribble(
 
 All of the lessons in this book will incorporate **Quarto** because it really is a great approach for running all R code in data analysis and visualization contexts. The prose portion of **Quarto** (i.e., *not* the R code) is the default text entry type. The R code is run inside code chunks, which are marked off areas (with three backticks: ```) in the document. The schematic in @fig:rmarkdown-annotation shows what an R code chunk looks like and what controls are available in **Quarto**.
 
-![A simple reference for Markdown. The text on the left will become the HTML on the right after an **Quarto** document is *knitted*.](appendix-figures/82-starting-with-r/figure-rmarkdown-annotation.png){#fig:rmarkdown-annotation}
+![A simple reference for Markdown. The text on the left will become the HTML on the right after an **Quarto** document is *knitted*.](../appendix-figures/82-starting-with-r/figure-rmarkdown-annotation.png){#fig:rmarkdown-annotation}
 
 Aside from reproducibility, the finished **Quarto** document can be rendered to a self-contained HTML file, to a Word document, to a various presentation types including Powerpoint, or to a PDF file. There are lots of ways to customize what the rendered document will look like (e.g., hiding code for non-technical audiences, adding HTML display elements, etc.), so, the analysis can double as a deliverable report. This will undoubtedly save you time. If ever the input data should change, the report could be run again and updated, usually with minimal (if any) modification. That's one of the features of reproducible reporting.
   
