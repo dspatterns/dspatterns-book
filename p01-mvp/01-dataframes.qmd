@@ -23,7 +23,7 @@ This section covers
 
 When you're working with data, quite often it'll be structured data in the form of tables. Tabular data is usually a joy to work with: there's regularity in its shape (rectangular!), the rules for working with tables are widely known, and we can also take proactive steps to shape the data in a way that's even more convenient for data analysis.
 
-Tables come in all shapes and sizes. Some are very small, filling maybe a screen or two with data. Some are in between, requiring querying and summarizing to really make sense of the data. Finally, some are huge and those require more efficient tools for transforming, querying, and summarizing the data. Here, we'll start small and learn how to explore tables of the small variety. In **R**, tabular data is often stored in data structures known as data frames. It's part of *base R* and you don't need any extra packages to use data frames.
+Tables come in all shapes and sizes. Some are very small, filling maybe a screen or two with data. Some are in between, requiring querying and summarizing to really make sense of the data. Finally, some are huge and those require more efficient tools for transforming, querying, and summarizing the data. Here, we'll start small and learn how to explore tables of the small variety. In R, tabular data is often stored in data structures known as data frames. It's part of *base R* and you don't need any extra packages to use data frames.
 
 We also have another variety of tables which are called *tibbles*. A tibble is a special implementation of a data frame that prints its data differently and behaves in a more consistent manner than data frames.
 
@@ -100,7 +100,7 @@ names(episodes)
 dim(episodes)
 ```
 
-Take note that the convention for table dimensions in **R** is first the number of rows (`94`) and then the number of variables or columns (`10`). If you're using the RStudio IDE, then the special `View()` function will put a table into a spreadsheet-like view:
+Take note that the convention for table dimensions in R is first the number of rows (`94`) and then the number of variables or columns (`10`). If you're using the RStudio IDE, then the special `View()` function will put a table into a spreadsheet-like view:
 
 ```{r}
 #| label: use-of-view-fn

@@ -14,16 +14,16 @@ This section covers
 
 - Working with lists: creating, modifying, and accessing data from them
 - Writing our own functions that either create list output, use a list as input, or both
-- Using factors successfully though inspection and transformation with base **R** functions and functions from the **forcats** package
+- Using factors successfully though inspection and transformation with base R functions and functions from the **forcats** package
 - Creating **ggplot** bar charts that make the best use of factor variables
 
-When working in **R** long enough, you'll encounter list objects again and again. You may bump into factors every now are again but try to side-step their use. However, these are very important and useful data structures and we ought to fully understand them. This section goes over lists, which we've seen before, in much more detail. We'll understand how to better create lists, how to access data from them, how to combine lists together, and how to go to and from lists and data frames. Factors will be introduced in the second part of this section. They shouldn't be something to be avoided as they are genuinely useful, especially in the context of plotting data with **ggplot**.
+When working in R long enough, you'll encounter list objects again and again. You may bump into factors every now are again but try to side-step their use. However, these are very important and useful data structures and we ought to fully understand them. This section goes over lists, which we've seen before, in much more detail. We'll understand how to better create lists, how to access data from them, how to combine lists together, and how to go to and from lists and data frames. Factors will be introduced in the second part of this section. They shouldn't be something to be avoided as they are genuinely useful, especially in the context of plotting data with **ggplot**.
 
-We'll use a dataset called `german_cities` (available in the **dspatterns** package) to work through examples that involve factors, eventually getting to nicer and nicer plots. The functions that we'll use throughout this section will be an even mix of base **R** functions and functions that are available in the *Tidyverse* packages **forcats** and **ggplot**.
+We'll use a dataset called `german_cities` (available in the **dspatterns** package) to work through examples that involve factors, eventually getting to nicer and nicer plots. The functions that we'll use throughout this section will be an even mix of base R functions and functions that are available in the *Tidyverse* packages **forcats** and **ggplot**.
 
-## Lists in **R**
+## Lists in R
 
-A list object in **R** is kind of like a container that can hold any type of **R** object, even other lists. The components of the list can have names, they can be unnamed (relying on numerical indices to distinguish between the components), or, we can have a mixture of named and unnamed components. They can be as simple as a vector, or, have numerous nested components. A good enough analogy for an **R** list is a computer's file system, where directories might hold elements (including more directories) and it's the files that are the addressable elements. A well-structured list is valuable as a complex data structure. Given that a function can only return a single object, and that a function may create complex data, a list adorned with different types of information can be returned and further used by other functions that require a little or a lot of that information.
+A list object in R is kind of like a container that can hold any type of R object, even other lists. The components of the list can have names, they can be unnamed (relying on numerical indices to distinguish between the components), or, we can have a mixture of named and unnamed components. They can be as simple as a vector, or, have numerous nested components. A good enough analogy for an R list is a computer's file system, where directories might hold elements (including more directories) and it's the files that are the addressable elements. A well-structured list is valuable as a complex data structure. Given that a function can only return a single object, and that a function may create complex data, a list adorned with different types of information can be returned and further used by other functions that require a little or a lot of that information.
 
 ### Making Named Lists and Accessing Their Elements
 
@@ -161,7 +161,7 @@ Setting values by element is possible for other data types as well (e.g., vector
 
 ### Transforming Lists
 
-The **R** list object is quite malleable in that it can be combined in numerous ways with other objects, transformed into entirely different data structures, and enable some pretty complex yet useful transformations. Let's walk through a few different list transformations of lists with examples, explanations, and possible use cases.
+The R list object is quite malleable in that it can be combined in numerous ways with other objects, transformed into entirely different data structures, and enable some pretty complex yet useful transformations. Let's walk through a few different list transformations of lists with examples, explanations, and possible use cases.
 
 #### The `c()` Function
 	
@@ -184,7 +184,7 @@ a_list
 
 The output of this `a_list` is the same as the `a_list` object created in the first code listing.
 
-If we don't want a certain component of the list, assign `NULL` to it. It's like sending that component into an **R** oblivion. Let's get rid of the tibble in `a_list` with this type of assignment:
+If we don't want a certain component of the list, assign `NULL` to it. It's like sending that component into an R oblivion. Let's get rid of the tibble in `a_list` with this type of assignment:
 
 `r dspatterns::code_hints(
 "Removing the second element of the ~~a_list~~ object using ~~NULL~~."
@@ -210,7 +210,7 @@ We are now left with a list-in-a-list that was once the third element in `a_list
 
 #### Transformations Between Data Frames and Lists
 
-Data frames and tibbles are lists. The `data.frame()` documentation page (accessed by using `?data.frame`) states: "a data frame is a list of variables of the same number of rows with unique row names, given class 'data.frame'  (with a few restrictions in place)". We can convince ourselves of this by using the base **R** `typeof()` function with data frames and tibbles. Invoked with empty versions of each, using `typeof(data.frame())` and `typeof(tibble())`, we get `"list"` returned in both cases (just as with `typeof(list())`).
+Data frames and tibbles are lists. The `data.frame()` documentation page (accessed by using `?data.frame`) states: "a data frame is a list of variables of the same number of rows with unique row names, given class 'data.frame'  (with a few restrictions in place)". We can convince ourselves of this by using the base R `typeof()` function with data frames and tibbles. Invoked with empty versions of each, using `typeof(data.frame())` and `typeof(tibble())`, we get `"list"` returned in both cases (just as with `typeof(list())`).
 
 Let's create a list that can potentially become a data frame or tibble. The list will be named (these become the column names), each element of the list will be a single vector, and all vectors will have the same length.
 
@@ -227,7 +227,7 @@ list_df <-
 list_df
 ```
 
-This is a list that conforms to the rules, let's use the base **R** `as.data.frame()` function to make a data frame from it. There's a catch though! We need to use `stringsAsFactors = FALSE` (just as we do with `data.frame()`) so that the character vector, `col_2`, isn't coerced to a factor.
+This is a list that conforms to the rules, let's use the base R `as.data.frame()` function to make a data frame from it. There's a catch though! We need to use `stringsAsFactors = FALSE` (just as we do with `data.frame()`) so that the character vector, `col_2`, isn't coerced to a factor.
 
 `r dspatterns::code_hints(
 "Transforming the ~~list_df~~ list into a data frame with ~~as.data.frame()~~."
@@ -260,13 +260,13 @@ list_from_tbl <- as.list(tbl_from_list)
 list_from_tbl
 ```
 
-Experimenting with these examples of list transformations provides us with useful techniques, especially as we get to using lists in more complex ways within functions. In **R** functions, sometimes a list makes sense and, other times, a table (like a tibble or data frame) can be better. Moving between the two data structures is sometimes necessary and that's where these skills come into play.
+Experimenting with these examples of list transformations provides us with useful techniques, especially as we get to using lists in more complex ways within functions. In R functions, sometimes a list makes sense and, other times, a table (like a tibble or data frame) can be better. Moving between the two data structures is sometimes necessary and that's where these skills come into play.
 
 ### Creating Functions that Involve Lists
 
 Lists are useful as both output and inputs for functions. While we can't return two objects at the same time from a function we can, however, do the next best thing: return a list that's structured with as much useful output as necessary. A list that serves as a primary input is a time-tested practice; we can use the list object as the main data object and transform it in interesting ways through functions written for transformation tasks.
 
-Let's make a function that takes a numeric vector returns a list object. **R** is great at doing statistical calculations so this new function will help us obtain descriptive statistics (mean, min, max, etc.) for a numeric vector, putting those values into a list. We'll create the function named `get_descriptive_stats()` in the following code listing and then immediately test it out using a numeric vector created with `c(2.3, 8.1, 5.5, 3.9, 6.0, 2.1, 8.5)`.
+Let's make a function that takes a numeric vector returns a list object. R is great at doing statistical calculations so this new function will help us obtain descriptive statistics (mean, min, max, etc.) for a numeric vector, putting those values into a list. We'll create the function named `get_descriptive_stats()` in the following code listing and then immediately test it out using a numeric vector created with `c(2.3, 8.1, 5.5, 3.9, 6.0, 2.1, 8.5)`.
 
 `r dspatterns::code_hints(
 "Example of a function (~~get_descriptive_stats()~~) that returns a list object."
@@ -320,7 +320,7 @@ The output looks good! Did you notice the use of the `c()` function within the b
 
 ## All About Factors
 
-Factors as an **R** data type are used to represent categorical data. They are vectors that contain levels: integers that describe the ordering of the factor's values. They are often misunderstood and are largely avoided on account of that. The reasons for their non-use may stem from their non-intuitive behavior in functions or the perception that non-factor-based solutions work just as well. But they can be useful, and this section will try to prove that.
+Factors as an R data type are used to represent categorical data. They are vectors that contain levels: integers that describe the ordering of the factor's values. They are often misunderstood and are largely avoided on account of that. The reasons for their non-use may stem from their non-intuitive behavior in functions or the perception that non-factor-based solutions work just as well. But they can be useful, and this section will try to prove that.
 
 The *Tidyverse* package **forcats** will be used here for handling factor values. We have an interesting dataset available in the **dspatterns** package called `german_cities.` It's a bit like the `us_cities` dataset we used previously except it's smaller (only 79 rows) and has two factor columns (`name` and `state`). A dataset like this may be used by statisticians to analyze population trends, or, it might be used in combination with other domain-specific data (e.g., in advertising/marketing, scientific studies, etc.). Here is a printout of the `german_cities` tibble.
 
@@ -331,7 +331,7 @@ The *Tidyverse* package **forcats** will be used here for handling factor values
 german_cities
 ```
 
-As with all datasets in the **dspatterns** package, more information about them can be obtained in the help system. In this case, using `?german_cities` in the **R** console brings up the help page for this dataset.
+As with all datasets in the **dspatterns** package, more information about them can be obtained in the help system. In this case, using `?german_cities` in the R console brings up the help page for this dataset.
 
 ### Factors Basics
 
@@ -348,7 +348,7 @@ state_fct
 
 Except for the last line, one would think (without checking) that `state_fct` is a character vector, but the mention of `Levels` is a dead giveaway that we are dealing with a factor vector.
 
-Using unique values for the vector is pretty instructive here since the 16 unique values have 16 factor levels. But what's a level in this world of factors? It's an integer value that determines the ordering of the strings. There are a number of base **R** functions that let us do diagnostics on factor. To see all the levels and, separately, the integer values associated with them, we can use the `levels()` and even the `as.integer()` functions (as shown in the next two code listings).
+Using unique values for the vector is pretty instructive here since the 16 unique values have 16 factor levels. But what's a level in this world of factors? It's an integer value that determines the ordering of the strings. There are a number of base R functions that let us do diagnostics on factor. To see all the levels and, separately, the integer values associated with them, we can use the `levels()` and even the `as.integer()` functions (as shown in the next two code listings).
 
 `r dspatterns::code_hints(
 "Getting all the levels for the ~~state_fct~~ factor using the ~~levels()~~ function."
@@ -364,7 +364,7 @@ levels(state_fct)
 as.integer(state_fct)
 ```
 
-When getting the levels through `levels()` we see that the state names are in alphabetical order. This is the default behavior of **R** when transforming character data to factors (i.e., during data import) and it's likely what has occurred during the creation of the `german_cities` dataset. So, in the output of the last code listing, `10` is `"Nordrhein-Westfalen"`, `2` is `"Bayern"`, and so on. It's the same order of cities as in the `state_fct` vector but the factors were based on the alphabetical ordering of the cities.
+When getting the levels through `levels()` we see that the state names are in alphabetical order. This is the default behavior of R when transforming character data to factors (i.e., during data import) and it's likely what has occurred during the creation of the `german_cities` dataset. So, in the output of the last code listing, `10` is `"Nordrhein-Westfalen"`, `2` is `"Bayern"`, and so on. It's the same order of cities as in the `state_fct` vector but the factors were based on the alphabetical ordering of the cities.
 
 `r dspatterns::code_hints(
 "Understanding the frequency of factor levels with the **forcats** ~~fct_count()~~ function."
@@ -388,7 +388,7 @@ german_cities_bayern <-
 german_cities
 ```
 
-Now that the `german_cities` tibble has been filtered to only those cities in Bayern (of which there are eight in this dataset), let's sanity check our levels in the `name` column (which is, like `state`, a factor). We can use the base **R** `nlevels()` function to get the number of levels. While you might expect `nlevels(german_cities_bayern$name)` to return the number `8` (because we can clearly see just eight different city names) what's returned is, surprisingly, `79`. Turns out that the factor levels of a factor don't change even when the elements of such a vector do change. We can remedy this either with the base **R** function `droplevels()` or the **forcats** function `fct_drop()`. The upcoming code listing uses `fct_drop()` twice inside of `mutate()` to remove unneeded factor levels from the `name` and `state` columns.
+Now that the `german_cities` tibble has been filtered to only those cities in Bayern (of which there are eight in this dataset), let's sanity check our levels in the `name` column (which is, like `state`, a factor). We can use the base R `nlevels()` function to get the number of levels. While you might expect `nlevels(german_cities_bayern$name)` to return the number `8` (because we can clearly see just eight different city names) what's returned is, surprisingly, `79`. Turns out that the factor levels of a factor don't change even when the elements of such a vector do change. We can remedy this either with the base R function `droplevels()` or the **forcats** function `fct_drop()`. The upcoming code listing uses `fct_drop()` twice inside of `mutate()` to remove unneeded factor levels from the `name` and `state` columns.
 
 `r dspatterns::code_hints(
 "Dropping unused factor levels in the ~~name~~ and ~~state~~ ~~\"factor\"~~ columns with ~~fct_drop()~~."
@@ -534,7 +534,7 @@ The plot shown in @fig-fct-infreq is a great improvement over the previous one i
 
 Regarding the reordering of factor levels, there are two other **forcats** functions you should know about. One is the `fct_inorder()` function. Using that on a factor will assign levels based on the order in which values first appear. This function could be handy should you have a table arranged just so, and you wanted to preserve the order of factor values in a plot.
 
-The other function worth mentioning is the `fct_inseq()`. What that does is transform a factor's levels to match the numeric values of the factor. This one's a little confusing so let's demonstrate its use. First, let's make a factor from scratch with the base **R** `factor()` function. We'll provide an integer vector, defined by `3:8`, to `factor()` and a corresponding character vector of integer values to levels (but it'll be in a jumbled up order). Then, we'll get the levels of the factor before and after using the `fct_inseq()` function.
+The other function worth mentioning is the `fct_inseq()`. What that does is transform a factor's levels to match the numeric values of the factor. This one's a little confusing so let's demonstrate its use. First, let's make a factor from scratch with the base R `factor()` function. We'll provide an integer vector, defined by `3:8`, to `factor()` and a corresponding character vector of integer values to levels (but it'll be in a jumbled up order). Then, we'll get the levels of the factor before and after using the `fct_inseq()` function.
 
 `r dspatterns::code_hints(
 "Using the ~~fct_inseq()~~ function to reorder a factor's levels by its numeric values."
@@ -576,6 +576,6 @@ While this exploration of factors, the functionality available in **forcats** fo
 - We can combine lists with the `c()` function, remove list elements by carefully assigning `NULL` to those elements, transform lists to data frames or tibbles with `as.data.frame()` or `as_tibble()`, or, do the opposite with `as.list()`
 - Creating functions that return list objects is useful in circumstances where complex information is needed with a single function call (because we can't return multiple objects, but a list can hold disparate object types)
 - Using lists as an input for a function can be a good idea should we need a complex input or if we want to further modify the one or more components of that list
-- Factors are vectors that contain levels: integers that describe the ordering of the factor's values; we can inspect factors with a number of useful base **R** functions (`as.integer()`, `levels()`, `nlevels()`, etc.) and the `fct_count()` function from the **forcats** package
+- Factors are vectors that contain levels: integers that describe the ordering of the factor's values; we can inspect factors with a number of useful base R functions (`as.integer()`, `levels()`, `nlevels()`, etc.) and the `fct_count()` function from the **forcats** package
 - Should factors vectors get modified by changing the number of elements, the storage of factor levels is not changed (and we may have levels for nonexistent values): remedy this with `fct_drop()`
 - We can get fine control over plotting categorical data when using factor transformation functions from **forcats** just before using **ggplot**; these **forcats** functions were useful in this regard: `fct_reorder()`, `fct_rev()`, `fct_recode()`, `fct_infreq()`, `fct_inseq()`, and `fct_lump_n()`.

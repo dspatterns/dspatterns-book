@@ -71,7 +71,7 @@ Two good rules of thumb when working with packages in R:
 
 1.  Install packages once per workstation/machine. Always use the console to `install.packages()`.
 
-2.  Load packages once per work session. Each `library()` call typically goes on its own line when we put our code in an **R** script or **Quarto** document.
+2.  Load packages once per work session. Each `library()` call typically goes on its own line when we put our code in an R script or **Quarto** document.
 
 You can download all of these at once, too:
 

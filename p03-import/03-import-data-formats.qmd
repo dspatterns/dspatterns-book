@@ -15,9 +15,9 @@ This section covers
 
 - The basics of the CSV file format
 - Using the `read_csv()` function from the **readr** package
-- Reading **Excel** data into **R**
+- Reading **Excel** data into R
 
-Previously, we had used datasets available in the **dspatterns** package to get the data we needed. This is all fine and well for the purpose of learning to use data transformation and visualization functions. However, real world data won't often be found in **R** packages. You may encounter useful data in text files, **Excel** files, or on the web in myriad forms. While there are hundreds of ways data can be structured and stored, there are a few formats that are quite common and so the focus of this section will be on the methods for importing these common formats into **R** (as tibbles). These formats are CSV and **Excel** files.
+Previously, we had used datasets available in the **dspatterns** package to get the data we needed. This is all fine and well for the purpose of learning to use data transformation and visualization functions. However, real world data won't often be found in R packages. You may encounter useful data in text files, **Excel** files, or on the web in myriad forms. While there are hundreds of ways data can be structured and stored, there are a few formats that are quite common and so the focus of this section will be on the methods for importing these common formats into R (as tibbles). These formats are CSV and **Excel** files.
 
 The **dspatterns** package for its part will offer some custom functions to make the examples flow a bit better. We need some CSV and **Excel** files to import, so, a few functions from **dspatterns** will be available for spawning these files in our project directory.
 
@@ -34,7 +34,7 @@ The `us_cities` dataset inside the **dspatterns** package can be written as a CS
 dataset_to_csv(dataset = "us_cities")
 ```
 
-A message should appear in your **R** console, which goes something like this:
+A message should appear in your R console, which goes something like this:
 
 ```
 #> The CSV file `us_cities.csv` was written to the working directory
@@ -43,7 +43,7 @@ A message should appear in your **R** console, which goes something like this:
 
 Further information on the `us_cities` dataset can be found by executing `help(us_cities)` in the **RStudio** console.
 
-In case we don't fully believe the message given by `dataset_to_csv()`, we can have a look at the *Files* tab in **RStudio** (in the lower-right pane, first tab). The file should be there. If it isn't, we can try two things. We should check that the path above the file view is same as that given in the message received after executing the `dataset_to_csv()` function. If it's different for whatever reason, we could navigate back to the project directory by clicking on the icon to the right of the path (the blue, **R**-in-cube icon). One last thing to try is clicking the refresh button just above (it could be that, on some file systems, a refresh of the directory listing is necessary).
+In case we don't fully believe the message given by `dataset_to_csv()`, we can have a look at the *Files* tab in **RStudio** (in the lower-right pane, first tab). The file should be there. If it isn't, we can try two things. We should check that the path above the file view is same as that given in the message received after executing the `dataset_to_csv()` function. If it's different for whatever reason, we could navigate back to the project directory by clicking on the icon to the right of the path (the blue, R-in-cube icon). One last thing to try is clicking the refresh button just above (it could be that, on some file systems, a refresh of the directory listing is necessary).
 
 ## Using **readr** to Import Data from CSV Files
 
@@ -82,7 +82,7 @@ city_table
 
 Since CSV files don't contain any information on column types, all CSV readers like `read_csv()` have to guess the column types upon reading. The message about parsing (in the console) appears during the function call. The printed table output looks to be reasonable, however.
 
-So, the CSV was successfully read into the `city_table` variable as a tibble. We verified this by printing the tibble object. However, we did get a message during import that told us that the data was parsed with a particular column specification. In this case, readr successfully made a workable table. However, we might have wanted the population values in the `pop_urb` (urban population) and `pop_mun` (municipal population) columns to be of the integer type (instead of `double`, which is the default numerical type in **R**). We can also imagine a situation where we might have ID values as numbers in a CSV but we would want them to be in a table as character values (and not as integer values). The good news is that we can provide our desired column types with the `col_types` argument. It's easiest to provide this as an encoded string of letters (one per column, in the order present in the CSV file). Here are the encodings:
+So, the CSV was successfully read into the `city_table` variable as a tibble. We verified this by printing the tibble object. However, we did get a message during import that told us that the data was parsed with a particular column specification. In this case, readr successfully made a workable table. However, we might have wanted the population values in the `pop_urb` (urban population) and `pop_mun` (municipal population) columns to be of the integer type (instead of `double`, which is the default numerical type in R). We can also imagine a situation where we might have ID values as numbers in a CSV but we would want them to be in a table as character values (and not as integer values). The good news is that we can provide our desired column types with the `col_types` argument. It's easiest to provide this as an encoded string of letters (one per column, in the order present in the CSV file). Here are the encodings:
 
 - `c`: `character`
 - `d`: `double`
@@ -124,7 +124,7 @@ The **dspatterns** package will again provide us the **Excel** files we need for
 
 ### Writing an example **Excel** file to the project directory
 
-The **dspatterns** package has a few functions that produce example **Excel** files. As always, ensure that `library(dspatterns)` is executed in the RStudio console if this is a new **R** session. We will use the `create_excel_file()` function to write an example **Excel** file to the working directory. The **Excel** document that the function creates has two sheets (and these are sometimes called tabs). The first sheet (called `us_cities`) contains all of the data from the `us_cities` dataset in the cleanest manner possible (*Figure \@ref(fig:us-cities)*). There are several qualities in this sheet that make it the data easy to import into **R**:
+The **dspatterns** package has a few functions that produce example **Excel** files. As always, ensure that `library(dspatterns)` is executed in the RStudio console if this is a new R session. We will use the `create_excel_file()` function to write an example **Excel** file to the working directory. The **Excel** document that the function creates has two sheets (and these are sometimes called tabs). The first sheet (called `us_cities`) contains all of the data from the `us_cities` dataset in the cleanest manner possible (*Figure \@ref(fig:us-cities)*). There are several qualities in this sheet that make it the data easy to import into R:
 
 - There is only a single data table
 - The data has a single header row for column names in the first row of the sheet
@@ -133,7 +133,7 @@ The **dspatterns** package has a few functions that produce example **Excel** fi
 
 ![The `us_cities` sheet in the example **Excel** file is a paragon of clean data as an input for the `read_excel()` function. This will make your life easier.](appendix-figures/86-importing-data-common-formats/04-figure-us-cities.png){#fig:us-cities}
 
-The second sheet (called `us_cities_messy`) contains the `us_cities` data, however, there is additional data strewn about in different cells. We can look to the first sheet as the idealized example of data stored in an **Excel** file. It won't provide us with any data import problems, and it's something to strive for when managing data in **Excel** files. The second is a more real-world example of an **Excel** sheet you'll often encounter. Perhaps a colleague provided this file as a source of data for a project, perhaps it's your own file, it really doesn't matter. What does matter is that the data must be cleaned/reorganized before importing it into **R**.
+The second sheet (called `us_cities_messy`) contains the `us_cities` data, however, there is additional data strewn about in different cells. We can look to the first sheet as the idealized example of data stored in an **Excel** file. It won't provide us with any data import problems, and it's something to strive for when managing data in **Excel** files. The second is a more real-world example of an **Excel** sheet you'll often encounter. Perhaps a colleague provided this file as a source of data for a project, perhaps it's your own file, it really doesn't matter. What does matter is that the data must be cleaned/reorganized before importing it into R.
 
 Ensuring that we are within an **RStudio** *Project*, let's use `create_excel_file()` to generate the example **Excel** file.
 
@@ -271,7 +271,7 @@ If the column names of the `city_table_x_m` table are not satisfactory, we can u
 "Using **dplyr**'s ~~rename()~~ function to change column names.",
 c(
 "#A The ~~rename()~~ function is from the **dplyr** package. The syntax is to have the replacement name first, making it equal to the existing column name (none of these names are in quotes).",
-"#B We have to use backticks for all of the existing names because these names have spaces in them (**R** only allows such names if they are enclosed in backticks)."
+"#B We have to use backticks for all of the existing names because these names have spaces in them (R only allows such names if they are enclosed in backticks)."
 ))`
 ```{r rename-columns, paged.print=FALSE}
 city_table_x_m <- 
@@ -288,7 +288,7 @@ city_table_x_m
 
 We can see that the column names are now the same as those in the `us_cities` dataset. If one wanted to remove some columns, then that only requires the use of the **dplyr** `select()` function.
 
-Would it have been easier to hand edit the messy **Excel** sheet before importing? Perhaps, but this is a choice that depends on the situation at hand. If you created the **Excel** file and its only purpose was to get data into **R**, then that's a good case for correcting your own mistakes in that **Excel** sheet. If a collaborator generated the file and it's treated as 'raw data', perhaps likely to be updated various times (and thus requiring periodic importing into **R**), then it's wise to not hand edit the file. That practice is error-prone and not leads to problems with reproducibility. Often, it's best to deal with these files as they are and make use of the helpful options in the **readxl** and **dplyr** packages to handle the importing.
+Would it have been easier to hand edit the messy **Excel** sheet before importing? Perhaps, but this is a choice that depends on the situation at hand. If you created the **Excel** file and its only purpose was to get data into R, then that's a good case for correcting your own mistakes in that **Excel** sheet. If a collaborator generated the file and it's treated as 'raw data', perhaps likely to be updated various times (and thus requiring periodic importing into R), then it's wise to not hand edit the file. That practice is error-prone and not leads to problems with reproducibility. Often, it's best to deal with these files as they are and make use of the helpful options in the **readxl** and **dplyr** packages to handle the importing.
 
 ## Summary
 
@@ -299,13 +299,13 @@ Would it have been easier to hand edit the messy **Excel** sheet before importin
 
 ## Exercises
 
-1. We used the `read_csv()` function to read a CSV a file into **R** as a tibble. How would you write a call if the CSV file data.csv were in the raw_data subdirectory of the project directory?
+1. We used the `read_csv()` function to read a CSV a file into R as a tibble. How would you write a call if the CSV file data.csv were in the raw_data subdirectory of the project directory?
 
 2. What is a column specification and which argument in `read_csv()` allows us to create one?
 
 3. What is the preferred way to have missing values represented in CSV files and **Excel** sheets?
 
-4. Suppose you want to import a CSV into **R** but it doesn't have a header row. You at least know what the column names should be. What could you do to import the CSV as a tibble with the desired column names?
+4. Suppose you want to import a CSV into R but it doesn't have a header row. You at least know what the column names should be. What could you do to import the CSV as a tibble with the desired column names?
 
 5. What kind of tibble would you expect if you used `read_csv("us_cities.csv", col_types = "ddddd")`? How about `read_csv("us_cities.csv", col_types = "ccccc")`?
 

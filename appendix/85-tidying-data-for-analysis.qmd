@@ -131,7 +131,7 @@ winni_mod
 
 We now find that `winni_mod` has an `hour` column with integer-based values (instead of text labels).
 
-Remember that `mutate()` modifies existing columns (or creates new ones) by providing it with a column name (here, `hour`) and an expression. The `case_when()` function and the resulting expression we have here is useful when you want to supply different logic on a case-by-case basis. The different cases are `hour` being equivalent to each of the four different `temp*` values. To the right of each `~` symbol are the expressions for each case. The expressions are very simple in every case: use the integer values of `0`, `6`, `12`, or `18` (the trailing `L` tells **R** to store these values as integers).
+Remember that `mutate()` modifies existing columns (or creates new ones) by providing it with a column name (here, `hour`) and an expression. The `case_when()` function and the resulting expression we have here is useful when you want to supply different logic on a case-by-case basis. The different cases are `hour` being equivalent to each of the four different `temp*` values. To the right of each `~` symbol are the expressions for each case. The expressions are very simple in every case: use the integer values of `0`, `6`, `12`, or `18` (the trailing `L` tells R to store these values as integers).
 
 ### Using the `separate()` Function to Split a Column into Several
 
@@ -208,7 +208,7 @@ winni_tidy
 
 The `winni_tidy` table now indeed contains a new column called `iso_date`. The `iso_date` column appears to have a type with the `<dttm>` (date-time) abbreviation in the tibble print out. The object type of `iso_date` is not `character` or `numeric` but instead `POSIXct`. It's a convenient way to store accurate date-time values in a single column of a table.
 
-About `POSIXct`: Under the hood, the `POSIXct` data type contains the number of seconds since the start of January 1, 1970. Positive numbers represent the number of seconds after this time, and negative numbers represent the number of seconds beforehand. Try using the `Sys.time()` function (which gives you a `POSIXct` object with the current date-time) with `as.numeric()` in the **R** console like this: `Sys.time() |> as.numeric()`. You'll get the number of seconds after `1970-01-01 00:00:00`. 
+About `POSIXct`: Under the hood, the `POSIXct` data type contains the number of seconds since the start of January 1, 1970. Positive numbers represent the number of seconds after this time, and negative numbers represent the number of seconds beforehand. Try using the `Sys.time()` function (which gives you a `POSIXct` object with the current date-time) with `as.numeric()` in the R console like this: `Sys.time() |> as.numeric()`. You'll get the number of seconds after `1970-01-01 00:00:00`. 
 
 Now that we have the time data represented in a single column, a basic scatterplot in **ggplot** requires only two statements: the `ggplot()` call followed by defining a layer of points with the `geom_point()` function.
 
@@ -248,7 +248,7 @@ winni_tidy <-
 
 The code that mutates the `winni_tidy` table writes over the previous version of `winni_tidy.` How do we verify that the change has been successful? After all, using `winni_tidy` by itself only shows us the first few rows of the table. We need a better way to inspect the modified table, so that we can sanity check our work.
 
-A reasonable method involves both **dplyr**'s `select()` function and the base **R** function `summary()`. The idea is to reduce the table to the column of interest first, and then get summary statistics for the single column (so as to not clutter up the console with summary output for many columns). We won't overwrite the `winni_tidy` object with a reassignment here, we just want to inspect the table non-destructively.
+A reasonable method involves both **dplyr**'s `select()` function and the base R function `summary()`. The idea is to reduce the table to the column of interest first, and then get summary statistics for the single column (so as to not clutter up the console with summary output for many columns). We won't overwrite the `winni_tidy` object with a reassignment here, we just want to inspect the table non-destructively.
 
 `r dspatterns::code_hints(
 "Inspecting the data in a column (~~temp~~) to verify that the mutation had occurred.",
