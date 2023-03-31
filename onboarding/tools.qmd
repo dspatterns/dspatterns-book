@@ -2,11 +2,11 @@
 
 {{< include ../_patterns.qmd >}}
 
-In this book, we'll be using **R** and the **RStudio IDE**. You'll need to download each from the internet to install and use on your local workstation.
+In this book, we'll be using R and the **RStudio IDE**. You'll need to download each from the internet to install and use on your local workstation.
 
-What is **R**? 
+What is R? 
 
-**R** is the name of the programming language itself, based off of S from Bell Labs, which users access through a command-line interpreter (`>`). Here is a bit of R code:
+R is the name of the programming language itself, based off of S from Bell Labs, which users access through a command-line interpreter (`>`). Here is a bit of R code:
 
 ```{r}
 5*2
@@ -27,23 +27,23 @@ You can use R with its built-in GUI ("graphical user interface"), but in this bo
 
 
 
-## Installing **R** and the **RStudio IDE**
+## Installing R and the **RStudio IDE**
 
-**R** is currently developed by the *R Development Core Team* and, at the time of this writing, the latest **R** release is 4.0. **R** has a package system that allows users to write and distribute their own packages of functions. The number of user-created packages at this point is well over 10,000 and that figure is part of the reason why **R** has so much functionality. A more detailed look at the **R** landscape is available in the *Appendix*.
+R is currently developed by the *R Development Core Team* and, at the time of this writing, the latest R release is 4.0. R has a package system that allows users to write and distribute their own packages of functions. The number of user-created packages at this point is well over 10,000 and that figure is part of the reason why R has so much functionality. A more detailed look at the R landscape is available in the *Appendix*.
 
-There are two pieces of software you'll need to download. One is **R** itself and the other is the *Community Edition* of the **RStudio IDE** IDE. Luckily, you can use both of these in Windows, macOS, and in various distributions of Linux. Depending on your OS there are preferred ways to install both. While we do need both pieces of software installed, the order of installation is not important.
+There are two pieces of software you'll need to download. One is R itself and the other is the *Community Edition* of the **RStudio IDE** IDE. Luckily, you can use both of these in Windows, macOS, and in various distributions of Linux. Depending on your OS there are preferred ways to install both. While we do need both pieces of software installed, the order of installation is not important.
 
 
 ### macOS Installation {-}
 
-Here are the steps for obtaining and installing the **R** programming language.
+Here are the steps for obtaining and installing the R programming language.
 
-1. With your preferred web browser, go to <https://cloud.r-project.org/>. This is the main site for **R** and *CRAN*.
+1. With your preferred web browser, go to <https://cloud.r-project.org/>. This is the main site for R and *CRAN*.
 2. Follow the *CRAN* link to the left.
 3. Follow the *Downloads* link to go to the download page then get the installer for the Macintosh computing platform. It downloads as a DMG file.
 4. Open the installer file and follow the installation instructions to completion.
 
-You then have **R**. If you’d like to be fully certain of that, open the *Terminal* application and type **R** and the **R** command-line console should appear.
+You then have R. If you’d like to be fully certain of that, open the *Terminal* application and type R and the R command-line console should appear.
 
 
 :::{.callout-note}
@@ -73,14 +73,14 @@ Launch RStudio. You should get a window similar to the screenshot you see [here]
 
 ### Windows Installation {-}
 
-The installation of **R** on Windows is not very different from that on the Mac. There are some subtle differences though. Let's walk through the entire process. First, we need to get **R**, so here are the steps:
+The installation of R on Windows is not very different from that on the Mac. There are some subtle differences though. Let's walk through the entire process. First, we need to get R, so here are the steps:
 
-1. Go to <https://cloud.r-project.org/>. This is the entry point to **R**-as-a-project and *CRAN.*
+1. Go to <https://cloud.r-project.org/>. This is the entry point to R-as-a-project and *CRAN.*
 2. Follow the *CRAN* link to the left.
 3. Follow the *Downloads* link to go to the download page then get the installer for the Windows computing platform.
-4. Run the installer program; it may ask a number of potentially confusing questions, however, just accept the defaults. Soon thereafter the installation will finish, and **R** for Windows will be installed.
+4. Run the installer program; it may ask a number of potentially confusing questions, however, just accept the defaults. Soon thereafter the installation will finish, and R for Windows will be installed.
 
-**R** will create a few shortcut icons and a good way to check that the installation had succeeded is to open **R** through the *Start Menu*.
+R will create a few shortcut icons and a good way to check that the installation had succeeded is to open R through the *Start Menu*.
 
 :::{.callout-note}
 ## Check-in
@@ -115,18 +115,18 @@ RStudio provides a powerful user interface for R, called an *integrated developm
 * a syntax-highlighting editor that supports direct code execution, and 
 * tools for plotting, history, debugging and workspace management.
 
-**RStudio IDE** is an integrated development environment (IDE) that makes it easy to do work with **R** (we'll simply refer to this IDE as **RStudio** throughout this book). **RStudio** and **R** itself both need to be installed separately (the order of installation does not matter). Detailed instructions for the installation of both (for Windows and macOS) are available in the *Appendix*.
+**RStudio IDE** is an integrated development environment (IDE) that makes it easy to do work with R (we'll simply refer to this IDE as **RStudio** throughout this book). **RStudio** and R itself both need to be installed separately (the order of installation does not matter). Detailed instructions for the installation of both (for Windows and macOS) are available in the *Appendix*.
 	
-**RStudio** has a customizable, four-pane workspace. It has a collection of useful features that help with **R** coding such as syntax highlighting, autocomplete, file and project management, and much more.
+**RStudio** has a customizable, four-pane workspace. It has a collection of useful features that help with R coding such as syntax highlighting, autocomplete, file and project management, and much more.
 
-![The **RStudio IDE** environment with an **Quarto** file in focus in top-left (the source pane) and the **R** console occupying the bottom-left.](appendix-figures/82-starting-with-r/figure-rstudio-desktop-env.png){#fig:rstudio-desktop-env}
+![The **RStudio IDE** environment with an **Quarto** file in focus in top-left (the source pane) and the R console occupying the bottom-left.](appendix-figures/82-starting-with-r/figure-rstudio-desktop-env.png){#fig:rstudio-desktop-env}
 
 The diagram shown in @fig:rstudio-desktop-env provides a reference to a cross section of the buttons available in the initial view. The most important takeaways from this first look at **RStudio** are:
 
-  1. The source pane (top-left) is where you would work on **R** scripts and **Quarto** documents.
-  2. The console pane (bottom-left) is where you would access the **R** console and the system's terminal.
+  1. The source pane (top-left) is where you would work on R scripts and **Quarto** documents.
+  2. The console pane (bottom-left) is where you would access the R console and the system's terminal.
   3. The toolbar (above the source pane) provides useful tools for managing and navigating through documents and projects.
-  4. Two panes (to the right) provide access to files, workspace objects, **R** packages, plots, and much more. 
+  4. Two panes (to the right) provide access to files, workspace objects, R packages, plots, and much more. 
   5. The *Project* dropdown (upper-right corner) provides access to existing projects, project options, and anything else related to managing projects.
   
 It's important to note that not all of the features of **RStudio** are likely to be touched by the average user. Early on, we will only need a very small subset of the functionality that's provided.
@@ -136,7 +136,7 @@ Indeed, a little can go a long way, so, while on the topic of the small things, 
   1. <kbd>Ctrl</kbd> + <kbd>Enter</kbd> — runs the current line or a selection of code from the editor in the console. This is extremely useful as you select even nested functions and run them in the console without copying anything anywhere.
   2. <kbd>Tab</kbd> — provides an auto-complete function. Start typing in the editor or even in the console and try hitting the tab key: **RStudio** will suggest functions, variables, or file names. Up and down with the arrow keys and another <kbd>Tab</kbd> (or <kbd>Enter</kbd>) will accept the choice.
   3. <kbd>Control</kbd> + <kbd>.</kbd> — brings up a search bar where you can search for files or functions. Up and down arrows and return allow you to navigate quickly to the file (at the right location) in a new tab.
-  4. <kbd>Command</kbd> + <kbd>Option</kbd> + <kbd>I</kbd> (<kbd>Control</kbd> + <kbd>Alt</kbd> + <kbd>I</kbd> on Windows) — creates an empty **R** code chunk in an **Quarto** document. As this is one of the key things you'll be doing, this shortcut does save a lot of time.
+  4. <kbd>Command</kbd> + <kbd>Option</kbd> + <kbd>I</kbd> (<kbd>Control</kbd> + <kbd>Alt</kbd> + <kbd>I</kbd> on Windows) — creates an empty R code chunk in an **Quarto** document. As this is one of the key things you'll be doing, this shortcut does save a lot of time.
   
 With time, it becomes easier to **RStudio** with less reliance on a pointing device. If you want to get on that road try the **RStudio** shortcut <kbd>Shift</kbd> + <kbd>Option</kbd> + <kbd>K</kbd> (<kbd>Shift</kbd> + <kbd>Alt</kbd> + <kbd>K</kbd> on Windows), it brings up the (*Keyboard Shortcuts Help* overlay (which has a lot of keyboard shortcuts).
 

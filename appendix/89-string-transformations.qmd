@@ -10,20 +10,20 @@ library(stringr)
 
 This section covers
 
-- Working with vectors and learning about **R**'s recycling behavior
-- Learning and reviewing some of the more essential base **R** functions (and getting the names of the dozens of other useful functions)
+- Working with vectors and learning about R's recycling behavior
+- Learning and reviewing some of the more essential base R functions (and getting the names of the dozens of other useful functions)
 - Writing our own functions to manipulate data
 - Writing conditional statements and understanding the logic behind control flow
-- The finer details of strings and character vectors in **R**
-- Formatting, transforming, and printing character objects using several useful base **R** functions
+- The finer details of strings and character vectors in R
+- Formatting, transforming, and printing character objects using several useful base R functions
 - Writing and using regular expressions to use as patterns for more advanced string-based applications
 - Using regex patterns with functions from the **stringr** package to work with strings and character vectors
 
-Text is set of characters, strung together, giving us the term *string*. Working with strings is something you might do in **R** over and over again. Because text may be very unstructured, working with it can be quite challenging. We need to understand the tools available for dealing with strings in base **R** and in the Tidyverse because strings play a big role in many data cleaning and preparation tasks. We'll use small and large examples of text in our lessons here. The **dspatterns** package provides a dataset for this section called `resto_reviews`. It's not a tibble this time but rather a character vector containing reviews for a restaurant. We will occasionally use it to practice with a collection of string-based **R** functions. Some of these functions will be base **R** functions and others will come from the **stringr** package from the Tidyverse.
+Text is set of characters, strung together, giving us the term *string*. Working with strings is something you might do in R over and over again. Because text may be very unstructured, working with it can be quite challenging. We need to understand the tools available for dealing with strings in base R and in the Tidyverse because strings play a big role in many data cleaning and preparation tasks. We'll use small and large examples of text in our lessons here. The **dspatterns** package provides a dataset for this section called `resto_reviews`. It's not a tibble this time but rather a character vector containing reviews for a restaurant. We will occasionally use it to practice with a collection of string-based R functions. Some of these functions will be base R functions and others will come from the **stringr** package from the Tidyverse.
 
-## How Strings and Character Vectors Work in **R**
+## How Strings and Character Vectors Work in R
 
-The characters that compose a string can include letters, numbers, and even symbols. For the purpose of simplicity here, we'll refer to individual strings and character vectors as character objects. **R** can store strings and it does so with a data type of character, and, the class is also character. Try using these statements in the **R** console: `typeof("a string")` and `class("another string")`. Both of these will return `"character"`. In this section we'll create strings and character vectors and further understand the subtle behaviors in how **R** treats these objects. We will also learn all about a small set of base **R** functions that are used very often with character objects.
+The characters that compose a string can include letters, numbers, and even symbols. For the purpose of simplicity here, we'll refer to individual strings and character vectors as character objects. R can store strings and it does so with a data type of character, and, the class is also character. Try using these statements in the R console: `typeof("a string")` and `class("another string")`. Both of these will return `"character"`. In this section we'll create strings and character vectors and further understand the subtle behaviors in how R treats these objects. We will also learn all about a small set of base R functions that are used very often with character objects.
 
 ### Making Simple Strings and Character Vectors
 
@@ -39,7 +39,7 @@ one_word <- "hello"  #A
 one_word
 ```
 
-We could just as easily have used single quotes (`' '`) around the string. The only condition is that you use the same type of quoting at the beginning and at the end. So `"hello"` is fine whereas `"hello'` won't work at all. I personally use double quotes whenever possible but, whether you use single or double quotes, **R** will always print character objects with double quotes.
+We could just as easily have used single quotes (`' '`) around the string. The only condition is that you use the same type of quoting at the beginning and at the end. So `"hello"` is fine whereas `"hello'` won't work at all. I personally use double quotes whenever possible but, whether you use single or double quotes, R will always print character objects with double quotes.
 
 The `c()` function helps us create vectors, and we can use it to generate character vectors from scratch (just as we've done several times before). Let's make a character vector that we can use for further experimentation.
 
@@ -65,7 +65,7 @@ words_and_days
 
 The output vector is still a character vector since we combined vectors of the same type: `character`.
 
-This result isn't too surprising. We know by now that vectors in **R** have to contain elements of the same type. But what would happen if a character vector were to be combined with a numeric vector? Let's find out by combining three_words with a vector of three numbers.
+This result isn't too surprising. We know by now that vectors in R have to contain elements of the same type. But what would happen if a character vector were to be combined with a numeric vector? Let's find out by combining three_words with a vector of three numbers.
 
 `r dspatterns::code_hints(
 "Combining a character vector with a numeric vector."
@@ -134,13 +134,13 @@ and there is no need to call `str()` to determine the column types since they ar
 
 ## Different Ways to Format Text
 
-Base **R** contains many functions to format text! We can start with numbers and use the `formatC()` function to transform them to text, using options that define exactly how the final text-based numbers will appear. Why would we format numbers to text? We often do this for display purposes. Formatting a numeric vector to a character vector can allow for consistent usage of decimal places, decoration of numbers with commas and units (like currency symbols or percent signs), or, left/right padding with spaces or other characters.
+Base R contains many functions to format text! We can start with numbers and use the `formatC()` function to transform them to text, using options that define exactly how the final text-based numbers will appear. Why would we format numbers to text? We often do this for display purposes. Formatting a numeric vector to a character vector can allow for consistent usage of decimal places, decoration of numbers with commas and units (like currency symbols or percent signs), or, left/right padding with spaces or other characters.
 
 Other times you'll have text strings but they need to be normalized to a common format. This might entail putting all characters in uppercase or lowercase, trimming whitespace, or, getting substrings (i.e., pieces of the original text string starting and ending at certain character positions). It's sometimes surprising how often you'll need to format text and numbers during data analysis tasks so acquiring a bag of tricks for text manipulation will really pay off.
 
 ### Formatting Numbers to Strings with `formatC()`
 
-The base **R** function `formatC()` is often used to format numeric values to strings with a consistent format. There are two other base **R** functions that also do formatting: `format()` and `sprintf()`. However since `formatC()` is more specialized to numeric formatting, we'll devote some time to learning some common uses of formatting numeric data to text.
+The base R function `formatC()` is often used to format numeric values to strings with a consistent format. There are two other base R functions that also do formatting: `format()` and `sprintf()`. However since `formatC()` is more specialized to numeric formatting, we'll devote some time to learning some common uses of formatting numeric data to text.
 
 You might have some decimal numbers in a numeric vector and there is the requirement for those to be formatted in the exact same way (three decimal digits, must have a period for the decimal mark, etc.). The `formatC()` function can handle this, have a look at this example:
 
@@ -197,9 +197,9 @@ combined_tbl
 
 The combined index string has a numeric component that still sorts properly (try it without the `mutate()` statement to see the difference!). And this is all thanks to `formatC()` and its myriad options.
 
-### Simple String Transformations with base **R** Functions
+### Simple String Transformations with base R Functions
 
-There are some useful base **R** functions that help us to transform character values in vectors. Should we need to have strings all in upper case or lower case letters, the `toupper()` and `tolower()` functions will make that possible. 
+There are some useful base R functions that help us to transform character values in vectors. Should we need to have strings all in upper case or lower case letters, the `toupper()` and `tolower()` functions will make that possible. 
 `r dspatterns::code_hints(
 "Using the ~~toupper()~~ and ~~tolower()~~ functions to transform characters to upper case and lower case."
 )`
@@ -279,9 +279,9 @@ What is a regular expression? It can be thought of as a search string, but it's 
 
 Think of a search you might do in a word processor. The search facility allows you to find simple matches with a simple string, showing you all of the exact matches of the search string to the text content. A regular expression can do this too. However, it goes so much further. You can match using higher-order patterns, such as two letters followed by two digits, or, words starting with a specified set of letters. We can make regex patterns that match phone numbers, words with similar but alternate spellings, email addresses, and much more.
 
-How does this relate to **R**? Once we begin to understand the language behind making regular expression patterns, we'll use those patterns in **R** functions to do things with text. The *Tidyverse* **stringr** package has quite a few functions that have a pattern argument where a regular expression is expected. Those functions that use regex patterns allow us to get information about a body of text (e.g., `str_count()`, `str_detect()`, `str_starts()`, `str_ends()`, `str_which()`), extract parts of text (e.g., `str_extract()`, `str_extract_all()`), or transform a piece of text (`str_subset()`, `str_replace()`, `str_replace_all()`).
+How does this relate to R? Once we begin to understand the language behind making regular expression patterns, we'll use those patterns in R functions to do things with text. The *Tidyverse* **stringr** package has quite a few functions that have a pattern argument where a regular expression is expected. Those functions that use regex patterns allow us to get information about a body of text (e.g., `str_count()`, `str_detect()`, `str_starts()`, `str_ends()`, `str_which()`), extract parts of text (e.g., `str_extract()`, `str_extract_all()`), or transform a piece of text (`str_subset()`, `str_replace()`, `str_replace_all()`).
 
-It's good to have a playground for experimenting with regexes and for that, the *RegExplain* gadget for **RStudio** (developed by Garrick Aden-Buie) is really good. It allows us to quickly experiment with our regex patterns. It's included as part of the **dspatterns** package for convenience; all we need to do is run `dspatterns_regexplain_gadget()` in the **R** console:
+It's good to have a playground for experimenting with regexes and for that, the *RegExplain* gadget for **RStudio** (developed by Garrick Aden-Buie) is really good. It allows us to quickly experiment with our regex patterns. It's included as part of the **dspatterns** package for convenience; all we need to do is run `dspatterns_regexplain_gadget()` in the R console:
 
 `r dspatterns::code_hints(
 "Opening up the *RegExplain* gadget is great for experimenting with regular expressions."
@@ -320,7 +320,7 @@ The examples in *Figure \@ref(fig:regex-examples-3)* can show us the difference 
 
 The first pattern in *Figure \@ref(fig:regex-examples-3)* isn't too surprising considering what we now know about the dot character's supreme matching abilities. The second pattern, `".\\.,"` uses the dot (matching all) followed by its escaped form (matching a period); this will match the last two characters in the sentence (that ends with a period). The last pattern, `"\\.\\.,"` just serves to remind us that matching on two literal period characters won't result in a match at all since there's only one period in the entire sentence (a trick question! but educational nonetheless).
 
-To test these matches in **R**, we can use either the `str_match()` or `str_match_all()` functions from the **stringr** package. The `str_match()` function returns us the first match of the pattern from the input string. Its variant `str_match_all()` returns all matches from the input text. The following provides an example of how this works in practice.
+To test these matches in R, we can use either the `str_match()` or `str_match_all()` functions from the **stringr** package. The `str_match()` function returns us the first match of the pattern from the input string. Its variant `str_match_all()` returns all matches from the input text. The following provides an example of how this works in practice.
 
 `r dspatterns::code_hints(
 "Using ~~str_match()~~ to determine the first match of the regex pattern on the text.",
@@ -459,7 +459,7 @@ Repetition is a very useful feature because we don't have to repeat regex tokens
 
 ### Anchors
 
-Unlike specific characters we were matching to before, anchors don't represent a character but rather a position. In the regular expressions commonly used in **R**, anchors basically tie a pattern to the start or end of the string. There are two of them:
+Unlike specific characters we were matching to before, anchors don't represent a character but rather a position. In the regular expressions commonly used in R, anchors basically tie a pattern to the start or end of the string. There are two of them:
 	
 - `^` matches the start of the string
 - `$` matches the end of the string
@@ -560,7 +560,7 @@ Sometimes you want to know if a particular pattern exists in one or more strings
 "Using the ~~str_detect()~~ function to see whether there are any matches of our pattern in the ~~resto_reviews~~ vector.",
 c(
 "#A The ~~str_detect()~~ function, like all <code>str_*()</code> functions in the **stringr** package, always takes the vector of strings as the first argument.",
-"#B The base **R** ~~table()~~ function is useful for converting a vector to a contingency table, which is a table counts for each categorical variable (~~TRUE~~ or ~~FALSE~~ in this case)."
+"#B The base R ~~table()~~ function is useful for converting a vector to a contingency table, which is a table counts for each categorical variable (~~TRUE~~ or ~~FALSE~~ in this case)."
 ))`
 ```{r str-detect}
 str_detect(string = resto_reviews, pattern = "yum\\w*?") %>%  #A
@@ -585,7 +585,7 @@ resto_reviews[matches]  #B
 
 With the two reviews that matched our pattern, the word 'yummy' is seen twice. And while this is admittedly a simple example of determining whether a single pattern is detected in a fairly large set of strings, we can probably imagine more complex searches that involve matching on multiple conditions.
 
-Suppose you wanted to extract all mentions of pricing from the `resto_reviews` dataset. One approach is too look for all price mentions with dollar signs affixed (i.e., $12 rather than twelve dollars). Further to this, the task involves getting all of these matches and eventually working the results into a numeric vector, which may be used for getting some basic descriptive statistics like the mean or min/max values. This can be accomplished by using the `str_extract_all()` and the `str_remove()` functions (along with some base **R** functions):
+Suppose you wanted to extract all mentions of pricing from the `resto_reviews` dataset. One approach is too look for all price mentions with dollar signs affixed (i.e., $12 rather than twelve dollars). Further to this, the task involves getting all of these matches and eventually working the results into a numeric vector, which may be used for getting some basic descriptive statistics like the mean or min/max values. This can be accomplished by using the `str_extract_all()` and the `str_remove()` functions (along with some base R functions):
 
 `r dspatterns::code_hints(
 "Getting all matches of dollar values and eventually resolving to a single numeric vector.",
@@ -608,10 +608,10 @@ The result of this data extraction scheme is the numeric vector with the values 
 
 - Combining vectors with `c()` can result in type coercion; if any vectors used with `c()` are of the `character` class, the resulting vector will be `character` (changing `numeric` vectors to `character`, for example)
 - When using `data.frame()` to make a table object, any `character` vectors used as inputs will be converted to factors unless we set `stringsAsFactors` to `FALSE`; a table produced with `tibble()` won't automatically convert strings to factors
-- The `str()` function shows us the structure of an **R** object and it's useful for inspecting data frames and lists (among other **R** data structures)
+- The `str()` function shows us the structure of an R object and it's useful for inspecting data frames and lists (among other R data structures)
 - The `formatC()` function is useful for formatting numeric values to string representations and has many options and useful applications
-- There are many useful base **R** functions for string transformations: `toupper()`, `tolower()`, `abbreviate()`, `substr()`, `trimws()`, and `strtrim()`.
-- Regular expressions (or regexes) in **R** are very useful in conjunction with string-handling functions that have a `pattern` argument
+- There are many useful base R functions for string transformations: `toupper()`, `tolower()`, `abbreviate()`, `substr()`, `trimws()`, and `strtrim()`.
+- Regular expressions (or regexes) in R are very useful in conjunction with string-handling functions that have a `pattern` argument
 - In the regular expressions primer, important regex concepts were literals, metacharacters, escaping, the dot (that matches all), character sets, character classes, negation, repetition, greediness/laziness, alternation, anchors, grouping, capturing, and backreferences... phew!
 - Experimentation with regular expressions is important for learning, so using the *RegExplain* gadget or the **stringr** package's `str_match()` or `str_match_all()` functions can be helpful for your own experimentation
 - The **stringr** package provides a well-designed set of functions for making working with strings easy and most of them use regular expressions; we found `str_detect()` useful for detecting matches, and `str_extract()`/`str_extract_all()` made it possible for us to extract the matched text for further manipulation

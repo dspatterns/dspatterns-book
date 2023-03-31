@@ -21,7 +21,7 @@ This section covers
 
 In the last section we focused on using **ggplot** to make line graphs and bar plots. That set the stage to having a closer look at customizing the plots until they were both aesthetically pleasing and presentation ready. In this section, we'll revisit scatter plots, histograms, box plots, and possibly some you hadn't heard of before. For those plots that **ggplot** just can't do, there are other packages available that extend **ggplot** for those tasks (and we'll use one called **ggridges** to make ridgeline plots). The examples in this section will expose you to new **ggplot** functions for customizing of plot elements such the axes and legends, and there will be more functions introduced for modifying the colors of plot objects.
 
-In the many examples that follow, we'll use datasets provided in the **dspatterns** package. One of them was used before (`nycweather`) but the `imdb` and `pitchfork` datasets are new in this section and great fun to use! You can find out more about them within **R** by visiting their documentation pages (`help(imdb)` or `help(pitchfork)`).
+In the many examples that follow, we'll use datasets provided in the **dspatterns** package. One of them was used before (`nycweather`) but the `imdb` and `pitchfork` datasets are new in this section and great fun to use! You can find out more about them within R by visiting their documentation pages (`help(imdb)` or `help(pitchfork)`).
 
 ## Lollipop Plots and Cleveland Dot Plots
 
@@ -251,7 +251,7 @@ imdb_filtered |>
 
 The data points in the scatter plot of @fig-imdb-plot-log-y now have a bit more vertical spread. It's surprising to see that some movies grossed less than \$10,000 but that's entertainment. A plot legend appeared, which is good, but we're going to axe it in the end anyway (and we know how). Thanks to less overplotting, we now can see two big clusters of points, distinguished by their earnings (generally, one cluster has earnings less than \$10M, and the other more than that).
 
-It would be interesting to annotate the plot with two dividing lines. One would be the median of IMDB ratings, the other the median of gross earnings at the box office. This is, of course, a snap in **R** because statistics it can do well. We only need to use the base **R** `median()` function on a vector of gross values and a vector of score values. The following code listing demonstrates how this is done.
+It would be interesting to annotate the plot with two dividing lines. One would be the median of IMDB ratings, the other the median of gross earnings at the box office. This is, of course, a snap in R because statistics it can do well. We only need to use the base R `median()` function on a vector of gross values and a vector of score values. The following code listing demonstrates how this is done.
 
 `r dspatterns::code_hints(
 "Getting the median earnings and median rating from ~~imdb_filtered~~ to generate dividing lines in the finalized plot."

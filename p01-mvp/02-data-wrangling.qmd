@@ -21,7 +21,7 @@ performing several column-selection operations with **dplyr**’s `select()` fun
 = creating new table columns (or modifying existing ones) with `mutate()` and carefully crafted expressions
 - summarizing tabular data with the combination of `group_by()` and `summarize()`
 
-We will start off by getting our bearings with assignment of variables in **R**. Later, we'll certainly get the opportunity to learn more programming fundamentals, however assignment is one of those topics that should be addressed right away. Then, the installation of packages will be covered. This will give us the chance to install some of required packages: **tidyverse**, **dspatterns**, and **devtools**.
+We will start off by getting our bearings with assignment of variables in R. Later, we'll certainly get the opportunity to learn more programming fundamentals, however assignment is one of those topics that should be addressed right away. Then, the installation of packages will be covered. This will give us the chance to install some of required packages: **tidyverse**, **dspatterns**, and **devtools**.
 
 The rest of the section is devoted to learning a skill that is very important: transforming tabular data. Of all the skills you will learn, the value of this one cannot be understated. A bit more than the usual amount of time will and should be spent on this.
 
@@ -36,11 +36,11 @@ We will learn how to install packages like **tidyverse**, **dspatterns**, and **
 
 ## Programming Basics and Package Installation
 
-Before we get to the fun stuff, it's best if we first get acquainted with two things: (1) the programming concept of assignment, and (2) installing packages. We will have a more in-depth look at **R** programming in later sections and just touch upon the basics for now. In **R**, installing and using packages is commonplace and thus a fundamental skill, so a few packages will be installed in this section.
+Before we get to the fun stuff, it's best if we first get acquainted with two things: (1) the programming concept of assignment, and (2) installing packages. We will have a more in-depth look at R programming in later sections and just touch upon the basics for now. In R, installing and using packages is commonplace and thus a fundamental skill, so a few packages will be installed in this section.
 
 ### The Basics of Assignment
 
-Let's create a new **R** script using the New File icon in the **RStudio** toolbar. Now we can type lines of code in the open **R** Script document in the Source pane, and, also execute individual statements or regions of code by selecting them (as you would select text in a word processor) and using the *Control* + *Enter* shortcut.
+Let's create a new R script using the New File icon in the **RStudio** toolbar. Now we can type lines of code in the open R Script document in the Source pane, and, also execute individual statements or regions of code by selecting them (as you would select text in a word processor) and using the *Control* + *Enter* shortcut.
 
 We assign values to variables (that we name ourselves) by using the leftward arrow `<-`. Many different types of data can be assigned to a variable. They can be single values, a vector of values (within the `c()` function, which combines individual values of the same type), or, more complex objects like tables (we'll get to that in the next section). Let's have a look at three examples.
 
@@ -99,7 +99,7 @@ We can overwrite any variable currently assigned. This is done by assigning a va
 `r dspatterns::code_hints(
 "Replacing the ~~one_word~~ variable with a different value.",
 c(
-"L.1 Assigning any value to an already assigned variable. Here, **R** will simply overwrite the previous value in ~~one_word~~, and, **R** won't inform you that ~~one_word~~ was previously assigned."
+"L.1 Assigning any value to an already assigned variable. Here, R will simply overwrite the previous value in ~~one_word~~, and, R won't inform you that ~~one_word~~ was previously assigned."
 ))`
 ```{r}
 #| label: one-word-new-assign
@@ -111,7 +111,7 @@ The return value in the console is now `"hi"`, or, `#> [1] "hi"`. The *Environme
 
 ## Using **dplyr** to Transform Data
 
-While visualizing your data is useful for generating insights, it's not common that you'll initially have the data in exactly the form you need. It's far more likely that you first will have to create some new variables or generate some summaries before plotting the data. So, we'll get to visualization in the next section and learn all transforming our data first. The process of data transformation is made easier in **R** by using the **dplyr** package. We'll learn how to use only a few functions from **dplyr** to modify a dataset in several useful ways.
+While visualizing your data is useful for generating insights, it's not common that you'll initially have the data in exactly the form you need. It's far more likely that you first will have to create some new variables or generate some summaries before plotting the data. So, we'll get to visualization in the next section and learn all transforming our data first. The process of data transformation is made easier in R by using the **dplyr** package. We'll learn how to use only a few functions from **dplyr** to modify a dataset in several useful ways.
 
 ### The Main **dplyr** Functions
 
@@ -133,7 +133,7 @@ All these functions generally work the same, where
 
 Eventually we'll see that we can chain together multiple simple steps to achieve a complex result but, first, let's just see how each of these functions work in isolation.
 
-Through the rest of this section, let's work with **dplyr** in the context of an **R Markdown** document. In the following code listing, we'll create a new **R Markdown** document and include this **R** code chunk just after the YAML header.
+Through the rest of this section, let's work with **dplyr** in the context of an **R Markdown** document. In the following code listing, we'll create a new **R Markdown** document and include this R code chunk just after the YAML header.
 
 `r dspatterns::code_hints(
 "Loading the **tidyverse** and **dspatterns** packages.",
@@ -164,11 +164,11 @@ The following is the console output which, in an **R Markdown** document, appear
 
 After running the chunk (using `Shift` + `Control` + `Enter` or the *Run Current Chunk* button), you might see messages relating to conflicts: this is entirely normal and expected (so don't worry about it). Now these packages are loaded, and all of their functions are available to use.
 
-We'll continue the practice of writing new **R** code chunks and running them interactively in an **R Markdown** document. The *Environment* pane in **RStudio** will fill up with variables and objects during this progression. Whenever in doubt about whether a variable has or hasn't been assigned during this sort of ad-hoc data analysis, it is recommended to use the **RStudio** menu option *Session >> Restart R and Clear Output*. This provides a clean slate where you can then run the chunks from top to bottom.
+We'll continue the practice of writing new R code chunks and running them interactively in an **R Markdown** document. The *Environment* pane in **RStudio** will fill up with variables and objects during this progression. Whenever in doubt about whether a variable has or hasn't been assigned during this sort of ad-hoc data analysis, it is recommended to use the **RStudio** menu option *Session >> Restart R and Clear Output*. This provides a clean slate where you can then run the chunks from top to bottom.
 
 ### The `sw` Dataset and the Elements of a Table
 
-The dataset with the name `sw` is provided by the **dspatterns** package. That is, once **dspatterns** is loaded in the session with `library(dspatterns)`, the `sw` dataset will be available. **R** considers datasets to be important components of packages since they are valuable for testing out a package's functions. It may seem odd, but we can treat `sw` like a variable that doesn't have to be explicitly assigned by the user. In the following code listing, we see that just by entering `sw` in the console, its output is provided.
+The dataset with the name `sw` is provided by the **dspatterns** package. That is, once **dspatterns** is loaded in the session with `library(dspatterns)`, the `sw` dataset will be available. R considers datasets to be important components of packages since they are valuable for testing out a package's functions. It may seem odd, but we can treat `sw` like a variable that doesn't have to be explicitly assigned by the user. In the following code listing, we see that just by entering `sw` in the console, its output is provided.
 
 `r dspatterns::code_hints(
 "The ~~sw~~ dataset can be printed to the console by using ~~sw~~.",
@@ -191,7 +191,7 @@ The returned console output for `sw` has a lot of information. This is a good op
 
 Depending on the width of your editing pane, the printing of the tibble might show more or less of the table data. Columns that don't fit in the print area are mentioned at the bottom (e.g., `... with 3 more variables: ...`) and, with smaller widths of the console or **R Markdown** editing pane, data in some columns will be more truncated (e.g., showing `Obi-Wan Ken...` instead of the full name of `Obi-Wan Kenobi`). While this is intentional, we may want to inspect just a little bit more of the data values. One quick fix is to manually widen the output area (by dragging the center, vertical pane in **RStudio** left or right) and print the output again. The extra width will provide more space for the individual columns and the output may even show you data in more columns.
 
-Sometimes, you'll discover a dataset in a package, look at it, and have no context for what the columns are supposed to be indicating. Datasets in **R** usually have internal help documents that explain the dataset in some detail. Try typing in `help(sw)` or `?sw` in the console, the help document will appear in the Help section in the bottom-right pane in **RStudio**.
+Sometimes, you'll discover a dataset in a package, look at it, and have no context for what the columns are supposed to be indicating. Datasets in R usually have internal help documents that explain the dataset in some detail. Try typing in `help(sw)` or `?sw` in the console, the help document will appear in the Help section in the bottom-right pane in **RStudio**.
 
 You may have noticed a few of the values in the printed dataset show as `NA`. Those indicate missing values, perhaps where no observation exists for a particular variable in a row. We can have `NA` values for all different types of columns (e.g., `character`, `numeric`, etc.).
 
@@ -505,7 +505,7 @@ c(
 summarize(by_species, avg_mass = mean(mass, na.rm = TRUE))
 ```
 
-Now we see that all values in the `avg_mass` column are non-`NA`, however, there is now at least one `NaN` (not a number) value. This is explainable. The cause of this stems from there not being any non-`NA` values for that species. The consequence is that a mean couldn't be calculated, so **R** returned an `NaN`.
+Now we see that all values in the `avg_mass` column are non-`NA`, however, there is now at least one `NaN` (not a number) value. This is explainable. The cause of this stems from there not being any non-`NA` values for that species. The consequence is that a mean couldn't be calculated, so R returned an `NaN`.
 
 Let's create a summary containing two grouping columns (`species` and `gender`) and two summary columns (`avg_mass` and `avg_height`) to further demonstrate what can be done with the `group_by()`/`summarize()` combination.
 
@@ -714,13 +714,13 @@ Moving between data transformation activities and plotting with **ggplot** like 
 
 - We learned how to assign values to variables using the `<-` operator
 - Transforming a dataset can be done with these five **dplyr** functions: `filter()`, `arrange()`, `select()`, `mutate()`, and `summarize()` (with `group_by()`)
-- The pipe operator (`|>`) (which was used with the **dplyr** functions) improved the composition and readability of our **R** statements
+- The pipe operator (`|>`) (which was used with the **dplyr** functions) improved the composition and readability of our R statements
 - Transforming data with **dplyr** and visualizing data with **ggplot** is often something that's done hand in hand
 - We can use the `tibble()` and `tribble()` functions to create our own data tables 
 
 ## Exercises
 
-1. When you are creating a new **R Markdown** document for analysis, what set of **R** statements is likely required before any analysis?
+1. When you are creating a new **R Markdown** document for analysis, what set of R statements is likely required before any analysis?
 
 2. What's the difference between `=` and `==`? Where should these used (and not used)?
 

@@ -55,7 +55,7 @@ gt_preview(bakers)
 
 This table presents really nicely and so it's great for sharing a preview of the dataset (e.g., in static R Markdown documents).
 
-Sometimes, however, you need more. You need some stats. Descriptive statistics can better aid in the understanding of a dataset. You'll get a sense of numerical ranges (for numerical columns), if there are missing values in certain columns, and the degree of uniqueness across columns (or variables). There are multiple great solutions for this in **R**. One of them in the `skim()` function provided by the **skimr** package:
+Sometimes, however, you need more. You need some stats. Descriptive statistics can better aid in the understanding of a dataset. You'll get a sense of numerical ranges (for numerical columns), if there are missing values in certain columns, and the degree of uniqueness across columns (or variables). There are multiple great solutions for this in R. One of them in the `skim()` function provided by the **skimr** package:
 
 ```r
 skim(bakers)

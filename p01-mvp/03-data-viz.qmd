@@ -12,7 +12,7 @@ library(ggplot2)
 
 This section covers
 
-- What the **ggplot** **R** package is and how it can be used to create plots from tabular data
+- What the **ggplot** R package is and how it can be used to create plots from tabular data
 - Creating a scatterplot from a dataset, using different aesthetic choices (e.g., shapes, color, and more)
 - Using faceted plots: multiple subplots that facilitate comparisons across groups of data
 - Customizing text in key plot elements
@@ -21,7 +21,7 @@ This section covers
 
 In the previous section, it was proposed that data visualization is a useful process for generating insights. It is often necessary to transform data before it's ready for plotting, and, the **dplyr** functions we just learned about make those transformations possible. Now, we will learn about how to create beautiful and informative plots with **ggplot** (actually called **ggplot2** but cited throughout this book more simply as **ggplot**). While **ggplot** provides functionality to create a wide selection of plot types, we will begin by focusing on a single type of plot: the scatterplot.
 
-This book's package, **dspatterns**, provides the input data we'll need to build our example plots. From that package the `dmd` dataset will be used (it's a simplified version of the `diamonds` dataset that is available in the **ggplot** package). Whenever we load in the **dspatterns** package using `library(dspatterns)`, the dmd table will be available; you can verify this by executing `dmd` in the **R** console. This particular dataset has nearly 2,700 rows, one for each diamond and its attributes, and the following 6 variables:
+This book's package, **dspatterns**, provides the input data we'll need to build our example plots. From that package the `dmd` dataset will be used (it's a simplified version of the `diamonds` dataset that is available in the **ggplot** package). Whenever we load in the **dspatterns** package using `library(dspatterns)`, the dmd table will be available; you can verify this by executing `dmd` in the R console. This particular dataset has nearly 2,700 rows, one for each diamond and its attributes, and the following 6 variables:
 
 - `carats`: the weight of the diamond in carats, where each carat is 0.2 grams
 - `depth`: a depth percentage of the diamond that takes into account the diamond's length, width, and depth distances
@@ -550,14 +550,14 @@ ggplot(dmd_mod, aes(x = carats, y = price)) +
 
 Moving between data transformation activities and plotting with **ggplot** like this is often valuable for better expressing the data you have to an audience, or, for exploring the data and getting insightful views that were otherwise hidden. Getting to a stage where you can rapidly translate your analysis/visualization needs to raw **dplyr** & **ggplot** code is worth the effort and understandably takes some practice. 
 
-Other readily-available datasets: There are many other datasets available in **R** where you could practice working in this closed loop of transforming and visualizing. Here are a few:
+Other readily-available datasets: There are many other datasets available in R where you could practice working in this closed loop of transforming and visualizing. Here are a few:
 
 - `mpg`: Fuel economy data from 1999 and 2008 for 38 popular models of car
 - `longley`: Longley's Economic Regression Data
 - `airquality`: New York Air Quality Measurements
 - `quakes`: Locations of Earthquakes off Fiji
 
-All of these datasets consist of tables and are easily accessible in **R** by their names.
+All of these datasets consist of tables and are easily accessible in R by their names.
 
 ## Summary
 
@@ -569,7 +569,7 @@ All of these datasets consist of tables and are easily accessible in **R** by th
 
 ## Exercises
 
-1. When you are creating a new **R Markdown** document for visualization with **ggplot**, what **R** statement should be written (and executed) before any plotting?
+1. When you are creating a new **R Markdown** document for visualization with **ggplot**, what R statement should be written (and executed) before any plotting?
 
 2. What is the first function that should use when making a **ggplot** plot?
 
