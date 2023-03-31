@@ -1,4 +1,4 @@
-# Batch styling of plots
+# Batch styling of tables and plots
 
 {{< include ../_patterns.qmd >}}
 
@@ -6,9 +6,11 @@
 library(intendo)
 library(pointblank)
 library(ggplot2)
+library(gt)
 library(dplyr)
 library(tidyr)
 library(glue)
+library(patchwork)
 ```
 
 ## This Chapter's Pattern
@@ -59,9 +61,50 @@ session_revenue_summary |>
   geom_line(aes(x = day, y = mean_rev_ads))
 ```
 
-While this is definitely not what we'd want as a final plot, it's certainly a good exploratory plot. Two things are important to note: (1) duration and revenue lines shouldn't belong on the same *y* axis, and (2) the lowest of the three lines (representing `mean_rev_ads`) is small and probably insignificant. Knowing this, we ought to split the visualization to show two plots: one for session duration and the other for daily revenue. Since ad revenue is small compared to revenue from in-app purchases (and fairly constant), we could safely omit that from the plot.
+While this is definitely not what we'd want as a final plot, it's certainly a good exploratory plot. Two things are important to note: (1) duration and revenue lines shouldn't belong on the same *y* axis, and (2) the lowest of the three lines (representing `mean_rev_ads`) is small and probably insignificant. Knowing this, we ought to split the visualization to show two plots: one for session duration and the other for daily revenue. Since ad revenue is small compared to revenue from in-app purchases (and fairly constant), we could safely omit that from any future plotting.
 
 The *x* axis *is* common to both the `mean_duration` and `mean_rev_iap` values that we'll carry forward. Owing to that, it makes sense to stack the plots vertically so that we can easily compare session duration and revenue values for the same time range. How do we do this? One great solution involves using the **patchwork** package.
+
+```{r}
+mean_duration_plt <-
+  ggplot(session_revenue_summary) +
+  geom_line(aes(x = day, y = mean_duration))
+
+mean_rev_iap_plt <-
+  ggplot(session_revenue_summary) +
+  geom_line(aes(x = day, y = mean_rev_iap))
+
+session_revenue_summary_plt <-
+  mean_duration_plt / mean_rev_iap_plt
+
+session_revenue_summary_plt
+```
+
+This looks a bit closer to what we need! We now can see these two plots are perfectly stacked such that the *x*-axis ticks line up vertically across both plots, regardless of what labeling is on the *y* axes. Because of this concordance, we might find that the *x*-axis labels don't need to be seen twice. So, let's remove all labels and tick marks from the uppper plot.
+
+```{r}
+mean_duration_plt <-
+  ggplot(session_revenue_summary) +
+  geom_line(aes(x = day, y = mean_duration)) +
+  theme(
+    axis.ticks.x = element_blank(),
+    axis.text.x = element_blank(),
+    axis.title.x = element_blank()
+  )
+
+mean_rev_iap_plt <-
+  ggplot(session_revenue_summary) +
+  geom_line(aes(x = day, y = mean_rev_iap))
+
+session_revenue_summary_plt <-
+  mean_duration_plt / mean_rev_iap_plt
+
+session_revenue_summary_plt
+```
+
+
+
+An interesting thing we could do is to plot average value lines for each of the plots. 
 
 ## Understand
 
