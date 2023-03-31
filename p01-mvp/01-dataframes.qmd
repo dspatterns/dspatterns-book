@@ -328,14 +328,16 @@ c(
 ))`
 ```{r}
 #| label: tibble-na-col
+#| caption: Using a single-length vector with an `NA` value in `tibble()`.
 #| class-output: "html sourceCode"
 #| paged.print: false
 
 tibble(
-  a = NA,
+  a = NA,                               # <1>
   b = c("a", "b", "g", "b")
 )
 ```
+1. Using a single `NA` (and nothing else) gives us a certain type of `NA`: a `logical` `NA` (yes, there are different types).
 
 Yes. The `NA` is repeated down the `a` column. We can see that column `a`'s type is `<lgl>`, or, `logical`.
 
