@@ -321,15 +321,9 @@ The resulting tibble here shows that those `NA` values in the `numeric` and `cha
 
 In the next code listing, an `NA` value is used in a vector of length 1. What will happen? Will the `NA` values be repeated down in the column? Let's have a look.
 
-`r dspatterns::code_hints(
-" Using a single-length vector with an ~~NA~~ value in ~~tibble()~~.",
-c(
-"L.2 Using a single ~~NA~~ (and nothing else) gives us a certain type of ~~NA~~: a ~~logical~~ ~~NA~~ (yes, there are different types)."
-))`
 ```{r}
 #| label: tibble-na-col
 #| caption: Using a single-length vector with an `NA` value in `tibble()`.
-#| class-output: "html sourceCode"
 #| paged.print: false
 
 tibble(
