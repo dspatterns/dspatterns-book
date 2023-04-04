@@ -80,7 +80,7 @@ session_revenue_summary_plt <-
 session_revenue_summary_plt
 ```
 
-This looks a bit closer to what we need! We now can see these two plots are perfectly stacked such that the *x*-axis ticks line up vertically across both plots, regardless of what labeling is on the *y* axes. Because of this concordance, we might find that the *x*-axis labels don't need to be seen twice. So, let's remove all labels and tick marks from the uppper plot.
+This looks a bit closer to what we need! We now can see these two plots are perfectly stacked such that the *x*-axis ticks line up vertically across both plots, regardless of what labeling is on the *y* axes. Because of this concordance, we might find that the *x*-axis labels don't need to be seen twice. So, let's remove all labels and tick marks from the upper plot.
 
 ```{r}
 mean_duration_plt <-
