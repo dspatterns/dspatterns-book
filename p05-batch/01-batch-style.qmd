@@ -1,4 +1,4 @@
-# Batch styling of tables and plots
+# Batch styling of plots and tables
 
 {{< include ../_patterns.qmd >}}
 
@@ -15,7 +15,7 @@ library(patchwork)
 
 ## This Chapter's Pattern
 
-We want to apply styling to different tables and plots, but do it in a way that doesn't require us to type out all the different options each and every time. We'll do this by making styling functions that work with **gt** and **ggplot2**. To get this going, a dataset will be explored and we'll arbitrarily try out different forms of styling. Once we have plots that look good, the code will be developed into a reusable function. We want to be able to use that function consistently in our workflow, so, documentation will be written to explain what that function does and, importantly, how it is used.
+We want to apply styling to different tables and plots, but do it in a way that doesn't require us to type out all the different options each and every time. We'll do this by making styling functions that work with **ggplot2** and **gt**. To get this going, a dataset will be explored and we'll arbitrarily try out different forms of styling. Once we have plots that look good, the code will be developed into a reusable function. We want to be able to use that function consistently in our workflow, so, documentation will be written to explain what that function does and, importantly, how it is used.
 
 ## Explore
 
@@ -23,6 +23,7 @@ We're going to get some data from the **intendo** package. This data package con
 
 ```{r}
 #| output: false
+#| echo: false
 all_sessions <- intendo::all_sessions()
 ```
 
@@ -32,7 +33,9 @@ Let's have a quick look at the dataset using **dplyr**'s `glimpse()` function. T
 dplyr::glimpse(all_sessions)
 ```
 
-This dataset has lots of information on player sessions for an entire year. We want to several variables from this dataset. Because there is so much data that can be plotted we will summarize to daily means of `session_duration`, revenue from in-app purchases (`rev_iap`), and revenue from ad views (`rev_ads`). This will be done with a little bit of **dplyr**:
+This dataset has lots of information on player sessions for an entire year. Our task is to create an effective visualization of player session length and revenue throughout the year.
+
+We want to several variables from this dataset. Because there is so much data that can be plotted we will summarize to daily means of `session_duration`, revenue from in-app purchases (`rev_iap`), and revenue from ad views (`rev_ads`). This will be done with a little bit of **dplyr**:
 
 ```{r}
 #| paged.print: false
@@ -102,16 +105,18 @@ session_revenue_summary_plt <-
 session_revenue_summary_plt
 ```
 
+Now that we have the basic structuring of the two plots now in place, it would be interesting to plot average value lines for each of the plots. A good way to divide them up is by week. To do this, we need to go back to the `session_revenue_summary` table and make changes so that we have that data in separate columns (one for session duration and the other for revenue).
 
+```{r}
+session_revenue_summary
+```
 
-An interesting thing we could do is to plot average value lines for each of the plots. 
 
 ## Understand
 
 ## Explain
 
+
 ## Share
 
-## DIY
 
-- dataset: ``
