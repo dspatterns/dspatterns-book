@@ -33,9 +33,9 @@ Let's have a quick look at the dataset using **dplyr**'s `glimpse()` function. T
 dplyr::glimpse(all_sessions)
 ```
 
-This dataset has lots of information on player sessions for an entire year. Our task is to create an effective visualization of player session length and revenue throughout the year.
+This dataset has lots of information on player sessions for an entire year. Our task is to create an effective visualization of player session length and revenue throughout the year. This will also our imagined stakeholders to make comparisons between engagement and revenue. 
 
-We want to several variables from this dataset. Because there is so much data that can be plotted we will summarize to daily means of `session_duration`, revenue from in-app purchases (`rev_iap`), and revenue from ad views (`rev_ads`). This will be done with a little bit of **dplyr**:
+Because there is so much data that can be plotted we will summarize the data to daily means of `session_duration`, revenue from in-app purchases (`rev_iap`), and revenue from ad views (`rev_ads`). This will be done with a little bit of **dplyr**:
 
 ```{r}
 #| paged.print: false
