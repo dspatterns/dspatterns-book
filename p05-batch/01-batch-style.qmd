@@ -64,7 +64,12 @@ session_revenue_summary |>
   geom_line(aes(x = day, y = mean_rev_ads))
 ```
 
-While this is definitely not what we'd want as a final plot, it's certainly a good exploratory plot. Two things are important to note: (1) duration and revenue lines shouldn't belong on the same *y* axis, and (2) the lowest of the three lines (representing `mean_rev_ads`) is small and probably insignificant. Knowing this, we ought to split the visualization to show two plots: one for session duration and the other for daily revenue. Since ad revenue is small compared to revenue from in-app purchases (and fairly constant), we could safely omit that from any future plotting.
+While this is definitely not what we'd want as a final plot, it can certainly serve as a good exploratory plot. Two things are important to note:
+
+1. duration and revenue lines shouldn't belong on the same *y* axis
+2. the lowest of the three lines (representing `mean_rev_ads`) is small and probably insignificant
+
+With both of these things in mind, we probably ought to split the visualization to show two plots: one for session duration and the other for daily revenue. Since ad revenue is small compared to revenue from in-app purchases (and fairly unchanging throughout the year), we could safely omit that from any future plotting.
 
 The *x* axis *is* common to both the `mean_duration` and `mean_rev_iap` values that we'll carry forward. Owing to that, it makes sense to stack the plots vertically so that we can easily compare session duration and revenue values for the same time range. How do we do this? One great solution involves using the **patchwork** package.
 
@@ -105,14 +110,50 @@ session_revenue_summary_plt <-
 session_revenue_summary_plt
 ```
 
+## Understand
+
 Now that we have the basic structuring of the two plots now in place, it would be interesting to plot average value lines for each of the plots. A good way to divide them up is by week. To do this, we need to go back to the `session_revenue_summary` table and make changes so that we have that data in separate columns (one for session duration and the other for revenue).
 
 ```{r}
-session_revenue_summary
+session_revenue_summary <-
+  session_revenue_summary |>
+  select(-mean_rev_ads) |>
+  mutate(week = lubridate::week(day)) |>
+  group_by(week) |>
+  mutate(
+    mean_duration_wk = mean(mean_duration),
+    mean_rev_iap_wk = mean(mean_rev_iap)
+  ) |>
+  ungroup()
+```
+
+In the above **dplyr** code, we are taking means of means. We needed first to have the week number in a new column, and **lubridate**'s `week()` function is perfect for that. Then, the next key combination was the use of `group_by()` and then `mutate()`. This lets us adds new columns of summarized data that belongs to each `week` category.
+
+Now we can plot again, adding in the weekly average lines as separate layers via additional `geom_line()` statements:
+
+```{r}
+mean_duration_plt <-
+  ggplot(session_revenue_summary) +
+  geom_line(aes(x = day, y = mean_duration)) +
+  geom_line(aes(x = day, y = mean_duration_wk)) +
+  theme(
+    axis.ticks.x = element_blank(),
+    axis.text.x = element_blank(),
+    axis.title.x = element_blank()
+  )
+
+mean_rev_iap_plt <-
+  ggplot(session_revenue_summary) +
+  geom_line(aes(x = day, y = mean_rev_iap)) +
+  geom_line(aes(x = day, y = mean_rev_iap_wk))
+
+session_revenue_summary_plt <-
+  mean_duration_plt / mean_rev_iap_plt
+
+session_revenue_summary_plt
 ```
 
 
-## Understand
 
 ## Explain
 
