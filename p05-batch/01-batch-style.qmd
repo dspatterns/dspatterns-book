@@ -1,4 +1,4 @@
-# Batch styling of plots and tables
+# Batch styling of plots
 
 {{< include ../_patterns.qmd >}}
 
@@ -15,7 +15,7 @@ library(patchwork)
 
 ## This Chapter's Pattern
 
-We want to apply styling to different tables and plots, but do it in a way that doesn't require us to type out all the different options each and every time. We'll do this by making styling functions that work with **ggplot2** and **gt**. To get this going, a dataset will be explored and we'll arbitrarily try out different forms of styling. Once we have plots that look good, the code will be developed into a reusable function. We want to be able to use that function consistently in our workflow, so, documentation will be written to explain what that function does and, importantly, how it is used.
+We want to apply styling to different plots, but do it in a way that doesn't require us to type out all the different options each and every time. We'll do this by making styling functions that work with **ggplot2** and **gt**. To get this going, a dataset will be explored and we'll arbitrarily try out different forms of styling. Once we have plots that look good, the code will be developed into a reusable function. We want to be able to use that function consistently in our workflow, so, documentation will be written to explain what that function does and, importantly, how it is used.
 
 ## Explore
 
@@ -110,14 +110,17 @@ session_revenue_summary_plt <-
 session_revenue_summary_plt
 ```
 
+With that bit of plotting code, we've eliminated the unnecessary repetition of the *x*-axis `ticks`, `text`, and `title`.
+
 ## Understand
 
 Now that we have the basic structuring of the two plots now in place, it would be interesting to plot average value lines for each of the plots. A good way to divide them up is by week. To do this, we need to go back to the `session_revenue_summary` table and make changes so that we have that data in separate columns (one for session duration and the other for revenue).
 
 ```{r}
+#| paged.print: false
+
 session_revenue_summary <-
   session_revenue_summary |>
-  select(-mean_rev_ads) |>
   mutate(week = lubridate::week(day)) |>
   group_by(week) |>
   mutate(
@@ -125,6 +128,8 @@ session_revenue_summary <-
     mean_rev_iap_wk = mean(mean_rev_iap)
   ) |>
   ungroup()
+
+session_revenue_summary
 ```
 
 In the above **dplyr** code, we are taking means of means. We needed first to have the week number in a new column, and **lubridate**'s `week()` function is perfect for that. Then, the next key combination was the use of `group_by()` and then `mutate()`. This lets us adds new columns of summarized data that belongs to each `week` category.
@@ -153,11 +158,73 @@ session_revenue_summary_plt <-
 session_revenue_summary_plt
 ```
 
-
+The weekly average lines are now in the plots, so, this is progress! The next things to be done are to package this up in a better visualization, one that is better understood by others.
 
 ## Explain
 
+We need to style this combined set of plots so that the results are more easily explainable to others.
+
+```{r}
+mean_duration_plt <-
+  ggplot(session_revenue_summary) +
+  geom_line(
+    aes(x = day, y = mean_duration),
+    color = "gray",
+    alpha = 0.75
+  ) +
+  geom_line(
+    aes(x = day, y = mean_duration_wk),
+    color = "steelblue",
+    linewidth = 1.5
+  ) +
+  labs(
+    title = "Average daily session time and in-app revenue",
+    subtitle = "All data shown for the 2015 year",
+    x = NULL,
+    y = "Average daily\n session time (min)"
+  ) +
+  theme_minimal() +
+  theme(
+    axis.ticks.x = element_blank(),
+    axis.text.x = element_blank(),
+    axis.title.x = element_blank()
+  )
+
+mean_rev_iap_plt <-
+  ggplot(session_revenue_summary) +
+  geom_line(
+    aes(x = day, y = mean_rev_iap),
+    color = "gray",
+    alpha = 0.75
+  ) +
+  geom_line(
+    aes(x = day, y = mean_rev_iap_wk),
+    color = "green",
+    linewidth = 1.5
+  ) +
+  labs(
+    caption = "Data source: the 'all_sessions' data table.",
+    x = NULL,
+    y = "Average IAP\n revenue (USD)"
+  ) +
+  geom_line(aes(x = day, y = mean_rev_iap_wk)) +
+  theme_minimal()
+  
+session_revenue_summary_plt <-
+  mean_duration_plt / mean_rev_iap_plt
+
+session_revenue_summary_plt
+```
+
+This plot definitely something that is presentable to others. One thing that would make this more amenable to sharing (and sharing more often) would be wrapping this all into a reusable function. In the next section, we'll do just that, allowing for different time spans to be chosen.
 
 ## Share
 
+Demonstrate a few different ways to theme the plot.
 
+- using `scale_kiki()` (example from Hiroaki Yutani) that uses `options()`
+- `ggplot2::theme_set`
+- using `ggthemer` and `thematic`
+- use ideas from https://github.com/r-causal/causal-inference-in-R/blob/a060488e1368278bbe2f2af368d888034645d2e1/index.qmd#L75
+- https://github.com/robjhyndman/ETC3550Slides/blob/4d2566efbb7bce72825b2a9a045d3b6a3a58e882/setup.R#L16
+- for Quarto use either YAML `includes` or the include shortcode (great for talking about shortcodes in general)
