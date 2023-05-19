@@ -222,7 +222,7 @@ This plot definitely something that is presentable to others. One thing that wou
 
 Demonstrate a few different ways to theme the plot.
 
-- using `scale_kiki()` (example from Hiroaki Yutani) that uses `options()`
+- try using the `scale_kiki()` example from Hiroaki Yutani (code snippet available in a tweet of his) that uses a custom function called globally from `options()`
 - `ggplot2::theme_set`
 - using `ggthemer` and `thematic`
 - use ideas from https://github.com/r-causal/causal-inference-in-R/blob/a060488e1368278bbe2f2af368d888034645d2e1/index.qmd#L75
