@@ -139,7 +139,7 @@ jobs:
       - name: Deploy to Netlify
         if: contains(env.isExtPR, 'false')
         id: netlify-deploy
-        uses: nwtgck/actions-netlify@v1.2
+        uses: nwtgck/actions-netlify@v2.0
         with:
           publish-dir: 'docs'
           production-branch: main
@@ -149,5 +149,5 @@ jobs:
           # these all default to 'true'
           enable-pull-request-comment: true
           enable-commit-comment: true
-          enable-commit-status: true
+          overwrites-pull-request-comment: true
         timeout-minutes: 1
