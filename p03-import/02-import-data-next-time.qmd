@@ -91,10 +91,3 @@ Share data quality reports with team/collaborators. These are meant to be easy t
 
 Triage upstream data quality issues with collaborators or data providers and provide descriptions of problems via explanations of 'bad rows' in R Markdown reports (use gt tables to produce data extracts in the document). This communication will help to get to the root causes of the bad data, even if you can't directly do much about it (i.e., collaborator must fix upstream process).
 
-
-
-## DIY
-
-- dataset: `penguins_raw`
-- come up with pointblank validation and create rules using your domain knowledge (you have to read up on the research around the penguin subjects)
-

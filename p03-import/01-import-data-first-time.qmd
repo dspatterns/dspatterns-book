@@ -12,9 +12,11 @@ library(janitor)
 library(pointblank)
 ```
 
-In this chapter we'll get down and dirty with some messy (but important to use) data. We need to use this data and although we acknowledge the data has problems, we can use a few strategies to overcome this.
+In this chapter we'll get down and dirty with some messy data. We need to use this data and although we acknowledge the data has problems, we can use a few strategies to overcome this.
 
-First, we'll explore the data and find out what went wrong during the import phase. This will invariably require some trial-and-error at first to get to a usable solution (which is the ideal import statement for the dataset at hand). After that, we'll use functions like `glimpse()`, `count()`, `head()`, and `tail()` to make sense of what we have during every step of the process. Checking the data at every major transformation is informative and important during this early phase of exploring a new dataset. All of this work will inevitably result in a messy `.qmd` file but you'll leave it in the dust when you're finally able to diagnose all of the issues. (We recommend you save the file for later use and we'll provide a tip or two on how to organize these scratch files.)
+First, we'll explore the data and find out what went wrong during the import phase. This will invariably require some trial-and-error at first to get to a usable solution (which is the ideal import statement for the dataset at hand). After that, we'll use functions like `glimpse()`, `count()`, `head()`, and `tail()` to make sense of what we have during every step of the process. Checking the data at every major transformation is informative and important during this early phase of exploring a new dataset.
+
+All of this work will inevitably result in a messy `.qmd` file but you'll leave it in the dust when you're finally able to diagnose all of the issues. (We recommend you save the file for later use and we'll provide a tip or two on how to organize these scratch files.)
 
 We'll need a few packages loaded in for this chapter:
 
@@ -33,7 +35,7 @@ We'll be working with an Excel file called `stickers.xlsx` in this chapter (the 
 
 Putting the problems aside for now, let's learn about where this dataset came from. It's a dataset from an experimental study where children played a variation of the dictator or ultimatum game, using stickers instead of money. The [study](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0138928) looked at how numerical context affects children's sharing behavior.    
 
-![The ultimatum game.](../figures/02-importing-data-first-time/ultimatum-game.png){#fig:stickers-ultimatum-game}
+![A schematic of the ultimatum game.](../figures/02-importing-data-first-time/ultimatum-game.png){#fig:stickers-ultimatum-game}
 
 The authors made that dataset freely available so we in turn get the chance to examine it in R. Let's read in the file with the **readxl** package (with the `read_excel()` function) and have a first look at the data table.
 
@@ -176,16 +178,17 @@ We knew this was true coming into the test but type-checking is exceedingly usef
 
 ## Understand
 
-Now that we just finished some radical surgery on `stickers`, here's a question: did all of the fixing ultimately solve the problem? Let's import the data from a `.qmd` that just contains the importing directives.
+Now that we just finished some radical surgery on `stickers`, we want to be sure that all that work ultimately solved the importing and cleaning issues. A good strategy for finalizing that work is to include those above statements in a new `.qmd` file. To test that everything should work in the future, it's recommended that a new R session is started, and that executing the contents of that `.qmd` file recreates the `stickers` object in the correct form.
 
 **Creating a Basic Data Dictionary for `stickers`**
 
-Now that we have the `stickers` data in reasonable shape it's a good idea to put together a data dictionary. It's documentation that will help us (and others) understand the data, now and especially for later on.
+Now that we have the `stickers` data in reasonable shape it's a good idea to put together a data dictionary. This data dictionary serves as documentation that will help us and others better understand the data. This is valuable now and especially later on.
 
 We can do this easily with the **pointblank** package and its functions for building up a data dictionary. That top row that we banished from the data table is actually metadata for each of the columns. Let's recover that and put it in a shape that allows for data dictionary creation! We can read in that first row (and only the first row) with `read_excel()` and `n_max = 1`:
 
 ```{r}
 stickers_meta <- read_excel("stickers.xlsx", n_max = 1)
+colnames(stickers_meta) <- colnames(stickers)
 ```
 
 Looking at the single row table of `stickers_meta`, we can plainly see some informative text in that row.
@@ -214,7 +217,7 @@ glimpse(stickers_metadata)
 
 Now that we have `stickers_metadata` in the correct form, we can use it in `info_columns_from_tbl()`. To get an informative title at the top of the data dictionary, we use the `get_informant_report()` function and use the `title` argument. 
 
-```{r eval=FALSE}
+```{r}
 stickers_dd <-
   create_informant(tbl = stickers) %>%
   info_columns_from_tbl(tbl = stickers_metadata) %>%
@@ -223,11 +226,11 @@ stickers_dd <-
 
 Once the data dictionary has been produced for `stickers`, we can look at it in the RStudio Viewer by printing out `stickers_dd`. Here is an excerpt of that output (which is quite long because of all the columns contained within `stickers`).
 
-```{r eval=FALSE}
+```{r}
 stickers_dd
 ```
 
-![A data dictionary for the `stickers` dataset.](../figures/02-importing-data-first-time/stickers_dd.png){#fig:stickers-data-dictionary}
+The data dictionary can be published in a Quarto document and placed somewhere prominant for you and others to read. This is great documentation to have when introducing others to the dataset or when your own recollection and understanding of the data has become shaky.
 
 ## Explain
 
@@ -261,7 +264,3 @@ We can build upon the **pointblank** data dictionary we made earlier. It's both 
 Sometimes, you need to have difficult conversations with data providers. Sometimes they are great (i.e., they provide you with data) and other times they can ruin your life (i.e., they provide you with *bad* data).
 
 Let's build a `.qmd` parent that uses a child `.qmd`. It's smart and we can break `.qmd`s down to components, if you will.
-
-## DIY
-
-It's now time to Do It Yourself. We'll recommend some dataset, give you some project ideas, steer you in the right direction, and you'll make something to be proud of.

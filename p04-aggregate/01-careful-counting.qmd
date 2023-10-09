@@ -255,7 +255,3 @@ Packages Needed
 
 -   installation details (script with `library()` calls)
 -   possibly use: https://github.com/rstudio4edu/rmd4edu/blob/master/R/lesson.R
-
-DIY
-
--   dataset:

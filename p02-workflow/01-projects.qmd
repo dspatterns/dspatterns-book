@@ -226,7 +226,7 @@ Now you saved this file on a shared laptop while working in the field. But you n
     -   anatomy of a document (installed packages and using packages and the text and code chunks)
     -   we have the option to show the chunk output either inline (default) or in the Viewer/Plots pane (show option in settings)
     -   introduce the dataset (`penguins` from `palmerpenguins`) and inspect the data:
-        -   `head()`, `tail()`, `dplyr::glimpse()`, `skimr::skim()` (let's avoid the `%>%` for now)
+    -   `head()`, `tail()`, `dplyr::glimpse()`, `skimr::skim()` (let's avoid the `%>%` for now)
 
 ## Explain
 
@@ -244,7 +244,3 @@ Now you saved this file on a shared laptop while working in the field. But you n
 
 Netlify drag and drop
 
-## DIY
-
--   use: https://alison.netlify.app/rls-plot-twist/#20
--   OR babynames
