@@ -220,14 +220,14 @@ Now that we have `stickers_metadata` in the correct form, we can use it in `info
 ```{r}
 stickers_dd <-
   create_informant(tbl = stickers) %>%
-  info_columns_from_tbl(tbl = stickers_metadata) %>%
-  get_informant_report(title = "Data Dictionary for `stickers`")
+  info_columns_from_tbl(tbl = stickers_metadata)
 ```
 
-Once the data dictionary has been produced for `stickers`, we can look at it in the RStudio Viewer by printing out `stickers_dd`. Here is an excerpt of that output (which is quite long because of all the columns contained within `stickers`).
+Once the data dictionary has been produced for `stickers`, we can look at it in the RStudio Viewer by printing out `stickers_dd`. We can even customize the title by using the `get_informant_report()` function and supplying the title text.
 
 ```{r}
-stickers_dd
+stickers_dd |> 
+  get_informant_report(title = "Data Dictionary for `stickers`")
 ```
 
 The data dictionary can be published in a Quarto document and placed somewhere prominant for you and others to read. This is great documentation to have when introducing others to the dataset or when your own recollection and understanding of the data has become shaky.
@@ -255,12 +255,50 @@ But what about your data provider or collaborator that provides you with 'raw' d
 
 The `.qmd` file that imports our raw data can (and should) be annotated with whatever notes are important for the understanding of the raw data and the importing process. In a way, we should provide lab notes for the handling of raw data. An idea here is to make a child doc where all the text will be hidden but the code will run.
 
-A good practice is to include data validation statements after importing. This is extremely important in the case where raw data changes due to revisions. Having the checks in place should catch any data errors that could creep in during data updates. This is something we can do with **pointblank** within the data import `.qmd` file.
+A good practice is to include data validation statements after importing. This is extremely important in the case where raw data changes due to revisions. Having the checks in place should catch any data errors that could creep in during data updates. This is something we can do with **pointblank** within the data import `.qmd` file. Earlier we did some ad hoc testing with a few `test_*()` functions, which provide us with a `TRUE` or `FALSE` value. If we want to better catch data failures, we can use the data validation functions variants that result in an error. So instead of using `test_rows_distinct()`, we would replace that with simply `rows_distinct()`:
+
+```{r}
+stickers %>% rows_distinct()
+```
+
+Using validation functions in this manner makes them act a bit like a filter. If there are no failures, the data passes through (i.e., the input data gets returned untouched). If there data issues, then you'll get an error and a `.qmd` render will stop. The stopping part is very helpful as it will force you to address the underlying data issue before moving further into data analysis and reporting.
 
 ## Share
 
-We can build upon the **pointblank** data dictionary we made earlier. It's both great for you as an aid in understanding the data, and, others will certainly appreciate it as well! It can either serve as a conversation starter or a valuable reference that will be used again and again. Let's extend that file with more sections. Then, we can publish it or save the reporting as HTML.
+We can build upon the **pointblank** data dictionary we made earlier. It's both great for you as an aid in understanding the data, and, others will certainly appreciate it as well! It can either serve as a conversation starter or a valuable reference that will be used again and again.
 
-Sometimes, you need to have difficult conversations with data providers. Sometimes they are great (i.e., they provide you with data) and other times they can ruin your life (i.e., they provide you with *bad* data).
+While the earlier incantation of the data dictionary got us off to a great start, it does seem a little incomplete. Let's make it more complete by using the **pointblank** functions `info_columns()`, `info_tabular()`, and `info_section()`. The first function adds information about selected columns in the table. The `info_tabular()` function lets you create a leading section for describing the table in a general fashion. The `info_section()` function lets you create multiple sections at the bottom of the data dictionary; it's good for including metadata for the table like its source, processing information, and anything else you'd want to mention.
 
-Let's build a `.qmd` parent that uses a child `.qmd`. It's smart and we can break `.qmd`s down to components, if you will.
+The `agemonths` and `ageyears` columns have no descriptions in the data dictionary. Two `info_columns()` statements are used to address this. We'll add a small bit of information about the data source with `info_tabular()` and some notes with `info_section()`:
+
+```{r}
+stickers_dd <-
+  stickers_dd |>
+  info_columns(
+    columns = agemonths,
+    info = "The age of the subject in months."
+  ) |>
+  info_columns(
+    columns = ageyears,
+    info = "The age of the subject in years."
+  ) |>
+  info_tabular(
+    source = "Data obtained from
+    <https://doi.org/10.1371/journal.pone.0138928> (Cordes et al., 2015)."
+  ) |>
+  info_section(
+    section_name = "Notes",
+    creation = "R dataset generated on (2023-08-15).",
+    generation = "Created from `stickers.xlsx` in `stickers_process.qmd`."
+  )
+
+stickers_dd
+```
+
+Now that we have a much more complete data dictionary, we can share it through publication or by distributing as an HTML file. To get a standalone HTML file for the data dictionary, we can use the `export_report()` function.
+
+```{r}
+stickers_dd |> export_report(filename = "stickers_dd.html")
+```
+
+Of course, you can go much further with the data dictionary functionality in **pointblank**. More sections can be included and much more fine-grained information can be provided for columns.
