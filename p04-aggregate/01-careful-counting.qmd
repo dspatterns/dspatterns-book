@@ -232,26 +232,70 @@ This is good and presents exact numbers per episode (important if someone needs 
 
 ## Share
 
-The reporting obtained from **pointblank**'s `scan_data()` can be shared in multiple ways. Some examples include publication on Quarto Pub or on a Connect instance, or, distributing an HTML document produced by R Markdown or Quarto. If you want to send the bare HTML from the table scan, that can be done with **pointblank**'s `export_report()` function. It's even possible to take the HTML file produced from that function and work it into a Shiny app.
+The reporting obtained from **pointblank**'s `scan_data()` can be shared in multiple ways. Some examples include publication on [https://quartopub.com](Quarto Pub) or on a Connect instance, or, distributing an HTML document produced by R Markdown or Quarto. If you want to send somebody the HTML file for the table scan, that can be done with **pointblank**'s `export_report()` function. It's even possible to take the HTML file produced from that function and work it into a Shiny app.
 
+Another great sharing opportunity comes from generating useful and excellent-looking plots. Let's use the **bakeoff** dataset `ratings` and make a vertical bar plot showing the ratings for all ten series. To make this excellent, we are going to do a few things:
 
--   use some code from course material that uses bakeoff
+- differentiate the different bars by colorizing them by series
+- directly label the groups of bars with a series number
+- apply an informative and interesting title and subtitle
+- remove unnecessary labeling/marks (all of the x-axis ticks and labels)
 
-    -   links: https://alison.netlify.app/rls-plot-twist/#19, https://alison.netlify.app/rls-plot-twist/#19 (counting slides)
+There are some challenging bits in here but let's look at the code, the resulting plot, and then go over how we solved each data visualization problem.
 
--   start off with histogram and create this plot: https://alison.netlify.app/rls-plot-twist/#19
+```{r}
+# Create a tibble with the data we need
+ratings_all <-
+  ratings |> 
+  mutate(series = as.factor(series)) |>
+  mutate(episode_id = row_number()) |>
+  select(episode_id, viewers_7day, series, episode)
 
--   histogram of ages of bakers + other interesting plots
+# Create a tibble with coordinates for the series labels
+series_labels <-
+  ratings_all |>
+  group_by(series) |> 
+  summarize(
+    y_position = median(viewers_7day) + 1,
+    x_position = mean(episode_id)
+  )
 
--   goals: making exploratory bar charts and histograms (useful for initial understanding of the data)
+# Generate the plot
+ggplot(
+  data = ratings_all,
+  aes(x = episode_id, y = viewers_7day, fill = series)
+  ) +
+  geom_col(alpha = 0.9) +
+  geom_text(
+    data = series_labels,
+    aes(label = series, x = x_position, y = y_position)
+  ) +
+  scale_fill_manual(
+    values = bakeoff_palette(n = 10),
+    guide = FALSE
+  ) +
+  scale_x_discrete(expand = c(0, 0)) +
+  labs(
+    title = "Series 8 Experienced a Big Setback in Regards to Viewers",
+    subtitle = "7-day viewers across all series/episodes",
+    caption = "Data source: the ratings dataset from the bakeoff package.",
+    x = NULL,
+    y = "7-day Viewers"
+  ) +
+  theme_minimal() +
+  theme(
+    axis.text.x = element_blank(),
+    axis.ticks.x = element_blank(),
+    axis.title.x = element_blank(),
+    panel.grid.major.x = element_blank(),
+    panel.grid.minor.x = element_blank()
+  )
+```
 
-Project Ideas
+This plot looks really good, and it's very shareable. The title is pretty captivating, gets to the heart of the matter, and makes its case. The code is split into three main statements. The first gets the data needed for the plot. Having a factor for the `series` column in the `ratings_all` table is important for filling each series' bars with a separate color. Having continuous episode numbers, independent of the series, is important for plotting the episode ratings in the correct order (it is a continuous scale after all). Selecting only the data you need keeps things tidy and keeps things organized and obvious for other people looking at your code (sharing code is also good, very good!).
 
-(should have a fully working set of Rmd templates, presented in the form of a project template - this can be prepped for the reader with a function call)
+What about the table that we called `series_labels`? Well, we need that to plot the series-number labels. We're using the power of stats to generate the positions for the data labels. Using the median of each series' ratings for the *y* position and the mean of that for the *x* position is pretty inspired. We also nudge the *y* positions up a little bit with the addition of `1` (try out different values and see for yourself what looks right).
 
-The moma dataset (https://apreshill.github.io/data-vis-labs-2018/02-moma.html) would be great for a project - explore using the lisa palette from paletteer
+After having those two tables made, we generate the plot. The `ratings_all` table is used to make the bars via `geom_col()`. With `geom_text()` we plot the text labels using that `series_labels` table. We have a wonderful set of color palettes in the **bakeoff** package; we can access the default palette `"showstopper"` by calling `bakeoff_palette()`. To add those colors to the different series' bars, we need `scale_fill_manual()` to do that bit of work. To avoid a legend (don't need it!), the `guide = FALSE` option is used. Labels are important and so we've added a title, subtitle, a caption, and a re-worked *y*-axis label with the ever-useful `labs()` function.
 
-Packages Needed
-
--   installation details (script with `library()` calls)
--   possibly use: https://github.com/rstudio4edu/rmd4edu/blob/master/R/lesson.R
+The resulting plot, again, is great! If shared via a Quarto document or through an email it would surely be a delight for the recipient.
