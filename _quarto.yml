@@ -88,7 +88,7 @@ book:
         - p06-production/03-run-on-conditions.qmd
     - "---"
   appendices:
-    - appendix/85-tidying-data-for-analysis.qmd
+    - appendix/86-tidying-data-for-analysis.qmd
     - appendix/87-transformations-dates-times.qmd
     - appendix/88-closer-look-r-programming.qmd
     - appendix/89-string-transformations.qmd
