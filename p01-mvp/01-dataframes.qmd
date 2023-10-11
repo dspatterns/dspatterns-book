@@ -2,8 +2,6 @@
 title: "Introduction to Data Frames and Tibbles"
 ---
 
-{{< include ../_patterns.qmd >}}
-
 ```{r setup, include=FALSE, echo=FALSE}
 library(dspatterns)
 library(dplyr)
@@ -13,21 +11,21 @@ library(skimr)
 library(gt)
 ```
 
-This section covers
+This MVP covers
 
-- printing a dataset obtained from a package with the object name and with `print()`, `head()`, and **dplyr**'s `glimpse()`
-- using the `names()` and `dim()` functions to get the column names and the dimensions of a table
-- looking at a full dataset with `View()` and the head and tail with **gt**'s `gt_preview()` function  
-- using `summary()` to get a basic summary of a table, and, going further with **skimr**'s `skim()` more comprehensive summary
-- creating our own tables/tibbles with `tibble()` and `tribble()`
+- Printing a dataset obtained from a package with the object name and with `print()`, `head()`, and **dplyr**'s `glimpse()`
+- Using the `names()` and `dim()` functions to get the column names and the dimensions of a table
+- Looking at a full dataset with `View()` and the head and tail with **gt**'s `gt_preview()` function  
+- Using `summary()` to get a basic summary of a table, and, going further with **skimr**'s `skim()` more comprehensive summary
+- Creating our own tables/tibbles with `tibble()` and `tribble()`
 
 When you're working with data, quite often it'll be structured data in the form of tables. Tabular data is usually a joy to work with: there's regularity in its shape (rectangular!), the rules for working with tables are widely known, and we can also take proactive steps to shape the data in a way that's even more convenient for data analysis.
 
 Tables come in all shapes and sizes. Some are very small, filling maybe a screen or two with data. Some are in between, requiring querying and summarizing to really make sense of the data. Finally, some are huge and those require more efficient tools for transforming, querying, and summarizing the data. Here, we'll start small and learn how to explore tables of the small variety. In R, tabular data is often stored in data structures known as data frames. It's part of *base R* and you don't need any extra packages to use data frames.
 
-We also have another variety of tables which are called *tibbles*. A tibble is a special implementation of a data frame that prints its data differently and behaves in a more consistent manner than data frames.
+We also have another variety of tables which are called *tibbles*. A tibble is a special implementation of a data frame that prints its data differently and behaves in a more consistent manner than data frames. This flavor of data frame is used quite a lot throughout this book and we'll make the case that *you* should also make them yours.
 
-In this chapter we'll take a look at a number of great ways to work with tables (whether they are data frames or tibbles). It's really hard to read all of the data in a large table so we can make use of many functions that provide different views of a table of interest. We will explore a handful of different packages that expressly deal with data frame exploration and summarization for better understanding.
+In this chapter we'll take a look at a number of great ways to work with tables (whether they are data frames or tibbles). It's really hard to read all of the data in a large table so we can make use of a plethora of functions that provide different views of a table of interest. We will explore a handful of different packages that expressly deal with data frame exploration and summarization for better understanding.
 
 ## Several Quick Ways to Initially Explore a Dataset
 
@@ -385,3 +383,11 @@ tribble(
 ```
 
 The resulting tibble appears just as we laid out the values. As can be seen in the code listing, the table values aren't provided as vectors but instead are laid out as column names and values in manner that approximates the structure of a table. Importantly the column names are preceded by a tilde (`~`) character, and, commas separate all values. This way of building a simple tibble can be useful when having values side-by-side is important for minimizing the potential for error.
+
+## Summary
+
+- There are many datasets kicking around in R packages; after loading the package (and discovering the datasets) you simply use the dataset name to print it
+- You can use a number of functions to look at a dataset that's a table: `print()`, `head()`, **dplyr**'s `glimpse()`, `View()` in RStudio, **gt**'s `gt_preview()`, and **skimr**'s `skim()`
+- Get the column names of a table with `names()` or `colnames()`; get the dimensions with `dim()`
+- The base R function `summary()` gives you a nice summary of a table and it's always there for you
+- You can easily make your own tibbles with either `tibble()` or `tribble()`
