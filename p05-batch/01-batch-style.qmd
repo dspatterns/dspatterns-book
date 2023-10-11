@@ -1,4 +1,6 @@
-# Batch styling of plots
+---
+title: "Batch Styling of Plots"
+---
 
 {{< include ../_patterns.qmd >}}
 
@@ -6,16 +8,20 @@
 library(intendo)
 library(pointblank)
 library(ggplot2)
-library(gt)
 library(dplyr)
 library(tidyr)
 library(glue)
 library(patchwork)
 ```
 
-## This Chapter's Pattern
+In this chapter, we will apply styling to different plots. We endeavor to do it in a way that doesn't require us to type out all the different options each and every time. We'll do this by making styling functions that work with **ggplot2**. To get this going, a dataset will be explored and we'll arbitrarily try out different forms of styling. Once we have plots that look good, the code will be developed into a reusable function. We want to be able to use that function consistently in our workflow, so, documentation will be written to explain what that function does and, importantly, how it is used.
 
-We want to apply styling to different plots, but do it in a way that doesn't require us to type out all the different options each and every time. We'll do this by making styling functions that work with **ggplot2** and **gt**. To get this going, a dataset will be explored and we'll arbitrarily try out different forms of styling. Once we have plots that look good, the code will be developed into a reusable function. We want to be able to use that function consistently in our workflow, so, documentation will be written to explain what that function does and, importantly, how it is used.
+We’ll need a few packages loaded in for this chapter:
+
+- **tidyverse**: for various functions from **dplyr**, **tidyr**, and **ggplot2**
+- **intendo**: for the dataset we'll be using (`all_sessions`)
+- **patchwork**: for arranging plots together in the most professional way imaginable
+- **glue**: for combining strings with the greatest of ease
 
 ## Explore
 
@@ -244,4 +250,4 @@ This is something that could be shared. But one thing that would make this more 
 
 ## Share
 
-Sharing code is often very important. We can do that with packages but just as easily do it in a low-key way by sharing .R scripts. Let's go part way to making that shareable script by re-working the code developed earlier into a reusable function.
+Sharing code is often very important. We can do that with packages but just as easily do it in a low-key way by sharing R scripts. Let's go part way to making that shareable script by re-working the code developed earlier into a reusable function.

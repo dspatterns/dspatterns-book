@@ -11,17 +11,15 @@ library(dplyr)
 library(readr)
 ```
 
-This section covers
-
-- The basics of the CSV file format
-- Using the `read_csv()` function from the **readr** package
-- Reading **Excel** data into R
-
 Previously, we had used datasets available in the **dspatterns** package to get the data we needed. This is all fine and well for the purpose of learning to use data transformation and visualization functions. However, real world data won't often be found in R packages. You may encounter useful data in text files, **Excel** files, or on the web in myriad forms. While there are hundreds of ways data can be structured and stored, there are a few formats that are quite common and so the focus of this section will be on the methods for importing these common formats into R (as tibbles). These formats are CSV and **Excel** files.
 
-The **dspatterns** package for its part will offer some custom functions to make the examples flow a bit better. We need some CSV and **Excel** files to import, so, a few functions from **dspatterns** will be available for spawning these files in our project directory.
+Here's a breakdown of packages needed for this chapter:
 
-## Writing a Sample CSV File
+- **tidyverse**: for the use of the **dplyr** and **readr** packages
+- **readxl**: for the dataset we'll be using (`bakers`)
+- **dspatterns**: for the Excel file we need in many of the examples
+
+## Explore
 
 To make things easy for us, the **dspatterns** package has a function that writes any **dspatterns**-based dataset to a CSV file: `dataset_to_csv()`. Remember that we need to load the **dspatterns** package first, and this can be done by executing `library(dspatterns)` in the **RStudio** console. The datasets you'll end up importing will be varied and will serve different purposes. Occasionally, you'll need a dataset that has data associated with your main subject of study. For examples in this section we will be experimenting with variations of a dataset called `us_cities` that has populations for cities in United States. Why would you need such a dataset in the real world? Well, suppose you are conducting a study that looks at sales by city. You might have a dataset with a listing of such sales but, sadly, you don't have the populations of these cities (which may help explain the sales figures). By obtaining an associated dataset on city populations, we can potentially combine the city populations with a summary of total sales by city. Before joining such datasets together, we first need to fully understand how to read in datasets from files.
 
@@ -45,7 +43,7 @@ Further information on the `us_cities` dataset can be found by executing `help(u
 
 In case we don't fully believe the message given by `dataset_to_csv()`, we can have a look at the *Files* tab in **RStudio** (in the lower-right pane, first tab). The file should be there. If it isn't, we can try two things. We should check that the path above the file view is same as that given in the message received after executing the `dataset_to_csv()` function. If it's different for whatever reason, we could navigate back to the project directory by clicking on the icon to the right of the path (the blue, R-in-cube icon). One last thing to try is clicking the refresh button just above (it could be that, on some file systems, a refresh of the directory listing is necessary).
 
-## Using **readr** to Import Data from CSV Files
+**Using readr to Import Data from CSV Files**
 
 Now that we have learned about how to set up our projects, we will now import data from CSV (comma-separated value) files. CSVs are quite commonplace as method for storing tabular data in plain text. Many software programs that deal with tabular data can often export such data to CSV. While the CSV 'format' isn't rigorously specified (there really is a lot of variation), we commonly find that
 
@@ -56,7 +54,7 @@ Now that we have learned about how to set up our projects, we will now import da
 
 While such variations in CSV formatting can't really be avoided, the *Tidyverse* **readr** package has many options to successfully deal with any such potential issues.
 
-### Reading in Our Sample CSV file with the `read_csv()` Function
+**Reading in Our Sample CSV file with the `read_csv()` Function**
 
 Now that we have a sample CSV file on disk, let's read in that file into a tibble object. We can do this using the `read_csv()` function from the readr package. This package is available in the *Tidyverse* so we need to first execute `library(tidyverse)` before using that function. As before, we will illustrate our upcoming examples as **R Markdown** code chunks, so, the next code listing will look familiar to us.
 
@@ -110,19 +108,19 @@ city_table
 
 Through inspection of the column types in `city_table`, we can see that the last two columns are now of the `integer` type.
 
-### Additional `read_csv()` Options for Non-standard CSVs
+**Additional `read_csv()` Options for Non-standard CSVs**
 
 There are many more options we can use with `read_csv()` and these begin to be important as we encounter CSV files that contain oddities within them. For example, what if we want to have proper `NA` values in our tibble to account for missing values but the CSV file, instead of using empty strings or `"NA"` (which are both parsed correctly as `NA` values), we see the word `"missing"` instead? In this case, we could use the `na = "missing"` option and then `read_csv()` would interpret those instances as `NA`s.
 
 Here an unusual one: some CSVs contain comment lines within them. This is nonstandard, but it does exist in useful CSV datasets you might find on the Web. To correctly parse these kinds of files, it's useful to inspect the file as text in **RStudio** and identify which characters signify the start of the comment lines. (We can conveniently do this in **RStudio** by clicking on the file in the *Files* pane and selecting the *View File* option.) Often, the comment line begins with a `#` sign. Knowing this, we could provide the `comment = "#"` option to `read_csv()` and this results in such lines being completely ignored.
 
-## Using **readxl** to Import **Excel** Data
+**Using readxl to Import Excel Data**
 
 **Excel** is a spreadsheet application that's made by **Microsoft**. It's quite popular and so there is a wealth of data stored in the .xls and .xlsx file formats within organizations and available as public data. It is widely used across many different fields because it's an easily accessible tool for organizing, analyzing, and storing data.
 
 The **dspatterns** package will again provide us the **Excel** files we need for the examples, eliminating the need to download **Excel** files from the Internet. We will use the **readxl** package, available in the *Tidyverse*, to import data tables within **Excel** files for all of our examples. But before we do that, we will need to consider the ways in which we can best prepare **Excel** files for import. The reason for this is that there are so many ways to add data to **Excel** files, and we'd want to ensure that the data is in the tidiest form possible before importing (remembering that tidy tools expect tidy data). We'll have a look at the ideal representation of data inside **Excel** as it relates to importing that data to R, and, propose some strategies for cleaning up **Excel** files are problematic.
 
-### Writing an example **Excel** file to the project directory
+**Writing an example Excel file to the project directory**
 
 The **dspatterns** package has a few functions that produce example **Excel** files. As always, ensure that `library(dspatterns)` is executed in the RStudio console if this is a new R session. We will use the `create_excel_file()` function to write an example **Excel** file to the working directory. The **Excel** document that the function creates has two sheets (and these are sometimes called tabs). The first sheet (called `us_cities`) contains all of the data from the `us_cities` dataset in the cleanest manner possible (*Figure \@ref(fig:us-cities)*). There are several qualities in this sheet that make it the data easy to import into R:
 
@@ -150,9 +148,11 @@ This function doesn't require any options. It will just write the **Excel** file
 #> The Excel file `us_cities.xlsx` was written to the working directory
 ```
 
+## Understand
+
 We can further verify that the file was written by looking for it in **RStudio**'s *Files* tab (lower-right pane). Only one type of file is generated from the `create_excel_file()` function and that's `us_cities.xlsx`.
 
-### Reading in Our Sample **Excel** File with the `read_excel()` Function
+**Reading in Our Sample Excel File with the `read_excel()` Function**
 
 Now that we have a sample **Excel** file on disk, let's read the first sheet of that document (the ideal, clean sheet) into a tibble object. We can do this using the `read_excel()` function from the **readxl** package. This package is available in the *Tidyverse* and will be available on your system when installing the *Tidyverse* package (through `install.packages(tidyverse)`). However, the **readxl** package functions won't be available when executing `library(tidyverse)`. Instead, we need to explicitly use `library(readxl)` beforehand. So, keep in mind that `library(readxl)` must accompany your suite of `library()` statements when importing **Excel** files.
 
@@ -217,6 +217,8 @@ city_table_x_m
 ```
 
 From this code, we get a message about new names. What's happening is that the function can't find column names on the top row, so, it's creating unique names for us. The resulting tibble has some extra columns and rows that are not intended to be table records (at least at the top, which is all we can see in this view).
+
+## Explain
 
 Upon looking at the **Excel** file (*Figure \@ref(fig:us-cities-messy)* provides an annotated guide to its problems) we can see why the import result is the way that it is. This is all fixable though, so long as we know what the particular problems are. However, we really need to have a close look at the sheet in **Excel** proper.
 
@@ -290,10 +292,6 @@ We can see that the column names are now the same as those in the `us_cities` da
 
 Would it have been easier to hand edit the messy **Excel** sheet before importing? Perhaps, but this is a choice that depends on the situation at hand. If you created the **Excel** file and its only purpose was to get data into R, then that's a good case for correcting your own mistakes in that **Excel** sheet. If a collaborator generated the file and it's treated as 'raw data', perhaps likely to be updated various times (and thus requiring periodic importing into R), then it's wise to not hand edit the file. That practice is error-prone and not leads to problems with reproducibility. Often, it's best to deal with these files as they are and make use of the helpful options in the **readxl** and **dplyr** packages to handle the importing.
 
-## Summary
+We learned a lot about importing CSVs and Excel files. And managing our projects and their associated files is much easier now that we've learned how to create and manage **RStudio** *Projects*. CSV data? Import all that with the **readr** package's excellent `read_csv()` function. Got Excel files? That's a bit more work since **Excel** files often contain a multitude of datasets. But once you understand what's in such a file we can use the `read_excel()` function (from **readxl**) to read in data from **Excel** sheets.
 
-- Managing our projects and their associated files is much easier now that we've learned how to create and manage **RStudio** *Projects*
-- We learned how to import data from a CSV file with the **readr** package's `read_csv()` function
-- **Excel** files often contain datasets and we used the `read_excel()` function (from **readxl**) to successfully read in data from **Excel** sheets
-- We encountered some common problems in both CSV and **Excel** files and discovered some useful options in `read_csv()` and `read_excel()` to ensure that data could be imported properly
-
+There will always be problems and we encountered some common ones when importing both CSV and **Excel** files. The `read_csv()` and `read_excel()` functions do, however, come packed with options to ensure that data could be imported properly!

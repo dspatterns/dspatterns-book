@@ -1,4 +1,6 @@
-# Batch creation of tables
+---
+title: "Batch Creation of Tables"
+---
 
 {{< include ../_patterns.qmd >}}
 
@@ -11,9 +13,15 @@ library(tidyr)
 library(glue)
 ```
 
-## This Chapter's Pattern
+In this chapter we explore the pattern of taking changing data and dependably making great looking tables. We'll first explore a dataset and try out some data manipulation that gets us close to what we need. That working code will be developed into a reusable function and some documentation will be written to explain what that function does and how we can use it. Finally, we'll take a look at basic some ways that function could be stored and used for generating a graphic that could be used in a report or presentation. This sort of thing is often part of a larger data sharing workflow. Getting this pattern down can make data sharing in an organization go much more smoothly, giving you the confidence to scale up the approach to multiple streams of data coming in, and generating multiple tabular data products to different audiences.
 
-We want to take changing data and dependably make great looking tables that might be part of a larger data sharing workflow. We'll first explore a dataset and try out some data manipulation that gets us close to what we need. That working code will be developed into a reusable function and some documentation will be written to explain what that function does and how we can use it. Finally, we'll take a look at basic some ways that function could be stored and used for generating a graphic that could be used in a report or presentation.
+We’ll need a few packages loaded in for this chapter:
+
+- **tidyverse**: for various functions across a collection of packages (e.g., **dplyr**, **tidyr**, etc.)
+- **intendo**: for the dataset we'll be using (`all_revenue`)
+- **pointblank**: for slicing up tibbles and performing data checks
+- **gt**: for making wonderful-looking tables
+- **glue**: for putting strings together elegantly
 
 ## Explore
 

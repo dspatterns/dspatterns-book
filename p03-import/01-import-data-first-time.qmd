@@ -1,4 +1,6 @@
-# Importing data for the first time
+---
+title: "Importing Data for the First Time"
+---
 
 {{< include ../_patterns.qmd >}}
 
