@@ -2,24 +2,22 @@
 title: "Introductory Data Transformation with **dplyr**"
 ---
 
-{{< include ../_patterns.qmd >}}
-
 ```{r setup, include=FALSE, echo=FALSE}
 library(dspatterns)
 library(dplyr)
 library(ggplot2)
 ```
 
-This section covers
+This MVP covers
 
-- learning the basics of assigning values to variables
-- installing and loading packages from **CRAN** and **GitHub**
-- accessing datasets and understanding the basic elements of a table
+- Learning the basics of assigning values to variables
+- Installing and loading packages from **CRAN** and **GitHub**
+- Accessing datasets and understanding the basic elements of a table
 using the **dplyr** `filter()` function, with expressions that filter a table to only the rows you need
-- reordering rows with the **dplyr** `arrange()` function
+- Reordering rows with the **dplyr** `arrange()` function
 performing several column-selection operations with **dplyr**’s `select()` function
-= creating new table columns (or modifying existing ones) with `mutate()` and carefully crafted expressions
-- summarizing tabular data with the combination of `group_by()` and `summarize()`
+- Creating new table columns (or modifying existing ones) with `mutate()` and carefully crafted expressions
+- Summarizing tabular data with the combination of `group_by()` and `summarize()`
 
 We will start off by getting our bearings with assignment of variables in R. Later, we'll certainly get the opportunity to learn more programming fundamentals, however assignment is one of those topics that should be addressed right away. Then, the installation of packages will be covered. This will give us the chance to install some of required packages: **tidyverse**, **dspatterns**, and **devtools**.
 
@@ -716,7 +714,7 @@ Moving between data transformation activities and plotting with **ggplot** like 
 - Transforming a dataset can be done with these five **dplyr** functions: `filter()`, `arrange()`, `select()`, `mutate()`, and `summarize()` (with `group_by()`)
 - The pipe operator (`|>`) (which was used with the **dplyr** functions) improved the composition and readability of our R statements
 - Transforming data with **dplyr** and visualizing data with **ggplot** is often something that's done hand in hand
-- We can use the `tibble()` and `tribble()` functions to create our own data tables 
+- We can use the `tibble()` and `tribble()` functions to create our own data tables
 
 ## Exercises
 
