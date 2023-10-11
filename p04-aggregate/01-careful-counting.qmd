@@ -12,23 +12,6 @@ library(gt)
 library(ggplot2)
 ```
 
-```{css, echo=FALSE}
-# TODO: place in external CSS file
-pre code {
-    overflow-wrap: unset;
-    word-break: unset;
-    white-space: unset;
-}
-
-pre.numberSource code > span > a:first-child::before {
-  left: -0.5em;
-}
-
-pre.numberSource {
-  margin-left: 2em;
-}
-```
-
 Counting things in our data is super important. It allows us to account for things and also make sense of data. Sometimes you'll want sums of values (for example, total amount of revenue earned in a week or a month), other times, you'll need an accurate count of occurrences (like the daily active users of a service).
 
 We'll make extensive use of the **bakeoff** package. It's a package that contains datasets based on the Great British Bake Off television show. In particular, the `bakers` dataset will be used for many of the examples.
