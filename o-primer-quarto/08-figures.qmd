@@ -10,7 +10,7 @@ library(paletteer)
 library(ggplot2)
 knitr::opts_chunk$set(warning=FALSE, message=FALSE)
 
-words <- read.csv(here::here("primer-quarto/data/word_summary.csv"))
+words <- read.csv(here::here("o-primer-quarto/data/word_summary.csv"))
 
 line <- 
   ggplot(words, aes(x = age, y = produces, color = lemma)) + 
