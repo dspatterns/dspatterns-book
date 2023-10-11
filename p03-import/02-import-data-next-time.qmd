@@ -1,5 +1,5 @@
 ---
-title: "Importing data the Next Time"
+title: "Importing Data the Next Time"
 ---
 
 {{< include ../_patterns.qmd >}}
@@ -11,39 +11,85 @@ library(readxl)
 library(janitor)
 ```
 
+*There will always be a next time*. This statement very much holds true when it comes to routinely loading in data for analysis. This variation of data loading is different from the *first time*, where you have no familiarity with the data at hand. Rather, this is data that perhaps comes in regularly (through updates) and the structure of it doesn't really change (or at least, it *shouldn't*).  
 
-## Introduction
+This pattern is really different because we're not coming to grips with what the data is. It's a known quantity by now and so the concerns are different. One of these is: "Will this updated dataset work with my existing scripts and workflows?". Typically, a workflow will adapt or scale with data that's an expansion of earlier, working data (in a similar fashion to subsets of data). So the main concern is less about understanding the data and generating the workflows around the data but ensuring that data quality is maintained with subsequent updates.
 
-Use: 
+We'll need a few packages loaded in for this chapter:
 
-- pointblank for data checking
-- introduce subject 263 in the data, which has data validity issues
-  - find some way to easily detect this with some data checking
-
-Resources:
-
-Goal: While you have basic data checking skills now, you have to build habits that ensure that every time you get data (even and especially updated data) you perform a high level of data checking. Small errors can easily creep in and cause small to huge problems with your analysis, so, this is super important!
-
-pains:
-
-- updated data where things have unexpectedly changed (e.g., less rows, different columns, modified data)
-
-
-## This chapter's pattern
-
+- **tidyverse**: for various functions across a collection of packages (the Tidyverse packages)
+- **pointblank**: for building a data dictionary and performing data checks
 
 ## Explore
 
-**Things you should do with every dataset either new or old**
+Before we dive right in and look at a messed up table (full of data quality issues) let enumerate the types of data quality problems that happen on a regular basis.
 
-Provide a series of steps that can be used to quickly get up to speed with a dataset.
+**Missing Values**
+
+Missing values occur when there are empty or null entries in the data. Missing values can lead to biased or incomplete analysis since they can introduce inconsistencies and distort statistical calculations. Analysts may need to handle missing values appropriately by imputing them or excluding them from the analysis, depending on the context.
+
+**Inconsistent Formatting**
+
+Inconsistent formatting refers to variations in how data is represented, such as inconsistent date formats or inconsistent capitalization. Inconsistent formatting can make data difficult to analyze, compare, or merge across different datasets. It can also lead to errors in calculations or misinterpretations of the data.
+
+**Duplicates**
+
+Duplicates occur when there are multiple identical or similar entries in the dataset. Duplicates can distort statistical analysis, as they may artificially inflate counts, averages, or other summary metrics. They can also lead to incorrect conclusions or duplicate efforts if not properly identified and handled.
+
+**Outliers**
+
+Outliers are extreme values that deviate significantly from the majority of the data. Outliers can have a disproportionate impact on statistical measures, potentially skewing results or leading to incorrect assumptions. Analysts need to identify and evaluate outliers to determine their validity and decide whether to include, transform, or remove them from the analysis.
+
+**Inaccurate or Incomplete Data**
+
+Inaccurate or incomplete data refers to data that contains errors, inaccuracies, or omissions. This can include data entry errors, measurement errors, or incomplete records. Inaccurate or incomplete data can lead to incorrect analysis, biased conclusions, or unreliable insights. It is crucial for analysts to validate and verify data quality and address any inaccuracies or incompleteness before drawing conclusions.
+
+This is just a sampling of data quality issues someone dealing with data might face. Data quality issues are straight up problematic for data people. These problems harm the integrity, reliability, and validity of analytical outcomes. This potentially leads to: (1) erroneous insights, (2) biased decision-making, and (3) flawed conclusions; three things which are pretty much the same w.r.t. badness and unwantedness. It is imperative, crucial even, to address data quality problems. This is done of course with data validation, and appropriate handling to safeguard the accuracy and dependability of analyses (and those decision-making processes).
+
+Now to the data. We're going to get that data from the **intendo** package. This data package contains synthetic datasets and it comes from the videogame analytics world. One thing that's really hard to find is data that is purposefully full of errors. The **intendo** package *has* these kind of datasets and, additionally, the errors are fully documented (in the package codebase, that is). But don't cheat and take a look just yet! We need to discover what the problems are through data quality checks.
+
+The dataset we are going to use for our data-quality-checking examples is called `user_summary` and we can access it (and choose the `"faulty"` variant) through **intendo**'s `user_summary()` function.
+
+```{r}
+#| output: false
+#| echo: false
+user_summary <- user_summary(quality = "faulty")
+```
+
+Let's look at the faulty `user_summary` table using **dplyr**'s `glimpse()` function:
+
+```{r}
+glimpse(user_summary)
+```
+
+This dataset, unlike the previously used `stickers` dataset, has no weirdness with regard to overly-long column names or the like. The major malfunction here is the data itself: it's faulty. We obviously can't see that in the `glimpse()` of the data but it's there. We have to deal with this using a high amount of data quality checks. Small errors can easily creep in and cause small to huge problems with your analysis, so, this is super important!
+
+Let's look at the data and what it means. The **intendo** package smartly provides data dictionaries for each of its datasets. We can view the data dictionary for the `user_summary` table with the 
+`user_summary_dd()` function.
+
+```{r}
+#| output: false
+#| echo: false
+#| eval: false
+user_summary_dd()
+```
+That data dictionary is pretty detailed! It doesn't provide sample values for any column, but, it does describe the data reasonably well (especially the `player_id` column). This should be read over at least twice and then, once we have a solid understanding of the data again (supposing we've seen this data before) we can then get to exploring the data again and building some data quality checks we can always run when we get refreshed data. 
+
+## Explore
+
+Let's use `scan_data()` to look at the `user_summary` table. In this case, we only want to look at a few sections of the full data scan.
+
+```{r}
+scan_data(user_summary, sections = "OVMS")
+```
 
 
 
-**Find out what went wrong with data updates using pointblank workflows.**
+incoming/refreshed data to quickly determine if anything changed in a very obvious/bad way
 
-- Provide examples of data changing over time (from initial dataset to revisions of the data)
-- Show potential issues like schema changes, reductions of rows, unexpected data in certain columns
+
+We can save the report to disk using `export_report()` function. Such table scan snapshots are useful to have around while formulating data quality checks.
+
 
 ## Understand
 
@@ -59,7 +105,79 @@ This may require some communication with the data provider. For now, we just hav
 
 - If there are problems that can be traced, then write a pointblank validation step for that (provide example where text data is becoming incorrect)
 
-- Use `scan_data()` on incoming/refreshed data to quickly determine if anything changed in a very obvious/bad way; save the reports to disk using `export_report()` to get table scan snapshots
+
+- Provide examples of data changing over time (from initial dataset to revisions of the data)
+
+- Show potential issues like schema changes, reductions of rows, unexpected data in certain columns
+
+One really cool thing you can do with **pointblank** (the package that's all about data quality checks) is use a function called `draft_validation()`. Executing that with the dataset gives you an .R script with a ton of data quality statements written for you! You run it like this
+
+```{r}
+#| output: false
+#| echo: false
+#| eval: false
+
+draft_validation(
+  tbl = user_summary,
+  tbl_name = "User Summary",
+  file_name = "user_summary_validation"
+)
+```
+
+and you get a .R file that looks like this
+
+```r
+library(pointblank)
+
+agent <-
+  create_agent(
+    tbl = ~ user_summary,
+    actions = action_levels(
+      warn_at = 0.05,
+      stop_at = 0.10
+    ),
+    tbl_name = "User Summary",
+    label = "Validation plan generated by `draft_validation()`."
+  ) %>%
+  # Expect that column `player_id` is of type: character
+  col_is_character(
+    columns = vars(player_id)
+  ) %>%
+  # Expect that column `country` is of type: character
+  col_is_character(
+    columns = vars(country)
+  ) %>%
+  # Expect that values in `country` should be in the set of `NA`, `United States`, `Japan` (and 27 more)
+  col_vals_in_set(
+    columns = vars(country),
+    set = c(NA, "United States", "Japan", "Switzerland", "China", "Denmark", "Hong Kong", "South Africa", "United Kingdom", "Austria", "India", "Portugal", "Russia", "Philippines", "South Korea", "Spain", "Germany", "Canada", "Egypt", "France", "Norway", "Mexico", "DK", "DE", "PH", "HK", "Australia", "Sweden", "CH", "NO")
+  ) %>%
+  # Expect that column `acquisition` is of type: character
+  col_is_character(
+    columns = vars(acquisition)
+  ) %>%
+  # Expect that column `device_name` is of type: character
+  col_is_character(
+    columns = vars(device_name)
+  ) %>%
+  # Expect entirely distinct rows across all columns
+  rows_distinct() %>%
+  # Expect that column schemas match
+  col_schema_match(
+    schema = col_schema(
+      player_id = "character",
+      first_login = c("POSIXct", "POSIXt"),
+      start_day = "Date",
+      country = "character",
+      acquisition = "character",
+      device_name = "character"
+    )
+  ) %>%
+  interrogate()
+
+agent
+```
+
 
 **Is the data I'm getting truly the raw data?** 
 
