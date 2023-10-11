@@ -303,4 +303,4 @@ Now that we have a much more complete data dictionary, we can share it through p
 stickers_dd |> export_report(filename = "stickers_dd.html")
 ```
 
-Of course, you can go much further with the data dictionary functionality in **pointblank**. More sections can be included and much more fine-grained information can be provided for columns.
+Of course, you can go much further with the data dictionary functionality in **pointblank**. More sections can be included and much more fine-grained information can be provided for columns. Take a look at the articles in the [**pointblank** website](https://rstudio.github.io/pointblank/) to do with *information management* for more information and inspiration.
