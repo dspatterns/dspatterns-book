@@ -6,9 +6,9 @@ title: "Importing Data the Next Time"
 
 ```{r setup, include=FALSE, echo=FALSE}
 library(dspatterns)
+library(intendo)
 library(tidyverse)
-library(readxl)
-library(janitor)
+library(pointblank)
 ```
 
 *There will always be a next time*. This statement very much holds true when it comes to routinely loading in data for analysis. This variation of data loading is different from the *first time*, where you have no familiarity with the data at hand. Rather, this is data that perhaps comes in regularly (through updates) and the structure of it doesn't really change (or at least, it *shouldn't*).  
@@ -18,6 +18,7 @@ This pattern is really different because we're not coming to grips with what the
 We'll need a few packages loaded in for this chapter:
 
 - **tidyverse**: for various functions across a collection of packages (the Tidyverse packages)
+- **intendo**: for the dataset we'll be using (`user_summary`)
 - **pointblank**: for building a data dictionary and performing data checks
 
 ## Explore
