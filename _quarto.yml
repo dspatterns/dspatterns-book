@@ -26,27 +26,27 @@ book:
     - "---"
     - part: "Onboarding patterns"
       chapters:
-        - onboarding/patterns.qmd
-        - onboarding/chapters.qmd
-        - onboarding/book.qmd
-        - onboarding/authors.qmd
-        - onboarding/tools.qmd
+        - m_onboarding/patterns.qmd
+        - m_onboarding/chapters.qmd
+        - m_onboarding/book.qmd
+        - m_onboarding/authors.qmd
+        - m_onboarding/tools.qmd
     - "---"
-    - primer-coding/01-hello-r.qmd
+    - n-primer-coding/01-hello-r.qmd
     - "---"
     - part: "Primer II: Quarto"
       chapters:
-        - primer-quarto/01-hello-quarto.qmd
-        - primer-quarto/02-source.qmd
-        - primer-quarto/03-coding.qmd
-        - primer-quarto/04-rendering.qmd
-        - primer-quarto/05-writing.qmd
-        - primer-quarto/06-how-it-works.qmd
-        - primer-quarto/07-chunks.qmd
-        - primer-quarto/08-figures.qmd
-        - primer-quarto/09-tables.qmd
-        - primer-quarto/10-options.qmd
-        - primer-quarto/11-formats.qmd
+        - o-primer-quarto/01-hello-quarto.qmd
+        - o-primer-quarto/02-source.qmd
+        - o-primer-quarto/03-coding.qmd
+        - o-primer-quarto/04-rendering.qmd
+        - o-primer-quarto/05-writing.qmd
+        - o-primer-quarto/06-how-it-works.qmd
+        - o-primer-quarto/07-chunks.qmd
+        - o-primer-quarto/08-figures.qmd
+        - o-primer-quarto/09-tables.qmd
+        - o-primer-quarto/10-options.qmd
+        - o-primer-quarto/11-formats.qmd
     - "---"
     - part: "Part 1: MVPs"
       chapters:
@@ -88,14 +88,14 @@ book:
         - p06-production/03-run-on-conditions.qmd
     - "---"
   appendices:
-    - appendix/86-tidying-data-for-analysis.qmd
-    - appendix/87-transformations-dates-times.qmd
-    - appendix/88-closer-look-r-programming.qmd
-    - appendix/89-string-transformations.qmd
-    - appendix/90-lists-and-factors.qmd
-    - appendix/91-more-ggplot-1.qmd
-    - appendix/92-more-ggplot-2.qmd
-    - appendix/93-making-presentation-tables.qmd
+    - q_appendix/86-tidying-data-for-analysis.qmd
+    - q_appendix/87-transformations-dates-times.qmd
+    - q_appendix/88-closer-look-r-programming.qmd
+    - q_appendix/89-string-transformations.qmd
+    - q_appendix/90-lists-and-factors.qmd
+    - q_appendix/91-more-ggplot-1.qmd
+    - q_appendix/92-more-ggplot-2.qmd
+    - q_appendix/93-making-presentation-tables.qmd
 
 format:
   html:
