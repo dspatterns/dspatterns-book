@@ -26,11 +26,11 @@ book:
     - "---"
     - part: "Onboarding patterns"
       chapters:
-        - m_onboarding/patterns.qmd
-        - m_onboarding/chapters.qmd
-        - m_onboarding/book.qmd
-        - m_onboarding/authors.qmd
-        - m_onboarding/tools.qmd
+        - m-onboarding/patterns.qmd
+        - m-onboarding/chapters.qmd
+        - m-onboarding/book.qmd
+        - m-onboarding/authors.qmd
+        - m-onboarding/tools.qmd
     - "---"
     - n-primer-coding/01-hello-r.qmd
     - "---"
@@ -88,14 +88,14 @@ book:
         - p06-production/03-run-on-conditions.qmd
     - "---"
   appendices:
-    - q_appendix/86-tidying-data-for-analysis.qmd
-    - q_appendix/87-transformations-dates-times.qmd
-    - q_appendix/88-closer-look-r-programming.qmd
-    - q_appendix/89-string-transformations.qmd
-    - q_appendix/90-lists-and-factors.qmd
-    - q_appendix/91-more-ggplot-1.qmd
-    - q_appendix/92-more-ggplot-2.qmd
-    - q_appendix/93-making-presentation-tables.qmd
+    - q-appendix/86-tidying-data-for-analysis.qmd
+    - q-appendix/87-transformations-dates-times.qmd
+    - q-appendix/88-closer-look-r-programming.qmd
+    - q-appendix/89-string-transformations.qmd
+    - q-appendix/90-lists-and-factors.qmd
+    - q-appendix/91-more-ggplot-1.qmd
+    - q-appendix/92-more-ggplot-2.qmd
+    - q-appendix/93-making-presentation-tables.qmd
 
 format:
   html:
