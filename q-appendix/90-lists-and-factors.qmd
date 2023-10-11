@@ -149,7 +149,7 @@ Perhaps we'd like to mutate the tibble inside the list, adding a character colum
 )`
 ```{r modifying-the-b-list-tibble, paged.print=FALSE}
 b_list$b <- 
-  b_list$b %>%
+  b_list$b |>
   mutate(z = c("a", "b", "c"))
 
 b_list
@@ -382,7 +382,7 @@ Let's take a subset of the data in `german_cities` so that, for the next few exa
 )`
 ```{r german-cities-filter-bayern, paged.print=FALSE}
 german_cities_bayern <-
-  german_cities %>%
+  german_cities |>
   filter(state == "Bayern")
 
 german_cities
@@ -395,7 +395,7 @@ Now that the `german_cities` tibble has been filtered to only those cities in Ba
 )`
 ```{r mutate-fct-drop}
 german_cities_bayern <- 
-  german_cities_bayern %>% 
+  german_cities_bayern |> 
   mutate(
     name = fct_drop(name),
     state = fct_drop(state)
@@ -510,12 +510,12 @@ Let's take the same dataset, `german_cities`, and get a bar plot that indicates 
 #| label: fig-barplot-count
 #| fig.cap: "A bar plot that shows the number of cities in the dataset that are part of each state. We need to order the bars, however, to make this a more effective visualization (it's hard to parse at present)."
 
-german_cities %>%
+german_cities |>
   ggplot(aes(y = state)) +
   geom_bar()
 ```
 
-The plot in @fig-barplot-count is, just like that of @fig-barplot-bayern-1, unsatisfactory as a visualization since the bars (corresponding to counts of cities in each state) are not ordered by their lengths. The **forcats** package offers a very useful function that assigns frequency values to factor levels: `fct_infreq()`. Let's use `fct_infreq()` in a `mutate()` statement along with `fct_rev()` as a way to reverse the levels, just as we've done before. In the next code listing the dataset is mutated with those factor adjustments and the table is then introduced to `ggplot()` via the `%>%`. The much-improved plot is shown in @fig-fct-infreq.
+The plot in @fig-barplot-count is, just like that of @fig-barplot-bayern-1, unsatisfactory as a visualization since the bars (corresponding to counts of cities in each state) are not ordered by their lengths. The **forcats** package offers a very useful function that assigns frequency values to factor levels: `fct_infreq()`. Let's use `fct_infreq()` in a `mutate()` statement along with `fct_rev()` as a way to reverse the levels, just as we've done before. In the next code listing the dataset is mutated with those factor adjustments and the table is then introduced to `ggplot()` via the `|>`. The much-improved plot is shown in @fig-fct-infreq.
 
 `r dspatterns::code_hints(
 "Improving on the city count bar plot through use of the ~~fct_infreq()~~ and ~~fct_rev()~~ functions."
@@ -524,8 +524,8 @@ The plot in @fig-barplot-count is, just like that of @fig-barplot-bayern-1, unsa
 #| label: fig-fct-infreq
 #| fig.cap: "An improved bar plot that made use of the `fct_infreq()` function (to assign levels according to frequency) and, following that, the `fct_rev()` function (to reverse the order of levels)."
 
-german_cities %>%
-  mutate(state = state %>% fct_infreq() %>% fct_rev()) %>%
+german_cities |>
+  mutate(state = state |> fct_infreq() |> fct_rev()) |>
   ggplot(aes(y = state)) +
   geom_bar()
 ```
@@ -542,9 +542,9 @@ The other function worth mentioning is the `fct_inseq()`. What that does is tran
 ```{r fct-inseq}
 fctr <- factor(3:8, levels = as.character(c(5, 4, 6, 3, 8, 7)))
 
-fctr %>% levels()
+fctr |> levels()
 
-fctr %>% fct_inseq() %>% levels()
+fctr |> fct_inseq() |> levels()
 ```
 
 From this code chunk we get two outputs, the first shows the levels as defined by the `factor()` statement, the second set of levels has been modified by `fct_inseq()` such that the order now matches the values of factor (the sequence of numbers from `3` to `8`). The `fct_inseq()` function could be very useful in situations where factor-based values are in terms of years, months, or some other numeric value where ordering numerically makes sense.
@@ -560,8 +560,8 @@ The example shown in the next code listing synthesizes a number of `fct_*()` fun
 #| label: fig-fct-lump-n
 #| fig.cap: "This bar plot of states and the count of cities within them now has an 'Other' bar that represents the count of cities in all other states not in the highlighted five."
 
-german_cities %>%
-  mutate(state = state %>% fct_infreq() %>% fct_lump_n(5) %>% fct_rev()) %>%
+german_cities |>
+  mutate(state = state |> fct_infreq() |> fct_lump_n(5) |> fct_rev()) |>
   ggplot(aes(y = state)) +
   geom_bar()
 ```

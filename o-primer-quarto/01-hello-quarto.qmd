@@ -44,14 +44,14 @@ tribble(
   
   "`1. ordered list`<br>`2. item 2`<br>`   + sub-item 1`<br>`   + sub-item 2`",
   "1. ordered list\n2. item 2\n   + sub-item 1\n   + sub-item 2",
-) %>%
-  gt(caption = "Markdown Reference", id = "md_ref") %>%
-  fmt_markdown(columns = everything()) %>%
+) |>
+  gt(caption = "Markdown Reference", id = "md_ref") |>
+  fmt_markdown(columns = everything()) |>
   cols_label(
     a = "Write this down as Markdown...",
     b = "...get this in HTML form"
-  ) %>%
-  tab_options(table.width = pct(100)) %>%
+  ) |>
+  tab_options(table.width = pct(100)) |>
   opt_css(
     css = "
     #md_ref code {

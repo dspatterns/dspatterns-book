@@ -298,23 +298,20 @@ Both of these `[[` approaches return to us the vector of numbers from `1` to `10
 Why extract a vector from a data frame or tibble? There are lots of good reasons. Perhaps the extracted vector might be used in a test to check for, say, the existence of any values greater than `8`. If this sort of test is important for an analysis, here's an example scenario:
 
 1. we could extract `col_1` as a vector
-2. piping it to the expression (in curly braces): `{. > 8}`
-3. piping that to the `any()` function
+2. use a comparison expression to get a logical vector
+3. use the `any()` function to determine if any of those individual comparisons was `TRUE`
 
 Here is the R code that does all of this, giving us a single `TRUE` as a result.
 
 `r dspatterns::code_hints(
 "Extracting a vector and performing a check of the values.",
 c(
-"L.2 Piping to an expression inside ~~{ }~~ is a way to use comparison operators with the extracted vector. The dot (~~.~~) represents the extracted vector in the expression.",
-"L.3 The ~~any()~~ function takes a logical vector (i.e., a vector of ~~TRUE~~/~~FALSE~~ values) and returns ~~TRUE~~ if there is at least one ~~TRUE~~ value in that logical vector."
+"L.1 The ~~any()~~ function takes a logical vector (i.e., a vector of ~~TRUE~~/~~FALSE~~ values) and returns ~~TRUE~~ if there is at least one ~~TRUE~~ value in that logical vector."
 ))`
 ```{r}
 #| label: tibble-extract-check
 
-example_tbl$col_1 %>%
-  {. > 8} %>%
-  any()
+any(example_tbl$col_1 > 8)
 ```
 
 ### Using the `summary()` Function with Tibbles and Vectors
@@ -856,12 +853,12 @@ library(dspatterns)
 date_str <- "2019-01-15"
 
 sales_day <-
-  sales %>%
+  sales |>
   filter(date == date_str)
 
-order_count <- unique(sales_day$order_id) %>% length()
+order_count <- unique(sales_day$order_id) |> length()
 items_sold <- nrow(sales_day)
-total_revenue <- sales_day$price %>% sum()
+total_revenue <- sales_day$price |> sum()
 ```
 
 The values for `order_count`, the `items_sold`, and the `total_revenue` turn out to be `62`, `123`, and `1523.55`. Each of these is accessed separately by printing to console, and each day of sales data is determined by changing the value of `date_str` and re-running the lines of code. While this is okay in a pinch, this manual process of obtaining these key data values can be made simpler and be put in a form that provides clearer reporting.
@@ -881,12 +878,12 @@ c(
 sales_on_day <- function(day) {
     
   sales_day <-
-    sales %>%
+    sales |>
     filter(date == day)
   
-  order_count <- unique(sales_day$order_id) %>% length()
+  order_count <- unique(sales_day$order_id) |> length()
   items_sold <- nrow(sales_day)
-  total_revenue <- sales_day$price %>% sum()
+  total_revenue <- sales_day$price |> sum()
   
   sales_day_tbl <-
     tibble(
@@ -931,13 +928,13 @@ c(
 
 daily_sales <- function(sales_table) {
   
-  sales_table %>%
-    group_by(date) %>%
+  sales_table |>
+    group_by(date) |>
     summarize(
       order_count = n_distinct(order_id),
       items_sold = n(),
       total_revenue = sum(price)
-    ) %>%
+    ) |>
     arrange(desc(date))
 }
 ```
@@ -975,13 +972,13 @@ daily_sales <- function(sales_table,
                         dates = NULL) {
   
   summary_tbl <-
-    sales_table %>%
-    group_by(date) %>%
+    sales_table |>
+    group_by(date) |>
     summarize(
       order_count = n_distinct(order_id),
       items_sold = n(),
       total_revenue = sum(price)
-    ) %>%
+    ) |>
     arrange(desc(date))
   
   if (!is.null(dates)) {
@@ -989,7 +986,7 @@ daily_sales <- function(sales_table,
     dates <- as.Date(dates)
 
     summary_tbl <-
-      summary_tbl %>%
+      summary_tbl |>
       filter(date %in% dates)
   }
   
@@ -1043,13 +1040,13 @@ daily_sales <- function(sales_table,
   }
   
   summary_tbl <-
-    sales_table %>%
-    group_by(date) %>%
+    sales_table |>
+    group_by(date) |>
     summarize(
       order_count = n_distinct(order_id),
       items_sold = n(),
       total_revenue = sum(price)
-    ) %>%
+    ) |>
     arrange(desc(date))
   
   if (!is.null(dates)) {
@@ -1062,7 +1059,7 @@ daily_sales <- function(sales_table,
     dates <- as.Date(dates)
     
     summary_tbl <-
-      summary_tbl %>%
+      summary_tbl |>
       filter(date %in% dates)
   }
   

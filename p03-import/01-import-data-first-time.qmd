@@ -61,8 +61,8 @@ We notice from this initial view of the column names is that they are none too g
 
 ```{r, paged.print=FALSE}
 stickers_empty <- 
-  stickers_empty %>%
-  rename(stickers_given = 12) %>%
+  stickers_empty |>
+  rename(stickers_given = 12) |>
   clean_names()
 ```
 
@@ -110,7 +110,7 @@ Not bad! All column types were guessed properly by the `read_excel()` function, 
 
 ```{r, paged.print=FALSE, collapse=TRUE}
 stickers <-
-  stickers %>%
+  stickers |>
   rename(percent_given = ends_with("100percent"))
 
 stickers
@@ -149,7 +149,7 @@ We need to acknowledge and accept concerns about data quality. Little mistakes (
 Because we have a table with one row per subject, along with a subject number, there shouldn't be any duplicates. We can test this with **pointblank**'s `test_rows_distinct()` and either get a `TRUE` result (all rows distinct) or `FALSE` result (at least one duplicate row). 
 
 ```{r}
-stickers %>% test_rows_distinct()
+stickers |> test_rows_distinct()
 ```
 
 We always want to be on the lookout for duplicate rows in a dataset when it runs contrary its rule (in this case, one row per subject).
@@ -157,13 +157,13 @@ We always want to be on the lookout for duplicate rows in a dataset when it runs
 Another test we could perform is verify whether certain columns have complete data. At least for the columns that have to do with the describing the subjects and recording the initial conditions of the dictator game, there shouldn't be any `NA` values. Let's do a quick check to verify this with `test_col_vals_not_null()`. We can check columns `1` (`subject_number`) through `9` (`subjects_envelope`) in a single testing call by providing `columns = 1:9` to `test_col_vals_not_null()`. This performs individual checks of `NA` values across the columns and if any one of those columns has an `NA` then we'll be returned `FALSE` (but we are expecting `TRUE` in this case).
 
 ```{r}
-stickers %>% test_col_vals_not_null(columns = 1:9)
+stickers |> test_col_vals_not_null(columns = 1:9)
 ```
 
 Extending the column range a bit further would have given us a `FALSE` result because `NA` values are expected in the later columns. However, for these columns we expected 'complete' data. Speaking of which, there is another test function in **pointblank** that handles data completeness: `test_rows_complete()`. Let's try that out with the same range of columns as before.
 
 ```{r}
-stickers %>% test_rows_complete(columns = 1:9)
+stickers |> test_rows_complete(columns = 1:9)
 ```
 
 Same result but the underlying method for this is a bit different as this test function can take a subset of columns and inspect entire rows. This will probably be useful later when we perform data quality reporting and we want to determine which *rows* may have incomplete data.
@@ -171,7 +171,7 @@ Same result but the underlying method for this is a bit different as this test f
 Lastly we know that each of the columns (from `glimpse(stickers)`) is of the numeric type. We can test this with `test_col_is_numeric()`:
 
 ```{r}
-stickers %>% test_col_is_numeric(columns = everything())
+stickers |> test_col_is_numeric(columns = everything())
 ```
 
 We knew this was true coming into the test but type-checking is exceedingly useful after data transformation tasks since column types might unexpectedly change. So, use this sort of test often as a check of your work!
@@ -201,7 +201,7 @@ This is a good start and all the infomation we need is available, we just have t
 
 ```{r}
 stickers_metadata <- 
-  stickers_meta %>%
+  stickers_meta |>
   pivot_longer(
     cols = everything(),
     names_to = "column",
@@ -219,7 +219,7 @@ Now that we have `stickers_metadata` in the correct form, we can use it in `info
 
 ```{r}
 stickers_dd <-
-  create_informant(tbl = stickers) %>%
+  create_informant(tbl = stickers) |>
   info_columns_from_tbl(tbl = stickers_metadata)
 ```
 
@@ -258,7 +258,7 @@ The `.qmd` file that imports our raw data can (and should) be annotated with wha
 A good practice is to include data validation statements after importing. This is extremely important in the case where raw data changes due to revisions. Having the checks in place should catch any data errors that could creep in during data updates. This is something we can do with **pointblank** within the data import `.qmd` file. Earlier we did some ad hoc testing with a few `test_*()` functions, which provide us with a `TRUE` or `FALSE` value. If we want to better catch data failures, we can use the data validation functions variants that result in an error. So instead of using `test_rows_distinct()`, we would replace that with simply `rows_distinct()`:
 
 ```{r}
-stickers %>% rows_distinct()
+stickers |> rows_distinct()
 ```
 
 Using validation functions in this manner makes them act a bit like a filter. If there are no failures, the data passes through (i.e., the input data gets returned untouched). If there data issues, then you'll get an error and a `.qmd` render will stop. The stopping part is very helpful as it will force you to address the underlying data issue before moving further into data analysis and reporting.

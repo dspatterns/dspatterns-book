@@ -275,7 +275,7 @@ c(
 ))`
 ```{r rename-columns, paged.print=FALSE}
 city_table_x_m <- 
-  city_table_x_m %>%
+  city_table_x_m |>
   rename(  #A
     state_id = `state id`,  #B
     state_name = `state name`,

@@ -121,12 +121,13 @@ names(babynames) # same
 If you have done the above and produced sane-looking output, you are ready for the next step. We'll use the code below to create a new data frame called `alison`.
 
 ```{r manipulate_name_data}
-alison <- babynames %>%
-  filter(name == "Alison" | name == "Allison") %>% 
+alison <- 
+  babynames |>
+  filter(name == "Alison" | name == "Allison") |>
   filter(sex == "F") 
 ```
 
--   The first bit makes a new dataset called `alison` that is a copy of the `babynames` dataset- the `%>%` tells you we are doing some other stuff to it later.
+-   The first bit makes a new dataset called `alison` that is a copy of the `babynames` dataset- the `|>` tells you we are doing some other stuff to it later.
 
 -   The second bit `filters` our `babynames` to only keep rows where the `name` is equal to "Alison" (read `==` as *"exactly equal to"*) *or* "Allison" (read `|` as *"or"*.)
 

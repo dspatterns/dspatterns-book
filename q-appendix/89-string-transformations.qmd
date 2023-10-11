@@ -182,14 +182,14 @@ c(
 ))`
 ```{r formatC-mutate, paged.print=FALSE}
 combined_tbl <-
-  dplyr::tibble(index = 1:1200, text = rep(LETTERS[1:12], 100)) %>%  #A
+  dplyr::tibble(index = 1:1200, text = rep(LETTERS[1:12], 100)) |>  #A
   dplyr::mutate(index = formatC(  #B
     index,
     digits = 4,  #C
     format = "d",  #D
     flag = "0"  #E
-  )) %>%
-  tidyr::unite(col = "combined", index, text) %>%  #F
+  )) |>
+  tidyr::unite(col = "combined", index, text) |>  #F
   dplyr::arrange(desc(combined))  #G
   
 combined_tbl
@@ -239,7 +239,7 @@ c(
 "#B In the interest in brevity, we will just print the first five vector elements of ~~resto_reviews_trunc~~."
 ))`
 ```{r substr-resto-reviews}
-resto_reviews_trunc <- resto_reviews %>% substr(1, 80)  #A
+resto_reviews_trunc <- resto_reviews |> substr(1, 80)  #A
 
 resto_reviews_trunc[1:5]  #B
 ```
@@ -253,7 +253,7 @@ c(
 "#B Again, we are just printing the first five elements of (the newly modified) ~~resto_reviews_trunc~~ vector."
 ))`
 ```{r trimws-resto-reviews}
-resto_reviews_trunc <- resto_reviews_trunc %>% trimws()  #A
+resto_reviews_trunc <- resto_reviews_trunc |> trimws()  #A
 
 resto_reviews_trunc[1:5]  #B
 ```
@@ -268,7 +268,7 @@ c(
 "#A Every output element of the ~~substr()~~ expression is compared to that of the ~~strtrim()~~ expression with ~~all.equal()~~. If they all match (and they do here), the result is ~~TRUE~~."
 ))`
 ```{r strtrim-resto-reviews}
-all.equal(resto_reviews %>% substr(1, 80), resto_reviews %>% strtrim(80))  #A
+all.equal(resto_reviews |> substr(1, 80), resto_reviews |> strtrim(80))  #A
 ```
 
 The `all.equal()` function compares the outputs of both function calls and determines whether they are all equivalent. In this case, the result is `TRUE`. Besides the variable width, what is different about `strtrim()` to justify its existence? It turns out that this function should be chosen over `substr()` if any character strings have double width characters (e.g., contains Chinese, Japanese, or Korean characters).
@@ -509,13 +509,13 @@ c(
 "#D The ~~str_split()~~ function always returns a list. To make this a single vector we can use the ~~unlist()~~ function."
 ))`
 ```{r str-replace-all}
-ihavefruit %>%
+ihavefruit |>
   str_replace_all(  #A
     pattern = ".*(limes?).*(figs?).*(plums?).*",
     replacement = "\\3 \\2 \\1"
-  ) %>%
-  str_replace_all(pattern = "s\\b", replacement = "") %>%  #B
-  str_split(pattern = " ") %>%  #C
+  ) |>
+  str_replace_all(pattern = "s\\b", replacement = "") |>  #B
+  str_split(pattern = " ") |>  #C
   unlist()  #D
 ```
 
@@ -528,8 +528,8 @@ c(
 "#B Just like ~~str_split()~~, the ~~str_extract_all()~~ function will create a list. Because we want a vector we can use the ~~unlist()~~ function."
 ))`
 ```{r str-extract-all}
-ihavefruit %>%
-  str_extract_all(pattern = "(limes?|figs?|plums?)") %>%  #A
+ihavefruit |>
+  str_extract_all(pattern = "(limes?|figs?|plums?)") |>  #A
   unlist()  #B
 ```
 
@@ -543,8 +543,8 @@ c(
 ```{r str-extract-all-2}
 ihavefruit_2 <- "Fruit? Yep, I've got a lime, 3 figs, and 5 plums. All covered in slime."
 
-ihavefruit %>%
-  str_extract_all(pattern = "(\\blimes?\\b|\\bfigs?\\b|\\bplums?\\b)") %>%  #A
+ihavefruit |>
+  str_extract_all(pattern = "(\\blimes?\\b|\\bfigs?\\b|\\bplums?\\b)") |>  #A
   unlist()
 ```
 
@@ -563,7 +563,7 @@ c(
 "#B The base R ~~table()~~ function is useful for converting a vector to a contingency table, which is a table counts for each categorical variable (~~TRUE~~ or ~~FALSE~~ in this case)."
 ))`
 ```{r str-detect}
-str_detect(string = resto_reviews, pattern = "yum\\w*?") %>%  #A
+str_detect(string = resto_reviews, pattern = "yum\\w*?") |>  #A
   table()  #B
 ```
 
@@ -596,9 +596,9 @@ c(
 "#D The character vector can be converted to numeric at this point by using the ~~as.numeric()~~ function."
 ))`
 ```{r str-extract-all-str-remove}
-str_extract_all(string = resto_reviews, pattern = "\\$\\d*") %>%  #A
-  unlist() %>%  #B
-  str_remove(pattern = "\\$") %>%  #C
+str_extract_all(string = resto_reviews, pattern = "\\$\\d*") |>  #A
+  unlist() |>  #B
+  str_remove(pattern = "\\$") |>  #C
   as.numeric()  #D
 ```
 

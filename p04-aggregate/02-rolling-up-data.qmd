@@ -28,6 +28,6 @@ Notes:
 ## test
 
 ```{r collapse=FALSE}
-penguins %>% select(where(is.numeric))
+penguins |> select(where(is.numeric))
 ```
 
