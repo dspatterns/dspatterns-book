@@ -1,4 +1,6 @@
-# Run on a schedule
+---
+title: "Run on a Schedule"
+---
 
 {{< include ../_patterns.qmd >}}
 

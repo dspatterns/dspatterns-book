@@ -1,5 +1,5 @@
 ---
-title: More Plotting with **ggplot** - II
+title: "More Plotting with **ggplot** - II"
 ---
 
 ```{r setup, include=FALSE, echo=FALSE}

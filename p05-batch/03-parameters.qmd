@@ -1,4 +1,6 @@
-# Parameterized reports
+---
+title: "Parameterized Reports"
+---
 
 {{< include ../_patterns.qmd >}}
 

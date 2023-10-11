@@ -4,7 +4,7 @@
 
 Given that packages are central to learning in this book, we should learn how to install them and then load them up. It's very common to want to install and use different packages to address different problems. R Packages are usually installed from either **CRAN** or **GitHub**, so, there are two methods for installing packages since they can come from both locations. What's the difference? **CRAN** packages are often considered to be 'stable' versions and these can be installed using `install.packages()`. Packages from **GitHub** are considered to be the in-development versions, and these packages can be obtained with the `devtools::install_github()` function.
 
-We need to install the **tidyverse** package, which installs all of the *Tidyverse* packages (plus numerous other packages that are dependencies), and we can use `install.packages("tidyverse")` in the R console. This installs the **tidyverse** meta-package and all of the *Tidyverse* packages like **dplyr**, **ggplot2**, **readr**, and more.
+We need to install the **tidyverse** package, which installs all of the *Tidyverse* packages (plus numerous other packages that are dependencies), and we can use `install.packages("tidyverse")` in the R console. This installs the **tidyverse** meta-package and all of the *Tidyverse* packages like **dplyr**, **ggplot**, **readr**, and more.
 
 To actually load the packages in your R session, we need to use the `library()` function for each package. Each `library()` call typically goes on its own line at the top of an R script or **Quarto** document. We'll be reminded of `library()` quite often throughout this book.
 

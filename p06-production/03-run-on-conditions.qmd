@@ -1,4 +1,6 @@
-# Run on conditions
+---
+title: "Run on Conditions"
+---
 
 {{< include ../_patterns.qmd >}}
 

@@ -18,7 +18,7 @@ Counting things in our data is super important. It allows us to account for thin
 
 We'll make extensive use of the **bakeoff** package. It's a package that contains datasets based on the Great British Bake Off television show. In particular, the `bakers` dataset will be used for many of the examples.
 
-- **tidyverse**: for the use of the **dplyr**, **tidyr**, and **ggplot2** packages
+- **tidyverse**: for the use of the **dplyr**, **tidyr**, and **ggplot** packages
 - **bakeoff**: for the dataset we'll be using (`bakers`)
 - **skimr**: to quickly summarize a dataset and get insights just as fast
 - **gt**: for making those tables that present well

@@ -1,4 +1,6 @@
-# Style package
+---
+title: "Style Package"
+---
 
 {{< include ../_patterns.qmd >}}
 

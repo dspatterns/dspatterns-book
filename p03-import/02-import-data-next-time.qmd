@@ -1,4 +1,6 @@
-# Importing data for the next time
+---
+title: "Importing data the Next Time"
+---
 
 {{< include ../_patterns.qmd >}}
 

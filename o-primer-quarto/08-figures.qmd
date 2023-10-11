@@ -44,7 +44,7 @@ also covered:
 ::: column
 By default, plots show up immediately after the code that prints them. 
 
-For example, the following line plot created with the **ggplot2** package will be inserted when you knit.
+For example, the following line plot created with the **ggplot** package will be inserted when you knit.
 :::
 
 ::: column

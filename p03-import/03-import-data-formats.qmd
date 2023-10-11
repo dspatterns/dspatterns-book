@@ -1,5 +1,5 @@
 ---
-title: "Importing Data From Common Formats"
+title: "Importing Data from Common Formats"
 ---
 
 {{< include ../_patterns.qmd >}}

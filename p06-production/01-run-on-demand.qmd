@@ -1,4 +1,6 @@
-# Run on demand
+---
+title: "Run on Demand"
+---
 
 {{< include ../_patterns.qmd >}}
 
