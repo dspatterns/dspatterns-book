@@ -162,7 +162,29 @@ The weekly average lines are now in the plots, so, this is progress! The next th
 
 ## Explain
 
-We need to style this combined set of plots so that the results are more easily explainable to others.
+We need to style this combined set of plots so that the results are more easily explainable to others. It all begins with a set of requirements though, so let's think through what was not so good in the previous plot and what would be great in a highly-presentable plot. We'll start with the good and then dwell on the parts that need improvement.
+
+**Good**
+
+- the stacking of plots and distance apart
+- the *x* values are lined up perfectly across both plots (thanks, **patchwork**!)
+- the shared *x*-axis and the nicely-formatted labels on that axis
+- the *y*-axis values are also good
+
+**Bad**
+
+- the lines are all the same color (four lines across two plots)
+- on each plot, it's hard to tell the lines apart (again, same color)
+- it's pretty obvious that the *x* axis is time, don't need a label for it
+- the *y*-axis labels are technical and a bit boring
+- we don't have a title or a subtitle describing the data
+- it would be nice to know the data source from a simple note, but we don't have that either
+
+With this critique of the table we find slightly more bad than good things, however, we can address all the badness with a few tweaks and a little bit of good taste. We got this.
+
+So let's lay out a plan for how this can be improved. First off, those lines... we need some color here. The bottom plot could have a green line (it's money after all), and, the top line could be blue in color (always a safe bet and oh so calming). But, there are two lines per plot; which one is the important one? Most likely, it is the weekly average line (and not the fast moving daily data trace). Let's diminish the latter and emphasize the former.
+
+That thinking on 'linework' was the most important change we could make since it is what people looking at the plot will inevitably focus on the most. It doesn't mean the other negatives needn't be addressed! While the rest of the changes aren't as radical, they are still important. We'll clean up the axis labels, add the appropriate titling and captioning, and use a minimalistic theme so that the data will pop (out to the viewer). Okay, here comes attempt #2:
 
 ```{r}
 mean_duration_plt <-
@@ -216,15 +238,10 @@ session_revenue_summary_plt <-
 session_revenue_summary_plt
 ```
 
-This plot definitely something that is presentable to others. One thing that would make this more amenable to sharing (and sharing more often) would be wrapping this all into a reusable function. In the next section, we'll do just that, allowing for different time spans to be chosen.
+This plot definitely something that is much more presentable to others! I like how the weekly-average data lines overlay the daily values in a substantial way. Those daily values are still in the mix but those volatile lines are subdued, made secondary. We can clearly see that average daily session time is pretty much always the same and the average daily revenue initially climbed to a somewhat steady state and is perhaps slowly increasing during the course of the year. The titles are descriptive but succinct, telling you exactly what you're looking at. The *y*-axis titles let you know which plot is which and what units the numbers have (minutes and U.S. Dollars).
+
+This is something that could be shared. But one thing that would make this more amenable to sharing (and sharing more often) would be wrapping this all into a reusable function. Your collegues can learn from the code used within that, they could re-use that function, and they might even use it as inspiration to build more functions with beautiful plots. In the next section, we'll do the thing where we make a function from this code, allowing for different time spans to be chosen.
 
 ## Share
 
-Demonstrate a few different ways to theme the plot.
-
-- try using the `scale_kiki()` example from Hiroaki Yutani (code snippet available in a tweet of his) that uses a custom function called globally from `options()`
-- `ggplot2::theme_set`
-- using `ggthemer` and `thematic`
-- use ideas from https://github.com/r-causal/causal-inference-in-R/blob/a060488e1368278bbe2f2af368d888034645d2e1/index.qmd#L75
-- https://github.com/robjhyndman/ETC3550Slides/blob/4d2566efbb7bce72825b2a9a045d3b6a3a58e882/setup.R#L16
-- for Quarto use either YAML `includes` or the include shortcode (great for talking about shortcodes in general)
+Sharing code is often very important. We can do that with packages but just as easily do it in a low-key way by sharing .R scripts. Let's go part way to making that shareable script by re-working the code developed earlier into a reusable function.
