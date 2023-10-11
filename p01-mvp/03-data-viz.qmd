@@ -2,15 +2,13 @@
 title: "Introductory Data Visualization with **ggplot**"
 ---
 
-{{< include ../_patterns.qmd >}}
-
 ```{r setup, include=FALSE, echo=FALSE}
 library(dspatterns)
 library(dplyr)
 library(ggplot2)
 ```
 
-This section covers
+This MVP covers
 
 - What the **ggplot** R package is and how it can be used to create plots from tabular data
 - Creating a scatterplot from a dataset, using different aesthetic choices (e.g., shapes, color, and more)
@@ -19,7 +17,7 @@ This section covers
 - Modifying the placement of automatically generated legends
 - Alternating between transforming data with **dplyr** and visualizing data with **ggplot**
 
-In the previous section, it was proposed that data visualization is a useful process for generating insights. It is often necessary to transform data before it's ready for plotting, and, the **dplyr** functions we just learned about make those transformations possible. Now, we will learn about how to create beautiful and informative plots with **ggplot** (actually called **ggplot2** but cited throughout this book more simply as **ggplot**). While **ggplot** provides functionality to create a wide selection of plot types, we will begin by focusing on a single type of plot: the scatterplot.
+Data visualization is a useful process for generating insights. It is often necessary to transform data before it's ready for plotting, and, the **dplyr** functions we just learned about make those transformations possible. Now, we will learn about how to create beautiful and informative plots with **ggplot** (actually called **ggplot2** but cited throughout this book more simply as **ggplot**). While **ggplot** provides functionality to create a wide selection of plot types, we will begin by focusing on a single type of plot: the scatterplot.
 
 This book's package, **dspatterns**, provides the input data we'll need to build our example plots. From that package the `dmd` dataset will be used (it's a simplified version of the `diamonds` dataset that is available in the **ggplot** package). Whenever we load in the **dspatterns** package using `library(dspatterns)`, the dmd table will be available; you can verify this by executing `dmd` in the R console. This particular dataset has nearly 2,700 rows, one for each diamond and its attributes, and the following 6 variables:
 
@@ -548,7 +546,7 @@ ggplot(dmd_mod, aes(x = carats, y = price)) +
   labs(x = "Carats", y = "Price")
 ```
 
-Moving between data transformation activities and plotting with **ggplot** like this is often valuable for better expressing the data you have to an audience, or, for exploring the data and getting insightful views that were otherwise hidden. Getting to a stage where you can rapidly translate your analysis/visualization needs to raw **dplyr** & **ggplot** code is worth the effort and understandably takes some practice. 
+Moving between data transformation activities and plotting with **ggplot** like this is often valuable for better expressing the data you have to an audience, or, for exploring the data and getting insightful views that were otherwise hidden. Getting to a stage where you can rapidly translate your analysis/visualization needs to raw **dplyr** and **ggplot** code is worth the effort and understandably takes some practice. 
 
 Other readily-available datasets: There are many other datasets available in R where you could practice working in this closed loop of transforming and visualizing. Here are a few:
 
