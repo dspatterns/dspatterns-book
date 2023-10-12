@@ -253,10 +253,9 @@ The validation report is a damning indictment of the data within `user_summary`.
 agent |> get_agent_report(keep = "fail_states")
 ```
 
-There are issues with the `first_login` datetime values (16 units failing), the values within `country` (47 failures), and the `country` and `acquistion` columns have `NA`s (17 and 9, respectively).
+There are issues with the `first_login` datetime values (16 units failing), the values within `country` (47 failures), and the `country` and `acquistion` columns have `NA`s (17 and 9, respectively). Knowledge of data being faulty and knowing *where* it is faulty is quite valuable. Only then will you have a chance to rectify the data generation process or at least know which portions of the data can be less trusted. 
 
-
-It's important to know if there are upstream processes you don't have access to when it comes to the data you're given. If it's truly raw data, then you can expect that the existing data won't change (new data might be added but existing data won't be mutated). However, if this data has been subject to treatments before being given to you, then that process is a bit out of your hands. However, you can improve these processes by checking data and pointing out anomalies that your data provider might have missed (or didn't check for). In doing so, the provider might improve the data transformation process and you get better (i.e., less anomalous) data.
+It's good to know if there are upstream processes you don't have access to when it comes to the data you're given. If it's truly raw data, then you can expect that the existing data won't change (new data might be added but existing data won't be mutated). However, if this data has been subject to treatments before being given to you, then that process is a bit out of your hands. However, you can improve these processes by checking data and pointing out anomalies that your data provider might have missed (or didn't check for). In doing so, the provider might improve the data transformation process and you get better (i.e., less anomalous) data.
 
 ## Explain
 
