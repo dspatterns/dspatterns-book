@@ -243,15 +243,23 @@ agent <-
     )
   ) |>
   interrogate()
+```
 
+We can print the agent report by calling the `agent` object.
+
+```r
 agent
 ```
 
+![The agent report. It's big and that's because we validated really hard.](img/validation-01.png)
+
 The validation report is a damning indictment of the data within `user_summary`. We can identify four separate data issues with this report. It's possible to isolate only the problematic steps
 
-```{r}
+```r
 agent |> get_agent_report(keep = "fail_states")
 ```
+
+![The part of the agent report that tells us what's not so good.](img/validation-02.png) 
 
 There are issues with the `first_login` datetime values (16 units failing), the values within `country` (47 failures), and the `country` and `acquistion` columns have `NA`s (17 and 9, respectively). Knowledge of data being faulty and knowing *where* it is faulty is quite valuable. Only then will you have a chance to rectify the data generation process or at least know which portions of the data can be less trusted. 
 
