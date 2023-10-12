@@ -9,13 +9,13 @@ library(tidyr)
 library(ggplot2)
 ```
 
-This section covers
+This appendix chapter covers
 
 - The characteristics of tidy data
 - How to reshape a data table using the `pivot_longer()` function
 - Further tidying of data tables with the `na_if()` function
 
-In previous sections we were introduced to data transformation (using **dplyr**) and data visualization (using **ggplot**). We really learned a lot, and we just dove right in with example data tables that were furnished by the **dspatterns** package. The `sw` and `dmd` datasets from earlier were tidy datasets. We didn't have to think much about the arrangement of the data within those tables, there were used as is. They just worked. Quite often, however, the datasets you'll encounter and want to use will not be tidy. This can cause problems in your analyses, so we really need to make the effort to tidy them before performing any analysis. This section is all about recognizing the difference between tidy and untidy data, and then, using strategies to tidy that data before getting to the analysis stage.
+Previously, we were introduced to data transformation (using **dplyr**) and data visualization (using **ggplot**). We really learned a lot, and we just dove right in with example data tables that were furnished by the **dspatterns** package. The `sw` and `dmd` datasets from earlier were tidy datasets. We didn't have to think much about the arrangement of the data within those tables, there were used as is. They just worked. Quite often, however, the datasets you'll encounter and want to use will not be tidy. This can cause problems in your analyses, so we really need to make the effort to tidy them before performing any analysis. This section is all about recognizing the difference between tidy and untidy data, and then, using strategies to tidy that data before getting to the analysis stage.
 
 While the **dspatterns** package usually offers tidy datasets, there are a few untidy ones in there as well. We will use the untidy `winniweather` dataset in our examples for this section. The dataset contains temperature data (four times daily) for the City of Winnipeg during the month of February 2015. As ever, we get access to all of **dspatterns**'s datasets using `library(dspatterns)`. Once that statement is executed, the untidy `winniweather` table will be available. This is not a large dataset since it has merely 28 rows (one row per day of the study month) and the following six variables:
 
