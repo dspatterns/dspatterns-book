@@ -8,7 +8,7 @@ library(dplyr)
 library(stringr)
 ```
 
-This section covers
+This appendix chapter covers
 
 - Working with vectors and learning about R's recycling behavior
 - Learning and reviewing some of the more essential base R functions (and getting the names of the dozens of other useful functions)
@@ -32,10 +32,10 @@ In one of our very first code listings in this Appendix, we assigned a character
 `r dspatterns::code_hints(
 "Assigning a character string to ~~one_word~~.",
 c(
-"#A We need quotes to distinguish character strings from variables."
+"L.1 We need quotes to distinguish character strings from variables."
 ))`
 ```{r one-word}
-one_word <- "hello"  #A
+one_word <- "hello"
 one_word
 ```
 
@@ -147,21 +147,21 @@ You might have some decimal numbers in a numeric vector and there is the require
 `r dspatterns::code_hints(
 "Using the ~~formatC()~~ function to get very particular output character strings for three decimal numbers.",
 c(
-"#A The values have varying numbers of decimal digits (3, 2, and 4 digits).",
-"#B Setting digits to ~~3~~ means that we need exactly three digits after the decimal mark. Rounding will occur.",
-"#C The format designation is pretty important here. Using ~~\"f\"~~ will give us numbers in the ~~xxx.yyy~~ format.",
-"#D The choice of decimal mark is usually decided by your system's locale. It can be an explicit character though and, here, the period character is chosen for ~~decimal.mark~~.",
-"#E The ~~drop0trailing~~ option will discard any trailing zeros after the decimal place if this is set to ~~TRUE~~. The default is ~~FALSE~~."
+"L.1 The values have varying numbers of decimal digits (3, 2, and 4 digits).",
+"L.5 Setting digits to ~~3~~ means that we need exactly three digits after the decimal mark. Rounding will occur.",
+"L.6 The format designation is pretty important here. Using ~~\"f\"~~ will give us numbers in the ~~xxx.yyy~~ format.",
+"L.7 The choice of decimal mark is usually decided by your system's locale. It can be an explicit character though and, here, the period character is chosen for ~~decimal.mark~~.",
+"L.8 The ~~drop0trailing~~ option will discard any trailing zeros after the decimal place if this is set to ~~TRUE~~. The default is ~~FALSE~~."
 ))`
 ```{r formatC-decimals-2dig}
-decimal_numbers <- c(3.825, 1.01, 15.7758)  #A
+decimal_numbers <- c(3.825, 1.01, 15.7758)
 
 formatC(
   decimal_numbers,
-  digits = 3,  #B
-  format = "f",  #C
-  decimal.mark = ".",  #D
-  drop0trailing = FALSE  #E
+  digits = 3,
+  format = "f",
+  decimal.mark = ".",
+  drop0trailing = FALSE
 )
 ```
 
@@ -172,25 +172,25 @@ Should we have index numbers in a table, it may sometimes be preferable to pad t
 `r dspatterns::code_hints(
 "Using ~~formatC()~~ in a ~~mutate()~~ call to format sequential numeric values to index strings that are left-padded with zeros (to a specified width).",
 c(
-"#A The ~~tibble()~~ statement generates a 1200 row tibble object.",
-"#B The ~~mutate()~~ call will write over the index column with the output values.",
-"#C The ~~digits~~ value being ~~4~~, this time, indicates total digits shown (there won't be decimal places because of the format specification we are providing).",
-"#D The format of ~~\"d\"~~ indicates that we want integers (no decimals).",
-"#E The flag is a format modifier (and there are several that ~~formatC()~~ understands); a flag of ~~\"0\"~~ is understood as a directive to pad with zeros on the left.",
-"#F Instead of using **dplyr**'s ~~mutate()~~ to ~~paste0()~~ strings together, the **tidyr** ~~unite()~~ function is used here.",
-"#G Reverse sorting on ~~combined~~ is done here to prove that the alphanumeric sorting works now that the numeric portion is padded with zeros."
+"L.2 The ~~tibble()~~ statement generates a 1200 row tibble object.",
+"L.3 The ~~mutate()~~ call will write over the index column with the output values.",
+"L.5 The ~~digits~~ value being ~~4~~, this time, indicates total digits shown (there won't be decimal places because of the format specification we are providing).",
+"L.6 The format of ~~\"d\"~~ indicates that we want integers (no decimals).",
+"L.7 The flag is a format modifier (and there are several that ~~formatC()~~ understands); a flag of ~~\"0\"~~ is understood as a directive to pad with zeros on the left.",
+"L.9 Instead of using **dplyr**'s ~~mutate()~~ to ~~paste0()~~ strings together, the **tidyr** ~~unite()~~ function is used here.",
+"L.10 Reverse sorting on ~~combined~~ is done here to prove that the alphanumeric sorting works now that the numeric portion is padded with zeros."
 ))`
 ```{r formatC-mutate, paged.print=FALSE}
 combined_tbl <-
-  dplyr::tibble(index = 1:1200, text = rep(LETTERS[1:12], 100)) |>  #A
-  dplyr::mutate(index = formatC(  #B
+  dplyr::tibble(index = 1:1200, text = rep(LETTERS[1:12], 100)) |>
+  dplyr::mutate(index = formatC(
     index,
-    digits = 4,  #C
-    format = "d",  #D
-    flag = "0"  #E
+    digits = 4,
+    format = "d",
+    flag = "0"
   )) |>
-  tidyr::unite(col = "combined", index, text) |>  #F
-  dplyr::arrange(desc(combined))  #G
+  tidyr::unite(col = "combined", index, text) |>
+  dplyr::arrange(desc(combined))
   
 combined_tbl
 ```
@@ -219,13 +219,13 @@ Sometimes, text strings are too long for a given purpose (e.g., for displaying i
 `r dspatterns::code_hints(
 "Using ~~abbreviate()~~ to make unique abbreviations for longer strings.",
 c(
-"#A This is the character vector with terms to abbreviate; notice that some of these are pretty close in spelling (and there's a duplicated entry in there as well).",
-"#B All strings in the ~~terms~~ vector are abbreviated with a minimum length of 3 characters with ~~minlength = 3~~."
+"L.1 This is the character vector with terms to abbreviate; notice that some of these are pretty close in spelling (and there's a duplicated entry in there as well).",
+"L.3 All strings in the ~~terms~~ vector are abbreviated with a minimum length of 3 characters with ~~minlength = 3~~."
 ))`
 ```{r abbreviate-terms}
-terms <- c("location", "site", "area", "arena", "locale", "site")  #A
+terms <- c("location", "site", "area", "arena", "locale", "site")
 
-abbreviate(terms, minlength = 3)  #B
+abbreviate(terms, minlength = 3)
 ```
 
 We get a named vector as output from `abbreviate()`, which makes it easy to compare the original strings with the abbreviated forms. These are unique abbreviations, and we didn't have to invent them. This is useful for those cases where you need short categorical names (say, for **ggplot**). 
@@ -235,13 +235,13 @@ Sometimes, text strings are too long for a given purpose (e.g., for displaying i
 `r dspatterns::code_hints(
 "Using ~~substr()~~ to truncate very long strings to a specific length.",
 c(
-"#A The values supplied to ~~substr()~~ are ~~1~~ and ~~80~~, representing the range of characters to retain.",
-"#B In the interest in brevity, we will just print the first five vector elements of ~~resto_reviews_trunc~~."
+"L.1 The values supplied to ~~substr()~~ are ~~1~~ and ~~80~~, representing the range of characters to retain.",
+"L.3 In the interest in brevity, we will just print the first five vector elements of ~~resto_reviews_trunc~~."
 ))`
 ```{r substr-resto-reviews}
-resto_reviews_trunc <- resto_reviews |> substr(1, 80)  #A
+resto_reviews_trunc <- resto_reviews |> substr(1, 80)
 
-resto_reviews_trunc[1:5]  #B
+resto_reviews_trunc[1:5]
 ```
 
 The first five elements of the `resto_reviews_trunc` character vector are printed and we can see right away that the strings are all of the same length. Some of the truncated strings above end with a space character (elements 2 and 4). We can remove, or trim, that whitespace with the `trimws()` function. Simply pipe the `resto_reviews_trunc` vector to `trimws()` and all of the new strings won't have any trailing whitespace (this also eliminates leading whitespace).
@@ -249,13 +249,13 @@ The first five elements of the `resto_reviews_trunc` character vector are printe
 `r dspatterns::code_hints(
 "Using ~~trimws()~~ to remove any leading and trailing whitespace in our truncated strings.",
 c(
-"#A The character vector of truncated strings is piped to ~~trimws()~~; the default options (trimming whitespace on the *left* and *right* and the function's definition of whitespace) are usually always adequate for this type of string operation.",
-"#B Again, we are just printing the first five elements of (the newly modified) ~~resto_reviews_trunc~~ vector."
+"L.1 The character vector of truncated strings is piped to ~~trimws()~~; the default options (trimming whitespace on the *left* and *right* and the function's definition of whitespace) are usually always adequate for this type of string operation.",
+"L.3 Again, we are just printing the first five elements of (the newly modified) ~~resto_reviews_trunc~~ vector."
 ))`
 ```{r trimws-resto-reviews}
-resto_reviews_trunc <- resto_reviews_trunc |> trimws()  #A
+resto_reviews_trunc <- resto_reviews_trunc |> trimws()
 
-resto_reviews_trunc[1:5]  #B
+resto_reviews_trunc[1:5]
 ```
 
 The result here seems subtle but for shorter strings (that perhaps need to be pasted with other strings), whitespace is much more noticeable and can be a nuisance unless it's removed.
@@ -265,10 +265,10 @@ Finally, there is the `strtrim()` function. It operates quite a bit like the `su
 `r dspatterns::code_hints(
 "Using ~~strtrim()~~ to truncate strings, much like ~~substr()~~.",
 c(
-"#A Every output element of the ~~substr()~~ expression is compared to that of the ~~strtrim()~~ expression with ~~all.equal()~~. If they all match (and they do here), the result is ~~TRUE~~."
+"L.1 Every output element of the ~~substr()~~ expression is compared to that of the ~~strtrim()~~ expression with ~~all.equal()~~. If they all match (and they do here), the result is ~~TRUE~~."
 ))`
 ```{r strtrim-resto-reviews}
-all.equal(resto_reviews |> substr(1, 80), resto_reviews |> strtrim(80))  #A
+all.equal(resto_reviews |> substr(1, 80), resto_reviews |> strtrim(80))
 ```
 
 The `all.equal()` function compares the outputs of both function calls and determines whether they are all equivalent. In this case, the result is `TRUE`. Besides the variable width, what is different about `strtrim()` to justify its existence? It turns out that this function should be chosen over `substr()` if any character strings have double width characters (e.g., contains Chinese, Japanese, or Korean characters).
@@ -325,13 +325,13 @@ To test these matches in R, we can use either the `str_match()` or `str_match_al
 `r dspatterns::code_hints(
 "Using ~~str_match()~~ to determine the first match of the regex pattern on the text.",
 c(
-"#A This is the text string.",
-"#B The ~~str_match()~~ function will return the first match of ~~\"....\"~~ from the ~~fox_dog~~ string."
+"L.1 This is the text string.",
+"L.3 The ~~str_match()~~ function will return the first match of ~~\"....\"~~ from the ~~fox_dog~~ string."
 ))`
 ```{r str-match}
-fox_dog <- "The quick brown fox jumps over the lazy dog."  #A
+fox_dog <- "The quick brown fox jumps over the lazy dog."
 
-str_match(fox_dog, "....")  #B
+str_match(fox_dog, "....")
 ```
 
 The returned match value represents the first four characters of the text supplied in `fox_dog`. 
@@ -341,10 +341,10 @@ Let's try a different pattern and see all of the possible matches in the text wi
 `r dspatterns::code_hints(
 "Using ~~str_match_all()~~ to get all of the matches from the text.",
 c(
-"#A The ~~str_match_all()~~ function will return all matches of ~~\".o.\"~~ from the ~~fox_dog~~ string."
+"L.1 The ~~str_match_all()~~ function will return all matches of ~~\".o.\"~~ from the ~~fox_dog~~ string."
 ))`
 ```{r str-match-all}
-str_match_all(fox_dog, ".o.")  #A
+str_match_all(fox_dog, ".o.")
 ```
 
 Turns out there are four matches from the `".o."` pattern. They are provided in the order they were found. Use these functions (or the *Regexplain* gadget) often to test out your regex patterns!
@@ -386,13 +386,13 @@ Now is a good time to try out all of these new things. Using the following code 
 `r dspatterns::code_hints(
 "A regex example that uses character sets, character classes, and negation.",
 c(
-"#A This is the text string.",
-"#B The ~~str_match_all()~~ function will return all matches the complex pattern from the ~~ihavefruit~~ string."
+"L.1 This is the text string.",
+"L.3 The ~~str_match_all()~~ function will return all matches the complex pattern from the ~~ihavefruit~~ string."
 ))`
 ```{r character-sets-classes}
-ihavefruit <- "Fruit? I've got a lime, 3 figs, and 5 plums."  #A
+ihavefruit <- "Fruit? I've got a lime, 3 figs, and 5 plums."
 
-str_match_all(ihavefruit, "[\\d\\w][^A-Z]\\w\\w\\w\\w\\S")  #B 
+str_match_all(ihavefruit, "[\\d\\w][^A-Z]\\w\\w\\w\\w\\S")
 ```
 
 The returned matches give us the quantities of fruit (plus the adjoining, non-space character to the right).
@@ -429,10 +429,10 @@ The question mark (`?`) makes the preceding token in the regex pattern optional.
 `r dspatterns::code_hints(
 "Using the ~~?~~ quantifier to denote an optional piece of text.",
 c(
-"#A This regex pattern gets the fruit names whether they are three or four letters long, and, whether they have singular or plural forms."
+"L.1 This regex pattern gets the fruit names whether they are three or four letters long, and, whether they have singular or plural forms."
 ))`
 ```{r question-mark-quantifier}
-str_match_all(ihavefruit, " [\\d\\w]\\s\\w\\w\\w\\w?s?\\S")  #A 
+str_match_all(ihavefruit, " [\\d\\w]\\s\\w\\w\\w\\w?s?\\S")
 ```
 
 Though the function call gives us the same matches as in the previous code listing, the regex pattern is written such that our intent is much clearer than before.
@@ -469,14 +469,14 @@ Let's take a look at three `str_match()` statements that all use the `ihavefruit
 `r dspatterns::code_hints(
 "Using anchors to bind the search pattern to the start and/or end of the string.",
 c(
-"#A This regex is anchored to the start of the string with ~~^~~. After the boundary, it wants to match as many word characters as possible.",
-"#B This regex is anchored to the end of the string with ~~$~~. Before the boundary, it wants to match as many word characters as possible, and then a period before the end of the string.",
-"#C This here regex is a bit different. It wants to match the entire line (as evidenced by the use of ~~^~~ and ~~$~~. As long as the string is entirely composed of printable characters (it is), a match will occur."
+"L.1 This regex is anchored to the start of the string with ~~^~~. After the boundary, it wants to match as many word characters as possible.",
+"L.2 This regex is anchored to the end of the string with ~~$~~. Before the boundary, it wants to match as many word characters as possible, and then a period before the end of the string.",
+"L.3 This here regex is a bit different. It wants to match the entire line (as evidenced by the use of ~~^~~ and ~~$~~. As long as the string is entirely composed of printable characters (it is), a match will occur."
 ))`
 ```{r anchors}
-str_match(ihavefruit, "^\\w*")  #A
-str_match(ihavefruit, "\\w*\\.?$")  #B
-str_match(ihavefruit, "^[[:print:]]*$")  #C
+str_match(ihavefruit, "^\\w*")
+str_match(ihavefruit, "\\w*\\.?$")
+str_match(ihavefruit, "^[[:print:]]*$")
 ```
 
 Anchors are often so useful because they both provide a constraint for the match and, often, the important text to match on occurs near the start or end of strings.
@@ -490,10 +490,10 @@ All of this probably doesn't mean much of anything right now, so, let's see it i
 `r dspatterns::code_hints(
 "Using alternation inside of parentheses (which is a capturing group).",
 c(
-"#A This regex is entirely in parentheses and it'll match on the first instance of ~~figs?~~, ~~plums?~~, or ~~limes?~~ (recall that the ~~?~~ makes the preceding token optional). Because it's all in parentheses, this is a capturing group (by default)."
+"L.1 This regex is entirely in parentheses and it'll match on the first instance of ~~figs?~~, ~~plums?~~, or ~~limes?~~ (recall that the ~~?~~ makes the preceding token optional). Because it's all in parentheses, this is a capturing group (by default)."
 ))`
 ```{r grouping-capturing-alternation}
-str_match(ihavefruit, "(figs?|plums?|limes?)")  #A
+str_match(ihavefruit, "(figs?|plums?|limes?)")
 ```
 
 The output shows us a character matrix with two columns. The first is the match (like before) and the second here is the value of the first (and only) capture group. We can deactivate capturing in this case by using the regex `"(?:limes?|figs?|plums?)"`, where the `?:` just inside the group indicates that this should not be a capturing group.
@@ -503,20 +503,20 @@ The next example involves using the capturing groups in a backreference. It's a 
 `r dspatterns::code_hints(
 "Backreferences are used to compose a new string in a particular order with the captured text.",
 c(
-"#A The ~~str_replace_all()~~ function requires both a regex pattern and a replacement string. Here we are using capturing groups for each of the fruits, then, we are composing a new string with the backreferences (in a reverse order).",
-"#B This is another ~~str_replace_all()~~ call that modifies the output of the previous call. The regex pattern ~~s\\\\b~~ matches on an ~~s~~ character and a word boundary. The replacement of ~~\"\"~~ (an empty string) essentially means that anything matching should be removed.",
-"#C The **stringr** ~~str_split()~~ function will take a string and split it into a vector using a pattern.",
-"#D The ~~str_split()~~ function always returns a list. To make this a single vector we can use the ~~unlist()~~ function."
+"L.2 The ~~str_replace_all()~~ function requires both a regex pattern and a replacement string. Here we are using capturing groups for each of the fruits, then, we are composing a new string with the backreferences (in a reverse order).",
+"L.6 This is another ~~str_replace_all()~~ call that modifies the output of the previous call. The regex pattern ~~s\\\\b~~ matches on an ~~s~~ character and a word boundary. The replacement of ~~\"\"~~ (an empty string) essentially means that anything matching should be removed.",
+"L.7 The **stringr** ~~str_split()~~ function will take a string and split it into a vector using a pattern.",
+"L.8 The ~~str_split()~~ function always returns a list. To make this a single vector we can use the ~~unlist()~~ function."
 ))`
 ```{r str-replace-all}
 ihavefruit |>
-  str_replace_all(  #A
+  str_replace_all(
     pattern = ".*(limes?).*(figs?).*(plums?).*",
     replacement = "\\3 \\2 \\1"
   ) |>
-  str_replace_all(pattern = "s\\b", replacement = "") |>  #B
-  str_split(pattern = " ") |>  #C
-  unlist()  #D
+  str_replace_all(pattern = "s\\b", replacement = "") |>
+  str_split(pattern = " ") |>
+  unlist()
 ```
 
 This example showed us how to selectively obtain certain words from a string and generate a vector. Incidentally, there is also another **stringr** function that will do this much better: `str_extract_all()`. The following code listing provides an example of this.
@@ -524,13 +524,13 @@ This example showed us how to selectively obtain certain words from a string and
 `r dspatterns::code_hints(
 "Extracting words from a string and putting them into a vector with ~~str_extract_all()~~.",
 c(
-"#A The ~~str_extract_all()~~ function just needs a regex pattern and dutifully extract each match from the string and put it into a list.",
-"#B Just like ~~str_split()~~, the ~~str_extract_all()~~ function will create a list. Because we want a vector we can use the ~~unlist()~~ function."
+"L.2 The ~~str_extract_all()~~ function just needs a regex pattern and dutifully extract each match from the string and put it into a list.",
+"L.3 Just like ~~str_split()~~, the ~~str_extract_all()~~ function will create a list. Because we want a vector we can use the ~~unlist()~~ function."
 ))`
 ```{r str-extract-all}
 ihavefruit |>
-  str_extract_all(pattern = "(limes?|figs?|plums?)") |>  #A
-  unlist()  #B
+  str_extract_all(pattern = "(limes?|figs?|plums?)") |>
+  unlist()
 ```
 
 This is a pretty good example of alternation but, if we really wanted to be sure that these words are matched exactly on whole words then word boundaries, with `\\b`, can be used.
@@ -538,13 +538,13 @@ This is a pretty good example of alternation but, if we really wanted to be sure
 `r dspatterns::code_hints(
 "Improving the pattern with the word boundary metacharacter.",
 c(
-"#A The use of the word boundary metacharacters ensures that we don't unintentionally match on fragments of words."
+"L.4 The use of the word boundary metacharacters ensures that we don't unintentionally match on fragments of words."
 ))`
 ```{r str-extract-all-2}
 ihavefruit_2 <- "Fruit? Yep, I've got a lime, 3 figs, and 5 plums. All covered in slime."
 
 ihavefruit |>
-  str_extract_all(pattern = "(\\blimes?\\b|\\bfigs?\\b|\\bplums?\\b)") |>  #A
+  str_extract_all(pattern = "(\\blimes?\\b|\\bfigs?\\b|\\bplums?\\b)") |>
   unlist()
 ```
 
@@ -559,12 +559,12 @@ Sometimes you want to know if a particular pattern exists in one or more strings
 `r dspatterns::code_hints(
 "Using the ~~str_detect()~~ function to see whether there are any matches of our pattern in the ~~resto_reviews~~ vector.",
 c(
-"#A The ~~str_detect()~~ function, like all <code>str_*()</code> functions in the **stringr** package, always takes the vector of strings as the first argument.",
-"#B The base R ~~table()~~ function is useful for converting a vector to a contingency table, which is a table counts for each categorical variable (~~TRUE~~ or ~~FALSE~~ in this case)."
+"L.1 The ~~str_detect()~~ function, like all <code>str_*()</code> functions in the **stringr** package, always takes the vector of strings as the first argument.",
+"L.2 The base R ~~table()~~ function is useful for converting a vector to a contingency table, which is a table counts for each categorical variable (~~TRUE~~ or ~~FALSE~~ in this case)."
 ))`
 ```{r str-detect}
-str_detect(string = resto_reviews, pattern = "yum\\w*?") |>  #A
-  table()  #B
+str_detect(string = resto_reviews, pattern = "yum\\w*?") |>
+  table()
 ```
 
 Given that the resulting table output shows two `TRUE` values, the pattern was found at least once in two of the reviews.
@@ -574,13 +574,13 @@ Given that this pattern did match something, we now want to know what those stri
 `r dspatterns::code_hints(
 "Using the logical vector from ~~str_detect()~~ to inspect those reviews that matched the regex.",
 c(
-"#A The output of the ~~str_detect()~~ statement is, this time, saved to an object called ~~matches~~.",
-"#B The logical vector of ~~matches~~ is a great way to subset ~~resto_reviews~~ to those elements where a match occurred."
+"L.1 The output of the ~~str_detect()~~ statement is, this time, saved to an object called ~~matches~~.",
+"L.3 The logical vector of ~~matches~~ is a great way to subset ~~resto_reviews~~ to those elements where a match occurred."
 ))`
 ```{r str-detect-see-matches}
-matches <- str_detect(string = resto_reviews, pattern = "yum\\w*?")  #A
+matches <- str_detect(string = resto_reviews, pattern = "yum\\w*?")
 
-resto_reviews[matches]  #B
+resto_reviews[matches]
 ```
 
 With the two reviews that matched our pattern, the word 'yummy' is seen twice. And while this is admittedly a simple example of determining whether a single pattern is detected in a fairly large set of strings, we can probably imagine more complex searches that involve matching on multiple conditions.
@@ -590,16 +590,16 @@ Suppose you wanted to extract all mentions of pricing from the `resto_reviews` d
 `r dspatterns::code_hints(
 "Getting all matches of dollar values and eventually resolving to a single numeric vector.",
 c(
-"#A The pattern ~~\\\\$\\\\d*~~ will match on text like ~~$10~~, ~~$5~~; the resulting object is a list containing all of the matches for each of the vector elements.",
-"#B Because we want all of the matches in a single vector we use ~~unlist()~~, which will flatten the list into a single character vector.",
-"#C Eventually, the values should be converted into a numeric vector, however, we can't do that if the dollar sign is present. It's removed by using ~~str_remove()~~, where the pattern is the text that's to be removed.",
-"#D The character vector can be converted to numeric at this point by using the ~~as.numeric()~~ function."
+"L.1 The pattern ~~\\\\$\\\\d*~~ will match on text like ~~$10~~, ~~$5~~; the resulting object is a list containing all of the matches for each of the vector elements.",
+"L.2 Because we want all of the matches in a single vector we use ~~unlist()~~, which will flatten the list into a single character vector.",
+"L.3 Eventually, the values should be converted into a numeric vector, however, we can't do that if the dollar sign is present. It's removed by using ~~str_remove()~~, where the pattern is the text that's to be removed.",
+"L.4 The character vector can be converted to numeric at this point by using the ~~as.numeric()~~ function."
 ))`
 ```{r str-extract-all-str-remove}
-str_extract_all(string = resto_reviews, pattern = "\\$\\d*") |>  #A
-  unlist() |>  #B
-  str_remove(pattern = "\\$") |>  #C
-  as.numeric()  #D
+str_extract_all(string = resto_reviews, pattern = "\\$\\d*") |>
+  unlist() |>
+  str_remove(pattern = "\\$") |>
+  as.numeric()
 ```
 
 The result of this data extraction scheme is the numeric vector with the values `14`, `30`, `8`, `16`, `3`, and `19`. What was once text is now in the form of useful numerical values!
