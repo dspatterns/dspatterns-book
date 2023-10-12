@@ -10,7 +10,7 @@ library(tidyr)
 library(forcats)
 ```
 
-This section covers
+This appendix chapter covers
 
 - Making presentation-ready line graphs and bar plots
 - Customizing plot axes so that you can express these important plot elements to your own specifications
