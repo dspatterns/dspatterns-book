@@ -84,13 +84,19 @@ Let's use `scan_data()` to look at the `user_summary` table. In this case, we on
 scan_data(user_summary, sections = "OVMS")
 ```
 
+The table is not supposed to have missing values, but this version of `user_summary` has 26 of them. That bit of information is shown in the *Table Overview* section of the table scan. That already is bad data detected through a useful summary. By moving down to the *Missing Values* section we see that the missing data is entirely found in the `country` and `acquisition` columns. (This is the sort of good information to have when speaking to your data provider; they can potentially fix the problem.)
 
+The next thing to do is look at the summary details for each of the columns. For `player_id`, we seem to have completely distinct values, and, that's expected (the data dictionary says they should be unique). The string lengths are always 15 characters, so, that's a good sign as well. We *don't* get information in the table scan that tells us whether the IDs are formed as expected from the data dictionary ("12 uppercase letters followed by 3 digits"). We'll check for that later.
 
-incoming/refreshed data to quickly determine if anything changed in a very obvious/bad way
+The next two columns (`first_login` and `start_day` columns) are `"datetime"`- and `"date"`-type columns. This is corroborated in the data dictionary. There's nothing yet to be suspicious about for these two columns.
 
+The `country` column, which we already know is problematic since is has `NA` values, should logically contain country names. The data dictionary doesn't say much about how country names are represented in the data. In the *Common Values* subsection of the table scan for `country`, we say common values written as `"United States"`, `"China"`, `"France"`, etc. Not the greatest practice, since there are more standardized ways of identifying a country. When looking at the *String Lengths* subsection we can see something a bit odd: minimum string values of `2`. Since no country names written in English are as small as two characters, something else is amiss. We'll check this further!
 
-We can save the report to disk using `export_report()` function. Such table scan snapshots are useful to have around while formulating data quality checks.
+For the `acquisition` column, aside from the `NA` values that ought not to be there, there seems to be nothing out of the ordinary when drilling down into that column's summary values.
 
+The `device_name` column looks fine, and the device names seem to be written out in a semi-standardized style. There are literally hundreds of distinct values here so we have to see if the formatting convention holds.
+
+That concludes our scan of the table scan! We got some leads from it and we'll be extra sure to check for those suspected problems and look for data anomalies. It's a good idea always to save the report to disk using the `export_report()` function. Such table scan snapshots are useful to have around while formulating data quality checks.
 
 ## Understand
 
