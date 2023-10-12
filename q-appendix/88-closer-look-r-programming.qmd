@@ -9,7 +9,7 @@ library(lubridate)
 library(tidyverse)
 ```
 
-This section covers
+This appendix chapter covers
 
 - Working with vectors and learning about R's recycling behavior
 - Learning and reviewing some of the more essential base R functions (and getting the names of the dozens of other useful functions)
