@@ -178,19 +178,13 @@ bakers |> count(hometown, series, sort = TRUE)
 
 We can see that we had fellow townies in series `8` and four Londoners in series `9`. For sure, this `count()` function from **dplyr** is incredibly powerful.
 
-We can extend this line of thinking to get a count of contestants per episode across all series. Again, `count()` is your friend here and all we need to do is choose the right grouping variables. In this case, those variables are `series` and `episode`. Here it is:
-
-```{r, paged.print=FALSE}
-episodes |> count(series, episode)
-```
-
-We see that the counts of contestants across episodes in each series decreases, which is to be expected from shows where participants are routinely eliminated. This is plottable and, crucially, we can facet the plots by `series`.
+The `episodes` dataset has an interesting metric in its `bakers_appeared` column. It gives us the count of contestants per episode across all the 10 series. Further to this, the `bakers_out` column tells us how many of the bakers-that-appeared in an episode were eliminated. This is natural and to be expected from shows where participants are routinely eliminated. And, this is eminently plottable. Let's do that and facet the plots by `series`.
 
 ```{r}
 episodes |> 
-  count(series, episode) |>
+  select(series, episode, bakers_appeared) |>
   ggplot() +
-  geom_col(aes(x = episode, y = n)) +
+  geom_col(aes(x = episode, y = bakers_appeared)) +
   facet_wrap(~series)
 ```
 
@@ -207,8 +201,8 @@ Perhaps the last plot of contestant counts per episode per series might be bette
 ```{r}
 episode_summary <- 
   episodes |> 
-  count(series, episode) |>
-  pivot_wider(names_from = episode, values_from = n) |>
+  select(series, episode, bakers_appeared) |>
+  pivot_wider(names_from = episode, values_from = bakers_appeared) |>
   gt(rowname_col = "series") |>
   tab_spanner(label = "Episode", columns = matches("[0-9]*")) |>
   sub_missing(columns = everything()) |>
@@ -218,7 +212,7 @@ episode_summary <-
 episode_summary
 ```
 
-This is good and presents exact numbers per episode (important if someone needs to scan down episode numbers across seasons and compare contestant counts). In this summary table we always see that the last episode became a showdown between three final contestants and other little patterns become apparent, like that 5-4-3 contestants is a motif across all the series.
+This is good and presents exact numbers per episode (important if someone needs to scan down episode numbers across seasons and compare contestant counts). In this summary table we always see that the last episode became a showdown between three final contestants and other little patterns become apparent (like that sequence of 5-4-3 contestants in the last three episodes is a motif across much of the series).
 
 ## Share
 
@@ -262,7 +256,7 @@ ggplot(
   ) +
   scale_fill_manual(
     values = bakeoff_palette(n = 10),
-    guide = FALSE
+    guide = "none"
   ) +
   scale_x_discrete(expand = c(0, 0)) +
   labs(
