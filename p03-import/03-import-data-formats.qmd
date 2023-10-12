@@ -129,7 +129,7 @@ The **dspatterns** package has a few functions that produce example **Excel** fi
 - All data rows follow the header (from row 2) and there are no gaps (i.e., empty rows)
 - All tabular data encompasses a rectangular region (i.e., there should be no cells with entries elsewhere 
 
-![The `us_cities` sheet in the example **Excel** file is a paragon of clean data as an input for the `read_excel()` function. This will make your life easier.](appendix-figures/86-importing-data-common-formats/04-figure-us-cities.png){#fig:us-cities}
+![The `us_cities` sheet in the example **Excel** file is a paragon of clean data as an input for the `read_excel()` function. This will make your life easier.](img/figure-us-cities.png){#fig:us-cities}
 
 The second sheet (called `us_cities_messy`) contains the `us_cities` data, however, there is additional data strewn about in different cells. We can look to the first sheet as the idealized example of data stored in an **Excel** file. It won't provide us with any data import problems, and it's something to strive for when managing data in **Excel** files. The second is a more real-world example of an **Excel** sheet you'll often encounter. Perhaps a colleague provided this file as a source of data for a project, perhaps it's your own file, it really doesn't matter. What does matter is that the data must be cleaned/reorganized before importing it into R.
 
@@ -222,7 +222,7 @@ From this code, we get a message about new names. What's happening is that the f
 
 Upon looking at the **Excel** file (*Figure \@ref(fig:us-cities-messy)* provides an annotated guide to its problems) we can see why the import result is the way that it is. This is all fixable though, so long as we know what the particular problems are. However, we really need to have a close look at the sheet in **Excel** proper.
 
-![The `us_cities_messy` sheet in the example **Excel** file has a number of issues that require a much more sophisticated use of the `read_excel()` function.](appendix-figures/86-importing-data-common-formats/05-figure-us-cities-messy.png){#fig:us-cities-messy}
+![The `us_cities_messy` sheet in the example **Excel** file has a number of issues that require a much more sophisticated use of the `read_excel()` function.](img/figure-us-cities-messy.png){#fig:us-cities-messy}
 
 The first big problem is that the table (which is comprised of the header row and the records) begins on the third row. Everything else above that is not the table and should be discarded. The `read_excel()` function has the `skip` argument (just as `read_csv()` does) to skip rows at the top of the sheet. We will use `skip = 2`, and this first problem will be solved.
 
