@@ -10,7 +10,7 @@ library(ggplot2)
 library(tidyr)
 ```
 
-This section covers
+This appendix chapter covers
 
 - Understanding the common pitfalls of handling data with dates and times
 - Using functions from the **lubridate** package to effectively work with date and time values
