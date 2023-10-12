@@ -57,6 +57,10 @@ The dataset we are going to use for our data-quality-checking examples is called
 user_summary <- user_summary(quality = "faulty")
 ```
 
+```r
+user_summary <- user_summary(quality = "faulty")
+```
+
 Let's look at the faulty `user_summary` table using **dplyr**'s `glimpse()` function:
 
 ```{r}
@@ -68,29 +72,35 @@ This dataset, unlike the previously used `stickers` dataset, has no weirdness wi
 Let's look at the data and what it means. The **intendo** package smartly provides data dictionaries for each of its datasets. We can view the data dictionary for the `user_summary` table with the 
 `user_summary_dd()` function.
 
-```{r}
-#| output: false
-#| echo: false
-#| eval: false
+```r
 user_summary_dd()
 ```
+
 That data dictionary is pretty detailed! It doesn't provide sample values for any column, but, it does describe the data reasonably well (especially the `player_id` column). This should be read over at least twice and then, once we have a solid understanding of the data again (supposing we've seen this data before) we can then get to exploring the data again and building some data quality checks we can always run when we get refreshed data. 
 
 ## Explore
 
 Let's use `scan_data()` to look at the `user_summary` table. In this case, we only want to look at a few sections of the full data scan.
 
-```{r}
+```r
 scan_data(user_summary, sections = "OVMS")
 ```
 
-The table is not supposed to have missing values, but this version of `user_summary` has 26 of them. That bit of information is shown in the *Table Overview* section of the table scan. That already is bad data detected through a useful summary. By moving down to the *Missing Values* section we see that the missing data is entirely found in the `country` and `acquisition` columns. (This is the sort of good information to have when speaking to your data provider; they can potentially fix the problem.)
+The table is not supposed to have missing values, but this version of `user_summary` has 26 of them. That bit of information is shown in the *Table Overview* section of the table scan.
+
+![Part of the table scan, where we get an overview of the table and its columns.](img/table-scan-01.png)
+
+That already is bad data detected through a useful summary. By moving down to the *Missing Values* section we see that the missing data is entirely found in the `country` and `acquisition` columns. (This is the sort of good information to have when speaking to your data provider; they can potentially fix the problem.)
+
+![Part of the table scan, where we see if and where data is missing.](img/table-scan-02.png)
 
 The next thing to do is look at the summary details for each of the columns. For `player_id`, we seem to have completely distinct values, and, that's expected (the data dictionary says they should be unique). The string lengths are always 15 characters, so, that's a good sign as well. We *don't* get information in the table scan that tells us whether the IDs are formed as expected from the data dictionary ("12 uppercase letters followed by 3 digits"). We'll check for that later.
 
 The next two columns (`first_login` and `start_day` columns) are `"datetime"`- and `"date"`-type columns. This is corroborated in the data dictionary. There's nothing yet to be suspicious about for these two columns.
 
 The `country` column, which we already know is problematic since is has `NA` values, should logically contain country names. The data dictionary doesn't say much about how country names are represented in the data. In the *Common Values* subsection of the table scan for `country`, we say common values written as `"United States"`, `"China"`, `"France"`, etc. Not the greatest practice, since there are more standardized ways of identifying a country. When looking at the *String Lengths* subsection we can see something a bit odd: minimum string values of `2`. Since no country names written in English are as small as two characters, something else is amiss. We'll check this further!
+
+![Part of the table scan, showing the proportions of string lengths for text in the `country` column.](img/table-scan-03.png)
 
 For the `acquisition` column, aside from the `NA` values that ought not to be there, there seems to be nothing out of the ordinary when drilling down into that column's summary values.
 
@@ -178,7 +188,7 @@ Let's copy these agent-based workflow statements (removing the comments). A few 
 4. ensure that `player_id` values are well formed
 5. check that dates/datetimes represent occurrences in `2015`
 
-On point 3, recall that the country names were suspect? Looking at the set used in the `col_vals_in_set()` statement, we can see that there are a few two-letter country names in the mix (that's not right). We'll have to change the way we check that column. Maybe the most prudent way to check for this error happening in the future is to check for a string length of at least four (this could guard against three-letter country codes erroneously entered in this column).
+On point 3, recall that the country names were suspect? Looking at the `set` value used in the `col_vals_in_set()` statement, we can see that there are a few two-letter country names in the mix (that's simply not right). We'll have to change the way we check that column. Maybe the most prudent way to check for this error happening in the future is to check for a string length of at least four (this could guard against three-letter country codes erroneously entered in this column). Really, a closed set may not be ideal since more countries may enter the column on a data refresh/update (and that's valid).
 
 Here's the complete validation plan, including the **pointblank** interrogation:
 
