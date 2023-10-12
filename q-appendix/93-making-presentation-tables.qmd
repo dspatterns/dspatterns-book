@@ -10,7 +10,7 @@ library(gt)
 library(stringr)
 ```
 
-This section covers
+This appendix chapter covers
 
 - Making presentation tables with the **DT** package for an interactive display of thousands of rows
 - Creating smaller scale, yet highly customized, presentation tables with the **gt** package
