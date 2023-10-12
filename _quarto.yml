@@ -80,12 +80,6 @@ book:
         - p05-batch/02-batch-create.qmd
         - p05-batch/03-parameters.qmd
     - "---"
-    - part: "Part 6: Production mode"
-      chapters:
-        - p06-production/01-run-on-demand.qmd
-        - p06-production/02-run-on-schedule.qmd
-        - p06-production/03-run-on-conditions.qmd
-    - "---"
   appendices:
     - q-appendix/86-tidying-data-for-analysis.qmd
     - q-appendix/87-transformations-dates-times.qmd
