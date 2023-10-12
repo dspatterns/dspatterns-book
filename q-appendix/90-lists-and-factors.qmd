@@ -10,7 +10,7 @@ library(ggplot2)
 library(tidyr)
 ```
 
-This section covers
+This appendix chapter covers
 
 - Working with lists: creating, modifying, and accessing data from them
 - Writing our own functions that either create list output, use a list as input, or both
@@ -37,9 +37,9 @@ Let's make a named list here with three wildly different elements: a numeric vec
 ```{r named-list-of-3-elements, paged.print=FALSE}
 a_list <- 
   list(
- a = c(1:5, 8:3, 2),
- b = tibble(x = 1:3, y = rep(TRUE, 3)),
- c = list(A = 1:3, B = LETTERS[20:26])
+    a = c(1:5, 8:3, 2),
+    b = tibble(x = 1:3, y = rep(TRUE, 3)),
+    c = list(A = 1:3, B = LETTERS[20:26])
   )
 
 a_list
@@ -104,9 +104,9 @@ Let's take a look at an unnamed list and see how things change without the use o
 ```{r unnamed-list-of-3-elements, paged.print=FALSE}
 b_list <- 
   list(
- c(1:5, 8:3, 2),
- tibble(x = 1:3, y = rep(TRUE, 3)),
- list(A = 1:3, B = LETTERS[20:26])
+    c(1:5, 8:3, 2),
+    tibble(x = 1:3, y = rep(TRUE, 3)),
+    list(A = 1:3, B = LETTERS[20:26])
   )
 
 b_list
