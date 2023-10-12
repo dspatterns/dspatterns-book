@@ -79,7 +79,6 @@ book:
         - p05-batch/01-batch-style.qmd
         - p05-batch/02-batch-create.qmd
         - p05-batch/03-parameters.qmd
-        - p05-batch/04-style-package.qmd
     - "---"
     - part: "Part 6: Production mode"
       chapters:
