@@ -11,7 +11,7 @@ library(tidyr)
 library(forcats)
 ```
 
-This section covers
+This appendix chapter covers
 
 - Making lollipop plots, Cleveland dot plots, and scatter plots
 - Plotting distributions with histograms, box plots, violin plots, density plots, and ridgeline plots
