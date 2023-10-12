@@ -227,12 +227,14 @@ stickers_dd <-
 
 Once the data dictionary has been produced for `stickers`, we can look at it in the RStudio Viewer by printing out `stickers_dd`. We can even customize the title by using the `get_informant_report()` function and supplying the title text.
 
-```{r}
+```r
 stickers_dd |> 
   get_informant_report(title = "Data Dictionary for `stickers`")
 ```
 
-The data dictionary can be published in a Quarto document and placed somewhere prominant for you and others to read. This is great documentation to have when introducing others to the dataset or when your own recollection and understanding of the data has become shaky.
+![The informant report. It's a big data dictionary and that's alright.](img/informant-report-stickers-01.png)
+
+The data dictionary can be published in a Quarto document and placed somewhere prominant for you and others to read. This is great documentation to have when introducing others to the dataset or when your own recollection and understanding of the data has started to become shaky.
 
 ## Explain
 
@@ -273,7 +275,7 @@ While the earlier incantation of the data dictionary got us off to a great start
 
 The `agemonths` and `ageyears` columns have no descriptions in the data dictionary. Two `info_columns()` statements are used to address this. We'll add a small bit of information about the data source with `info_tabular()` and some notes with `info_section()`:
 
-```{r}
+```r
 stickers_dd <-
   stickers_dd |>
   info_columns(
@@ -296,6 +298,8 @@ stickers_dd <-
 
 stickers_dd
 ```
+
+![The second revision of the informant report. More information is definitely a good thing here.](img/informant-report-stickers-02.png)
 
 Now that we have a much more complete data dictionary, we can share it through publication or by distributing as an HTML file. To get a standalone HTML file for the data dictionary, we can use the `export_report()` function.
 
