@@ -192,11 +192,11 @@ This is an interesting overview of the series and how eliminations were carried 
 
 ## Explain
 
-Now that we better understand the **bakeoff** data in general. We need to develop some ways to explain the data. If you're using R Markdown or Quarto, you'll sometimes want to get the values inside of the inline text of the document. This is key for describing your data and we can, for example, use `nrow()` to get the number of rows in the table like this `r knitr::inline_expr("nrow(bakers)")`. It's pretty essential that we directly use the input data and function calls to get the derived values. If the values were hardcoded that might be fine but there's always the risks that (1) your transcription is inaccurate, and (2) the underlying data might change when rendering the document.
+Now that we better understand the **bakeoff** data in general. We need to develop some ways to explain the data. If you're using **R Markdown** or **Quarto**, you'll sometimes want to get the values inside of the inline text of the document. This is key for describing your data and we can, for example, use `nrow()` to get the number of rows in the table like this `` `r nrow(bakers)` ``. It's pretty essential that we directly use the input data and function calls to get the derived values. If the values were hardcoded that might be fine but there's always the risks that (1) your transcription is inaccurate, and (2) the underlying data might change when rendering the document.
 
 While sometimes it's useful to explain things in the prose of the report, other times a well-placed table can provide more information. Let's look at a few summary tables that can explain the results found previously.
 
-Perhaps the last plot of contestant counts per episode per series might be better presented as a table? Sometimes it's hard to really know until the table is made. We can do that with `count()` as before, pivoting the data to a wide format with `pivot_wider()` (so that we can scan across episodes per each series), and then use `gt()` to construct the summary table.
+Perhaps the last plot of contestant counts per episode per series might be better presented as a table? Sometimes it's hard to really know until the table is made. We can do that by making use of the `bakers_appeared` column as before, and by pivoting the data to a wide format with `pivot_wider()` (so that we can scan across episodes per each series). Once the table is in the right shape, we then use the `gt()` function (and other functions in **gt**) to construct the summary table.
 
 ```{r}
 episode_summary <- 
@@ -206,17 +206,20 @@ episode_summary <-
   gt(rowname_col = "series") |>
   tab_spanner(label = "Episode", columns = matches("[0-9]*")) |>
   sub_missing(columns = everything()) |>
-  cols_width(1 ~ "60px", everything() ~ "40px") |>
+  cols_width(
+    stub() ~ "60px",
+    everything() ~ "40px"
+  ) |>
   tab_stubhead(label = "Series")
 
 episode_summary
 ```
 
-This is good and presents exact numbers per episode (important if someone needs to scan down episode numbers across seasons and compare contestant counts). In this summary table we always see that the last episode became a showdown between three final contestants and other little patterns become apparent (like that sequence of 5-4-3 contestants in the last three episodes is a motif across much of the series).
+This table looks really good and it presents exact numbers of bakers appearing per episode (important if someone needs to scan down episode numbers across seasons and compare contestant counts). In this summary table we always see that the last episode became a showdown between three (but in one case, four) final contestants and other little patterns become apparent (like that sequence of 5-4-3 contestants in the last three episodes is a motif across much of the series).
 
 ## Share
 
-The reporting obtained from **pointblank**'s `scan_data()` can be shared in multiple ways. Some examples include publication on [https://quartopub.com](Quarto Pub) or on a Connect instance, or, distributing an HTML document produced by R Markdown or Quarto. If you want to send somebody the HTML file for the table scan, that can be done with **pointblank**'s `export_report()` function. It's even possible to take the HTML file produced from that function and work it into a Shiny app.
+The reporting obtained from **pointblank**'s `scan_data()` can be shared in multiple ways. Some examples include publication on [https://quartopub.com](**Quarto Pub**) or on a Connect instance, or, distributing an HTML document produced by **R Markdown** or **Quarto**. If you want to send somebody the HTML file for the table scan, that can be done with **pointblank**'s `export_report()` function. It's even possible to take the HTML file produced from that function and work it into a Shiny app.
 
 Another great sharing opportunity comes from generating useful and excellent-looking plots. Let's use the **bakeoff** dataset `ratings` and make a vertical bar plot showing the ratings for all ten series. To make this excellent, we are going to do a few things:
 
@@ -282,4 +285,4 @@ What about the table that we called `series_labels`? Well, we need that to plot 
 
 After having those two tables made, we generate the plot. The `ratings_all` table is used to make the bars via `geom_col()`. With `geom_text()` we plot the text labels using that `series_labels` table. We have a wonderful set of color palettes in the **bakeoff** package; we can access the default palette `"showstopper"` by calling `bakeoff_palette()`. To add those colors to the different series' bars, we need `scale_fill_manual()` to do that bit of work. To avoid a legend (don't need it!), the `guide = FALSE` option is used. Labels are important and so we've added a title, subtitle, a caption, and a re-worked *y*-axis label with the ever-useful `labs()` function.
 
-The resulting plot, again, is great! If shared via a Quarto document or through an email it would surely be a delight for the recipient.
+The resulting plot, again, is great! If shared via a **Quarto** document or through an email it would surely be a delight for the recipient.
