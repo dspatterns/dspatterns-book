@@ -11,12 +11,12 @@ library(dplyr)
 library(readr)
 ```
 
-Previously, we had used datasets available in the **dspatterns** package to get the data we needed. This is all fine and well for the purpose of learning to use data transformation and visualization functions. However, real world data won't often be found in R packages. You may encounter useful data in text files, **Excel** files, or on the web in myriad forms. While there are hundreds of ways data can be structured and stored, there are a few formats that are quite common and so the focus of this section will be on the methods for importing these common formats into R (as tibbles). These formats are CSV and **Excel** files.
+Previously, we had used datasets available in the **dspatterns**, **bakeoff**, **intendo**, etc. packages to get the data we needed. This is all fine and well for the purpose of learning to use data transformation and visualization functions. However, real world data won't often be found in R packages. You may encounter useful data in text files, **Excel** files, or on the web in myriad forms. While there are hundreds of ways data can be structured and stored, there are a few formats that are quite common and so the focus of this section will be on the methods for importing these common formats into R (as tibbles). These formats are CSV and **Excel** files.
 
 Here's a breakdown of packages needed for this chapter:
 
 - **tidyverse**: for the use of the **dplyr** and **readr** packages
-- **readxl**: for the dataset we'll be using (`bakers`)
+- **readxl**: to read in Excel files
 - **dspatterns**: for the Excel file we need in many of the examples
 
 ## Explore
@@ -70,10 +70,10 @@ When using `read_csv()` the file name must of course be specified but since the 
 `r dspatterns::code_hints(
 "Using the ~~read_csv()~~ function to read the us_cities.csv to a tibble object.",
 c(
-"#A This use of ~~read_csv()~~ provides only the minimal amount of required information: the file to read in."
+"L.1 This use of ~~read_csv()~~ provides only the minimal amount of required information: the file to read in."
 ))`
 ```{r read_csv, paged.print=FALSE}
-city_table <- read_csv(file = "us_cities.csv")  #A
+city_table <- read_csv(file = "us_cities.csv")
 
 city_table
 ```
@@ -98,10 +98,10 @@ For the first three `character`-based columns of `us_cities.csv` (`city`, `state
 `r dspatterns::code_hints(
 "Using the ~~read_csv()~~ with ~~us_cities.csv~~, specifying the exact column types in ~~col_types~~.",
 c(
-"#A Using compact representation of column types as ~~\"cccii\"~~ provides more information to ~~read_csv()~~ so that we get our desired column types."
+"L.1 Using compact representation of column types as ~~\"cccii\"~~ provides more information to ~~read_csv()~~ so that we get our desired column types."
 ))`
 ```{r read-csv-col-types, paged.print=FALSE}
-city_table <- read_csv(file = "us_cities.csv", col_types = "cccii")  #A
+city_table <- read_csv(file = "us_cities.csv", col_types = "cccii")
 
 city_table
 ```
@@ -122,7 +122,7 @@ The **dspatterns** package will again provide us the **Excel** files we need for
 
 **Writing an example Excel file to the project directory**
 
-The **dspatterns** package has a few functions that produce example **Excel** files. As always, ensure that `library(dspatterns)` is executed in the RStudio console if this is a new R session. We will use the `create_excel_file()` function to write an example **Excel** file to the working directory. The **Excel** document that the function creates has two sheets (and these are sometimes called tabs). The first sheet (called `us_cities`) contains all of the data from the `us_cities` dataset in the cleanest manner possible (*Figure \@ref(fig:us-cities)*). There are several qualities in this sheet that make it the data easy to import into R:
+The **dspatterns** package has a few functions that produce example **Excel** files. As always, ensure that `library(dspatterns)` is executed in the RStudio console if this is a new R session. We will use the `create_excel_file()` function to write an example **Excel** file to the working directory. The **Excel** document that the function creates has two sheets (and these are sometimes called tabs). The first sheet (called `us_cities`) contains all of the data from the `us_cities` dataset in the cleanest manner possible. There are several qualities in this sheet that make it the data easy to import into R:
 
 - There is only a single data table
 - The data has a single header row for column names in the first row of the sheet
@@ -161,10 +161,10 @@ When using `read_excel()` the file name needs to be specified just as in the cas
 `r dspatterns::code_hints(
 "Using the ~~read_excel()~~ function to read the first sheet from the ~~us_cities.xlsx~~ file to a tibble object.",
 c(
-"#A This use of ~~read_excel()~~ provides only the minimal amount of required information: the file to read in. By default, the first sheet of the workbook will be read."
+"L.1 This use of ~~read_excel()~~ provides only the minimal amount of required information: the file to read in. By default, the first sheet of the workbook will be read."
 ))`
 ```{r read-excel, eval=FALSE}
-city_table_x <- read_excel(path = "us_cities.xlsx")  #A
+city_table_x <- read_excel(path = "us_cities.xlsx")
 
 city_table_x
 ```
@@ -198,10 +198,10 @@ So that was the first sheet of the **Excel** workbook. The second sheet contains
 `r dspatterns::code_hints(
 "Using the ~~read_excel()~~ function to read in the second sheet from the ~~us_cities.xlsx~~ **Excel** file.",
 c(
-"#A This ~~read_excel()~~ call specifies the sheet as ~~2~~ (it's the second sheet)."
+"L.1 This ~~read_excel()~~ call specifies the sheet as ~~2~~ (it's the second sheet)."
 ))`
 ```{r read-excel-messy, eval=FALSE}
-city_table_x_m <- read_excel("us_cities.xlsx", sheet = 2)  #A
+city_table_x_m <- read_excel("us_cities.xlsx", sheet = 2)
 
 city_table_x_m
 ```
@@ -220,7 +220,7 @@ From this code, we get a message about new names. What's happening is that the f
 
 ## Explain
 
-Upon looking at the **Excel** file (*Figure \@ref(fig:us-cities-messy)* provides an annotated guide to its problems) we can see why the import result is the way that it is. This is all fixable though, so long as we know what the particular problems are. However, we really need to have a close look at the sheet in **Excel** proper.
+Upon looking at the **Excel** file (the image below provides an annotated guide to its problems) we can see why the import result is the way that it is. This is all fixable though, so long as we know what the particular problems are. However, we really need to have a close look at the sheet in **Excel** proper.
 
 ![The `us_cities_messy` sheet in the example **Excel** file has a number of issues that require a much more sophisticated use of the `read_excel()` function.](img/figure-us-cities-messy.png){#fig:us-cities-messy}
 
@@ -235,19 +235,19 @@ Given all of these considerations, here is the finalized function call:
 `r dspatterns::code_hints(
 "Using the ~~read_excel()~~ function with the ~~us_cities_messy~~ sheet, take 2.",
 c(
-"#A This skips the first two rows, which are clearly not tabular data.",
-"#B While defining the types is good, choosing which columns to skip (i.e., get rid of) is also good and needed.",
-"#C We see some cell values being 'N/A'. They really should be blank but that's okay. This is fixable with the ~~na~~ option."
+"L.5 This skips the first two rows, which are clearly not tabular data.",
+"L.6 While defining the types is good, choosing which columns to skip (i.e., get rid of) is also good and needed.",
+"L.7 We see some cell values being 'N/A'. They really should be blank but that's okay. This is fixable with the ~~na~~ option."
 ))`
 ```{r read-excel-messy-options, eval=FALSE}
 city_table_x_m <- 
   read_excel(
     "us_cities.xlsx",
     sheet = 2, 
-    skip = 2,  #A
-    col_types = c(rep("text", 3), rep("numeric", 2), rep("skip", 2)),  #B
-    na = "N/A"  #C
-  ) 
+    skip = 2,
+    col_types = c(rep("text", 3), rep("numeric", 2), rep("skip", 2)),
+    na = "N/A"
+  )
 
 city_table_x_m
 ```
@@ -272,14 +272,14 @@ If the column names of the `city_table_x_m` table are not satisfactory, we can u
 `r dspatterns::code_hints(
 "Using **dplyr**'s ~~rename()~~ function to change column names.",
 c(
-"#A The ~~rename()~~ function is from the **dplyr** package. The syntax is to have the replacement name first, making it equal to the existing column name (none of these names are in quotes).",
-"#B We have to use backticks for all of the existing names because these names have spaces in them (R only allows such names if they are enclosed in backticks)."
+"L.3 The ~~rename()~~ function is from the **dplyr** package. The syntax is to have the replacement name first, making it equal to the existing column name (none of these names are in quotes).",
+"L.4 We have to use backticks for all of the existing names because these names have spaces in them (R only allows such names if they are enclosed in backticks)."
 ))`
 ```{r rename-columns, paged.print=FALSE}
 city_table_x_m <- 
   city_table_x_m |>
-  rename(  #A
-    state_id = `state id`,  #B
+  rename(
+    state_id = `state id`,
     state_name = `state name`,
     pop_urb = `urban population`,
     pop_mun = `municipal population`
@@ -295,3 +295,80 @@ Would it have been easier to hand edit the messy **Excel** sheet before importin
 We learned a lot about importing CSVs and Excel files. And managing our projects and their associated files is much easier now that we've learned how to create and manage **RStudio** *Projects*. CSV data? Import all that with the **readr** package's excellent `read_csv()` function. Got Excel files? That's a bit more work since **Excel** files often contain a multitude of datasets. But once you understand what's in such a file we can use the `read_excel()` function (from **readxl**) to read in data from **Excel** sheets.
 
 There will always be problems and we encountered some common ones when importing both CSV and **Excel** files. The `read_csv()` and `read_excel()` functions do, however, come packed with options to ensure that data could be imported properly!
+
+## Share
+
+You now know a ton about importing data from CSVs and even Excel files. What are you going to do with that knowledge? You've got to give something back and share. Suppose you spent 45 minutes to an hour dealing with the importing of table from an Excel file. And futher suppose that someone else you know will eventually need to get that same data. What we can do (to be nice) is create some sharable code and documentation around how that exact thing is done.
+
+Here is how that might look in an .R script:
+
+```r
+
+#
+# Obtaining clean data in R from the `us_cities.xlsx` file given to us
+# from our data provider
+#
+
+# First ensure that the `us_cities.xlsx` file is in your working directory
+# (i.e., in the same place as this `us_cities.R` script)
+
+# Load in packages
+library(readxl)      # For the `read_excel()` function
+library(tidyverse)   # Just for the `rename()` function
+library(pointblank)  # For various data quality checks
+
+# 1. Reading in the data from the Excel file
+# - the data we need is on sheet 2
+# - we have to skip to row 3 (that's where the column names are)
+# - the correct column types are provided (we have to skip the reading
+#   of the last two columns because that's just some analysis our
+#   data provider did)
+# - missing values in this file are consistently written as `N/A`; the
+#   `na` arg here is given `"N/A"` so we get proper NAs
+
+city_table <- 
+  read_excel(
+    "us_cities.xlsx",
+    sheet = 2, 
+    skip = 2,
+    col_types = c(rep("text", 3), rep("numeric", 2), rep("skip", 2)),
+    na = "N/A"
+  )
+
+# 2. Renaming column labels to avoid spaces
+# - the renaming here fits better with our conventions and crucially
+#   removes the space characters
+city_table <- 
+  city_table |>
+  rename(
+    state_id = `state id`,
+    state_name = `state name`,
+    pop_urb = `urban population`,
+    pop_mun = `municipal population`
+  )
+
+# 3. Data quality checks
+# - these pointblank checks ensure that everything is fine
+# - if you get an error when running this, there is yet another
+#   problem with this data; we'll then have to have yet another
+#   difficult conversation with our data provider
+
+# All rows are distinct
+city_table |> rows_distinct()
+
+# Should be no NAs in the first three columns
+city_table |> rows_complete(columns = vars(city, state_id, state_name))
+
+# First three columns are character, last two are numeric
+city_table |> col_is_character(columns = vars(city, state_id, state_name))
+city_table |> col_is_numeric(columns = vars(pop_urb, pop_mun))
+
+# State ID values are all two letters long (and in capitals)
+city_table |> col_vals_regex(columns = state_id, regex = "^[A-Z]{2}$")
+
+# Ensure there are no spuriously large population values
+city_table |> col_vals_lt(columns = pop_urb, value = 25E6, na_pass = TRUE)
+city_table |> col_vals_lt(columns = pop_mun, value = 15E6, na_pass = TRUE)
+```
+
+If in this hypothetical scenario nobody else really needs this information, the situation might yet arise where you yourself need this info again (to obtain that dataset or perhaps something close to it). What I'm saying is that knowledge is valuable and findings like this should be written down (either for yourself or someone else).
