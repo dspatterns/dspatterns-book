@@ -227,7 +227,7 @@ mean_rev_iap_plt <-
   ) +
   geom_line(
     aes(x = day, y = mean_rev_iap_wk),
-    color = "green",
+    color = "forestgreen",
     linewidth = 1.5
   ) +
   labs(
@@ -235,7 +235,6 @@ mean_rev_iap_plt <-
     x = NULL,
     y = "Average IAP\n revenue (USD)"
   ) +
-  geom_line(aes(x = day, y = mean_rev_iap_wk)) +
   theme_minimal()
   
 session_revenue_summary_plt <-
@@ -251,3 +250,166 @@ This is something that could be shared. But one thing that would make this more 
 ## Share
 
 Sharing code is often very important. We can do that with packages but just as easily do it in a low-key way by sharing R scripts. Let's go part way to making that shareable script by re-working the code developed earlier into a reusable function.
+
+Let's go with the idea of providing a general function that makes a top-and-bottom time-series plot (with daily values). You can provide two traces for each plot, and the only condition is that you use a single table with a `"Date"`-type column. The colors used have default values, but you can tweak them to your liking.
+
+The way to do this is to copy the existing, working code into the new function body and replace the existing variable names with general names. In this general function, `session_revenue_summary` becomes `data_tbl`, and `mean_duration_plt` becomes `plot_1` (among other changes). The convention will be that `plot_1_...` refers to the top plot and `plot_2_...` is the bottom plot. Here's the function, called `daily_plot_two()`.
+
+```{r}
+daily_plot_two <- function(
+    data_tbl,
+    date_col,
+    plot_1_y,
+    plot_2_y,
+    plot_1_y_sec,
+    plot_2_y_sec,
+    plot_1_color = "steelblue",
+    plot_2_color = "forestgreen",
+    title = NULL,
+    subtitle = NULL,
+    caption = NULL,
+    x_title = NULL,
+    plot_1_y_title = NULL,
+    plot_2_y_title = NULL
+) {
+  
+  plot_1 <-
+    ggplot(data_tbl) +
+    geom_line(
+      aes(x = {{ date_col }}, y = {{ plot_1_y_sec }}),
+      color = "gray",
+      alpha = 0.75
+    ) +
+    geom_line(
+      aes(x = {{ date_col }}, y = {{ plot_1_y }}),
+      color = plot_1_color,
+      linewidth = 1.5
+    ) +
+    labs(
+      title = title,
+      subtitle = subtitle,
+      x = NULL,
+      y = plot_1_y_title
+    ) +
+    theme_minimal() +
+    theme(
+      axis.ticks.x = element_blank(),
+      axis.text.x = element_blank(),
+      axis.title.x = element_blank()
+    )
+  
+  plot_2 <-
+    ggplot(data_tbl) +
+    geom_line(
+      aes(x = {{ date_col }}, y = {{ plot_2_y_sec }}),
+      color = "gray",
+      alpha = 0.75
+    ) +
+    geom_line(
+      aes(x = {{ date_col }}, y = {{ plot_2_y }}),
+      color = plot_2_color,
+      linewidth = 1.5
+    ) +
+    labs(
+      caption = caption,
+      x = x_title,
+      y = plot_2_y_title
+    ) +
+    theme_minimal()
+  
+  plot_1 / plot_2
+}
+```
+
+It has six required parameters:
+
+1. `data_tbl`: the data table that contains a date column and four other columns with values to plot.
+2. `date_col`: the name of the column containing the date values.
+3. `plot_1_y`: the main data values for the top plot. 
+4. `plot_2_y`: the main data values for the bottom plot.
+5. `plot_1_y_sec`: the secondary data values for the top plot. 
+6. `plot_2_y_sec`: the secondary data values for the bottom plot.
+
+We need to use the **rlang** embracing scheme to inject bare column names into the **ggplot** expression. We embrace with: `{{` and `}}`, and, for more information on this check out the [**rlang** data-masking article](https://rlang.r-lib.org/reference/topic-data-mask.html). Because that's all in place we can test out `daily_plot_two` with the `session_revenue_summary` table and the same column names as used in the earlier statements that made the plot:
+ 
+```{r}
+daily_plot_two(
+    data_tbl = session_revenue_summary,
+    date_col = day,
+    plot_1_y = mean_duration_wk,
+    plot_2_y = mean_rev_iap_wk,
+    plot_1_y_sec = mean_duration,
+    plot_2_y_sec = mean_rev_iap
+)
+```
+
+It works! Notice we don't really have much in the way of titles/text in the produced plot. That's totally intentional. In a general plotting function, we can't really know anything about which titles to use. The following optional arguments allow the person that you're sharing the function with to add in the titles:
+
+1. `title`: The title for the collection of plots.
+2. `subtitle`: The subtitle for the collection of plots.
+3. `caption`: The caption for the collection of plots (appears bottom right).
+4. `x_title`: The *x*-axis title (wasn't used in original plot)
+5. `plot_1_y_title`: The *y*-axis title for the top plot.
+6. `plot_2_y_title`: The *y*-axis title for the bottom plot.
+
+In the interest of further testing the `daily_plot_two()` function, we can add the same titles as in the original visualization and check that everything is faithfully reproduced:
+
+```{r}
+daily_plot_two(
+    data_tbl = session_revenue_summary,
+    date_col = day,
+    plot_1_y = mean_duration_wk,
+    plot_2_y = mean_rev_iap_wk,
+    plot_1_y_sec = mean_duration,
+    plot_2_y_sec = mean_rev_iap,
+    title = "Average daily session time and in-app revenue",
+    subtitle = "All data shown for the 2015 year",
+    caption = "Data source: the 'all_sessions' data table.",
+    plot_1_y_title = "Average daily\n session time (min)",
+    plot_2_y_title = "Average IAP\n revenue (USD)"
+)
+```
+
+*It is*. Which is wonderful to see. Now it just makes sense to see if this function works for other data tables as a sort of final QA/QC task. But what data? Well, we could use the `pizzaplace` dataset from the **gt** package. Interestingly enough, it also has data throughout the year of 2015. Let's manipulate that dataset and use `daily_plot_two()` to plot the data. The pizza analytics here involves the comparison of pizza sales between the `"classic"` and `"supreme"` group. Here's all of the **dplyr** and **tidyr** work needed to get a table pizzas sold by day and the average daily sales per week:
+
+```{r}
+pizza_sales_summary <-
+  pizzaplace |>
+  select(date, type) |>
+  filter(type %in% c("classic", "supreme")) |>
+  mutate(date = lubridate::as_date(date)) |>
+  group_by(date, type) |>
+  summarize(n_sold_day = n(), .groups = "drop") |>
+  mutate(week = lubridate::week(date)) |>
+  group_by(week, type) |>
+  mutate(mean_daily_per_wk = mean(n_sold_day)) |>
+  ungroup() |>
+  pivot_wider(
+    names_from = type,
+    values_from = c(n_sold_day, mean_daily_per_wk)
+  )
+
+pizza_sales_summary
+```
+
+Now, let's use that table with the `daily_plot_two()` function. We'll even change up the colors used in the two plots:
+
+```{r}
+daily_plot_two(
+    data_tbl = pizza_sales_summary,
+    date_col = date,
+    plot_1_y = mean_daily_per_wk_classic,
+    plot_2_y = mean_daily_per_wk_supreme,
+    plot_1_y_sec = n_sold_day_classic,
+    plot_2_y_sec = n_sold_day_supreme,
+    plot_1_color = "tomato",
+    plot_2_color = "purple",
+    title = "Average pizza sales during 2015",
+    subtitle = "Comparison between Classic (top) and Supreme (bottom) pizzas",
+    caption = "Data source: the 'pizzaplace' data table.",
+    plot_1_y_title = "Classic",
+    plot_2_y_title = "Supreme"
+)
+```
+
+That we get a usable plot with the newly-crafted `daily_plot_two()` with entirely different data is so good to see. And it looks like the pizzas from `"classic"` pizza group has an edge over those pizzas from the `"supreme"` group.
