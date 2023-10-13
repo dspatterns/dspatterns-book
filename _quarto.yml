@@ -71,8 +71,7 @@ book:
         - p04-aggregate/02-rolling-up-data.qmd
         - p04-aggregate/03-slicing-and-dicing-data.qmd
         - p04-aggregate/04-making-datasets-longer.qmd
-        - p04-aggregate/05-windows-of-data.qmd
-        - p04-aggregate/06-making-datasets-wider.qmd
+        - p04-aggregate/05-making-datasets-wider.qmd
     - "---"
     - part: "Part 5: Batch mode"
       chapters:
