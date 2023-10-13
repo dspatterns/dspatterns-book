@@ -1,10 +1,8 @@
 # About the Book {.unnumbered}
 
-{{< include ../_patterns.qmd >}}
-
 ## Explore
 
-An online version of this book is available at `<insert link here>`.
+An online version of this book is available at `<https://dspatterns.netlify.app>`.
 
 We are writing this book right now! Please feel free to explore, but also please be mindful that all of the content is undergoing active iteration. We are still forming our own ideas and opinions as we work.
 
@@ -14,8 +12,11 @@ This version of the book was built with:
 #| message: false
 #| warning: false
 #| echo: false
-all_pkgs <- renv::dependencies() |> 
+
+all_pkgs <- 
+  renv::dependencies() |> 
   dplyr::pull(Package) 
+
 sessioninfo::platform_info()
 ```
 
@@ -25,20 +26,21 @@ Along with these packages:
 #| message: false
 #| warning: false
 #| echo: false
+
 sessioninfo::package_info() |> 
   dplyr::select(package, loadedversion, date, source) |> 
-  DT::datatable(rownames = FALSE,
-                class = 'cell-border stripe',
-                filter = list(position = 'top'),
-                options = list(autoWidth = TRUE,
-                           bInfo = FALSE,
-                           paging = TRUE))
+  DT::datatable(
+    rownames = FALSE,
+    class = 'cell-border stripe',
+    filter = list(position = 'top'),
+    options = list(autoWidth = TRUE, bInfo = FALSE, paging = TRUE)
+  )
 ```
 
 ## Understand
 
 ::: {layout-ncol="2"}
-Want to know what goes into the sausage? Here is an overview of our book tech stack.
+Want to know what goes into the sausage? Here is an overview of our book's tech stack.
 
 ![](img/sausage.jpeg){fig-align="right"}
 :::
