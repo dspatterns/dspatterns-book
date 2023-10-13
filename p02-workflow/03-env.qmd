@@ -1,0 +1,21 @@
+# Starting with Project Environments
+
+```{r setup, include=FALSE, echo=FALSE}
+library(dspatterns)
+library(renv)
+```
+
+
+## New Packages and Functions  
+
+## This Chapter's Pattern
+
+## Explore
+
+## Understand
+
+## Explain
+
+## Share
+
+
