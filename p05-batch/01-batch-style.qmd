@@ -7,6 +7,7 @@ title: "Batch Styling of Plots"
 ```{r setup, include=FALSE, echo=FALSE}
 library(intendo)
 library(pointblank)
+library(gt)
 library(ggplot2)
 library(dplyr)
 library(tidyr)
@@ -20,6 +21,7 @@ We’ll need a few packages loaded in for this chapter:
 
 - **tidyverse**: for various functions from **dplyr**, **tidyr**, and **ggplot**
 - **intendo**: for the dataset we'll be using (`all_sessions`)
+- **gt**: for the `pizzaplace` dataset (*not* for table making)
 - **patchwork**: for arranging plots together in the most professional way imaginable
 - **glue**: for combining strings with the greatest of ease
 
