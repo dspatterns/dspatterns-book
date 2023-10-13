@@ -1,0 +1,28 @@
+---
+title: "Importing Bigger Data"
+---
+
+```{r setup, include=FALSE, echo=FALSE}
+library(dspatterns)
+library(arrow)
+library(dplyr)
+```
+
+This section covers
+
+- Read in a csv file quickly with `read_csv_arrow()`
+- Read in a csv file quickly with column types
+
+https://francoismichonneau.net/2022/10/import-big-csv/
+
+## Explore
+
+`glimpse()`
+
+## Understand
+
+maybe use `tictoc()`
+
+## Explain
+
+## Share

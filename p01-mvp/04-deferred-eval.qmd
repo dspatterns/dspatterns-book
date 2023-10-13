@@ -1,0 +1,13 @@
+---
+title: "Introductory Deferred Evaluation with **arrow**"
+---
+
+```{r setup, include=FALSE, echo=FALSE}
+library(dspatterns)
+library(dplyr)
+library(arrow)
+```
+
+Maybe?
+
+Using Datasets
