@@ -48,7 +48,7 @@ Want to know what goes into the sausage? Here is an overview of our book's tech 
 ### Writing tools
 
 
--   The book is built with {{< var quarto.docs >}}. It is a {{< var quarto.proj >}} because the actual book is a collection of chapters, where each chapter is an individual Quarto file (`*.qmd`).[^book-1]
+- The book is built with {{< var quarto.docs >}}. It is a {{< var quarto.proj >}} because the actual book is a collection of chapters, where each chapter is an individual Quarto file (`*.qmd`).[^book-1]
 
 [^book-1]: Every Quarto project includes a configuration ("config") file.
 
