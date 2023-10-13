@@ -1,6 +1,6 @@
 # Our chapter pattern {-}
 
-{{< include ../_patterns.qmd >}}
+In the central part of the book, we adhere to a *chapter pattern* containing four sections. Here is a breakdown of those section names and the focus of each.
 
 **Explore**: The first steps with a new pattern (e.g., get info you need, take stock, smell checks).
 
@@ -9,3 +9,5 @@
 **Explain**: How do we take the answers and rationalize with the investigations? That's covered in this pattern. How to document to oneself, programmatic text for resilient reporting. This is really about talking to yourself, in a way.
 
 **Share**: Communication and collaboration. We'll show you ways you can make everything presentable and create outputs in a format that allows for easy consumption and feedback. An example: reordering plots or tables to make them easier to interpret.
+
+It is amazing that so many data science patterns with R fit so very nicely into a chapter pattern like this. We hope this arrangement serves you well as you work your way through the book!
