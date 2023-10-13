@@ -1,15 +1,13 @@
 # Prerequisites {-}
 
-{{< include ../_patterns.qmd >}}
+In this book, we'll be using R and the **RStudio IDE**. You'll need to download each of these separately from the Internet to use on your local workstation.
 
-In this book, we'll be using R and the **RStudio IDE**. You'll need to download each from the internet to install and use on your local workstation.
-
-What is R? 
+**What is R?** 
 
 R is the name of the programming language itself, based off of S from Bell Labs, which users access through a command-line interpreter (`>`). Here is a bit of R code:
 
 ```{r}
-5*2
+5 * 2
 ```
 
 If you want to learn more about the history of R as a programming language, we recommend reading the original paper by Ihaka. One of our favorite quotes from 
@@ -18,21 +16,17 @@ If you want to learn more about the history of R as a programming language, we r
 >
 > — Ihaka & Gentleman (1996) see @ihaka1996r, p. 2
 
-
-What is the **RStudio IDE**?
+**What is the RStudio IDE?**
 
 The **RStudio IDE** is a powerful and convenient user interface that allows you to access the R programming language along with a lot of other bells and whistles that enhance functionality (and sanity). The acronym IDE stands for "integrated development environment" which is, to put it technically, where you do stuff. It is where you will work with R. 
 
 You can use R with its built-in GUI ("graphical user interface"), but in this book, we'll use and show you how to use the **RStudio IDE** instead.
 
-
-
 ## Installing R and the **RStudio IDE**
 
-R is currently developed by the *R Development Core Team* and, at the time of this writing, the latest R release is 4.0. R has a package system that allows users to write and distribute their own packages of functions. The number of user-created packages at this point is well over 10,000 and that figure is part of the reason why R has so much functionality. A more detailed look at the R landscape is available in the *Appendix*.
+R is currently developed by the *R Development Core Team* and, at the time of this writing, the latest R release is 4.3. R has a package system that allows users to write and distribute their own packages of functions. The number of user-created packages at this point is well over 10,000 and that figure is part of the reason why R has so much functionality.
 
-There are two pieces of software you'll need to download. One is R itself and the other is the *Community Edition* of the **RStudio IDE** IDE. Luckily, you can use both of these in Windows, macOS, and in various distributions of Linux. Depending on your OS there are preferred ways to install both. While we do need both pieces of software installed, the order of installation is not important.
-
+There are two pieces of software you'll need to download. One is R itself and the other is the **RStudio IDE**. Luckily, you can use both of these in Windows, macOS, and in various distributions of Linux. Depending on your OS there are preferred ways to install both. While we do need both pieces of software installed, the order of installation is not important.
 
 ### macOS Installation {-}
 
@@ -45,7 +39,6 @@ Here are the steps for obtaining and installing the R programming language.
 
 You then have R. If you’d like to be fully certain of that, open the *Terminal* application and type R and the R command-line console should appear.
 
-
 :::{.callout-note}
 ## Check-in
 
@@ -54,12 +47,10 @@ Launch R. You should see one console with a command line interpreter (`>`). Clos
 
 To install the **RStudio IDE** on macOS:
 
-1. Go to the *RStudio* website, which is at <https://www.rstudio.com>.
-2. Once there, look for the macOS installation file of **RStudio Desktop Community Edition**. If browsing from a Mac, the site will present you with a large download button that leads to the latest stable Mac release of **RStudio IDE**.
-3. Download the DMG file, open it, and drag the app to the Applications directory.
+1. Go to this *Posit* webpage <https://posit.co/download/rstudio-desktop/> and click the **DOWNLOAD RSTUDIO DESKTOP...** button; the macOS installation file (DMG) will be downloaded
+2. Open the DMG file, and drag the app to the *Applications* directory.
 
 Keeping the **RStudio** app in the macOS Dock is a good idea for easy access to the IDE.
-
 
 :::{.callout-note}
 ## Check-in
@@ -67,9 +58,8 @@ Keeping the **RStudio** app in the macOS Dock is a good idea for easy access to 
 Launch RStudio. You should get a window similar to the screenshot you see [here](https://www.rstudio.com/wp-content/uploads/2014/04/rstudio-workbench.png), but yours will be empty. Look at the bottom left pane: this is the same console window you saw when you opened R in the previous session.
 
 * Place your cursor where you see `>` and type `x <- 2 + 2`, hit enter or return, then type `x`, and hit enter/return again. 
-* If `[1] 4` prints to the screen, you have successfully installed R and RStudio, and you can move onto installing packages.
+* If `[1] 4` prints to the screen, you have successfully installed R and **RStudio**, and you can move onto installing packages.
 :::
-
 
 ### Windows Installation {-}
 
@@ -90,56 +80,49 @@ Launch R. You should see one console with a command line interpreter (`>`). Clos
 
 The next step is to get **RStudio IDE**.
 
-1. Go to the website of *RStudio* (<https://www.rstudio.com>).
-2. Look for the Windows install of **RStudio IDE Community Edition**. A large download button for the Windows version of **RStudio IDE** will appear (it leads to the latest stable Windows release).
-3. Download the installation package and open it. Installation will proceed through a number of dialogue boxes, so, ensure that all are followed until completion of the install process.
+1. Go to this *Posit* webpage <https://posit.co/download/rstudio-desktop/> and click the **DOWNLOAD RSTUDIO DESKTOP...** button; the Windows installation package will be downloaded
+2. After opening that file, installation will proceed through a number of dialogue boxes, so, ensure that all are followed until completion of the install process.
 
 After installation, try opening **RStudio**; the IDE will appear on the screen. I suggest keeping the **RStudio** icon pinned to the Task Bar so that it's easily accessible.
 
 :::{.callout-note}
 ## Check-in
 
-Launch RStudio. You should get a window similar to the screenshot you see [here](https://www.rstudio.com/wp-content/uploads/2014/04/rstudio-workbench.png), but yours will be empty. Look at the bottom left pane: this is the same console window you saw when you opened R in the previous session.
+Launch **RStudio**. You should get a window similar to the screenshot you see [here](https://www.rstudio.com/wp-content/uploads/2014/04/rstudio-workbench.png), but yours will be empty. Look at the bottom left pane: this is the same console window you saw when you opened R in the previous session.
 
 * Place your cursor where you see `>` and type `x <- 2 + 2`, hit enter or return, then type `x`, and hit enter/return again. 
-* If `[1] 4` prints to the screen, you have successfully installed R and RStudio, and you can move onto installing packages.
+* If `[1] 4` prints to the screen, you have successfully installed R and **RStudio**, and you can move onto installing packages.
 :::
 
-## Using the RStudio IDE Environment
+## Using the **RStudio IDE** Environment
 
-Install the free, open-source edition of RStudio: http://www.rstudio.com/products/rstudio/download/
-
-RStudio provides a powerful user interface for R, called an *integrated development environment*. RStudio includes:
+The **RStudio IDE** includes:
 
 * a console (the standard command line interface: `>`), 
 * a syntax-highlighting editor that supports direct code execution, and 
 * tools for plotting, history, debugging and workspace management.
 
-**RStudio IDE** is an integrated development environment (IDE) that makes it easy to do work with R (we'll simply refer to this IDE as **RStudio** throughout this book). **RStudio** and R itself both need to be installed separately (the order of installation does not matter). Detailed instructions for the installation of both (for Windows and macOS) are available in the *Appendix*.
+This is an integrated development environment (IDE) that makes it easy to do work with R (we'll simply refer to this IDE as **RStudio** throughout this book). **RStudio** and R itself both need to be installed separately (but the order of installation does not matter).
 	
 **RStudio** has a customizable, four-pane workspace. It has a collection of useful features that help with R coding such as syntax highlighting, autocomplete, file and project management, and much more.
 
-![The **RStudio IDE** environment with an **Quarto** file in focus in top-left (the source pane) and the R console occupying the bottom-left.](appendix-figures/82-starting-with-r/figure-rstudio-desktop-env.png){#fig:rstudio-desktop-env}
+![The **RStudio IDE** environment with an **Quarto** file in focus in top-left (the source pane) and the R console occupying the bottom-left.](img/rstudio-desktop-environment.png){#fig:rstudio-desktop-env}
 
-The diagram shown in @fig:rstudio-desktop-env provides a reference to a cross section of the buttons available in the initial view. The most important takeaways from this first look at **RStudio** are:
+The diagram shown in above provides a reference to a cross section of the buttons available in the initial view. The most important takeaways from this first look at **RStudio** are:
 
-  1. The source pane (top-left) is where you would work on R scripts and **Quarto** documents.
-  2. The console pane (bottom-left) is where you would access the R console and the system's terminal.
-  3. The toolbar (above the source pane) provides useful tools for managing and navigating through documents and projects.
-  4. Two panes (to the right) provide access to files, workspace objects, R packages, plots, and much more. 
-  5. The *Project* dropdown (upper-right corner) provides access to existing projects, project options, and anything else related to managing projects.
+1. The source pane (top-left) is where you would work on R scripts and **Quarto** documents.
+2. The console pane (bottom-left) is where you would access the R console and the system's terminal.
+3. The toolbar (above the source pane) provides useful tools for managing and navigating through documents and projects.
+4. Two panes (to the right) provide access to files, workspace objects, R packages, plots, and much more. 
+5. The *Project* dropdown (upper-right corner) provides access to existing projects, project options, and anything else related to managing projects.
   
 It's important to note that not all of the features of **RStudio** are likely to be touched by the average user. Early on, we will only need a very small subset of the functionality that's provided.
 
 Indeed, a little can go a long way, so, while on the topic of the small things, it's never too early to learn about a few useful keyboard shortcuts. These are the ones that you'll use again and again.
 
-  1. <kbd>Ctrl</kbd> + <kbd>Enter</kbd> — runs the current line or a selection of code from the editor in the console. This is extremely useful as you select even nested functions and run them in the console without copying anything anywhere.
-  2. <kbd>Tab</kbd> — provides an auto-complete function. Start typing in the editor or even in the console and try hitting the tab key: **RStudio** will suggest functions, variables, or file names. Up and down with the arrow keys and another <kbd>Tab</kbd> (or <kbd>Enter</kbd>) will accept the choice.
-  3. <kbd>Control</kbd> + <kbd>.</kbd> — brings up a search bar where you can search for files or functions. Up and down arrows and return allow you to navigate quickly to the file (at the right location) in a new tab.
-  4. <kbd>Command</kbd> + <kbd>Option</kbd> + <kbd>I</kbd> (<kbd>Control</kbd> + <kbd>Alt</kbd> + <kbd>I</kbd> on Windows) — creates an empty R code chunk in an **Quarto** document. As this is one of the key things you'll be doing, this shortcut does save a lot of time.
+1. <kbd>Ctrl</kbd> + <kbd>Enter</kbd> — runs the current line or a selection of code from the editor in the console. This is extremely useful as you select even nested functions and run them in the console without copying anything anywhere.
+2. <kbd>Tab</kbd> — provides an auto-complete function. Start typing in the editor or even in the console and try hitting the tab key: **RStudio** will suggest functions, variables, or file names. Up and down with the arrow keys and another <kbd>Tab</kbd> (or <kbd>Enter</kbd>) will accept the choice.
+3. <kbd>Control</kbd> + <kbd>.</kbd> — brings up a search bar where you can search for files or functions. Up and down arrows and return allow you to navigate quickly to the file (at the right location) in a new tab.
+4. <kbd>Command</kbd> + <kbd>Option</kbd> + <kbd>I</kbd> (<kbd>Control</kbd> + <kbd>Alt</kbd> + <kbd>I</kbd> on Windows) — creates an empty R code chunk in a **Quarto** document. As this is one of the key things you'll be doing, this shortcut does save a lot of time.
   
 With time, it becomes easier to **RStudio** with less reliance on a pointing device. If you want to get on that road try the **RStudio** shortcut <kbd>Shift</kbd> + <kbd>Option</kbd> + <kbd>K</kbd> (<kbd>Shift</kbd> + <kbd>Alt</kbd> + <kbd>K</kbd> on Windows), it brings up the (*Keyboard Shortcuts Help* overlay (which has a lot of keyboard shortcuts).
-
-
-
-
