@@ -376,31 +376,61 @@ We also made sure that the reporting is organized with timestamps in as many pla
 
 ## Share
 
-- Put extensive notes about each validation step in the data dictionary, or, in an associated report
+Suppose you need to share an excerpt of the `user_summary` dataset but you know the data quality of it has issues. Thankfully, **pointblank** has a function for separating the 'good' data from the 'bad'. It's the `get_sundered_data()` function. Let's see how it works with a very small data quality check of `user_summary` (using only the `col_vals_not_null()` validation function).
 
-- Show how to update a data dictionary with important information about the evolution of a dataset
+```{r}
+agent <-
+  create_agent(
+    tbl = ~ user_summary,
+    actions = action_levels(warn_at = 1),
+    tbl_name = "User Summary",
+    label = "Validation of `user_summary` table."
+  ) |>
+  col_vals_not_null(columns = everything()) |>
+  interrogate()
 
-- We have to be able to determine whether data quality is becoming more of a problem or is getting better because that will inform our next actions
+complete_rows <- get_sundered_data(agent = agent)
+```
 
-This may require some communication with the data provider. For now, we just have to make note of all the changes whether they are correct or not. 
+The `get_sundered_data()` function will, by default, return a slice of the data consisting of rows that *didn't* have any failing test units. So, the `complete_rows` table will only contain rows where there weren't any `NA` values. Let's look at it:
 
-A data dictionary as produced by **pointblank** can serve as really important data documentation for the team. While it can provide the basic information about a dataset (and can be kept up to date with changes to the dataset), it can also serve as a log for more detailed changes to the data. 
+```{r, paged.print=FALSE}
+complete_rows
+```
 
-- demonstrate how notes can be added to the data dictionary, with dates and detailed text
+Of course, a printing of the tibble won't assure us that there aren't any rows with `NA`s in them. We can use the `test_*()` variant of the `rows_complete()` function to give us a `TRUE` or a `FALSE`.
 
-It's a good idea always to keep the the data dictionary reporting accessible via a persistent link that stakeholders can always access. The report always contains the last modified date at the bottom, so viewers will be assured that they have the latest version in front of them.
+```{r}
+complete_rows |> test_rows_complete()
+```
 
-Share data quality reports with team/collaborators. These are meant to be easy to read and, again, they should be centralized and available at a link that all stakeholders can access. You may need to explain the checks in some detail with the stakeholders (especially if there are lots of detailed validations). A great place to put descriptions of checks is in the data dictionary. Here's an example of a validation report and the corresponding data dictionary:
+If you want to check this table even more and be sure that the column schema hasn't changed, we can use `test_col_schema_match()` function. We'll compare the schema of the new table (`complete_rows`) with that of the source table (`user_summary`). If we get `TRUE` that means the the column names are the same, they're in the correct order, and they have the same types.
 
-<!-- validation report -->
+```{r}
+test_col_schema_match(complete_rows, schema = col_schema(.tbl = user_summary))
+```
 
-<!-- data dictionary -->
+To make that table-to-table comparison we had to use the `col_schema()` helper function and feed in the comparison table (which, again, is `user_summary`). But the really important thing is that we get `TRUE` returned to us. Now we can be confident that the `complete_rows` table is a filtered version of `user_summary`.
 
-Triage upstream data quality issues with collaborators or data providers and provide descriptions of problems via explanations of 'bad rows' in R Markdown reports (use gt tables to produce data extracts in the document). This communication will help to get to the root causes of the bad data, even if you can't directly do much about it (i.e., collaborator must fix upstream process).
+How you share this vitally-important data, perhaps needed for an important analysis of some sort? Here are two ways, because options are good.
 
-- Demonstrate how problem rows can be extracted and packaged up for communication with upstream data providers
+1. Save as a CSV file using `readr::write_csv()`
 
-- Save the validation report if the data is changing quickly over time (this can be considered a validation snapshot, important if we have frequent changes)
+   The **readr** package, did you know?, also can write files? It's true, the `write_csv()` function can be used for saving tibbles or data frames as CSV files. This function offers improved performance (and better defaults) compared to the base R `write.csv()` function.
 
-- What is the frequency and breadth of problems? Is it just one or two that cause predictable errors or are there several that cause many problems?
+   Here's how to use:
+   
+   ```r
+   write_csv(complete_rows, "user_summary-complete_rows.csv")
+   ```
 
+2. Share as an RDS file:
+
+   Is the person you're sharing the file with using R? If 'yes', then sending them an RDS file is a pretty good option. Plus, all of the column types will be preserved faithfully within this format! We can use **readr**'s `write_rds()` function for this:
+
+   Example:
+   ```r
+   write_rds(complete_rows, "user_summary-complete_rows.rds")
+   ```
+
+So, we've double-checked that the `complete_rows` data is complete, a subset of the `user_summary` table, and now it's a file of some sort (either `.csv` or `.rds`). Now you can send it in the way that is most convenient, like email, in a message, or dropping the file somewhere in a shared file storage system.
