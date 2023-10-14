@@ -300,7 +300,7 @@ There will always be problems and we encountered some common ones when importing
 
 You now know a ton about importing data from CSVs and even Excel files. What are you going to do with that knowledge? You've got to give something back and share. Suppose you spent 45 minutes to an hour dealing with the importing of table from an Excel file. And futher suppose that someone else you know will eventually need to get that same data. What we can do (to be nice) is create some sharable code and documentation around how that exact thing is done.
 
-Here is how that might look in an .R script:
+Here is how that might look in an `.R` script:
 
 ```r
 
