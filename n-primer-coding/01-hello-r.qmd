@@ -108,13 +108,22 @@ library(ggplot2)    # for plotting data
 
 ## Functions
 
-Here are some critical commands to obtain a high-level overview (HLO) of your freshly read dataset in R. We'll call it saying hello to your dataset:
+Here are some critical commands to obtain a high-level overview of your freshly read dataset in R. We'll call it saying 'hello' to your dataset:
 
-```{r hlo_dataset}
-glimpse(babynames) # dplyr
-head(babynames) # base R
-tail(babynames) # same
-names(babynames) # same
+```{r}
+glimpse(babynames)
+```
+
+```{r, paged.print=FALSE}
+head(babynames)
+```
+
+```{r, paged.print=FALSE}
+tail(babynames)
+```
+
+```{r}
+names(babynames)
 ```
 
 If you have done the above and produced sane-looking output, you are ready for the next step. We'll use the code below to create a new data frame called `alison`.
@@ -150,22 +159,22 @@ plot <-
   geom_line()  
 ```
 
-Now if you did this right, you will not see your plot! Because we saved the `ggplot` with a name (`plot`), R just saved the object for you. But check out the top right pane in RStudio again: under `Values` you should see `plot`, so it is there, you just have to ask for it. Here's how:
+Now if you did this right, you will not see your plot! Because we saved the plot with a name (`plot`), R just saved the object for you. But check out the top right pane in RStudio again: under `Values` you should see `plot`, so it is there, you just have to ask for it. Here's how:
 
 ```{r}
 plot 
 ```
 
-# Make a new name plot
+# DIY: Make a New Name Plot
 
-Edit my code above to create a new dataset. Pick two names to compare how popular they each are (these could be different spellings of your own name, like I did, but you can choose any two names that are present in the dataset). Make the new plot, changing the name of the first argument `alison` in `ggplot()` to the name of your new dataset.
+Edit the code above to create a new dataset. Pick two names to compare how popular they each are (these could be different spellings of your own name, like I did, but you can choose any two names that are present in the dataset). Make the new plot, changing the name of the first argument `alison` in `ggplot()` to the name of your new dataset.
 
 ## Save and share
 
 Save your plotting work so you can share your favorite plot with others! You could use the exporting functionality the plot window but you will most likely not like the looks of it. Instead, use **ggplot**’s `ggsave()` function for saving a plot with sensible defaults:
 
 ``` {{r}}
-ggsave("alison_hill.pdf", plot)
+ggsave("alison_hill.pdf", plot)  # Choose your own filename, keep the .pdf part 
 ```
 
 Some extra tips are in order: 
@@ -181,3 +190,5 @@ Some extra tips are in order:
 3. Set the resolution.
 
     When saving the plot as an image file, it's sometimes important to consider the resolution (dots per inch or *dpi*) of of that image. Using a higher resolution gives you a more detailed and sharper image. The default resolution in R is usually 72 dpi. However, for better quality, especially if you plan to print the plot or display it in high-resolution surroundings, you can increase the dpi value by using the `dpi` argument in `ggsave()`. 
+
+Woot! You did it. Plotting with **ggplot** is fun and the resulting plots do look great.
