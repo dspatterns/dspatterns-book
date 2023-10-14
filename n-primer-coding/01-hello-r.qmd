@@ -75,9 +75,8 @@ Two good rules of thumb when working with packages in R:
 
 You can download all of these at once, too:
 
-``` {{r}}
-install.packages(c("dplyr", "ggplot2", "babynames"), 
-                 dependencies = TRUE)
+```r
+install.packages(c("dplyr", "ggplot2", "babynames"), dependencies = TRUE)
 ```
 
 ::: callout-tip
@@ -133,20 +132,21 @@ alison <-
 
 -   The third bit applies another `filter` to keep only those where sex is female.
 
-Let's check out the data.
+Let's check out the data (in two different ways):
 
 ```{r}
 alison
+```
+
+```{r}
 glimpse(alison)
 ```
 
 Again, if you have sane-looking output here, move along to plotting the data!
 
 ```{r plot_name_data}
-plot <- ggplot(alison, aes(x = year, 
-                           y = prop,  
-                           group = name, 
-                           color = name)) + 
+plot <- 
+  ggplot(alison, aes(x = year, y = prop, group = name, color = name)) + 
   geom_line()  
 ```
 
@@ -158,7 +158,7 @@ plot
 
 # Make a new name plot
 
-Edit my code above to create a new dataset. Pick 2 names to compare how popular they each are (these could be different spellings of your own name, like I did, but you can choose any 2 names that are present in the dataset). Make the new plot, changing the name of the first argument `alison` in `ggplot()` to the name of your new dataset.
+Edit my code above to create a new dataset. Pick two names to compare how popular they each are (these could be different spellings of your own name, like I did, but you can choose any two names that are present in the dataset). Make the new plot, changing the name of the first argument `alison` in `ggplot()` to the name of your new dataset.
 
 ## Save and share
 
@@ -168,16 +168,16 @@ Save your plotting work so you can share your favorite plot with others! You cou
 ggsave("alison_hill.pdf", plot)
 ```
 
-Some tips are in order: 
+Some extra tips are in order: 
 
-1. Specify the Output Format:
+1. Specify the output format.
   
-I's important to specify the desired output format by providing the appropriate file extension in the filename. For example, if you want to save the plot as a PNG image, use a filename like "plot.png". Similarly, for PDF, use "plot.pdf". By specifying the format explicitly, you ensure that the plot is saved in the desired format.
+    It's important to specify the desired output format by providing the appropriate file extension in the filename. For example, if you want to save the plot as a PNG image, use a filename like `"plot.png"`. Similarly, for PDF, use `"plot.pdf"`. So always specify the format explicitly; you'll then be guaranteed to get the plot saved to the right format.
 
-2. Adjust the Plot Dimensions:
+2. Adjust the plot dimensions.
 
-It may be necessary to adjust the dimensions to fit the intended output medium. For example, if you plan to include the plot in a report or presentation slide, you might want to adjust the width and height of the plot to match the desired layout. This can be done using the `width` and `height` arguments.
+    It may be necessary to adjust the dimensions to fit the intended output medium. For example, if you plan to include the plot in a report or presentation slide, you might want to adjust the width and height of the plot to match the desired layout. This can be done using the `width` and `height` arguments.
 
-3. Set the Resolution:
+3. Set the resolution.
 
-When saving the plot as an image file, it's sometimes important to consider the resolution (dots per inch or dpi). Higher resolution results in a more detailed and sharper image. The default resolution in R is usually 72 dpi. However, for better quality, especially if you plan to print the plot or display it in high-resolution surroundings, you can increase the dpi value by using the `dpi` argument. 
+    When saving the plot as an image file, it's sometimes important to consider the resolution (dots per inch or *dpi*) of of that image. Using a higher resolution gives you a more detailed and sharper image. The default resolution in R is usually 72 dpi. However, for better quality, especially if you plan to print the plot or display it in high-resolution surroundings, you can increase the dpi value by using the `dpi` argument in `ggsave()`. 
