@@ -110,7 +110,7 @@ That concludes our scan of the table scan! We got some leads from it and we'll b
 
 ## Understand
 
-One really cool thing you can do with **pointblank** (the package that's all about data quality checks) is use a function called `draft_validation()`. Executing that with the dataset gives you an .R script with a ton of data quality statements written for you! You run it like this
+One really cool thing you can do with **pointblank** (the package that's all about data quality checks) is use a function called `draft_validation()`. Executing that with the dataset gives you an `.R` script with a ton of data quality statements written for you! You run it like this
 
 ```{r}
 #| output: false
@@ -267,21 +267,122 @@ It's good to know if there are upstream processes you don't have access to when 
 
 ## Explain
 
-- We have to organize this workflow to easily keep on top of anything that may compromise data quality; that way we can react quickly and provide some evidence of data issues to data providers/producers
+We ought to get a workflow in order to continually test datasets of this type. The common scenario is that the table should data much the same in terms of shape, structure, and intent, but it will be updated with new data and older records may be updated/corrected as well. Because we now have a **pointblank** validation plan that successfully ran with `interrogate()`, we could use that every time the data is updated.
+
+An R script to set this all up might look like this:
+
+```r
+library(tidyverse)   # for data manipulation functions
+library(pointblank)  # for performing data quality checks
+library(intendo)     # for the data itself
+
+# Obtain the updated data
+user_summary <- user_summary(quality = "faulty")
+
+# Get the current date and time
+report_time <- Sys.time()
+
+# Create a pointblank agent, include several validation steps
+# to exhaustively test the data, and interrogate the data
+# with the `interrogate()` function
+agent <-
+  create_agent(
+    tbl = ~ user_summary,
+    actions = action_levels(warn_at = 1),
+    tbl_name = "User Summary",
+    label = paste("Validation of `user_summary` table on", report_time)
+  ) |>
+  col_is_character(
+    columns = vars(player_id)
+  ) |>
+  col_vals_regex(
+    columns = vars(player_id),
+    regex = "[A-Z]{12}[0-9]{3}"
+  ) |>
+  col_is_posix(columns = vars(first_login)) |>
+  col_is_date(columns = vars(start_day)) |>
+  col_vals_equal(
+    columns = vars(first_login),
+    value = "2015",
+    preconditions = function(x) {
+      dplyr::mutate(x, first_login = substr(first_login, 1, 4))
+    }
+  ) |>
+  col_vals_equal(
+    columns = vars(start_day),
+    value = "2015",
+    preconditions = function(x) {
+      dplyr::mutate(x, start_day = substr(start_day, 1, 4))
+    }
+  ) |>
+  col_is_character(columns = vars(country, acquisition, device_name)) |>
+  col_vals_gte(
+    columns = vars(country),
+    value = 4,
+    preconditions = function(x) dplyr::mutate(x, country = nchar(country))
+  ) |>
+  rows_distinct() |>
+  rows_complete() |>
+  col_vals_not_null(columns = everything()) |>
+  col_schema_match(
+    schema = col_schema(
+      player_id = "character",
+      first_login = c("POSIXct", "POSIXt"),
+      start_day = "Date",
+      country = "character",
+      acquisition = "character",
+      device_name = "character"
+    )
+  ) |>
+  interrogate()
+
+# Customize the reporting of the agent by adding
+# a title and by arranging the validation steps
+# in order of 'severity' (steps with failing units
+# are shown first)
+agent_report <- 
+  get_agent_report(
+    agent,
+    title = "Data Quality Report",
+    arrange_by = "severity"
+  )
+
+# Save the agent reporting as an HTML file on disk;
+# include the date and time of running the validation
+# checks so that we have an ongoing record that sorts
+# nicely in a directory
+export_report(
+  agent_report,
+  filename = affix_datetime(
+    "user_summary-data-quality-report.html"
+  )
+)
+
+# Write a YAML file that captures all of the
+# data validation instructions in YAML form
+yaml_write(
+  agent,
+  filename = affix_datetime(
+    "user_summary-data-quality-inputs.yml"
+  )
+)
+```
+
+We did a few extra things in this script in order to have some additional file artifacts stored in the working directory. First, we customized the agent report with the `get_agent_report()` function (and we assigned it to a new variable called `agent_report`). We can export that to a standalone HTML file with **pointblank**'s `export_report()` function (and we did, in the script above). We also did an extra thing which was to write a YAML file containing all of the **pointblank** validation instructions. This is a great-to-have bit of record-keeping for your data validation pattern. Within the script, we made sure to document the intent of each statement (with comments located above the relevant statements).
+
+This `.R` script (could be a `.qmd`: your choice) organizes this workflow so you can easily keep on top of anything that may compromise data quality for this dataset. If you have multiple datasets to check, they can be part of the same `.R`/`.qmd` and it could be run once (checking lots more data, generating way more files). With what is currently set up here, we can react quickly to data problems and provide some evidence of the data issues to data providers/producers, thanks to the artifacts generated by the script.
+
+We also made sure that the reporting is organized with timestamps in as many places as possible. You might imagine a situation where the data quality checking is running every day on many datasets. With a huge volume of files, we really need an audit trail that clearly identifies the date and time of each check. The filenames have this datetime information (the `affix_datetime()` utility function in **pointblank** makes this easy) and the HTML reports each have the date and time embedded within (top and bottom of each!). The last thing you want is a disorganization of artifacts but the strategy laid out here is a good one to follow.
+
+## Share
 
 - Put extensive notes about each validation step in the data dictionary, or, in an associated report
 
 - Show how to update a data dictionary with important information about the evolution of a dataset
 
-- Demonstration of the possible organization of reports with timestamps so that we have an audit trail of sorts
-
 - We have to be able to determine whether data quality is becoming more of a problem or is getting better because that will inform our next actions
 
 This may require some communication with the data provider. For now, we just have to make note of all the changes whether they are correct or not. 
-
-
-
-## Share
 
 A data dictionary as produced by **pointblank** can serve as really important data documentation for the team. While it can provide the basic information about a dataset (and can be kept up to date with changes to the dataset), it can also serve as a log for more detailed changes to the data. 
 
