@@ -162,12 +162,22 @@ Edit my code above to create a new dataset. Pick 2 names to compare how popular 
 
 ## Save and share
 
-Save your work so you can share your favorite plot with us. You will not like the looks of your plot if you mouse over to `Export` and save it. Instead, use `ggplot2`'s command for saving a plot with sensible defaults:
+Save your plotting work so you can share your favorite plot with others! You could use the exporting functionality the plot window but you will most likely not like the looks of it. Instead, use **ggplot**’s `ggsave()` function for saving a plot with sensible defaults:
 
 ``` {{r}}
-help(ggsave)
+ggsave("alison_hill.pdf", plot)
 ```
 
-``` {{r}}
-ggsave("alison_hill.pdf", plot) # please make the filename unique!
-```
+Some tips are in order: 
+
+1. Specify the Output Format:
+  
+I's important to specify the desired output format by providing the appropriate file extension in the filename. For example, if you want to save the plot as a PNG image, use a filename like "plot.png". Similarly, for PDF, use "plot.pdf". By specifying the format explicitly, you ensure that the plot is saved in the desired format.
+
+2. Adjust the Plot Dimensions:
+
+It may be necessary to adjust the dimensions to fit the intended output medium. For example, if you plan to include the plot in a report or presentation slide, you might want to adjust the width and height of the plot to match the desired layout. This can be done using the `width` and `height` arguments.
+
+3. Set the Resolution:
+
+When saving the plot as an image file, it's sometimes important to consider the resolution (dots per inch or dpi). Higher resolution results in a more detailed and sharper image. The default resolution in R is usually 72 dpi. However, for better quality, especially if you plan to print the plot or display it in high-resolution surroundings, you can increase the dpi value by using the `dpi` argument. 
