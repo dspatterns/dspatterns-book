@@ -4,20 +4,68 @@
 
 ```{r setup, include=FALSE, echo=FALSE}
 library(dspatterns)
+library(dplyr)
+library(tidyr)
+library(gt)
+library(janitor)
 ```
 
-This is great for summary tables, since tidy data is better for analysis/plotting, but not so much for sharing.
+Wide data, why do you want it? It is **awesome** for summary tables. Display tables just present and look better when they have a bit of width to them. Long data, that's great for plotting, no question, but we don't do any of that in this chapter. This chapter is dedicated to the tables and all their charms.
 
-## New Packages and Functions  
+Here's the collection of packages needed for this chapter:
 
-## This Chapter's Pattern
+- **tidyverse**: for the use of the **dplyr** and **tidyr** packages
+- **gt**: for its datasets and table-making capabilities
+- **janitor**: for cleaning column names
 
 ## Explore
 
-- dataset: from https://github.com/apreshill/teachthat/blob/master/pivot/pivot_wider.md (will be in `bakeoff` later, use as tibble for now)
 
 ## Understand
 
+
 ## Explain
+
+The `illness` dataset in the **gt** package starts out as a wide type of dataset. Put another way it is not tidy and we can see that right away given there are multiple columns for different observations (e.g., `day_3`, `day_4`, etc.).
+
+```{r, paged.print=FALSE}
+illness
+```
+
+In the above form, we have the different tests performed on a patient as a different row. Now, the tests were performed every day (from day 3 to day 8) and the result of each type of test on each day is written in the cell that intersects these two different things. It's just tabulated in this way. But what if you wanted the different days of measurement to be enumerated in a column, having the different tests occupy a different column? There's a way to do that and it involves two steps: (1) pivoting to long data with `pivot_longer()`, and (2) pivoting to a wide form again with `pivot_wider()`.
+
+Let's do this one step at a time. Starting, as stated earlier, with a `pivot_longer()` statement. To simplify things, we'll use only the `test` and the `day_*` columns.
+
+```{r, paged.print=FALSE}
+illness_redux <- 
+  illness |>
+  select(test, starts_with("day")) |>
+  pivot_longer(
+    cols = starts_with("day"),
+    names_to = "day",
+    names_prefix = "day_",
+    values_to = "value"
+  )
+
+illness_redux
+```
+
+Now *this* is some tidy data. The columns we have now are: `test`, `day`, and `value`. And it's certainly a lot longer than the original table, with 273 rows (compared to the 39 in the original `illness` dataset). We had to specially handle the `day_*` column names. To turn them into values in the new `day` column, the `names_prefix = "day_"` option needed to be specified.
+
+Because the data is tidy and long we can now make it wide, but in a different way. The `pivot_wider()` statement is relatively simple (just needing a column each for `names_from` and `values_from`). To clean up the new column names, we'll employ the `clean_names()` function from the **janitor** package.
+
+```{r, paged.print=FALSE}
+illness_redux <-
+  illness_redux |>
+  pivot_wider(
+    names_from = test,
+    values_from = value
+  ) |>
+  clean_names()
+
+illness_redux
+```
+
+This is not just a wide table, it's *super* wide with 40 columns. Totally fine if using this data for further analysis but maybe not what you want if you're making a summary table for publication from the widened data. There are two things you can do to limit the amount of columns in the this wide output: (1) use the `select()` function to pick the columns to keep, or (2) `filter()` the `test` column in the data just before (or even just after) the `pivot_longer()` statement.
 
 ## Share
