@@ -116,12 +116,12 @@ It looks like this:
 
 Now that we have a place to put our project things, let's create our first project. Do the following:
 
-1.  Open up RStudio
+1.  Open up **RStudio**
 2.  In the top menu bar, go to: *File \> New Project... \> New Directory*
 3.  In the "New Project Wizard", select "Quarto Project" as the project type.
 4.  We'll be creating a penguin progress report as an example, so name the directory `penguin-progress`.
 5.  Make sure it is a subdirectory of your `ds-projects` folder (remember the task was to put it in a place where you will remember to look for it!)
-6.  Check the boxes to make this project a git repository (more on that in a second) and to open in a new session.
+6.  Check the boxes to make this project a git repository and to open in a new session.
 7.  Click **Create Project** 🚀
 
 ::: {layout-ncol="2"}
@@ -151,9 +151,9 @@ All three files are important ingredients for our project.
 
 3.  `penguin-progress.qmd` is a Quarto markdown file. This is the main file you'll want to open and edit in this project. You can include narrative text using Markdown formatting, and you can also include code written with R or Python. We'll use R in this book.
 
-A note on `kebab-case`: you may have noticed that we encourage you to use dashes as separators between words
+A note on `kebab-case`: you may have noticed that we encourage you to use dashes as separators between words. Kebab-case, also known as hyphen-case, uses hyphens (`"-"`) to separate words in a filename. This naming convention improves readability and clarity by clearly indicating word boundaries. It makes filenames easier to read, especially when the filenames contain multiple words. For example, `"my-important-analysis.qmd"` is more readable than `"myimportantanalysis.qmd"` or even `"MyImportantAnalysis.qmd"`.
 
-### Key Takeaways
+**Key Takeaways**
 
 -   A project is a project, no matter how small.
 
@@ -161,7 +161,7 @@ A note on `kebab-case`: you may have noticed that we encourage you to use dashes
 
 -   Each project gets a folder in a place on your computer where you will remember to look for it.
 
--   Use "kebab-case" when naming files and folders like `penguin-progress`, which is a style that replaces spaces with dashes. Try to avoid punctuation, special characters like underscores, and uppercase letters if possible - this will simplify your project life. No SCREAMING-KEBABS-PLEASE.
+-   Use kebab-case when naming files and folders like `penguin-progress`, which is a style that replaces spaces with dashes. Try to avoid punctuation, special characters like underscores, and uppercase letters if possible - this will simplify your project life.
 
 -   Start a new "batteries included" Quarto project using the RStudio New Project Wizard. Be intentional about creating new projects inside the right subdirectory (we like `ds-projects` to start, but you may create more elaborate subdirectory structures as you gain experience).
 
@@ -171,27 +171,23 @@ Your project is unique. Of course! But it does not need to be unique in terms of
 
 Having a "new project" pattern with a defined file structure has several benefits:
 
-1. It helps others to be able to jump into your project more easily. 
+1. It helps others to be able to jump into your project more easily. When multiple team members are working on the same project, a standardized file structure ensures that everyone knows where to find specific files and how to access them. It enables reproducibility by providing a clear path for replicating analyses, experiments, and results.
 
-1. It helps you jump back into your project more easily.
+2. It helps you jump back into your project more easily. It's *so* much easier for you to navigate through the project, locate specific files, and understand the project's overall structure. By following a consistent file structure, it becomes simpler to find relevant data, code, documentation, and other project components. And, this saves a lot of time and effort.
 
-1. It helps you switch between your own projects more easily.
+3. It helps you switch between your own projects more easily. Especially when using **RStudio**, as the project selection dropdown (top-right of IDE) makes switching a cinch.
 
 Here is a healthy file structure to help you understand a data science project:
 
 -   How to organize a project folder to help you understand the shape of your project
 
-    -   raw data
+    -   have a place for raw data
 
-    -   clean data
+    -   have a separate place where cleaned data goes
 
-    -   each file should be named clearly (e.g., \`...-raw.csv\`)
+    -   name each file clearly (e.g., \`...-raw.csv\`)
 
-    -   on naming incoming files from collaborators:
-
-        -   some files can strange names; rename them sensibility (with iso dates and some words that indicate provenance)
-
-
+    -   on naming incoming files from collaborators: some files can strange names; rename them sensibility (with ISO-formatted dates and some words that indicate provenance)
 
 ``` yaml
 Documents/
@@ -207,26 +203,22 @@ Documents/
 └── recipes/
 ```
 
-We can take a break from the exciting secret life of our file system to understand our data
+**An Important Setting to Make in RStudio**
 
-Add a data file
+There's a thing where, upon quitting R, R/*RStudio* will ask you this:
 
-Who are these penguins and why do they need a progress report?
+```
+Save workspace image to ~/.Rdata?
+```
 
+What this is doing is saving the contents of your entire workspace to that file (the `~` means your *home* directory). It's often best to say 'No' here and take another step: disable the setting that prompts this question to be asked. It's located as a drop-down setting in *Tools \> Global Options*, and that drop-down is next to the text reading `Restore .RData into workspace at startup:`. Here's a screenshot:
 
+![How to disable workspace saving. The key word is 'Never'.](img/disable-workspace-saving.png)
+You might ask, why disable what seems like a useful feature? Well, you are saving `.R` files and `.qmd` files and your project environment can be recreating by running the contents of those files. Put another way, the source of truth will be what's in those files in the project directory and not whatever is in the `~/.Rdata` file (which could be many things not in your `.R` and `.qmd` files).
 
-Now you saved this file on a shared laptop while working in the field. But you need to get the file from this laptop out in the field to yourself, on a nice laptop in a warm place where you *actually* want to work.
+**An Important Thing to Do When Developing Code**
 
--   review how projects fit in with the documents they contain and where they physically live
-
-<!-- -->
-
--   Light data analysis (filler content mostly to be more instructive for learning Quarto):
-
-    -   anatomy of a document (installed packages and using packages and the text and code chunks)
-    -   we have the option to show the chunk output either inline (default) or in the Viewer/Plots pane (show option in settings)
-    -   introduce the dataset (`penguins` from `palmerpenguins`) and inspect the data:
-    -   `head()`, `tail()`, `dplyr::glimpse()`, `skimr::skim()` (let's avoid the `|>` for now)
+Sometimes you'll run bits of code in a sequence different than what's written in the script. I'm sure you've come across the issue where the variable you assigned is different than how it's assigned in the script (for lots of reasons, developing code can be chaotic). But the goal eventually is to get a re-runnable, reproducible `.R`/`.qmd` file you might share or run later. The important thing to do is to restart R often, clearing the environment completely and re-running the script or `.qmd`. This is done through the **RStudio** menu item *Session \> Restart R*. Do it often to reset things and ensure what's in the `.R/`/`.qmd` really is the source of truth.
 
 ## Explain
 
