@@ -1,10 +1,12 @@
-# Projects
+---
+title: "Projects"
+---
 
 {{< include ../_patterns.qmd >}}
 
-One of the hardest things about starting anything new is knowing where to start. So we will make this easy. Our first pattern is the "new project" pattern. 
+One of the hardest things about starting anything new is knowing where to start. So we will make this easy. Our first pattern is the *New Project* pattern. 
 
-In this book, we want to help you cultivate healthy project habits. This includes knowing proper project hygiene, but it starts with having a small "p" project mindset.
+In this book, we want to help you cultivate healthy project habits. This includes knowing proper project hygiene, but it starts with having a small-'p' project mindset.
 
 What does that mean? It means that you acknowledge and appreciate that a project is just a place on your computer to put things. To paraphrase a famous Dr. Seuss quote from "Horton Hears a Who":
 
@@ -12,57 +14,20 @@ What does that mean? It means that you acknowledge and appreciate that a project
 
 Say it with us: *A project is a project, no matter how small.*
 
-A project doesn't have to be a capital "P" Project. You don't need an objective, a hypothesis, or even a plan (yet). It can be as simple as a single Excel file with a handful of rows and columns.
+A project doesn't have to be a capital-'P' Project. You don't need an objective, a hypothesis, or even a plan (yet). It can be as simple as consisting of a single Excel file with a handful of rows and columns.
 
 For the person tasked with doing anything with that file, you have a choice when you start:
 
-1.  You could choose to fanny around with some files on your desktop, maybe adding some formulas or formatting to your Excel file, perhaps saving some of your work along the way.
-2.  Instead, we suggest- or rather implore- you to mentally and functionally start a project.
+1. You could choose to fanny around with some files on your desktop, maybe adding some formulas or formatting to your Excel file, perhaps saving some of your work along the way.
+2. Instead, we suggest (or rather implore) you to mentally and functionally start a project.
 
 How do you choose option 2? Read on.
 
-```{r setup, include=FALSE, echo=FALSE}
-```
-
-```{=html}
-<!--
-This chapter covers
-
--   Understanding our learning path for this book
--   File organization basics; using Projects
--   How to organize a project folder
-    -   raw data
-    -   clean data
-    -   each file should be named clearly (e.g., `...-raw.csv`)
-    -   on naming incoming files from collaborators:
-        -   some files can strange names; rename them sensibility (with iso dates and some words that indicate provenance)
-        -   create a data-README file that has notes on where files came from; like a 'lab notebook'
--   GitHub:
-    -   one repo per project (matching with local project paradigm)
-    -   checking in data project with all files (including data) is totally fine and recommended
-    -   if your data size is really big (\~100 MB) then consider .gitignore-ing the data (problem is that the project won't be truly reproducible)
-    -   use happygitwithr as an invaluable resource
--   Introduce Quarto
-    -   test mechanics of Quarto (project relative paths)
-        -   is there a new document flow and what should be used (HTML)
-            -   easier to share and most portable/flexible format
-            -   better features and looks better
-        -   does moving the quarto file around into different subfolders cause issues
--   Where to go for help (in the appendix)
-
-Notes:
-
--   use this to develop a single project following the chapter pattern
--   show the Simpsons Paradox plot
--   draw from: https://apreshill.github.io/data-vis-labs-2018/slides.html for organization of this chapter
--->
-```
 ## Explore
 
 Imagine you are a researcher doing field work at the Palmer Station in Antarctica. You've been meticulously taking size measurements of three species of adult foraging penguins under pretty precarious circumstances. It's been a lot of hard work, but it shows when you analyze all the data you've collected. This project is your chance to share your work with your colleagues in the Long-term Ecological Research Network.
 
-
-To explore this "new project" pattern, we need to explore our actual computer and where the project files should live.
+To explore this *New Project* pattern, we need to explore our actual computer and where the project files should live.
 
 In a nutshell, even the smallest of small projects gets its own folder (remember: "a project is a project, no matter how small!"). We recommend setting yourself up for success by having a dedicated folder on your computer to store all your projects.
 
@@ -153,19 +118,21 @@ All three files are important ingredients for our project.
 
 A note on `kebab-case`: you may have noticed that we encourage you to use dashes as separators between words. Kebab-case, also known as hyphen-case, uses hyphens (`"-"`) to separate words in a filename. This naming convention improves readability and clarity by clearly indicating word boundaries. It makes filenames easier to read, especially when the filenames contain multiple words. For example, `"my-important-analysis.qmd"` is more readable than `"myimportantanalysis.qmd"` or even `"MyImportantAnalysis.qmd"`.
 
-**Key Takeaways**
-
--   A project is a project, no matter how small.
-
--   Store all your projects inside a dedicated folder. We like `Documents/ds-projects` to start (but also give you permission to set up `Documents/ds-scratch` for projects you think you'll scrap).
-
--   Each project gets a folder in a place on your computer where you will remember to look for it.
-
--   Use kebab-case when naming files and folders like `penguin-progress`, which is a style that replaces spaces with dashes. Try to avoid punctuation, special characters like underscores, and uppercase letters if possible - this will simplify your project life.
-
--   Start a new "batteries included" Quarto project using the RStudio New Project Wizard. Be intentional about creating new projects inside the right subdirectory (we like `ds-projects` to start, but you may create more elaborate subdirectory structures as you gain experience).
-
 ## Understand
+
+There are a few key takeaways we'll summarize here. Here we go:
+
+- A project is a project, no matter how small.
+
+- Store all your projects inside a dedicated folder. We like `Documents/ds-projects` to start (but also give you permission to set up `Documents/ds-scratch` for projects you think you'll scrap).
+
+- Each project gets a folder in a place on your computer where you will remember to look for it.
+
+- Use kebab-case when naming files and folders like `penguin-progress`, which is a style that replaces spaces with dashes. Try to avoid punctuation, special characters like underscores, and uppercase letters if possible - this will simplify your project life.
+
+Start a new "batteries included" Quarto project using the **RStudio** New Project Wizard (through *File \> New Project...*). Be intentional about creating new projects inside the right subdirectory (we like `ds-projects` to start, but you may create more elaborate subdirectory structures as you gain experience).
+
+## Explain
 
 Your project is unique. Of course! But it does not need to be unique in terms of its file structure. The file structure you set up for yourself helps you understand the shape of your project. 
 
@@ -220,19 +187,8 @@ You might ask, why disable what seems like a useful feature? Well, you are savin
 
 Sometimes you'll run bits of code in a sequence different than what's written in the script. I'm sure you've come across the issue where the variable you assigned is different than how it's assigned in the script (for lots of reasons, developing code can be chaotic). But the goal eventually is to get a re-runnable, reproducible `.R`/`.qmd` file you might share or run later. The important thing to do is to restart R often, clearing the environment completely and re-running the script or `.qmd`. This is done through the **RStudio** menu item *Session \> Restart R*. Do it often to reset things and ensure what's in the `.R/`/`.qmd` really is the source of truth.
 
-## Explain
-
--   create a data-README file that has notes on where files came from; like a 'lab notebook'
-
-<!-- -->
-
--   talking to yourself with Quarto
-
--   note that in Appendix there is a Markdown reference
-
--   add a `readme.md` to have general notes for the project
-
 ## Share
 
-Netlify drag and drop
+Aside from sharing R scripts, `.qmd` files, reports, flexdashboards, etc., etc., how about sharing these learnings on project basics with others? They would likely be appreciative of these 'ways of working' after some period of adjustment and reflection.
 
+The principles discussed here in this chapter can seem pretty basic, but not to everyone certainly. Helping others out with project workflow basics will probably serve them better in the long run than a lesson on working with R factors, for instance.
