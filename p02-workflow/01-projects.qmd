@@ -178,10 +178,12 @@ There's a thing where, upon quitting R, R/*RStudio* will ask you this:
 Save workspace image to ~/.Rdata?
 ```
 
-What this is doing is saving the contents of your entire workspace to that file (the `~` means your *home* directory). It's often best to say 'No' here and take another step: disable the setting that prompts this question to be asked. It's located as a drop-down setting in *Tools \> Global Options*, and that drop-down is next to the text reading `Restore .RData into workspace at startup:`. Here's a screenshot:
+What this is asking to do is to save the contents of your entire workspace to that file (the `~` means your *home* directory); this is so that the next time you use R, that workspace is loaded in for you.
+
+It's best to go in a different direction entirely and say 'No' here. And, we should take another preventative step: disable the default **RStudio** settings that (1) prompt this question and (2) reload any saved workspace. The specific settings are located in *Tools \> Global Options*. Once there the checkbox next to `Restore .RData into workspace at startup` should be unchecked. And the drop-down is next to the `Save workspace to .RData on exit` text should be set to `Never` Here's a screenshot with the revised settings:
 
 ![How to disable workspace saving. The key word is 'Never'.](img/disable-workspace-saving.png)
-You might ask, why disable what seems like a useful feature? Well, you are saving `.R` files and `.qmd` files and your project environment can be recreating by running the contents of those files. Put another way, the source of truth will be what's in those files in the project directory and not whatever is in the `~/.Rdata` file (which could be many things not in your `.R` and `.qmd` files).
+You might ask, why disable what seems like a useful feature? Well, in practice you are saving `.R` files and `.qmd` files and so it follows that your project environment can be recreating by running the contents of those files. Put another way, the source of truth should be what's in files of the project directory and *not* whatever is in the `~/.Rdata` file (which could be many things not in your `.R` and `.qmd` files).
 
 **An Important Thing to Do When Developing Code**
 
