@@ -8,16 +8,18 @@ library(dplyr)
 library(tidyr)
 library(gt)
 library(bakeoff)
+library(palmerpenguins)
 library(janitor)
 ```
 
-Wide data, why do you want it? It is **awesome** for summary tables. Display tables just present and look better when they have a bit of width to them. Long data, that's great for plotting, no question, but we won't do any of that in this chapter. This chapter is dedicated to summary tables and all of their charms.
+Wide data... why do you want it? It is **awesome** for summary tables. Display tables just present and look better when they have a bit of width to them. Long data, that's great for plotting, no question, but we won't do any of that in this chapter. This chapter is dedicated to summary tables and all of their charms.
 
 Here's the collection of packages needed for this chapter:
 
 - **tidyverse**: for the use of the **dplyr** and **tidyr** packages
 - **gt**: for its datasets and table-making capabilities
 - **bakeoff**: for the `ratings` dataset
+- **palmerpenguins**: for the `penguins` dataset
 - **janitor**: for cleaning column names
 
 ## Explore
@@ -94,8 +96,76 @@ This makes for a pretty wide table (21 columns!) but only 10 rows. We basically 
 
 ## Understand
 
+You'll sometimes run into the case where you have a lot of columns in your dataset that you want to widen. But many of those columns will be extraneous, in that you don't want them in the pivoted table. We solved for this in our first example with `pivot_wider()` by using an initial `select()` statement. Here it is again:
+
+```{r, paged.print=FALSE}
+ratings_by_series <-
+  ratings |>
+  select(series, episode, viewers_7day) |>
+  pivot_wider(names_from = episode, values_from = viewers_7day)
+
+ratings_by_series
+```
+
+However, we could take advantage of `id_cols` and state which of the columns makes for an 'ID' for a row. Put another way, the combined information from the columns will uniquely identify each column. Anything not in `id_cols` will be dropped in the pivoted table. Here's a variation of the earlier example that uses `id_cols` in `pivot_wider()` and drops the `select()` statement.
+
+```{r, paged.print=FALSE}
+ratings_by_series_id_cols <-
+  ratings |>
+  pivot_wider(
+    id_cols = series,
+    names_from = episode,
+    values_from = viewers_7day
+  )
+
+ratings_by_series_id_cols
+```
+
+It gives us the same output table. Which is great to see. Importantly, any columns provided to `id_cols` must not be given to either of the `names_from` or `values_from` arguments. The above example used only one column in `id_cols` but conceivably you could have a few columns that, only in combination, concretely and uniquely describe the row (a good example is a first name, a last name, and an address). 
+
+A very pro move to use with `pivot_wider()` is to combine it with `group_by()`/`summarize()`. The summarizing part could happen before pivoting and here's an example where the summarizing of the `penguins` dataset happens right before the pivoting operation.
+
+```{r, paged.print=FALSE}
+penguins_average_mass_by_year <-
+  penguins |>
+  group_by(island, year) |>
+  summarize(
+    mean_body_mass_g = mean(body_mass_g, na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  pivot_wider(
+    id_cols = island,
+    names_from = year, 
+    values_from = mean_body_mass_g
+  )
+
+penguins_average_mass_by_year
+```
+
+Here's a slightly different pivoting-after-summarizing example. Where we transpose the columns provided to the `id_cols` and `names_from` arguments. This gives us the three different years as rows and the different islands as columns.
+
+```{r, paged.print=FALSE}
+penguins_average_mass_by_island <-
+  penguins |>
+  group_by(island, year) |>
+  summarize(
+    mean_body_mass_g = mean(body_mass_g, na.rm = TRUE),
+    .groups = "drop"
+  ) |>
+  pivot_wider(
+    id_cols = year,
+    names_from = island, 
+    values_from = mean_body_mass_g
+  )
+
+penguins_average_mass_by_island
+```
+
+With some practice, using `pivot_wider()` in combination with a summary of a dataset will become second nature. It's a very powerful pattern, as summarizing is undeniably useful (especially for making summary tables meant for publication) and pivoting that to a wide form of your choosing makes the summary more readable. 
 
 ## Explain
+
+With the previous examples demonstrating a wide range of uses for `pivot_wider()`, we've really gotten to grips with how to effectively use that great function. There is a pattern, though, that may be encountered less commonly: converting a wide dataset to a *different* wide dataset. Put another way, the variables that represent the bulk of the table columns should be replaced with names from another column. While this sort of scenario is difficult to articulate, we can explain the problem and work through the solution with the examples that will follow.
 
 The `illness` dataset in the **gt** package starts out as a wide type of dataset. Put another way it is not tidy and we can see that right away given there are multiple columns for different observations (e.g., `day_3`, `day_4`, etc.).
 
