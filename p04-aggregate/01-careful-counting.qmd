@@ -19,7 +19,7 @@ Counting things in our data is super important. It allows us to account for thin
 We'll make extensive use of the **bakeoff** package. It's a package that contains datasets based on the Great British Bake Off television show. In particular, the `bakers` dataset will be used for many of the examples.
 
 - **tidyverse**: for the use of the **dplyr**, **tidyr**, and **ggplot** packages
-- **bakeoff**: for the dataset we'll be using (`bakers`)
+- **bakeoff**: for the datasets we'll be using (`bakers` and `ratings`)
 - **skimr**: to quickly summarize a dataset and get insights just as fast
 - **gt**: for making those tables that present well
 
@@ -33,7 +33,7 @@ glimpse(bakers)
 
 Right up front we get told there are 120 rows and 8 columns. That's very useful because we get a sense of the overall size of the dataset. Because `bakers` is a tibble, when the core *Tidyverse* packages are loaded with `library(tidyverse)` we get a pretty nice printing of the table just by calling its name. Check it out:
 
-```{r}
+```{r, paged.print=FALSE}
 bakers
 ```
 
