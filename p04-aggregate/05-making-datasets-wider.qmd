@@ -210,3 +210,42 @@ illness_redux
 This is not just a wide table, it's *super* wide with 40 columns. Totally fine if using this data for further analysis but maybe not what you want if you're making a summary table for publication from the widened data. There are two things you can do to limit the amount of columns in the this wide output: (1) use the `select()` function to pick the columns to keep, or (2) `filter()` the `test` column in the data just before (or even just after) the `pivot_longer()` statement.
 
 ## Share
+
+Let's take all of these nicely-pivoted tables and transform them into shareable **gt** tables. Tables of this type are simply meant to get the **gt** treatment, and we could take advantage of numerous interesting features in that package to make the tables shine.
+
+The `ratings_by_series` table shows the viewership for each episode. And the data is organized left-to-right by episode number. Each row represents a different series. After introducing the data to the `gt()` function (and putting the `series` column in the table stub with `rowname_col = "series"`), we can do things like:
+
+1. add a table title (with `tab_header()`)
+2. including a source note (with `tab_source_note()`)
+3. format the viewership numbers (with `fmt_number()`)
+4. replacing `NA` values with an empty string (through `sub_missing()`)
+5. putting a spanner label over the episode numbers (with `tab_spanner()`)
+6. inserting a label in the 'stubhead' cell (with `tab_stubhead()`)
+7. color-coding the data cells (via `data_color()`)
+
+```{r}
+ratings_by_series |>
+  gt(rowname_col = "series") |>
+  tab_header(
+    title = "Viewership of Bakeoff Episodes",
+    subtitle = "Numbers represent millions of viewers"
+  ) |>
+  tab_source_note(
+    source_note = "Data taken from the bakeoff package."
+  ) |>
+  fmt_number(columns = -series, decimals = 1) |>
+  sub_missing(missing_text = "") |>
+  tab_spanner(
+    label = "Episode",
+    columns = everything()
+  ) |>
+  tab_stubhead(label = "Series") |>
+  data_color(
+    columns = everything(),
+    palette = c("white", "red"),
+    na_color = "white"
+  )
+```
+
+The finalized table looks good enough to share with others! The title lets people quickly know what's in the table. The colorizing of data makes it apparent that Series 7 did super excellent numbers (with Series 6 running a close second in terms of viewership). Little touches like carefully formatting numbers and handling `NA` values make all the different when presenting data to others!
+
