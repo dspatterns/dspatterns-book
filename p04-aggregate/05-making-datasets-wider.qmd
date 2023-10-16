@@ -249,3 +249,42 @@ ratings_by_series |>
 
 The finalized table looks good enough to share with others! The title lets people quickly know what's in the table. The colorizing of data makes it apparent that Series 7 did super excellent numbers (with Series 6 running a close second in terms of viewership). Little touches like carefully formatting numbers and handling `NA` values make all the different when presenting data to others!
 
+The `ratings_by_series_num_expand` table is a variation of `ratings_by_series`, where numbers for viewership are expanded to full numbers (rather than being abbreviated numbers, if you will). That table could be made in a similar way, and a good formatting option for that one would be to use this `fmt_number()` statement:
+
+```r
+fmt_number(columns = -series, n_sigfig = 2, suffixing = TRUE)
+```
+
+With this slightly different data and replacement of the `fmt_number()` statement with the one above `10.2` becomes `10.2M` and the `subtitle` text given in the `tab_header()` statement could be removed. It's sometimes good to have alternatives when presenting data and both tables would be acceptable in most contexts.
+
+Let's now plot the penguins-based tables. We have two, `penguins_average_mass_by_year` and `penguins_average_mass_by_island`, and they are strikingly similar. Here we'll see that we can make **gt** tables that look decent even when the input tables are super small.
+
+```{r}
+penguins_average_mass_by_year |>
+  gt() |>
+  tab_header(title = "Average Mass of Penguins on Different Islands") |>
+  tab_spanner(label = "Year", columns = -island) |>
+  fmt_number(decimals = 1, pattern = "{x} g") |>
+  cols_width(everything() ~ px(125)) |>
+  cols_align(align = "left", columns = island) |>
+  cols_label(island = "Island") |>
+  opt_align_table_header(align = "left")
+```
+
+
+```{r}
+penguins_average_mass_by_island |>
+  gt() |>
+  tab_header(title = "Average Mass of Penguins in Different Years") |>
+  tab_spanner(label = "Island", columns = -year) |>
+  fmt_number(columns = -year, decimals = 1, pattern = "{x} g") |>
+  cols_width(everything() ~ px(125)) |>
+  cols_align(align = "left", columns = year) |>
+  cols_label(year = "Year") |>
+  opt_align_table_header(align = "left")
+```
+
+
+A good thing to do with very small tables is to widen them just a bit with `cols_width()`. This gives the few columns we have a little space to breathe. In both of these **gt** tables, we used the same statements to effectively make similar tables. We had to handle some things a little differently (like not accidentally formatting the `year` column with decimal places) but they are more similar than they are different.
+
+
