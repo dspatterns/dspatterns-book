@@ -7,19 +7,90 @@ library(dspatterns)
 library(dplyr)
 library(tidyr)
 library(gt)
+library(bakeoff)
 library(janitor)
 ```
 
-Wide data, why do you want it? It is **awesome** for summary tables. Display tables just present and look better when they have a bit of width to them. Long data, that's great for plotting, no question, but we don't do any of that in this chapter. This chapter is dedicated to the tables and all their charms.
+Wide data, why do you want it? It is **awesome** for summary tables. Display tables just present and look better when they have a bit of width to them. Long data, that's great for plotting, no question, but we won't do any of that in this chapter. This chapter is dedicated to summary tables and all of their charms.
 
 Here's the collection of packages needed for this chapter:
 
 - **tidyverse**: for the use of the **dplyr** and **tidyr** packages
 - **gt**: for its datasets and table-making capabilities
+- **bakeoff**: for the `ratings` dataset
 - **janitor**: for cleaning column names
 
 ## Explore
 
+Let's get a little practice in make wide tables from long tables. The **bakeoff** package's `ratings` dataset is really interesting as it contains a wealth of information concerning viewership for every episode across the ten series. Let's have a look at that dataset once again by printing the tibble.
+
+```{r, paged.print=FALSE}
+ratings
+```
+
+Let's make it so that we get the following wide-table structure:
+
+- Each row represents a series (from `1` to `10`)
+- The 7-day viewership data (in millions of viewers) will appear in columns for each episode in a season
+- all other data (like airdate, rankings, etc.) will be omitted
+
+We start by keeping only the data columns we need. In this case, that's the `series`, `episode`, and `viewers_7day` columns (and we do this with **dplyr**'s `select()` function). Then, it's a matter of using `pivot_wider()` with the `names_from` and `values_from` arguments.
+
+```{r, paged.print=FALSE}
+ratings_by_series <-
+  ratings |>
+  select(series, episode, viewers_7day) |>
+  pivot_wider(names_from = episode, values_from = viewers_7day)
+
+ratings_by_series
+```
+
+It might be weird to have column names that are numbers. If you think it is strange and rather have more text-y column names, then we can use the `names_prefix` argument to change all that. In this alternate bit of code, we do pretty much the same operations as before, except that `names_prefix = "episode_"` is employed to prefix each new column name with `episode_`.
+
+```{r, paged.print=FALSE}
+ratings_by_series_alt <-
+  ratings |>
+  select(series, episode, viewers_7day) |>
+  pivot_wider(
+    names_from = episode,
+    values_from = viewers_7day,
+    names_prefix = "episode_"
+  )
+
+ratings_by_series_alt
+```
+
+The orginal dataset has viewership numbers represented in millions. So a value like `3.85` really means 3,850,000. If you wanted to expand these values to real number values you could mutate all of the columns with **dplyr**, where each column is multiplied by `1e6` (1 million). Or, you could do it in the `pivot_wider()` statement! With the `values_fn` argument, you could pass in a function that takes `x` (any input value) and returns a variation of that. We'll use `function(x) x * 1e6` for `values_fn` and what we'll get is a wide table with all of the viewership numbers in the millions (i.e., big numbers).
+
+```{r, paged.print=FALSE}
+ratings_by_series_num_expand <-
+  ratings |>
+  select(series, episode, viewers_7day) |>
+  pivot_wider(
+    names_from = episode,
+    values_from = viewers_7day,
+    values_fn = function(x) x * 1e6
+  )
+
+ratings_by_series_num_expand
+```
+If we wanted to incorporate the air date along with the viewership figures, two columns could be specified in the `values_from` argument. We can no longer use the `values_fn` with a supplied function because we're getting both `numeric` and `Date` columns this time around (and the function would try to multiply dates by one million). The new-column naming will mash together a `values_from` column name (either `viewers_7day` or `uk_airdate`) with the values from the `episode` column. We can have it so that some text gets inserted in between these text fragments, and we'll do that with the `names_sep` argument. 
+
+```{r, paged.print=FALSE}
+ratings_by_series_with_air_date <-
+  ratings |>
+  select(series, episode, viewers_7day, uk_airdate) |>
+  pivot_wider(
+    names_from = episode,
+    names_sep = "_episode_",
+    values_from = c(viewers_7day, uk_airdate)
+  ) |>
+  mutate(across(starts_with("viewers_7day"), function(x) x * 1e6))
+
+ratings_by_series_with_air_date
+```
+
+This makes for a pretty wide table (21 columns!) but only 10 rows. We basically got what we asked for. Because we can't use `values_fn` to multiply the `viewers_7day_*` columns by `1e6` the alternative is to use **dplyr**'s `mutate()` with the `across()` helper function (to target the right columns for the multiplying function). Though that last incantation is somewhat difficult to remember how to use, we *did* get it done here.
 
 ## Understand
 
