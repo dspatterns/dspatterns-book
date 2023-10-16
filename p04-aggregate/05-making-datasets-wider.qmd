@@ -284,7 +284,39 @@ penguins_average_mass_by_island |>
   opt_align_table_header(align = "left")
 ```
 
-
 A good thing to do with very small tables is to widen them just a bit with `cols_width()`. This gives the few columns we have a little space to breathe. In both of these **gt** tables, we used the same statements to effectively make similar tables. We had to handle some things a little differently (like not accidentally formatting the `year` column with decimal places) but they are more similar than they are different.
 
+With the `illness` dataset treatment performed earlier, we used `clean_names()`. That's nice, but the names are actually better not cleaned when being tabulated. We want labels to look like labels! We can take this all a bit further and take advantage of **gt**'s ability to render units in column labels. To do this, the `test` name will be pasted to the `units` info in a way that includes a line break (with `"<br>"`), having the 'units' part enclosed in `"{{"` and `"}}"` (needed by **gt** to interpret this text as 'units notation'). The act of actually interpreting this text in that way is handled by the `cols_label()` statement (the `.process_units = TRUE` parts sets this in motion). Here is but one way that re-widened `illness` data can be made into a shareable **gt** table:
 
+```{r}
+illness |>
+  dplyr::mutate(test = paste0(test, ",<br>{{", units, "}}")) |>
+  dplyr::slice_head(n = 8) |>
+  dplyr::select(-c(starts_with("norm"), units)) |>
+  tidyr::pivot_longer(
+    cols = starts_with("day"),
+    names_to = "day",
+    names_prefix = "day_",
+    values_to = "value"
+  ) |>
+  tidyr::pivot_wider(
+    names_from = test,
+    values_from = value
+  ) |>
+  gt(rowname_col = "day") |>
+  tab_header(title = "Six tests performed daily on patient") |>
+  tab_source_note(source_note = "Data taken from the `illness` dataset.") |>
+  tab_stubhead(label = "Day") |>
+  cols_label(
+    .fn = md,
+    .process_units = TRUE
+  ) |>
+  cols_width(
+    stub() ~ px(50),
+    everything() ~ px(120)
+  ) |>
+  opt_align_table_header(align = "left")
+  
+```
+
+This presents very nicely! Having the units incorporated into the column labels is beneficial to the user (and you don't have to explain what the numbers mean elsewhere in the table). The table could be further embellished with colorized data cells or explanations of the tests (in the form of footnotes, via `tab_footnote()`).
