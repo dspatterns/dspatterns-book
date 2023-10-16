@@ -298,7 +298,7 @@ There will always be problems and we encountered some common ones when importing
 
 ## Share
 
-You now know a ton about importing data from CSVs and even Excel files. What are you going to do with that knowledge? You've got to give something back and share. Suppose you spent 45 minutes to an hour dealing with the importing of table from an Excel file. And futher suppose that someone else you know will eventually need to get that same data. What we can do (to be nice) is create some sharable code and documentation around how that exact thing is done.
+You now know a ton about importing data from CSVs and even Excel files. What are you going to do with that knowledge? You've got to give something back and share. Suppose you spent 45 minutes to an hour dealing with the importing of table from an Excel file. And futher suppose that someone else you know will eventually need to get that same data. What we can do (to be nice) is create some shareable code and documentation around how that exact thing is done.
 
 Here is how that might look in an `.R` script:
 
@@ -371,4 +371,4 @@ city_table |> col_vals_lt(columns = pop_urb, value = 25E6, na_pass = TRUE)
 city_table |> col_vals_lt(columns = pop_mun, value = 15E6, na_pass = TRUE)
 ```
 
-If in this hypothetical scenario nobody else really needs this information, the situation might yet arise where you yourself need this info again (to obtain that dataset or perhaps something close to it). What I'm saying is that knowledge is valuable and findings like this should be written down (either for yourself or someone else).
+If in this hypothetical scenario nobody else really needs this information, the situation might yet arise where you yourself will need this info again (to obtain that dataset or perhaps something close to it). What I'm saying is that knowledge like this is valuable and findings like those shown here should be written down (either for yourself or someone else).
