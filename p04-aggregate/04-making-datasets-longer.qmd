@@ -169,7 +169,8 @@ illness
 Let's waste no time and make this long! Code:
 
 ```{r, paged.print=FALSE}
-illness |>
+illness_long <-
+  illness |>
   select(-starts_with("norm")) |>
   pivot_longer(
     cols = starts_with("day"),
@@ -179,10 +180,26 @@ illness |>
   ) |>
   unite(col = "test", test, units, sep = ", ") |>
   mutate(day = as.integer(day))
+
+illness_long
 ```
 
 We adjusted the value for the `names_pattern` argument to `"_(.+)"` so that the number part of the `"day_*"` column names goes into the new column `day`. The **tidyr** package has a useful function called `unite()`. We're using that above to join together the `test` and `units` columns together. In that way, we get the name of the test and the units for that test in the same column (called that `test` again).
 
 ## Share
 
-- make faceted ggplot with `sp500`
+Now that we have long data in the object `illness_long`, let's make a **ggplot** plot. We'll use `facet_wrap()` to facet the plots by the specific test.
+
+```{r}
+illness_long |>
+  ggplot(mapping = aes(x = day, y = value)) +
+  geom_line() +
+  facet_wrap(
+    facets = vars(test),
+    scales = "free_y",
+    ncol = 2
+  )
+```
+
+This doesn't look good when trying to display too many tests. We're going to have to take decisive action to make this all look better.
+
