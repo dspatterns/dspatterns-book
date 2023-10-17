@@ -160,7 +160,28 @@ This is twice as many rows as the previous long table (4,968 rows!). As we did b
 
 ## Explain
 
-- dataset: `illness`
+Now that we have explored small and wide data tables (changing them to long versions) and experimented with a fairly large (yet wide) table, let's work with a wide dataset with measurement data. This one is called `illness` and it comes from the **gt** package. Let's look at it:
+
+```{r, paged.print=FALSE}
+illness
+```
+
+Let's waste no time and make this long! Code:
+
+```{r, paged.print=FALSE}
+illness |>
+  select(-starts_with("norm")) |>
+  pivot_longer(
+    cols = starts_with("day"),
+    names_to = "day",
+    names_pattern = "_(.+)",
+    values_to = "value"
+  ) |>
+  unite(col = "test", test, units, sep = ", ") |>
+  mutate(day = as.integer(day))
+```
+
+We adjusted the value for the `names_pattern` argument to `"_(.+)"` so that the number part of the `"day_*"` column names goes into the new column `day`. The **tidyr** package has a useful function called `unite()`. We're using that above to join together the `test` and `units` columns together. In that way, we get the name of the test and the units for that test in the same column (called that `test` again).
 
 ## Share
 
