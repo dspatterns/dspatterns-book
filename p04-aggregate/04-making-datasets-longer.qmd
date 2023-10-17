@@ -6,6 +6,7 @@
 library(dspatterns)
 library(dplyr)
 library(tidyr)
+library(ggplot2)
 library(bakeoff)
 library(gt)
 ```
@@ -188,18 +189,20 @@ We adjusted the value for the `names_pattern` argument to `"_(.+)"` so that the 
 
 ## Share
 
-Now that we have long data in the object `illness_long`, let's make a **ggplot** plot. We'll use `facet_wrap()` to facet the plots by the specific test.
+Now that we have long data in the object `illness_long`, let's make a **ggplot** plot. We'll cut down the amount of test results to be plotted first (with `filter()`). Then, `facet_wrap()` will be used to facet the plots by the test.
 
 ```{r}
 illness_long |>
+  filter(grepl("PLT|ALT|AST|TBIL|DBIL|PT|APTT|PTA|DD", test)) |>
   ggplot(mapping = aes(x = day, y = value)) +
   geom_line() +
   facet_wrap(
     facets = vars(test),
     scales = "free_y",
-    ncol = 2
+    ncol = 3
   )
 ```
 
-This doesn't look good when trying to display too many tests. We're going to have to take decisive action to make this all look better.
+This doesn't look too bad, so long as the number of plots included is reasonably limited. There are situations where many more facets could be used but, in this case, we have lengthy labels and different *y*-axis scales (two things that take up more space).
 
+While the plot above can certainly be improved, the thing we really want to be aware of is that the `illness_long` table (being long and tidy) was prepared for this type of plot. The only extra data manipulation operation involved was using `filter()` to limit the number of plots shown. Attempting to make a similar plot with the `illness` dataset without the reshaping is difficult with **ggplot**, so this pattern is essential is you do want to plot data that comes to you in a wide form.
