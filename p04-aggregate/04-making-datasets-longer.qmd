@@ -2,27 +2,166 @@
 
 {{< include ../_patterns.qmd >}}
 
-
 ```{r setup, include=FALSE, echo=FALSE}
 library(dspatterns)
+library(dplyr)
+library(tidyr)
+library(bakeoff)
+library(gt)
 ```
 
+Tidy (and long) data is needed for **ggplot**-ing. Long (and tidy) data is needed to make those **ggplot**s. If your data happens to be wide, or not long enough, you can try to use **gplot** but you might end up a little sad. It's not easy to use non-tidy data with **gplot**; it might be OK for some plots but it will seriously make it difficult for many other types of plots. In this chapter, we'll get the wide-to-long table reshaping pattern down. In this way, you won't end up disappointed that you can't make cool plots for your reporting work. You'll instead know to use `pivot_longer()` like a boss and look damn good whilst doing it! 
 
-## New Packages and Functions  
+As always, we need packages. Here are the ones we'll be using for this chapter:
 
-## This Chapter's Pattern
+- **tidyverse**: to use the **dplyr** and **tidyr** packages
+- **bakeoff**: for the `spice_test_wide` dataset
+- **gt**: for various wide datasets we will make longer
 
 ## Explore
 
-- dataset: `bakeoff::spice_test_wide`
+The **bakeoff** package has so many great datasets. One that's plum perfect for this chapter is the `spice_test_wide` table. It even has 'wide' in the name so you know it's topical. Let's have a look at it by printing it out:
+
+```{r, paged.print=FALSE}
+spice_test_wide
+```
+
+This a small one! Only 4 rows and 7 columns, which is perfect for our exploration into data lengthening. The tell-tale sign of tabular data being too wide is repetition of column names (e.g., `guess_1`, `guess_2`, etc.). Want we want instead is a row for each observation. Here is a proposal for new columns (and what they would contain) that would probably make this table tidier:
+
+- `baker`: the baker name (same as the original, wide table)
+- `guess_number`: an index value for the guess (possible values: `1`, `2`, or `3`)
+- `guess_response`: the response given by the baker when prompted
+- `guess_correct`: was the response the correct answer? (`TRUE` or `FALSE`)
+
+The challenge here (and this is common in this pattern) is that some data is encoded in the column names. The numbers in the column names refer to the `guess_number` we want. Because of this, we have to use pattern matching with `pivot_longer()` to smartly break apart the column names into components.
+
+Thankfully, the argument called `names_pattern` is available and ready for this type of operation. The pattern we need to use is `"(.+)_(.+)"`. This matches some non-zero sequence of characters to the left of the `"_"`, and a sequence of character to the right of the underscore character. The parentheses represent capture groups, where the one to the left is first and the one to the right is the second (it's all very logical). This works in conjunction with the `names_to` argument. Here, we provide a two-element vector where the first element is the `".value"` keyword and the second is `"number"`. The first element indicates to **tidyr** that the text fragment before the `"_"` is the column name; this produces the `number` and `guess` columns. It's best to see this in action:
+
+```{r, paged.print=FALSE}
+spice_test_long <-
+  spice_test_wide |>
+  pivot_longer(
+    cols = -baker,
+    names_to = c(".value", "number"),
+    names_pattern = "(.+)_(.+)"
+  )
+
+spice_test_long
+```
+
+That `pivot_longer()` statement got us really close to where we need to be! We'd rather have the column names be a bit different though (we planned to have `guess_number`, `guess_response`, and `guess_correct`). We can easily use **dplyr**'s `rename()` to take care of all that. Two more things:
+
+1. The `correct` column (renaming that to `guess_correct`) should have `logical` values
+2. The `number` column (renaming that to `guess_number`) should have `integer` values
+
+Those last two touch-ups can be handled with **dplyr**'s `mutate()` function. Here's what's needed to finish off this long table.
+
+```{r, paged.print=FALSE}
+spice_test_long <-
+  spice_test_long |>
+  rename(
+    guess_number = number,
+    guess_response = guess,
+    guess_correct = correct
+  ) |>
+  mutate(
+    guess_correct = as.logical(guess_correct),
+    guess_number = as.integer(guess_number)
+  )
+
+spice_test_long
+```
+
+Now, this was a particularly challenging exercise in transforming a wide dataset to a long, tidy form. But this type of table might be encountered every so often (it's somewhat common within public datasets) so the lessons learned here could prove to be valuable.
 
 ## Understand
 
+The **gt** package has quite a few datasets that are considered to be wide. This is because that package is concerned with generating summary tables, and, the tables often end up a bit on the wide side before tabulation (this is natural). Let's take advantage of the abundance of wide tables in that package and use the `towny` dataset for our next for examples. With that dataset, we'll be able to better understand `pivot_longer()` and the process of lengthening datasets in general.
+
+Let's look at `towny`, by printing it out:
+
+```{r, paged.print=FALSE}
+towny
+```
+
+Alright that tibble is packed full of information, and it's totally fine to simplify the table so our use of `pivot_longer()` runs more smoothly. Let's do that, here's the vision for the long table:
+
+1. Take only the `name`, `census_div`, and `population_*` columns
+2. Incorporate a `year` column, a `population` column, and `density` column
+
+How do we do this? One way is to break the problem down and make two long tables, then join them together. It's not a bad strategy so let's go with it. Let's start by making a long table that focuses on populations for the different measurement years.
+
+```{r, paged.print=FALSE}
+towny_pops <-
+  towny |>
+  select(name, census_div, starts_with("population")) |>
+  pivot_longer(
+    cols = starts_with("population"),
+    names_to = "year",
+    names_prefix = "population_",
+    values_to = "population"
+  ) |>
+  mutate(year = as.integer(year))
+
+towny_pops
+```
+
+Nice! That worked out quite well. Just looking at the first ten rows shows that the `pivot_longer()` expression used was correct. In the above, we used the `names_prefix` argument (giving it the value of `"population_"`). This snips out the `"population_"` from each value that goes in the `year` column. And because the values in `year` came from column names, a `mutate()` statement, with `as.integer()`, was used to convert the `character`-based years to `integer` values.
+
+Let's now make an analogous, long table for the density table. It'll be pretty much the same except the the last column (using `density` instead of `population`). Not surprisingly, the statements to create the `towny_density` table are strikingly similar the ones just above. It's also reassuring to see that the row count for this table is the same as in the last one.
+
+```{r, paged.print=FALSE}
+towny_density <-
+  towny |>
+  select(name, census_div, starts_with("density")) |>
+  pivot_longer(
+    cols = starts_with("density"),
+    names_to = "year",
+    names_prefix = "density_",
+    values_to = "density"
+  ) |>
+  mutate(year = as.integer(year))
+
+towny_density
+```
+
+Now, it's joining time! We have a fine selection of joins to choose from. This time, however, we'll use the *full join* through use of the **dplyr** `full_join()` function. The `by` argument here is crucial to get correct. We can supply a vector of column names that are common to both tables. This will make `full_join()` perform a *natural join*. The columns that are common to both tables are `"name"`, `"census_div"`, and `"year"` so those'll be used in the `by` argument.
+
+```{r, paged.print=FALSE}
+towny_pops_density <-
+  towny_pops |>
+  full_join(towny_density, by = c("name", "census_div", "year"))
+
+towny_pops_density
+```
+
+The result is a table with the same number of rows (2,484), as the previous two. We have all the columns we wanted to have too. This is what success looks like.
+
+If we wanted to, though, we could make the table even longer! Instead of having `population` and `density` columns we could instead have `measure` and `value` columns. The `measure` column would contain either `"population"` or `"density"` and `value` would have either a population value or a density value (corresponding to the label within `measure`).
+
+To do this, the first step is to keep only the needed columns in `towny`. We'll use `select()` to keep the `name`, `census_div`, `population_*`, and `density_*` columns. Then, we'll `pivot_longer()` and that's it! Here's the necessary code and resultant table:
+
+```{r, paged.print=FALSE}
+towny |>
+  select(
+    name, census_div,
+    starts_with("population"),
+    starts_with("density")
+  ) |>
+  pivot_longer(
+    cols = c(starts_with("population"), starts_with("density")),
+    names_to = "measure",
+    names_pattern = "(.+)_",
+    values_to = "value"
+  )
+```
+
+This is twice as many rows as the previous long table (4,968 rows!). As we did before with the lengthening of the `spice_test_wide` dataset, we used the `name_pattern` argument (pattern used: `"(.+)_"`).
+
 ## Explain
+
+- dataset: `illness`
 
 ## Share
 
-
-## DIY
-
-- dataset: ``
+- make faceted ggplot with `sp500`
