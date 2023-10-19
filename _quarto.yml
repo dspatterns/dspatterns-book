@@ -55,29 +55,25 @@ book:
         - p01-mvp/02-data-wrangling.qmd
         - p01-mvp/03-data-viz.qmd
     - "---"
-    - part: "Part 2: Workflow Patterns"
+    - part: "Part 2: Local Data Patterns"
       chapters:
-        - p02-workflow/01-projects.qmd
-        - p02-workflow/02-github.qmd
+        - p02-data/01-projects.qmd
+        - p02-data/02-import-data-first-time.qmd
+        - p02-data/03-import-data-next-time.qmd
+        - p02-data/04-import-data-formats.qmd
     - "---"
-    - part: "Part 3: Local Data Patterns"
+    - part: "Part 3: Aggregation Patterns"
       chapters:
-        - p03-import/01-import-data-first-time.qmd
-        - p03-import/02-import-data-next-time.qmd
-        - p03-import/03-import-data-formats.qmd
+        - p03-aggregate/01-careful-counting.qmd
+        - p03-aggregate/02-rolling-up-data.qmd
+        - p03-aggregate/03-slicing-and-dicing-data.qmd
+        - p03-aggregate/04-making-datasets-longer.qmd
+        - p03-aggregate/05-making-datasets-wider.qmd
     - "---"
-    - part: "Part 4: Aggregation Patterns"
+    - part: "Part 4: Batch Patterns"
       chapters:
-        - p04-aggregate/01-careful-counting.qmd
-        - p04-aggregate/02-rolling-up-data.qmd
-        - p04-aggregate/03-slicing-and-dicing-data.qmd
-        - p04-aggregate/04-making-datasets-longer.qmd
-        - p04-aggregate/05-making-datasets-wider.qmd
-    - "---"
-    - part: "Part 5: Batch Patterns"
-      chapters:
-        - p05-batch/01-batch-plots.qmd
-        - p05-batch/02-batch-tables.qmd
+        - p04-batch/01-batch-plots.qmd
+        - p04-batch/02-batch-tables.qmd
     - "---"
   appendices:
     - q-appendix/86-tidying-data-for-analysis.qmd
