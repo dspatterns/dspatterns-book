@@ -132,7 +132,7 @@ That will produce an HTML document with the same name as the **Quarto** document
 
 It's here where you can see that the Markdown elements become things like bold and italicized text. That rendered text appears above and below the code and the outputs, just as it was in the **Quarto** document. It's also here where its more apparent that **Quarto** is indeed useful for working with data and also for creating reports.
 
-## What is Quarto?
+### What is Quarto?
 
 Quarto is open-source software that helps you develop your code and ideas in one reproducible document. It is designed for anyone who uses code to work with data. You can use Quarto at any stage of an analysis project, any time you want to develop code and ideas alongside each other.
 
@@ -146,7 +146,7 @@ Start a Quarto project if you want to:
 ![A crafty hedgehog knitting a sock, art by Allison Horst](img/hedgehog.png)
 :::
 
-## What is a `.qmd` file?
+### What is a `.qmd` file?
 
 ::: {layout="[50,50]"}
 ::: column
@@ -164,7 +164,7 @@ You can use all three elements to develop your code and ideas in one reproducibl
 ![](img/01-source.png)
 :::
 
-## How do I create a `.qmd` file?
+### How do I create a `.qmd` file?
 
 Here is the plain text version of the same `.qmd` document, which you can copy and paste into a new document:
 
@@ -175,7 +175,7 @@ Here is the plain text version of the same `.qmd` document, which you can copy a
 
 In the rest of this primer, we'll focus on using **Quarto** to create `.qmd` documents that integrate narrative text, code, and its output. While **Quarto** allows for many different kinds of output, we will use HTML documents. But the possibilities are endless 😃 In fact, this book was also written in **Quarto**, and its full source is publicly available in the GitHub repository: <https://github.com/dspatterns/dspatterns-book>.
 
-## Develop code
+## Developing Code
 
 ::: {layout="[50,50]"}
 
@@ -193,9 +193,7 @@ It is totally natural to use your `.qmd` as a scratchpad to develop code. Many u
 :::
 
 
-
-
-## Run code cells
+### Running code cells
 
 ::: {layout="[50,50]"}
 
@@ -214,7 +212,7 @@ Results like plots and tables are appear inline in your document- but don't get 
 :::
 
 
-## Add new code cells
+### Adding new code cells
 
 ::: {layout="[50,50]"}
 
@@ -232,7 +230,7 @@ Now let's add a new code cell. You can insert code cells in any of three ways:
 :::
 
 
-## Edit code cells
+### Editing code cells
 
 Let's try a different color palette, available through a package called [`paletteer`](https://emilhvitfeldt.github.io/paletteer/), which you can install from CRAN:
 
@@ -247,7 +245,7 @@ The main differences here are:
 1. We used the `scale_color_paletteer_d()` function from the `paletteer` package to try out a new color palette.
 
 
-## Set up your panes
+### Setting up your panes
 
 ::: {layout="[50,50]"}
 
@@ -275,11 +273,11 @@ Your workspace in RStudio then would look something like this:
 
 In this section, we showed how you can develop Quarto documents in RStudio, one code cell at a time. A `.qmd` file can be used to both save and execute code, and to create a reproducible record of what you did and how you did it. How to "knit" this record is up next.
 
-# Rendering
+## Rendering
 
 Quarto is designed to keep your source code separate from your output. Why? Because you will want to save your source code as a readable record of what you did. The source code can then be used to "play back" that record and (re-)produce the output. To be reproducible though, you have to first produce something---let's render this `.qmd` to produce an output file.
 
-## Knitting the source file
+### Knitting the source file
 
 ::: {layout="[30,-10,60]"}
 
@@ -306,7 +304,7 @@ NOTE: You may also use keyboard shortcuts to knit:
 -   `Ctrl` + `Shift` + `K` on Windows
 -   `Cmd` + `Shift` + `K` on Mac
 
-## The output file
+### The output file
 
 ::: {layout="[50,50]"}
 
@@ -331,7 +329,7 @@ When we render, Quarto generates a new file that now contains four elements:
 
 
 
-## The output format
+### The output format
 
 ::: {layout="[50,50]"}
 
@@ -357,23 +355,19 @@ Output formats are one of the most versatile features of Quarto&mdash;you can us
 
 While this is a polished and shareable document as is, it is not likely that your work stops there---but it is a great place to start. Next, we'll show how to use Quarto to develop your ideas alongside your code using narrative text.
 
-# Narrative text
+### Narrative text
 
 Everything that is not code in your `.qmd` is called narrative text, and can be styled with Markdown. Markdown is a plain text formatting syntax, which means everything you see in the file itself can be typed with a normal keyboard.
 
-## Add structure
+### Adding structure
 
 You can use Markdown to organize your `.qmd` file with headings. Headings are useful for organizing your document into sections, and with Markdown formatting you can have up to 6 types/sizes of headers. Use a hash symbol like `#` before the label to create a new header.
 
-drop-down IDE navigator
-
-outline pane
-
-## Add formatting
+### Adding formatting
 
 All narrative text in your `.qmd` file can be formatted to add **bold**, *italics*, bulletted lists, numbered lists, superscripts<sup>1</sup>, and subscripts<sub>1</sub>.
 
-# How it works
+## How it works
 
 Thus far, we've shown how you can use Quarto with RStudio to interactively develop code inside an `.qmd` document. Next, we showed how you can also take the same `.qmd` document and knit it to make a single output file, like a simple HTML page. So, you have learned how to fill up an `.qmd` file with your good ideas, code, and data. How does it all actually work?
 
@@ -381,7 +375,7 @@ Thus far, we've shown how you can use Quarto with RStudio to interactively devel
 knitr::include_graphics("img/quarto-how.png")
 ```
 
-## The **knitr** package
+### The **knitr** package
 
 ::: {layout="[60,-5,35]"}
 
@@ -415,7 +409,7 @@ execute:
 
 This is documented on the Quarto website (<https://quarto.org/docs/computations/execution-options.html#intermediates>).
 
-## Pandoc
+### Pandoc
 
 ::: {layout="[60,-5,35]"}
 
@@ -434,7 +428,7 @@ If you choose a `format` in your YAML, this is passed to Pandoc to convert the `
 
 ::: 
 
-## Render from the command line
+### Rendering from the command line
 
 This may all sound complicated, but **Quarto** and RStudio makes this simpler for you by wrapping it all up with the "Render" button.
 
@@ -449,11 +443,11 @@ The `quarto_render()` function will pass your `.qmd` file through the same proce
 
 One of the most powerful features of the **knitr** package is how it helps you control how your code and output look in your final finished product. Want to hide some gnarly-looking code that nevertheless makes a beautiful plot? Want to save all the plots you made in a directory when you knit? Read on to learn about **knitr** code cell options for figures.
 
-# Code Cells
+## Code Cells
 
 We just learned about how the **knitr** package is responsible for both executing code and knitting the output back into the document. The **knitr** package has some special code [cell options](http://yihui.name/knitr/options/) to control how your code both works and looks. 
 
-## Using code cell options
+### Using code cell options
 
 All **knitr** options are placed between the curly braces `{}` on the first line of each code cell. This line is called the header, and it must be a single line without line breaks.
 
@@ -472,7 +466,6 @@ The option name goes on the left, with the value on the right. You may include s
 :::
 
 :::
-
 
 
 ::: {layout="[50,50]"}
@@ -496,7 +489,7 @@ Careful! The `r` part is the code engine. While other engines are possible, when
 
 In total, there are `r length(knitr::opts_chunk$get())` options, so we'll highlight those with the highest payoff. Options specific to [controlling figures](/start/07-figures) are covered in the next section.
 
-## Control what appears in the output
+### Controlling what appears in the output
 
 By default, all source code, output, warnings, and messages are printed faithfully by **knitr** in the output file. The most important **knitr** options help you gain control over what appears in your output when you knit. By combining options, you can have the output display just the code, just the results, both, or neither. For example:
 
@@ -508,7 +501,7 @@ By default, all source code, output, warnings, and messages are printed faithful
 
 Each of these options takes `TRUE` or `FALSE` (no quotes) as its input value, with `TRUE` as the default value.
 
-## Control how code is executed
+### Controlling how code is executed
 
 Two additional code cell options help you control how your code is executed *when you knit*. Note that these do not affect how your code cell run interactively in RStudio.
 
@@ -525,7 +518,7 @@ knitr::knit_exit()
 The rest is scrap work.
 ````
 
-## Control your whole document
+### Controlling your entire document
 
 It can get repetitive to reset options for many individual code cells, when sometimes you'd like to override the default values for a whole `.qmd` document. To set global options that apply to every code cell in a `.qmd`, call `knitr::opts_chunk$set` in a code cell. 
 
@@ -561,13 +554,15 @@ A few notes on what the above options do:
 
 * `collapse = TRUE` fuses your code cell's code and output together into a single block (by default, they are written to separate blocks).
 
-## Naming and finding code cells
+### Naming and finding code cells
 
-## Caching
+### Caching
 
 If document rendering becomes time consuming due to long computations you can use knitr caching to improve performance. [*Knitr chunk and package options*](http://yihui.name/knitr/options) describes how caching works and the [*Cache examples*](http://yihui.name/knitr/demo/cache/) provide additional details.
 
 See the [R Markdown Reference Guide](https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf) for a complete list of **knitr** options.
+
+## Figures
 
 Style your figures w/ knitr options (out.width, fig.show, fig.align, fig.asp, fig.cap, fig.alt)
 
@@ -594,9 +589,9 @@ Any figure that you create with code in your `.qmd` document will be inserted in
 
 The author makes the graph, saves it as a file, and then copy and pastes it into the final report. This process relies on manual labor. If the data changes, the author must repeat the entire process to update the graph.
 
-## Saving figures
+### Saving figures
 
-## Figure placement
+### Figure placement
 
 ::: {layout="[50,50]"}
 
@@ -644,7 +639,7 @@ line
 
 :::
 
-## Figure size 
+### Figure size 
 
 It can often be hard to get your figures to show up in the right size and place in your knitted output. Some code cell options that help with this are:
 
@@ -667,19 +662,14 @@ line
 rose
 ```
 
-## Figure captions & alt text
+### Figure captions & alt text
 
 + `fig.cap = "Oh caption, my caption!"` produces a figure caption; this will change the figure from inline to "floating".
 + `fig.alt = "Informative alt text"` produces alt text for a figure, meant for screen readers.
 
-# Tables
+## Tables
 
 Format the text in your R Markdown file with [Pandoc's Markdown](authoring_pandoc_markdown.html), a set of markup annotations for plain text files. When you render your file, Pandoc transforms the marked up text into formatted text in your final file format, as below. Try it out with [this file](https://rstudio.cloud/project/181948) on RStudio Cloud.
 
 {{< test-drive url="https://rstudio.cloud/project/181948" >}}
-
-## Source editing mode
-
-![](markdown-1-markup.png)
-
 
