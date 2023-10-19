@@ -5,8 +5,10 @@ format: html
 
 ```{r}
 #| include: false
+
 library(paletteer)
 library(ggplot2)
+
 ggplot2::theme_set(theme_minimal())
 words <- read.csv("../data/word_summary.csv")
 ```
@@ -18,7 +20,9 @@ We have data on children from `r min(words$age)` to `r max(words$age)` months of
 ```{r}
 #| message: false
 #| out.width: '80%'
-plot <- ggplot(words, aes(x = age, y = produces, color = lemma)) + 
+
+plot <- 
+  ggplot(words, aes(x = age, y = produces, color = lemma)) + 
   geom_smooth(se = FALSE, lwd = .5) +
   geom_point() 
   
