@@ -132,13 +132,14 @@ That will produce an HTML document with the same name as the **Quarto** document
 
 It's here where you can see that the Markdown elements become things like bold and italicized text. That rendered text appears above and below the code and the outputs, just as it was in the **Quarto** document. It's also here where its more apparent that **Quarto** is indeed useful for working with data and also for creating reports.
 
-### What is Quarto?
+### More about Quarto
 
 Quarto is open-source software that helps you develop your code and ideas in one reproducible document. It is designed for anyone who uses code to work with data. You can use Quarto at any stage of an analysis project, any time you want to develop code and ideas alongside each other.
 
 Start a Quarto project if you want to:
 
 ::: {layout="[60,-5,35]"}
+
 -   Save, execute, and explain your code, all in the same place. Develop your code and ideas in one reproducible document.
 
 -   Transform your code into polished and professional data products---reports, dashboards, websites, slides, even books. Knit plots, tables, and results together with narrative text, and create analyses ready to be shared.
@@ -149,7 +150,9 @@ Start a Quarto project if you want to:
 ### What is a `.qmd` file?
 
 ::: {layout="[50,50]"}
+
 ::: column
+
 Every Quarto project starts with a Quarto file that has the extension `.qmd`.\
 \
 This particular one analyzes children's early words, but every `.qmd` includes the same three basic elements inside:\
@@ -159,6 +162,7 @@ This particular one analyzes children's early words, but every `.qmd` includes t
 -   Code cells in gray between two fences of ```` ``` ````, written with R or another programming language.
 
 You can use all three elements to develop your code and ideas in one reproducible document.
+
 :::
 
 ![](img/01-source.png)
@@ -177,40 +181,19 @@ In the rest of this primer, we'll focus on using **Quarto** to create `.qmd` doc
 
 ## Developing Code
 
-::: {layout="[50,50]"}
+The code inside your Quarto documents will often start small, then grow as you work.  It is totally natural to use your `.qmd` as a scratchpad to develop code. Many users find that using `.qmd` files helps them 'code while thinking'. 
 
-::: column
-The code inside your Quarto documents will often start small, then grow as you work. 
-\
-\
-It is totally natural to use your `.qmd` as a scratchpad to develop code. Many users find that using `.qmd` files helps them "code while thinking."
-\
-\
-`.qmd` files are designed to be used interactively in RStudio. You can use RStudio to test your code one code cell at a time, which we'll show now.
-:::
+Also, `.qmd` files are designed to be used interactively in **RStudio**. You can use **RStudio** to test your code one code cell at a time, which we'll show now.
 
 ![Hedgehog developing a new Quarto file, art by Allison Horst](img/pattern.png)
-:::
-
 
 ### Running code cells
 
-::: {layout="[50,50]"}
+If you take everything from the `.qmd` given above and create a new `.qmd` in **RStudio**, you can experiment with running the code. For every gray code cell, you'll notice a green arrow on the right: ![](img/run-button.png)
 
-::: column
-For every gray code cell, you'll notice a green arrow on the right: ![](img/run-button.png)
+When you click the *run* button, the code is evaluated and the output will appear. If you run the second code cell after the first, it also works! This is because RStudio is running your code cells in your global environment, so it finds any objects already assigned.
 
-
-When you click "Run Current Chunk", the code is sent straight to your console. 
-
-If you run the second code cell after the first, it also works! This is because RStudio is running your code cells in your global environment, so it finds the `words` dataframe.
-
-Results like plots and tables are appear inline in your document- but don't get confused, your source `.qmd` file still has not changed.
-:::
-
-
-:::
-
+Results like plots and tables are appear inline in your document. The cool thing about this is that your source `.qmd` file won't change on the basis of the output.
 
 ### Adding new code cells
 
@@ -226,52 +209,31 @@ Now let's add a new code cell. You can insert code cells in any of three ways:
 + type ` ```{r} ` and ` ``` ` (the symbols are backticks)
 :::
 
-
 :::
-
-
-### Editing code cells
-
-Let's try a different color palette, available through a package called [`paletteer`](https://emilhvitfeldt.github.io/paletteer/), which you can install from CRAN:
-
-```r
-install.packages("paletteer")
-```
-
-
-The main differences here are:
-
-1. We reorganized our code cells so that all packages are loaded in the first code cell, and
-1. We used the `scale_color_paletteer_d()` function from the `paletteer` package to try out a new color palette.
-
 
 ### Setting up your panes
 
 ::: {layout="[50,50]"}
 
 ::: column
-In RStudio, you can remove the inline preview in RStudio, and instead send your code output to the console. 
+In **RStudio**, you can remove the inline preview for a code cell. So, instead of the output appearing right below a code cell, the output will appear in the Viewer pane. 
 \
 \
-This can be done as a global setting in RStudio by going to **RStudio > Preferences > R Markdown**.
+This can be done as a global setting in RStudio by going to **Tools > Global Options > R Markdown**. On that options page, un-check the box that says *Show output inline for all R Markdown documents*. Don't worry if you're using **Quarto**, this setting applies for those such as well. 
 \
 \
-On that options page, uncheck the box shown on the right. 
-\
-\
-Scroll down and click the "Apply" button for this setting to take effect.
+Hit the "Apply" button for this setting to take effect.
 :::
 
 ![](img/ide-inline.png)
+
 :::
 
-
-
-Your workspace in RStudio then would look something like this:
+Your workspace in **RStudio** should then look something like this:
 
 ![](img/ide-console.png)
 
-In this section, we showed how you can develop Quarto documents in RStudio, one code cell at a time. A `.qmd` file can be used to both save and execute code, and to create a reproducible record of what you did and how you did it. How to "knit" this record is up next.
+In this section, we showed you how to develop **Quarto** documents in **RStudio**, one code cell at a time. A `.qmd` file can be used to both save and execute code, and to create a reproducible record of what you did and how you did it.
 
 ## Rendering
 
@@ -286,23 +248,24 @@ Quarto is designed to keep your source code separate from your output. Why? Beca
 ::: column
 The file extension `.qmd` makes your file **executable**, which means that this file can be used to both save *and* execute code. Here is a code cell:
 
-
 ```{r}
 #| fenced: true
 1 + 1
 ```
 
-
-Any output your code produces like tables, plots, or other results can be included when you render your document. This process is called **rendering**, because you are executing code and putting the output back into the document. There is a special button for it in RStudio that looks like this: ![](img/render-btn.png)
+Any output your code produces like tables, plots, or other results can be included when you render your document. This process is called **rendering**, because you are executing code and putting the output back into the document. There is a special button for it in **RStudio** that looks like this: ![](img/render-btn.png).
 :::
 
 :::
 
+:::{.callout-note}
+## Keyboard shortcuts
 
 NOTE: You may also use keyboard shortcuts to knit:
 
 -   `Ctrl` + `Shift` + `K` on Windows
 -   `Cmd` + `Shift` + `K` on Mac
+:::
 
 ### The output file
 
@@ -310,24 +273,23 @@ NOTE: You may also use keyboard shortcuts to knit:
 
 ::: column
 
-When we render, Quarto generates a new file that now contains four elements: 
+When we render that *Early Words* `.qmd`, Quarto generates a new file that now contains four elements: 
 
--   Metadata at the top (we see the title)
+1. Metadata at the top (we see the title)
 
--   Narrative text
+2. Narrative text
 
--   A code cell (but we only see one...)
+3. Code cell (but we only see one...)
 
--   Results (a plot!) 
-
+4. Results (a plot!)
 
 :::
 
 ![](img/01-output.png)
+
 :::
 
-
-
+The great thing about **Quarto** is that it can render the same source document to a multiple of different output formats.
 
 ### The output format
 
@@ -335,7 +297,7 @@ When we render, Quarto generates a new file that now contains four elements:
 
 ::: column
 
-This output file is an HTML document. This is a type of output, which was stored in the document's metadata block:
+This output file made in the previous example is an HTML document. This is a type of `format`, which was stored in the document's metadata block:
 
 ```yaml
 ---
@@ -344,16 +306,17 @@ format: html
 ---
 ```
 
-Output formats are one of the most versatile features of Quarto&mdash;you can use them to build web pages like this one, Word documents, PDFs, multi-page websites, slides, and even write books.
-
+Output formats are one of the most versatile features of Quarto---you can use them to build web pages like the one shown above. Going further, you can create Word documents, PDFs, multi-page websites, slides, and even write books.
 
 :::
 
 ![](img/hedgehog-projects.jpg)
+
 :::
 
+While this example output is a polished and shareable document as is, it's not likely that your work stops there---but it is a great place to start. Next, we'll show how to use **Quarto** to develop your ideas alongside your code using narrative text.
 
-While this is a polished and shareable document as is, it is not likely that your work stops there---but it is a great place to start. Next, we'll show how to use Quarto to develop your ideas alongside your code using narrative text.
+## Writing
 
 ### Narrative text
 
@@ -554,18 +517,7 @@ A few notes on what the above options do:
 
 * `collapse = TRUE` fuses your code cell's code and output together into a single block (by default, they are written to separate blocks).
 
-### Naming and finding code cells
-
-### Caching
-
-If document rendering becomes time consuming due to long computations you can use knitr caching to improve performance. [*Knitr chunk and package options*](http://yihui.name/knitr/options) describes how caching works and the [*Cache examples*](http://yihui.name/knitr/demo/cache/) provide additional details.
-
-See the [R Markdown Reference Guide](https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf) for a complete list of **knitr** options.
-
 ## Figures
-
-Style your figures w/ knitr options (out.width, fig.show, fig.align, fig.asp, fig.cap, fig.alt)
-
 
 ```{r include=FALSE}
 
@@ -589,41 +541,19 @@ Any figure that you create with code in your `.qmd` document will be inserted in
 
 The author makes the graph, saves it as a file, and then copy and pastes it into the final report. This process relies on manual labor. If the data changes, the author must repeat the entire process to update the graph.
 
-### Saving figures
-
 ### Figure placement
 
-::: {layout="[50,50]"}
-
-::: column
 By default, plots show up immediately after the code that prints them. 
 
 For example, the following line plot created with the **ggplot** package will be inserted when you knit.
-:::
 
-::: column
 ```{r}
 ggplot(words, aes(x = age, y = produces, color = lemma)) + 
   geom_smooth(se = FALSE, lwd = .5) +
   geom_point(size = 2)
 ```
-:::
 
-:::
-
-::: {layout="[50,50]"}
-
-::: column
-
-By contrast, the code cell on the right will create a plot object named `line`.
-
-If you ran this code in your console, it would not print the plot until you call the `line` object by name. The same will be true when you knit.
-
-+ `fig.align = 'center' / 'left' / 'right'` aligns the figure in the output
-+ `fig.show = 'hide' / 'hold'` hides plots entirely, or holds printing until the end of a code cell
-:::
-
-::: column
+By contrast, the code cell on the below will create a plot object named `line`. If you ran this code in your console, it would not print the plot until you call the `line` object by name. The same will be true when you knit.
 
 ```{r}
 line <- 
@@ -635,41 +565,38 @@ line <-
 ```{r}
 line
 ```
-:::
 
-:::
+There are two really handy display options for figures:
 
-### Figure size 
+- `fig.align = 'center' / 'left' / 'right'` aligns the figure in the output
+
+- `fig.show = 'hide' / 'hold'` hides plots entirely, or holds printing until the end of a code cell
+
+You never know when you'll never options like this but when you're ready for them, they're there!
+
+### Figure sizing
 
 It can often be hard to get your figures to show up in the right size and place in your knitted output. Some code cell options that help with this are:
 
-+ `out.width = '50%'` allows you resize a plot (here, shrunk to half its original size; for full width, set to `'100%'`)
+- `out.width = '50%'` allows you resize a plot (here, shrunk to half its original size; for full width, set to `'100%'`)
 
-+ `fig.asp = 0.618` to control the ratio of height to width (this is the golden ratio, but any number will do: < 1 will be more wide than tall) 
-
+- `fig.asp = 0.618` to control the ratio of height to width (this is the golden ratio, but any number will do: < 1 will be more wide than tall) 
 
 A neat trick you can use by combining these options is to place two figures side-by-side:
 
 ````
-```{r out.width='50%', fig.show='hold'}`r ''`
+```{r out.width='40%', fig.show='hold'}`r ''`
 plot1
 plot2
 ```
 ````
 
-```{r out.width='50%', fig.show='hold', fig.align='default'}
+```{r out.width='40%', fig.show='hold', fig.align='default'}
 line
 rose
 ```
 
-### Figure captions & alt text
+### Figure captions and alt text
 
-+ `fig.cap = "Oh caption, my caption!"` produces a figure caption; this will change the figure from inline to "floating".
-+ `fig.alt = "Informative alt text"` produces alt text for a figure, meant for screen readers.
-
-## Tables
-
-Format the text in your R Markdown file with [Pandoc's Markdown](authoring_pandoc_markdown.html), a set of markup annotations for plain text files. When you render your file, Pandoc transforms the marked up text into formatted text in your final file format, as below. Try it out with [this file](https://rstudio.cloud/project/181948) on RStudio Cloud.
-
-{{< test-drive url="https://rstudio.cloud/project/181948" >}}
-
+- `fig.cap = "Oh caption, my caption!"` produces a figure caption; this will change the figure from inline to "floating".
+- `fig.alt = "Informative alt text"` produces alt text for a figure, meant for screen readers.
