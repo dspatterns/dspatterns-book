@@ -1,14 +1,11 @@
-## Hello **Quarto**
+# Primer II: Quarto {.unnumbered}
 
-```{r}
-#| code-line-numbers: true
-#| warning: false
-#| message: false
+```{r setup, include=FALSE, echo=FALSE}
 library(tidyverse)
 library(gt)
 ```
 
-https://jthomasmock.github.io/quarto-2hr-webinar/
+## Hello Quarto!
 
 > tl;dr: - **Quarto** is a way to run R code and create a report from a combination of prose and code.
 
@@ -33,7 +30,6 @@ tribble(
   "`subscript~2~ / superscript^2^`",          "subscript<sub>2</sub> / superscript<sup>2</sup>",
   "`[link](https://www.rstudio.com)`",        "[link](https://www.rstudio.com)",
   "`inline equation: $E=mc^2$`",              "inline equation: $E=mc^2$",
-  "`image: ![]()`",                           "image: ![]()",
   "`# Biggest Heading`",                      "# Biggest Heading",
   "`###### Smallest Heading`",                
   "<span style='font-size:16px;'>Smallest Heading</span>",
@@ -51,7 +47,11 @@ tribble(
     a = "Write this down as Markdown...",
     b = "...get this in HTML form"
   ) |>
-  tab_options(table.width = pct(100)) |>
+  tab_options(
+    table.width = pct(100),
+    quarto.disable_processing = FALSE,
+    quarto.use_bootstrap = FALSE
+  ) |>
   opt_css(
     css = "
     #md_ref code {
@@ -60,11 +60,9 @@ tribble(
   )
 ```
 
-<br>
+The prose portion of **Quarto** (i.e., *not* the R code) is the default text entry type. The R code is run inside code chunks, which are marked off areas (with three backticks: ```) in the document. The schematic below shows what an R code cell looks like and what controls are available in **Quarto**.
 
-All of the lessons in this book will incorporate **Quarto** because it really is a great approach for running all R code in data analysis and visualization contexts. The prose portion of **Quarto** (i.e., *not* the R code) is the default text entry type. The R code is run inside code chunks, which are marked off areas (with three backticks: ```) in the document. The schematic in @fig:rmarkdown-annotation shows what an R code chunk looks like and what controls are available in **Quarto**.
-
-![A simple reference for Markdown. The text on the left will become the HTML on the right after an **Quarto** document is *knitted*.](../appendix-figures/82-starting-with-r/figure-rmarkdown-annotation.png){#fig:rmarkdown-annotation}
+![](../appendix-figures/82-starting-with-r/figure-rmarkdown-annotation.png){#fig:rmarkdown-annotation}
 
 Aside from reproducibility, the finished **Quarto** document can be rendered to a self-contained HTML file, to a Word document, to a various presentation types including Powerpoint, or to a PDF file. There are lots of ways to customize what the rendered document will look like (e.g., hiding code for non-technical audiences, adding HTML display elements, etc.), so, the analysis can double as a deliverable report. This will undoubtedly save you time. If ever the input data should change, the report could be run again and updated, usually with minimal (if any) modification. That's one of the features of reproducible reporting.
   
@@ -85,7 +83,7 @@ Let's walk through a simple example of how to use **Quarto** in RStudio. You pro
 
 ![](../appendix-figures/82-starting-with-r/column-rmarkdown_walkthrough_3.png)
 
-**STEP 3**. We should delete everything in this default document except for the useful YAML Front Matter (i.e., the text enclosed by three hyphens). Then save the document as an .Rmd file. Saving is necessary before rendering and is generally considered a good practice (though RStudio will always keep your unsaved documents across sessions).
+**STEP 3**. We should delete everything in this default document except for the useful YAML Front Matter (i.e., the text enclosed by three hyphens). Then save the document as an .qmd file. Saving is necessary before rendering and is generally considered a good practice (though RStudio will always keep your unsaved documents across sessions).
   
 <hr>
 
@@ -121,12 +119,55 @@ The Markdown text for below the code chunk can be:
 For more information on this dataset, use `help(airquality)` in the R console.
 ```
 
-Inside the IDE, this just looks like plaintext with some highlighting applied when using asterisks or other Markdown elements. Let's render the document by pressing the *Knit* button that is on the toolbar.
+Inside the IDE, this just looks like plaintext with some highlighting applied when using asterisks or other Markdown elements. Let's render the document by pressing the *Render* button that is on the toolbar.
 
 <hr>
 
-That will produce an HTML document with the same name as the **Quarto** document (in the directory where the .Rmd file was saved) and the process opens a preview window with the HTML report (@fig:rmarkdown-html-output).
+That will produce an HTML document with the same name as the **Quarto** document (in the directory where the .qmd file was saved) and the process opens a preview window with the HTML report.
 
-![The rendered HTML document based on the **Quarto** document. The preview window provides a way to easily look over the output initiated by a *Knit*.](../appendix-figures/82-starting-with-r/figure-rmarkdown-html-output.png){#fig:rmarkdown-html-output}
+![The rendered HTML document based on the **Quarto** document. The preview window provides a way to easily look over the output initiated by a *Render*.](../appendix-figures/82-starting-with-r/figure-rmarkdown-html-output.png){#fig:rmarkdown-html-output}
 
 It's here where you can see that the Markdown elements become things like bold and italicized text. That rendered text appears above and below the code and the outputs, just as it was in the **Quarto** document. It's also here where its more apparent that **Quarto** is indeed useful for working with data and also for creating reports.
+
+## What is Quarto?
+
+Quarto is open-source software that helps you develop your code and ideas in one reproducible document. It is designed for anyone who uses code to work with data. You can use Quarto at any stage of an analysis project, any time you want to develop code and ideas alongside each other.
+
+Start a Quarto project if you want to:
+
+::: {layout="[60,-5,35]"}
+-   Save, execute, and explain your code, all in the same place. Develop your code and ideas in one reproducible document.
+
+-   Transform your code into polished and professional data products---reports, dashboards, websites, slides, even books. Knit plots, tables, and results together with narrative text, and create analyses ready to be shared.
+
+![A crafty hedgehog knitting a sock, art by Allison Horst](img/hedgehog.png)
+:::
+
+## What is a `.qmd` file?
+
+::: {layout="[50,50]"}
+::: column
+Every Quarto project starts with a Quarto file that has the extension `.qmd`.\
+\
+This particular one analyzes children's early words, but every `.qmd` includes the same three basic elements inside:\
+
+-   A block of metadata at the top, between two fences of `---`s. This is written in [YAML](https://learnxinyminutes.com/docs/yaml/).
+-   Narrative text, written in [Markdown](https://commonmark.org/help/tutorial/).
+-   Code chunks in gray between two fences of ```` ``` ````, written with R or another programming language.
+
+You can use all three elements to develop your code and ideas in one reproducible document.
+:::
+
+![](img/01-source.png)
+:::
+
+## How do I create a `.qmd` file?
+
+Here is the plain text version of the same `.qmd` document, which you can copy and paste into a new document:
+
+```{verbatim, file="fragments/doc.qmd"}
+```
+
+**Quarto** helps you create dynamic documents that combine code, rendered output (such as figures), and markdown-formatted text. It was developed by software engineers at Posit, so it works well with the **RStudio** IDE, which is our IDE of choice for using **Quarto** with code written in R.
+
+In the rest of this primer, we'll focus on using **Quarto** to create `.qmd` documents that integrate narrative text, code, and its output. While **Quarto** allows for many different kinds of output, we will use HTML documents. But the possibilities are endless 😃 In fact, this book was also written in **Quarto**, and its full source is publicly available in the GitHub repository: <https://github.com/dspatterns/dspatterns-book>.

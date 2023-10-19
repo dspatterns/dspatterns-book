@@ -32,8 +32,9 @@ book:
         - m-onboarding/authors.qmd
         - m-onboarding/tools.qmd
     - "---"
-    - n-primer-coding/01-hello-r.qmd
+    - n-primer-coding/01-quick-start.qmd
     - "---"
+    - o-primer-coding/01-hello-quarto.qmd
     - part: "Primer II: Quarto"
       chapters:
         - o-primer-quarto/01-hello-quarto.qmd
