@@ -42,7 +42,7 @@ book:
         - p01-mvp/02-data-wrangling.qmd
         - p01-mvp/03-data-viz.qmd
     - "---"
-    - part: "Part 2: Local Data Patterns"
+    - part: "Part 2: Data Management Patterns"
       chapters:
         - p02-data/01-projects.qmd
         - p02-data/02-import-data-first-time.qmd
