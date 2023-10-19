@@ -13,7 +13,7 @@ library(tidyr)
 library(glue)
 ```
 
-In this chapter we explore the pattern of taking changing data and dependably making great looking tables. We'll first explore a dataset and try out some data manipulation that gets us close to what we need. That working code will be developed into a reusable function and some documentation will be written to explain what that function does and how we can use it. Finally, we'll take a look at basic some ways that function could be stored and used for generating a graphic that could be used in a report or presentation. This sort of thing is often part of a larger data sharing workflow. Getting this pattern down can make data sharing in an organization go much more smoothly, giving you the confidence to scale up the approach to multiple streams of data coming in, and generating multiple tabular data products to different audiences.
+In this chapter we explore the pattern of taking changing data and dependably making great looking tables: in *batch* mode. We'll first explore a dataset and try out some data manipulation that gets us close to what we need. That working code will be developed into a reusable function and some testing will be done to give us confidence it won't fail. Finally, we'll take a look at basic some ways that function could be stored and used for generating a graphic that could be used in a report or presentation. This sort of thing is often part of a larger data sharing workflow. Getting this pattern down can make data sharing in an organization go much more smoothly, giving you the confidence to scale up the approach to multiple streams of data coming in, and generating multiple tabular data products to different audiences.
 
 We’ll need a few packages loaded in for this chapter:
 

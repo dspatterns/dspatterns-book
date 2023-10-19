@@ -1,5 +1,5 @@
 ---
-title: "Batch Styling of Plots"
+title: "Batch Creation of Plots"
 ---
 
 {{< include ../_patterns.qmd >}}
@@ -15,7 +15,7 @@ library(glue)
 library(patchwork)
 ```
 
-In this chapter, we will apply styling to different plots. We endeavor to do it in a way that doesn't require us to type out all the different options each and every time. We'll do this by making styling functions that work with **ggplot**. To get this going, a dataset will be explored and we'll arbitrarily try out different forms of styling. Once we have plots that look good, the code will be developed into a reusable function. We want to be able to use that function consistently in our workflow, so, documentation will be written to explain what that function does and, importantly, how it is used.
+In this chapter, we will look at the *batch* creation of plots. We endeavor to do it in a way that doesn't require us to type out all the different options each and every time. We'll do this by making functions that take in data and use **ggplot** under the hood. To get this going, a dataset will be explored and we'll arbitrarily try out different forms of plotting and styling. Once we have plots that look good, the code will be developed into a reusable function. We want to have others be able to use that function consistently their own workflows, so, we'll test it thoroughly before handing it off!
 
 We’ll need a few packages loaded in for this chapter:
 

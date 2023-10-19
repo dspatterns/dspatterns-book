@@ -24,7 +24,7 @@ book:
   chapters:
     - index.qmd
     - "---"
-    - part: "Onboarding patterns"
+    - part: "Onboarding Patterns"
       chapters:
         - m-onboarding/patterns.qmd
         - m-onboarding/chapters.qmd
@@ -54,18 +54,18 @@ book:
         - p01-mvp/02-data-wrangling.qmd
         - p01-mvp/03-data-viz.qmd
     - "---"
-    - part: "Part 2: Workflow patterns"
+    - part: "Part 2: Workflow Patterns"
       chapters:
         - p02-workflow/01-projects.qmd
         - p02-workflow/02-github.qmd
     - "---"
-    - part: "Part 3: Local data patterns"
+    - part: "Part 3: Local Data Patterns"
       chapters:
         - p03-import/01-import-data-first-time.qmd
         - p03-import/02-import-data-next-time.qmd
         - p03-import/03-import-data-formats.qmd
     - "---"
-    - part: "Part 4: Aggregation patterns"
+    - part: "Part 4: Aggregation Patterns"
       chapters:
         - p04-aggregate/01-careful-counting.qmd
         - p04-aggregate/02-rolling-up-data.qmd
@@ -73,10 +73,10 @@ book:
         - p04-aggregate/04-making-datasets-longer.qmd
         - p04-aggregate/05-making-datasets-wider.qmd
     - "---"
-    - part: "Part 5: Batch mode"
+    - part: "Part 5: Batch Patterns"
       chapters:
-        - p05-batch/01-batch-style.qmd
-        - p05-batch/02-batch-create.qmd
+        - p05-batch/01-batch-plots.qmd
+        - p05-batch/02-batch-tables.qmd
     - "---"
   appendices:
     - q-appendix/86-tidying-data-for-analysis.qmd
