@@ -171,3 +171,585 @@ Here is the plain text version of the same `.qmd` document, which you can copy a
 **Quarto** helps you create dynamic documents that combine code, rendered output (such as figures), and markdown-formatted text. It was developed by software engineers at Posit, so it works well with the **RStudio** IDE, which is our IDE of choice for using **Quarto** with code written in R.
 
 In the rest of this primer, we'll focus on using **Quarto** to create `.qmd` documents that integrate narrative text, code, and its output. While **Quarto** allows for many different kinds of output, we will use HTML documents. But the possibilities are endless 😃 In fact, this book was also written in **Quarto**, and its full source is publicly available in the GitHub repository: <https://github.com/dspatterns/dspatterns-book>.
+
+## Develop code
+
+::: {layout="[50,50]"}
+
+::: column
+The code inside your Quarto documents will often start small, then grow as you work. 
+\
+\
+It is totally natural to use your `.qmd` as a scratchpad to develop code. Many users find that using `.qmd` files helps them "code while thinking."
+\
+\
+`.qmd` files are designed to be used interactively in RStudio. You can use RStudio to test your code one chunk at a time, which we'll show now.
+:::
+
+![Hedgehog developing a new Quarto file, art by Allison Horst](img/pattern.png)
+:::
+
+
+
+
+## Run code chunks
+
+::: {layout="[50,50]"}
+
+::: column
+For every gray code chunk, you'll notice a green arrow on the right: ![](img/run-button.png)
+
+
+When you click "Run Current Chunk", the code is sent straight to your console. 
+
+If you run the second chunk after the first, it also works! This is because RStudio is running your code chunks in your global environment, so it finds the `words` dataframe.
+
+Results like plots and tables are appear inline in your document- but don't get confused, your source `.qmd` file still has not changed.
+:::
+
+
+:::
+
+
+## Add new code chunks
+
+::: {layout="[50,50]"}
+
+::: column
+Now let's add a new code chunk. You can insert chunks any of three ways:
+
++ use the Add Chunk ![](img/chunk-button.png) button in the editor toolbar
+
++ use the keyboard shortcut **Ctrl + Alt + I** (OS X: **Cmd + Option + I**)
+
++ type ` ```{r} ` and ` ``` ` (the symbols are backticks)
+:::
+
+
+:::
+
+
+## Edit code chunks
+
+Let's try a different color palette, available through a package called [`paletteer`](https://emilhvitfeldt.github.io/paletteer/), which you can install from CRAN:
+
+```r
+install.packages("paletteer")
+```
+
+
+The main differences here are:
+
+1. We reorganized our code chunks so that all packages are loaded in the first code chunk, and
+1. We used the `scale_color_paletteer_d()` function from the `paletteer` package to try out a new color palette.
+
+
+## Set up your panes
+
+::: {layout="[50,50]"}
+
+::: column
+In RStudio, you can remove the inline preview in RStudio, and instead send your code output to the console. 
+\
+\
+This can be done as a global setting in RStudio by going to **RStudio > Preferences > R Markdown**.
+\
+\
+On that options page, uncheck the box shown on the right. 
+\
+\
+Scroll down and click the "Apply" button for this setting to take effect.
+:::
+
+![](img/ide-inline.png)
+:::
+
+
+
+Your workspace in RStudio then would look something like this:
+
+![](img/ide-console.png)
+
+## What's next?
+
+In this section, we showed how you can develop Quarto documents in RStudio, one code chunk at a time. A `.qmd` file can be used to both save and execute code, and to create a reproducible record of what you did and how you did it. How to "knit" this record is up next.
+
+
+# Rendering
+
+```{r setup, include=FALSE, echo=FALSE}
+library(dspatterns)
+```
+
+
+Quarto is designed to keep your source code separate from your output. Why? Because you will want to save your source code as a readable record of what you did. The source code can then be used to "play back" that record and (re-)produce the output. To be reproducible though, you have to first produce something---let's render this `.qmd` to produce an output file.
+
+## Knitting the source file
+
+::: {layout="[30,-10,60]"}
+
+![](img/rmarkdown_hedgehog.png)
+
+::: column
+The file extension `.qmd` makes your file **executable**, which means that this file can be used to both save *and* execute code. Here is a code chunk:
+
+
+```{r}
+#| fenced: true
+1 + 1
+```
+
+
+Any output your code produces like tables, plots, or other results can be included when you render your document. This process is called **rendering**, because you are executing code and putting the output back into the document. There is a special button for it in RStudio that looks like this: ![](img/render-btn.png)
+:::
+
+:::
+
+
+NOTE: You may also use keyboard shortcuts to knit:
+
+-   `Ctrl` + `Shift` + `K` on Windows
+-   `Cmd` + `Shift` + `K` on Mac
+
+## The output file
+
+::: {layout="[50,50]"}
+
+::: column
+
+When we render, Quarto generates a new file that now contains four elements: 
+
+-   Metadata at the top (we see the title)
+
+-   Narrative text
+
+-   A code chunk (but we only see one...)
+
+-   Results (a plot!) 
+
+
+:::
+
+![](img/01-output.png)
+:::
+
+
+
+
+## The output format
+
+::: {layout="[50,50]"}
+
+::: column
+
+This output file is an HTML document. This is a type of output, which was stored in the document's metadata block:
+
+```yaml
+---
+title: "Early words"
+format: html
+---
+```
+
+Output formats are one of the most versatile features of Quarto&mdash;you can use them to build web pages like this one, Word documents, PDFs, multi-page websites, slides, and even write books.
+
+
+:::
+
+![](img/hedgehog-projects.jpg)
+:::
+
+
+
+## What's next?
+
+While this is a polished and shareable document as is, it is not likely that your work stops there---but it is a great place to start. Next, we'll show how to use Quarto to develop your ideas alongside your code using narrative text.
+
+
+
+Everything that is not code in your `.qmd` is called narrative text, and can be styled with Markdown. Markdown is a plain text formatting syntax, which means everything you see in the file itself can be typed with a normal keyboard. Below is an example:
+
+
+## Add structure
+
+You can use Markdown to organize your `.qmd` file with headings. Headings are useful for organizing your document into sections, and with Markdown formatting you can have up to 6 types/sizes of headers. Use a hash symbol like `#` before the label to create a new header.
+
+drop-down IDE navigator
+
+outline pane
+
+## Add formatting
+
+All narrative text in your `.qmd` file can be formatted to add **bold**, *italics*, bulletted lists, numbered lists, superscripts<sup>1</sup>, and subscripts<sub>1</sub>.
+
+
+
+## How it works
+
+Thus far, we've shown how you can use Quarto with RStudio to interactively develop code inside an `.qmd` document. Next, we showed how you can also take the same `.qmd` document and knit it to make a single output file, like a simple HTML page. So, you have learned how to fill up an `.qmd` file with your good ideas, code, and data. How does it all actually work?
+
+```{r echo=FALSE, out.width="100%"}
+knitr::include_graphics("img/quarto-how.png")
+```
+
+
+## The **knitr** package
+
+::: {layout="[60,-5,35]"}
+
+::: column
+When you click the "Render" button, **Quarto** detects your first code chunk using the R engine, then feeds the `.qmd` file to an R package called **knitr** (<https://yihui.org/knitr/>) as the code execution engine. 
+\
+\
+The **knitr** package executes all of the code chunks. Quarto creates a new markdown (`.md`) document, which then includes your good ideas plus your code *and* its **knitr**-generated output (figures, results, tables, etc.). 
+:::
+
+![](img/knitr.png)
+:::
+
+
+
+So, **knitr** turns your `.qmd` into an `.md`. This file is no longer executable, but it is still a plain text document without any formatting. Because of this, the actual `.md` file is temporary and not kept by default.
+
+::: {layout="[50,50]"}
+### `.qmd`
+
+### .`md`
+::: 
+
+
+If you want to keep a copy of the Markdown file after rendering, you can do so using the `keep-md` option:
+
+```yaml
+---
+format: html
+execute:
+  keep-md: true
+---
+```
+
+This is documented on the Quarto website (<https://quarto.org/docs/computations/execution-options.html#intermediates>).
+
+## Pandoc
+
+::: {layout="[60,-5,35]"}
+
+
+::: column
+The markdown file generated by **knitr** is then processed by a tool called Pandoc (<https://pandoc.org/>).
+\
+\
+Pandoc is a free and open-source document converter. **Quarto** calls Pandoc for you to create the finished output file. Pandoc also transforms your Markdown-flavored text into formatted text in your final file format.
+\
+\
+If you choose a `format` in your YAML, this is passed to Pandoc to convert the `.md` into the right format. This is the formatted document that you'll want to read and share with others. 
+
+:::
+
+![](img/pandoc.png)
+
+::: 
+
+
+three columns: html / word / pdf
+
+## Render from the command line
+
+This may all sound complicated, but **Quarto** and RStudio makes this simpler for you by wrapping it all up with the "Render" button.
+
+If you don't use RStudio, or if you simply prefer using the command line, you can also render a `.qmd` file from the R console using the **quarto** package.
+
+```{r eval=FALSE}
+library(quarto)
+quarto_render("early-words.qmd")
+```
+
+The `quarto_render()` function will pass your `.qmd` file through the same process described above with **knitr** and Pandoc.
+
+## What's next?
+
+One of the most powerful features of the **knitr** package is how it helps you control how your code and output look in your final finished product. Want to hide some gnarly-looking code that nevertheless makes a beautiful plot? Want to save all the plots you made in a directory when you knit? Read on to learn about **knitr** code chunk options for figures.
+
+
+# Code Cells
+
+We just learned about how the **knitr** package is responsible for both executing code and knitting the output back into the document. The **knitr** package has some special code [chunk options](http://yihui.name/knitr/options/) to control how your code both works and looks. 
+
+## Using chunk options
+
+All **knitr** chunk options are placed between the curly braces `{}` on the first line of each code chunk. This line is called the chunk header, and it must be a single line without line breaks.
+
+::: {layout="[50,50]"}
+
+::: column
+The option name goes on the left, with the value on the right. You may include spaces around the equal sign if you wish.
+:::
+
+::: column
+````
+```{r echo=FALSE}`r ''`
+...code goes here...
+```
+````
+:::
+
+:::
+
+
+
+::: {layout="[50,50]"}
+
+::: column
+Multiple options can be separated by commas. You may include or exclude extra spaces around the comma, too.
+:::
+
+::: column
+````
+```{r echo=FALSE, error=TRUE}`r ''`
+...code goes here...
+```
+````
+:::
+
+:::
+
+
+Careful! The `r` part is the code engine. While other engines are possible, when you edit the chunk header, be sure not to touch the code engine.
+
+In total, there are `r length(knitr::opts_chunk$get())` options, so we'll highlight those with the highest payoff. Chunk options specific to [controlling figures](/start/07-figures) are covered in the next section.
+
+## Control what appears in the output
+
+By default, all source code, output, warnings, and messages are printed faithfully by **knitr** in the output file. The most important **knitr** chunk options help you gain control over what appears in your output when you knit. By combining options, you can have the output display just the code, just the results, both, or neither. For example:
+
+* `echo = FALSE` hides code (but not results) from appearing in the output file. This is a useful way to embed figures.
+* `results = FALSE` hides text results from appearing in the output file (the corollary option for figures is `fig.show = 'hide'`)
+* `message = FALSE` hides messages generated by the chunk from appearing in the output file.
+* `warning = FALSE` hides warnings generated by the chunk from appearing in the output file.
+* `include = FALSE` hides code, results, warnings, and messages from appearing in the output file. The code in the chunk is still executed invisibly, and the results can be used by other chunks.
+
+Each of these options takes `TRUE` or `FALSE` (no quotes) as its input value, with `TRUE` as the default value.
+
+## Control how code is executed
+
+Two additional code chunk options help you control how your code is executed *when you knit*. Note that these do not affect how your code chunk run interactively in RStudio.
+
+* `error = TRUE` allows the knitting process to keep going if the chunk produces an error.
+* `eval = FALSE` skips executing code in a chunk, often used for chunks where the code calls functions like `install.packages()` or `View()`, which should not be run when you knit.
+
+If you find yourself with an `.Rmd` where you want to set `error=TRUE` or `eval=FALSE` for all remaining code chunks, you may want to insert code chunk strategically using `knit_exit()`. After that chunk, **knitr** will exit the knitting process, and all subsequent chunks will be ignored.
+
+````
+```{r include=FALSE}`r ''`
+knitr::knit_exit()
+```
+
+The rest is scrap work.
+````
+
+## Control your whole document
+
+It can get repetitive to reset chunk options individually, when sometimes you'd like to override the default values for a whole `.Rmd` document. To set global options that apply to every chunk in an `.Rmd`, call `knitr::opts_chunk$set` in a code chunk. 
+
+::: {layout="[50,50]"}
+
+::: column
+The `setup` code chunk affects all code chunks in the same `.Rmd` document. It is called a global chunk option for that reason. 
+
+The chunk option for the `setup` chunk itself is typically `include=FALSE` so that no one sees it but you.
+:::
+
+::: column
+````
+```{r setup, include = FALSE}`r ''`
+knitr::opts_chunk$set(
+  comment = "#>",
+  collapse = TRUE,
+  echo = FALSE,
+  warning = FALSE,
+  message = FALSE
+)
+```
+````
+:::
+
+:::
+
+
+Knitr will treat each option that you pass to `knitr::opts_chunk$set` as a global default that can be overwritten in individual chunk headers. You can (and should) use individual chunk options too, but setting up some nice ones that apply to all code chunks can save you time and can lessen your cognitive load as you develop your code.
+
+A few notes on what the above chunk options do:
+
+* `comment = "#>"` sets the character on the far left of all printed output such that a reader could copy/paste a block of code into their console and run it (that is, the pasted code with printed output will not produce errors).
+
+* `collapse = TRUE` fuses your chunk's code and output together into a single block (by default, they are written to separate blocks).
+
+Below is a side-by-side changing this chunk option for an individual chunk.
+
+## Naming and finding code chunks
+
+## Caching
+
+If document rendering becomes time consuming due to long computations you can use knitr caching to improve performance. [*Knitr chunk and package options*](http://yihui.name/knitr/options) describes how caching works and the [*Cache examples*](http://yihui.name/knitr/demo/cache/) provide additional details.
+
+## What's next
+
+See the [R Markdown Reference Guide](https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf) for a complete list of **knitr** chunk options.
+Style your figures w/ knitr chunk options (out.width, fig.show, fig.align, fig.asp, fig.cap, fig.alt)
+
+
+```{r include=FALSE}
+library(paletteer)
+library(ggplot2)
+knitr::opts_chunk$set(warning=FALSE, message=FALSE)
+
+words <- read.csv(here::here("o-primer-quarto/data/word_summary.csv"))
+
+line <- 
+  ggplot(words, aes(x = age, y = produces, color = lemma)) + 
+  geom_smooth(se = FALSE, lwd = .5) +
+  geom_point(size = 2)  
+
+rose <- 
+  ggplot(words, aes(x = age, y = produces, fill = lemma)) +
+  geom_col(width = 2) +
+  coord_polar() + 
+  theme(axis.text.y = element_blank()) 
+```
+
+
+Any figure that you create with code in your `.Rmd` document will be inserted inline into your knitted output file. Previously, we learned about how the **knitr** package is responsible for both executing code and knitting the output back into the document. When a code chunk produces a figure, **knitr** has some special code chunk options to control how your figure looks. 
+
+ The author makes the graph, saves it as a file, and then copy and pastes it into the final report. This process relies on manual labor. If the data changes, the author must repeat the entire process to update the graph.
+
+## Naming figures
+
+also covered:
++ Organize your code with knitr chunk labels (kebabs, not snakes)
++ setup chunk for setting global options (+ fig.path!)
+
+## Saving figures
+
+## Figure placement
+
+::: {layout="[50,50]"}
+
+::: column
+By default, plots show up immediately after the code that prints them. 
+
+For example, the following line plot created with the **ggplot** package will be inserted when you knit.
+:::
+
+::: column
+```{r}
+ggplot(words, aes(x = age, y = produces, color = lemma)) + 
+  geom_smooth(se = FALSE, lwd = .5) +
+  geom_point(size = 2)
+```
+:::
+
+:::
+
+
+
+::: {layout="[50,50]"}
+
+::: column
+By contrast, the code chunk on the right will create a plot object named `line`.
+
+If you ran this code in your console, it would not print the plot until you call the `line` object by name. The same will be true when you knit.
+
++ `fig.align = 'center' / 'left' / 'right'` aligns the figure in the output
++ `fig.show = 'hide' / 'hold'` hides plots entirely, or holds printing until end of a chunk
+:::
+
+::: column
+
+```{r}
+line <- 
+  ggplot(words, aes(x = age, y = produces, color = lemma)) + 
+  geom_smooth(se = FALSE, lwd = .5) +
+  geom_point(size = 2)
+```
+
+```{r}
+line
+```
+:::
+
+:::
+
+
+
+
+## Figure size 
+
+It can often be hard to get your figures to show up in the right size and place in your knitted output. Some **knitr** chunk options that help with this are:
+
+
++ `out.width = '50%'` allows you resize a plot (here, shrunk to half its original size; for full width, set to `'100%'`)
+
++ `fig.asp = 0.618` to control the ratio of height to width (this is the golden ratio, but any number will do: < 1 will be more wide than tall) 
+
+
+A neat trick you can use by combining these chunk options is to place two figures side-by-side:
+
+````
+```{r out.width='50%', fig.show='hold'}`r ''`
+plot1
+plot2
+```
+````
+
+```{r out.width='50%', fig.show='hold', fig.align='default'}
+line
+rose
+```
+
+
+
+## Figure captions & alt text
+
++ `fig.cap = "Oh caption, my caption!"` produces a figure caption; this will change the figure from inline to "floating".
++ `fig.alt = "Informative alt text"` produces alt text for a figure, meant for screen readers.
+
+
+
+# Tables
+
+Format the text in your R Markdown file with [Pandoc's Markdown](authoring_pandoc_markdown.html), a set of markup annotations for plain text files. When you render your file, Pandoc transforms the marked up text into formatted text in your final file format, as below. Try it out with [this file](https://rstudio.cloud/project/181948) on RStudio Cloud.
+
+{{< test-drive url="https://rstudio.cloud/project/181948" >}}
+
+## Source editing mode
+
+![](markdown-1-markup.png)
+</br>
+
+You can use Pandoc's Markdown to make:
+
+* Headers
+* Lists
+* Links
+* Images
+* Block quotes
+* Latex equations
+* Horizontal rules
+* Tables
+* Footnotes
+* Bibliographies and Citations
+* Slide breaks
+* Italicized text
+* Bold text
+* Superscripts
+* Subscripts
+* Strikethrough text
+
+## Visual editing mode
+
+TODO
+
+Read more about markdown at [Pandoc's Markdown](authoring_pandoc_markdown.html) or consult the quick reference in the [R Markdown Cheatsheet](https://www.rstudio.com/wp-content/uploads/2016/03/rmarkdown-cheatsheet-2.0.pdf).
+
+
+

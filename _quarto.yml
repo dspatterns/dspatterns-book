@@ -34,20 +34,7 @@ book:
     - "---"
     - n-primer-coding/01-quick-start.qmd
     - "---"
-    - o-primer-coding/01-hello-quarto.qmd
-    - part: "Primer II: Quarto"
-      chapters:
-        - o-primer-quarto/01-hello-quarto.qmd
-        - o-primer-quarto/02-source.qmd
-        - o-primer-quarto/03-coding.qmd
-        - o-primer-quarto/04-rendering.qmd
-        - o-primer-quarto/05-writing.qmd
-        - o-primer-quarto/06-how-it-works.qmd
-        - o-primer-quarto/07-chunks.qmd
-        - o-primer-quarto/08-figures.qmd
-        - o-primer-quarto/09-tables.qmd
-        - o-primer-quarto/10-options.qmd
-        - o-primer-quarto/11-formats.qmd
+    - o-primer-quarto/01-hello-quarto.qmd
     - "---"
     - part: "Part 1: MVPs"
       chapters:
