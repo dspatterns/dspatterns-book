@@ -139,7 +139,7 @@ alison <-
 
 -   The second bit `filters` our `babynames` to only keep rows where the `name` is equal to "Alison" (read `==` as *"exactly equal to"*) *or* "Allison" (read `|` as *"or"*.)
 
--   The third bit applies another `filter` to keep only those where sex is female.
+-   The third bit applies another `filter` to keep only those where `sex` is female.
 
 Let's check out the data (in two different ways):
 
@@ -151,7 +151,7 @@ alison
 glimpse(alison)
 ```
 
-Again, if you have sane-looking output here, move along to plotting the data!
+Again, if you have proper-looking output here, move along to plotting the data.
 
 ```{r plot_name_data}
 plot <- 
@@ -165,7 +165,7 @@ Now if you did this right, you will not see your plot! Because we saved the plot
 plot 
 ```
 
-# DIY: Make a New Name Plot
+## DIY: Make a New Name Plot
 
 Edit the code above to create a new dataset. Pick two names to compare how popular they each are (these could be different spellings of your own name, like I did, but you can choose any two names that are present in the dataset). Make the new plot, changing the name of the first argument `alison` in `ggplot()` to the name of your new dataset.
 
