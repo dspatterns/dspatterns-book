@@ -22,7 +22,9 @@ There are many advantages of taking this approach for all of your data analysis 
 
 You may or may not be familiar with **Markdown**, which is a big part of this format. **Markdown** is a text markup language that translates really well to **HTML**. It was created as a very simple way for anybody (i.e., non-programmers) to write in an easy-to-read format that could be converted directly into **HTML**. The following table provides a quick rundown of what typical **Markdown** looks like before and after rendering to **HTML**.
 
-```{r echo=FALSE}
+```{r}
+#| echo: false
+
 tribble(
   ~a,                                         ~b,
   "`Plain text`",                             "Plain text",
