@@ -87,6 +87,8 @@ users_daily |>
 
 This is better, for now we have thousands of users per group. For users across different countries we find that the average play time per day is about the same: 30 minutes. This in itself is interesting. It does mean that users across these groups are equally engaged (and we did have that question answered).
 
+## Understand
+
 We could now look at other metrics to see if there is some variation that is interesting. Let's look at the IAP (in-app purchase) spend and the quantity of ad views. We'll get `mean()` values again, both for the number of IAPs and ads viewed and the amount of revenue earned from both.
 
 ```{r, paged.print=FALSE}
@@ -145,5 +147,17 @@ users_daily_summary_gt <-
 
 users_daily_summary_gt
 ```
+
+Though some may characterize it as prematurely styling a table, it is good to include *as early as possible* things like revised column labels, column spanners, and consistent sizing of columns in a **gt** table. Even though we're not at the sharing stage yet and still understanding the data and the hidden patterns within, basic table improvements through the use of the `fmt_*()` functions, `cols_label()`, `tab_spanner()`, and `cols_width()` do make it easier get an understanding of the data.
+
+From the summary **gt** table we can see that the country has virtually no effect on the average daily play time. However, the average daily revenue from IAP *does* vary according to country; Norway users have an average daily spend of \$48.31 whereas users from India spend an average of \$6.41 daily on in-app purchases. There are also differences in ad revenue across countries, though the revenue gained from ad views is one order of magnitude lower.
+
+
+## Explain
+
+
+
+
+## Share
 
 
