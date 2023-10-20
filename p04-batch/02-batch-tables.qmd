@@ -29,10 +29,10 @@ We're going to get some data from the **intendo** package. This data package con
 
 ```{r}
 #| output: false
-all_revenue <- intendo::all_revenue()
+all_revenue <- all_revenue()
 ```
 
-It's good to have a glimpse of the data, if only to see what's there before doing anything substantial with the dataset:
+It's good to have a glimpse of the data, if only to see what's there before doing anything substantial with the dataset. Let's use `glimpse()` from the **dplyr** package:
 
 ```{r}
 dplyr::glimpse(all_revenue)
