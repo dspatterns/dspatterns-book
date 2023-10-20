@@ -27,12 +27,12 @@ We’ll need a few packages loaded in for this chapter:
 
 ## Explore
 
-We're going to get some data from the **intendo** package. This data package contains synthetic datasets that deal with activity and revenue from an online game. The dataset we want for our examples is called `all_sessions` and that's accessed by using the `all_sessions()` function.
+Let's grab some data from within the **intendo** package. This data package contains synthetic datasets that deal with activity and revenue from an online game. The dataset we want for our examples is called `all_sessions` and that's accessed by using the `all_sessions()` function.
 
 ```{r}
 #| output: false
 #| echo: false
-all_sessions <- intendo::all_sessions()
+all_sessions <- all_sessions()
 ```
 
 Let's have a quick look at the dataset using **dplyr**'s `glimpse()` function. This gives us an idea of what's contained in the dataset, even though we only see a small portion of it:
