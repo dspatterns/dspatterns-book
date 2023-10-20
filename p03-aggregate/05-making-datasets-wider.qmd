@@ -224,6 +224,8 @@ The `ratings_by_series` table shows the viewership for each episode. And the dat
 7. color-coding the data cells (via `data_color()`)
 
 ```{r}
+#| html-table-processing: none
+
 ratings_by_series |>
   gt(rowname_col = "series") |>
   tab_header(
@@ -260,6 +262,8 @@ With this slightly different data and replacement of the `fmt_number()` statemen
 Let's now plot the penguins-based tables. We have two, `penguins_average_mass_by_year` and `penguins_average_mass_by_island`, and they are strikingly similar. Here we'll see that we can make **gt** tables that look decent even when the input tables are super small.
 
 ```{r}
+#| html-table-processing: none
+
 penguins_average_mass_by_year |>
   gt() |>
   tab_header(title = "Average Mass of Penguins on Different Islands") |>
@@ -273,6 +277,8 @@ penguins_average_mass_by_year |>
 
 
 ```{r}
+#| html-table-processing: none
+
 penguins_average_mass_by_island |>
   gt() |>
   tab_header(title = "Average Mass of Penguins in Different Years") |>
@@ -289,6 +295,8 @@ A good thing to do with very small tables is to widen them just a bit with `cols
 With the `illness` dataset treatment performed earlier, we used `clean_names()`. That's nice, but the names are actually better not cleaned when being tabulated. We want labels to look like labels! We can take this all a bit further and take advantage of **gt**'s ability to render units in column labels. To do this, the `test` name will be pasted to the `units` info in a way that includes a line break (with `"<br>"`), and the 'units' part will be enclosed in `"{{"` and `"}}"` (needed by **gt** to interpret this text as 'units notation'). The act of actually interpreting this text in that way is handled by the `cols_label()` statement (the `.process_units = TRUE` part sets this in motion). Here is but one way that re-widened `illness` data can be made into a shareable **gt** table:
 
 ```{r}
+#| html-table-processing: none
+
 illness |>
   dplyr::mutate(test = paste0(test, ",<br>{{", units, "}}")) |>
   dplyr::slice_head(n = 8) |>
@@ -316,7 +324,6 @@ illness |>
     everything() ~ px(120)
   ) |>
   opt_align_table_header(align = "left")
-  
 ```
 
 This presents very nicely! Having the units incorporated into the column labels is beneficial to the user (and you don't have to explain what the numbers mean elsewhere in the table). The table could be further embellished with colorized data cells or explanations of the tests (in the form of footnotes, via `tab_footnote()`).
