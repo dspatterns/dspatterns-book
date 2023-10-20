@@ -199,6 +199,8 @@ While sometimes it's useful to explain things in the prose of the report, other 
 Perhaps the last plot of contestant counts per episode per series might be better presented as a table? Sometimes it's hard to really know until the table is made. We can do that by making use of the `bakers_appeared` column as before, and by pivoting the data to a wide format with `pivot_wider()` (so that we can scan across episodes per each series). Once the table is in the right shape, we then use the `gt()` function (and other functions in **gt**) to construct the summary table.
 
 ```{r}
+#| html-table-processing: none
+
 episode_summary <- 
   episodes |> 
   select(series, episode, bakers_appeared) |>
