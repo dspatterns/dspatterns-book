@@ -109,6 +109,8 @@ users_daily_summary
 The table above probably has the information you need but, even though it is summarized, it is very hard to read. It's very much worth making a **gt** table to better present this summary data. You can organize the `country` column values into the table stub. You could format the values so they are easier to read. And you can color code the values within key columns so that it's all much easier to parse.
 
 ```{r}
+#| html-table-processing: none
+
 users_daily_summary_gt <-
   users_daily_summary |>
   gt(rowname_col = "country") |>
