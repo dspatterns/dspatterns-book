@@ -8,6 +8,8 @@ title: "Rolling Up Data"
 library(dspatterns)
 library(intendo)
 library(dplyr)
+library(gt)
+library(ggplot2)
 ```
 
 Sometimes you have a lot of data. I'm talking many, *many*, rows. In data analysis, summarizing large amounts of data is crucial. It's a commonly use pattern, and this is not a joke. The pattern involves distilling vast quantities of information into shorter representations. Why do this? To make it easier to uncover insights and to draw conclusions. Summaries save time! Communication with summaries is more expressive. Summarized material makes it easier to identify outliers or unexpected patterns.
@@ -16,25 +18,49 @@ We'll make extensive use of the `summarize()` function in **dplyr** to generate 
 
 - **tidyverse**: to use the **dplyr** package
 - **gt**: for making summary tables in a more presentable fashion
+- **intendo**: for the dataset we'll be using (`users_daily`)
 
 ## Explore
 
+Let's obtain some interesting data from the **intendo** package. If you don't already know this package, it contains datasets that deal with activity and revenue from a (non-real) online game. The dataset we want for the forthcoming examples is `users_daily`. We can get it through use of the `users_daily()` function.
+
 ```{r}
-users_daily <- intendo::users_daily()
+#| output: false
+#| echo: false
+users_daily <- users_daily()
 ```
 
-
-average `playtime_day` for all users in January 2015
+Let's take a look at the `users_daily` tibble by printing it out:
 
 ```{r, paged.print=FALSE}
-users_daily |>
+users_daily
+```
+
+To start with the summarizing, we'll first get the mean value of `playtime_day` for all users in January 2015. The dataset encompasses the entire 2015 year, so using the `filter()` function is a good strategy to trim down the data. Let's get a value of the mean play time across all users by every day in the one month we're looking at. We do this with a combination of `group_by()` (grouping by `login_date`) and `summarize()` (taking the mean of `playtime_day`).
+
+```{r, paged.print=FALSE}
+users_daily_playtime <- 
+  users_daily |>
   filter(login_date < "2015-02-01") |>
   group_by(login_date) |>
   summarize(playtime_day = mean(playtime_day))
+
+users_daily_playtime
 ```
 
+We find that right away it's hard to read a tibble, even for summarized data. Since this is a simple table, we could very well make a line plot using **ggplot**.
 
-average `playtime_day` in January 2015
+```{r}
+ggplot(
+  users_daily_playtime,
+  mapping = aes(x = login_date, y = playtime_day)
+) +
+  geom_line()
+```
+
+What this plot tells us is that the average daily playtime across all users in January 2015 is roughly between 30 and 40 minutes. This is interesting but we have a lot more data in `users_daily` that we can use to tease out some even more useful summary info.
+
+Let's get the average `playtime_day` in January 2015, this time creating groups by `country` and getting the number of users in each of these country groups. This is to answer the question: are users from different countries more-or-less equally engaged (or not)?
 
 ```{r, paged.print=FALSE}
 users_daily |>
@@ -47,8 +73,7 @@ users_daily |>
   arrange(desc(n_users))
 ```
 
-
-Too few users, remove the filter for the month and use the whole year:
+We find from looking at the printing of the summary that we have not very many users. Upon splitting the total set of users in January by `country`, we get less than a hundred per country. Because of these low user counts per group, let's choose to remove the `filter()` statement and use the whole year and re-run the summarizing statements:
 
 ```{r, paged.print=FALSE}
 users_daily |>
@@ -60,7 +85,9 @@ users_daily |>
   arrange(desc(n_users))
 ```
 
-For users across different countries we find that the average play time per day is about the same: 30 minutes. This in itself is interesting. But could we look at other metrics to see if there is some variation that is interesting? Let's look at the IAP spend and the amount of ad views:
+This is better, for now we have thousands of users per group. For users across different countries we find that the average play time per day is about the same: 30 minutes. This in itself is interesting. It does mean that users across these groups are equally engaged (and we did have that question answered).
+
+We could now look at other metrics to see if there is some variation that is interesting. Let's look at the IAP (in-app purchase) spend and the quantity of ad views. We'll get `mean()` values again, both for the number of IAPs and ads viewed and the amount of revenue earned from both.
 
 ```{r, paged.print=FALSE}
 users_daily_summary <-
@@ -81,9 +108,9 @@ users_daily_summary
 
 The table above probably has the information you need but, even though it is summarized, it is very hard to read. It's very much worth making a **gt** table to better present this summary data. You can organize the `country` column values into the table stub. You could format the values so they are easier to read. And you can color code the values within key columns so that it's all much easier to parse.
 
-```{r, paged.print=FALSE}
-
-users_daily_summary |>
+```{r}
+users_daily_summary_gt <-
+  users_daily_summary |>
   gt(rowname_col = "country") |>
   fmt_integer(columns = n_users) |>
   fmt_number(
@@ -113,5 +140,8 @@ users_daily_summary |>
     stub() ~ px(120),
     everything() ~ px(65)
   )
+
+users_daily_summary_gt
 ```
+
 
