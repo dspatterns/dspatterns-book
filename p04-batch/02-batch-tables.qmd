@@ -124,6 +124,7 @@ Making a **gt** table from this summary makes for a very presentable deliverable
 
 ```{r}
 #| label: daily-revenue-top5-gt-table
+#| html-table-processing: none
 
 daily_revenue_top5 |>
   gt(rowname_col = "item_name", groupname_col = "date") |>
@@ -345,6 +346,7 @@ This shiny new function is now flexible and it really works! Always test your cu
 
 ```{r}
 #| label: daily-revenue-revised-function-invoke
+#| html-table-processing: none
 
 get_sales_tbl(
   all_revenue,
