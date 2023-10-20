@@ -150,8 +150,7 @@ users_daily_summary_gt
 
 Though some may characterize it as prematurely styling a table, it is good to include *as early as possible* things like revised column labels, column spanners, and consistent sizing of columns in a **gt** table. Even though we're not at the sharing stage yet and still understanding the data and the hidden patterns within, basic table improvements through the use of the `fmt_*()` functions, `cols_label()`, `tab_spanner()`, and `cols_width()` do make it easier get an understanding of the data.
 
-From the summary **gt** table we can see that the country has virtually no effect on the average daily play time. However, the average daily revenue from IAP *does* vary according to country; Norway users have an average daily spend of \$48.31 whereas users from India spend an average of \$6.41 daily on in-app purchases. There are also differences in ad revenue across countries, though the revenue gained from ad views is one order of magnitude lower.
-
+From the summary **gt** table we can see that the country has virtually no effect on the average daily play time. However, the average daily revenue from IAP *does* vary according to country; Norway users have an average daily spend of \$48.31 whereas users from India spend an average of \$6.41 daily on in-app purchases. There are also differences in ad revenue across countries, though the revenue gained from ad views is one order of magnitude lower. What's more intriguing is that the average numbers of IAPs and ads are much the same across the users of the different countries. Since ad views have variations in revenue earned and IAPs come in a wide range of price points, it seems that users of different countries tend to spend differently when it comes to IAPs.
 
 ## Explain
 
