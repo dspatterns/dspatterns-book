@@ -1,33 +1,117 @@
-# Rolling Up Data
+---
+title: "Rolling Up Data"
+---
 
 {{< include ../_patterns.qmd >}}
 
 ```{r setup, include=FALSE, echo=FALSE}
 library(dspatterns)
-library(palmerpenguins)
+library(intendo)
 library(dplyr)
 ```
 
+Sometimes you have a lot of data. I'm talking many, *many*, rows. In data analysis, summarizing large amounts of data is crucial. It's a commonly use pattern, and this is not a joke. The pattern involves distilling vast quantities of information into shorter representations. Why do this? To make it easier to uncover insights and to draw conclusions. Summaries save time! Communication with summaries is more expressive. Summarized material makes it easier to identify outliers or unexpected patterns.
 
-Notes: 
+We'll make extensive use of the `summarize()` function in **dplyr** to generate summarized tables (from larger tables). And we'll use some larger datasets available in the packages you know and love. Here's what we'll be using:
 
-- focusing on explaining data by pulling out data bits from objects (e.g., summary stats)
-- feature gtsummary()
-- explicitly numeric variables - NOT ones that you want to count essentially
-- https://apreshill.github.io/data-vis-labs-2018/04-distributions.html
-- this chapter might be slightly opinionated about which stats to use when? (i.e., median is always useful)
-- the idea being people may simply report means b/c they are easy to calculate, and easy to explain. But this chapter is going to take a different view: there is nothing harder about calculating other stats, or explaining them with the right tools.
+- **tidyverse**: to use the **dplyr** package
+- **gt**: for making summary tables in a more presentable fashion
 
-## This chapter's pattern
+## Explore
 
-- Explore: summary / describe / skimr /  gtsummary::tbl_summary() [default is median yay] / looking at & fixing missingness
-- Understand: tables (gtsummary + gt) + viz (distributions - boxplots / beeswarms / stat_*) / layer_data() to understand where the data is in a ggplot layer
-- Explain: pull / pluck + combine with glue for inline code? (need ways to extract individual cells from gt/gtsummary) https://www.tjmahr.com/lists-knitr-secret-weapon/
-- Share (Collaborate/Communicate): use pointblank; gtsummary with better formatting (Median (IQR))
+```{r}
+users_daily <- intendo::users_daily()
+```
 
-## test
 
-```{r collapse=FALSE}
-penguins |> select(where(is.numeric))
+average `playtime_day` for all users in January 2015
+
+```{r, paged.print=FALSE}
+users_daily |>
+  filter(login_date < "2015-02-01") |>
+  group_by(login_date) |>
+  summarize(playtime_day = mean(playtime_day))
+```
+
+
+average `playtime_day` in January 2015
+
+```{r, paged.print=FALSE}
+users_daily |>
+  filter(login_date < "2015-02-01") |>
+  group_by(country) |>
+  summarize(
+    n_users = n(),
+    mean_playtime_day = mean(playtime_day)
+  ) |>
+  arrange(desc(n_users))
+```
+
+
+Too few users, remove the filter for the month and use the whole year:
+
+```{r, paged.print=FALSE}
+users_daily |>
+  group_by(country) |>
+  summarize(
+    n_users = n(),
+    mean_playtime_day = mean(playtime_day)
+  ) |>
+  arrange(desc(n_users))
+```
+
+For users across different countries we find that the average play time per day is about the same: 30 minutes. This in itself is interesting. But could we look at other metrics to see if there is some variation that is interesting? Let's look at the IAP spend and the amount of ad views:
+
+```{r, paged.print=FALSE}
+users_daily_summary <-
+  users_daily |>
+  group_by(country) |>
+  summarize(
+    n_users = n(),
+    mean_playtime_day = mean(playtime_day),
+    mean_n_iap_day = mean(n_iap_day),
+    mean_n_ads_day = mean(n_ads_day),
+    mean_rev_iap_day = mean(rev_iap_day),
+    mean_rev_ads_day = mean(rev_ads_day)
+  ) |>
+  arrange(desc(n_users))
+
+users_daily_summary
+```
+
+The table above probably has the information you need but, even though it is summarized, it is very hard to read. It's very much worth making a **gt** table to better present this summary data. You can organize the `country` column values into the table stub. You could format the values so they are easier to read. And you can color code the values within key columns so that it's all much easier to parse.
+
+```{r, paged.print=FALSE}
+
+users_daily_summary |>
+  gt(rowname_col = "country") |>
+  fmt_integer(columns = n_users) |>
+  fmt_number(
+    columns = starts_with(c("mean_play", "mean_n")),
+    decimals = 1
+  ) |>
+  fmt_currency(columns = starts_with("mean_rev")) |>
+  data_color(
+    columns = starts_with("mean_rev"),
+    palette = c("white", "green")
+  ) |>
+  cols_label(
+    n_users = "Users",
+    mean_playtime_day = "Play Time",
+    matches("iap") ~ "IAP",
+    matches("ads") ~ "Ads"
+  ) |>
+  tab_spanner(
+    label = md("*N*"),
+    columns = starts_with("mean_n")
+  ) |>
+  tab_spanner(
+    label = "Revenue",
+    columns = starts_with("mean_rev")
+  ) |>
+  cols_width(
+    stub() ~ px(120),
+    everything() ~ px(65)
+  )
 ```
 
