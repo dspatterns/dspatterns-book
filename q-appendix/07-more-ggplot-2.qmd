@@ -51,7 +51,8 @@ nyc_highlow_temps <-
   group_by(month, day) |>
   summarize(
     min_temp_d = min(temp, na.rm = TRUE),
-    max_temp_d = max(temp, na.rm = TRUE)
+    max_temp_d = max(temp, na.rm = TRUE),
+    .groups = "drop"
   ) |>
   group_by(month) |>
   summarize(
@@ -176,8 +177,8 @@ nyc_highlow_temps |>
     plot.title.position = "plot",
     plot.caption.position =  "plot",
     panel.grid.major.y = element_blank(),
-    panel.grid.major.x = element_line(color = "gray60", size = 1/5),
-    panel.grid.minor.x = element_line(color = "gray80", size = 1/10),
+    panel.grid.major.x = element_line(color = "gray60", linewidth = 1/5),
+    panel.grid.minor.x = element_line(color = "gray80", linewidth = 1/10),
     plot.margin = unit(c(15, 15, 15, 15), "pt")
   )
 ```
