@@ -53,9 +53,8 @@ book:
       chapters:
         - p03-aggregate/01-careful-counting.qmd
         - p03-aggregate/02-rolling-up-data.qmd
-        - p03-aggregate/03-slicing-and-dicing-data.qmd
-        - p03-aggregate/04-making-datasets-longer.qmd
-        - p03-aggregate/05-making-datasets-wider.qmd
+        - p03-aggregate/03-making-datasets-longer.qmd
+        - p03-aggregate/04-making-datasets-wider.qmd
     - "---"
     - part: "Part 4: Batch Patterns"
       chapters:
@@ -63,14 +62,14 @@ book:
         - p04-batch/02-batch-tables.qmd
     - "---"
   appendices:
-    - q-appendix/86-tidying-data-for-analysis.qmd
-    - q-appendix/87-transformations-dates-times.qmd
-    - q-appendix/88-closer-look-r-programming.qmd
-    - q-appendix/89-string-transformations.qmd
-    - q-appendix/90-lists-and-factors.qmd
-    - q-appendix/91-more-ggplot-1.qmd
-    - q-appendix/92-more-ggplot-2.qmd
-    - q-appendix/93-making-presentation-tables.qmd
+    - q-appendix/01-tidying-data-for-analysis.qmd
+    - q-appendix/02-transformations-dates-times.qmd
+    - q-appendix/03-closer-look-r-programming.qmd
+    - q-appendix/04-string-transformations.qmd
+    - q-appendix/05-lists-and-factors.qmd
+    - q-appendix/06-more-ggplot-1.qmd
+    - q-appendix/07-more-ggplot-2.qmd
+    - q-appendix/08-making-presentation-tables.qmd
 
 format:
   html:
