@@ -8,6 +8,7 @@ title: "Rolling Up Data"
 library(dspatterns)
 library(intendo)
 library(dplyr)
+library(lubridate)
 library(gt)
 library(ggplot2)
 ```
@@ -16,7 +17,7 @@ Sometimes you have a lot of data. I'm talking many, *many*, rows. In data analys
 
 We'll make extensive use of the `summarize()` function in **dplyr** to generate summarized tables (from larger tables). And we'll use some larger datasets available in the packages you know and love. Here's what we'll be using:
 
-- **tidyverse**: to use the **dplyr** package
+- **tidyverse**: to use the **dplyr**, **ggplot**, and **lubridate** packages
 - **gt**: for making summary tables in a more presentable fashion
 - **intendo**: for the dataset we'll be using (`users_daily`)
 
@@ -48,7 +49,7 @@ users_daily_playtime <-
 users_daily_playtime
 ```
 
-We find that right away it's hard to read a tibble, even for summarized data. Since this is a simple table, we could very well make a line plot using **ggplot**.
+We find that right away it's hard to read a tibble, even for summarized data. Since this is a simple table, we could very well make a line plot using **ggplot**. Using **ggplot** during the exploratory phase is always useful and it doesn't require a lot of code:
 
 ```{r}
 ggplot(
@@ -154,9 +155,52 @@ From the summary **gt** table we can see that the country has virtually no effec
 
 ## Explain
 
+Once we understood that summaries can be useful for finding out that different countries have differing amounts of IAP spends, we can continue in this way and look for differences using other variables. There are several categorical variables from `users_daily` that could be used in a `group_by()`/`summarize()` pattern. Let's see if the `acquisition` variable has any discernable effect on mean revenue from IAPs per day:
 
+```{r, paged.print=FALSE}
+users_daily_summary_by_acquisition <-
+  users_daily |>
+  group_by(acquisition) |>
+  summarize(
+    n_users = n(),
+    mean_rev_iap_day = mean(rev_iap_day)
+  )
 
+users_daily_summary_by_acquisition
+```
+
+This summarized table is quite small (6 rows by 3 columns) so we could look it over as is (i.e., no need to re-tabulate in **gt** for better readability). There seems to be two things that stick out:
+
+1. The `"organic"` group (players that came to the game independently of a campaign) is the largest group
+2. The `"apple"` group, comprising players that installed as a result of an ad in the App Store, spends the most per day on IAPs
+
+This is pretty useful information! And we can use this to make additional summaries. For instance, it might be good to see if there is a trend in spend for this `acquisition` groups over the 2015 year. We can do that with some manipulation of the `users_daily` table. Essentially, we'll make an additional categorical column (`month`) through mutation of the `login_date` column via the `month()` function from the **lubridate** package.
+
+```{r, paged.print=FALSE}
+users_daily_summary_by_acquisition_month <-
+  users_daily |>
+  mutate(month = lubridate::month(login_date, label = TRUE)) |>
+  group_by(month, acquisition) |>
+  summarize(
+    n_users = n(),
+    mean_rev_iap_day = mean(rev_iap_day),
+    .groups = "drop"
+  )
+
+users_daily_summary_by_acquisition_month
+```
+
+We can plot this using **ggplot**. This won't be a line plot since our `mean_rev_iap_day` values belong to a specific `month` and `acquisition`. So instead of `geom_line()` being used, we'll opt for `geom_point()`. The months will be categories on the *x* axis and the mean revenue per day will be put onto the *y* axis. We also need to be able to distinguish the different data points and, to that end, the `acquisition` variable will be assigned to the `color` aesthetic.
+
+```{r}
+ggplot(
+  users_daily_summary_by_acquisition_month,
+  mapping = aes(x = month, y = mean_rev_iap_day, color = acquisition)
+) +
+  geom_point()
+```
+
+From the plot we can see that users introduced to the game via the `"apple"` campaign, for eight out of twelve months, had the highest average spend. And for those months, the difference between `"apple"` and the next highest-performing campaign was quite substantial. This additional summary provides useful information for the analyst. It shows how the different campaigns have performed and this information can be used to influence future advertising campaigns (perhaps for the 2016 year).
 
 ## Share
-
 
