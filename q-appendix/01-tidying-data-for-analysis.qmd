@@ -280,6 +280,7 @@ c(
 ```{r}
 #| label: fig-winni-tidy-ggplot-2
 #| fig.cap: "The scatterplot with all temperature data after dealing with the spurious data point."
+#| warning: true
 
 ggplot(data = winni_tidy) +
   geom_point(aes(x = iso_date, y = temp))
@@ -295,6 +296,7 @@ c(
 ```{r}
 #| label: fig-winni-tidy-ggplot-3
 #| fig.cap: "A scatterplot with facets. Now possible with our tidy data."
+#| warning: true
 
 ggplot(data = winni_tidy) +
   geom_point(aes(x = iso_date, y = temp)) +

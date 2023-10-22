@@ -569,7 +569,7 @@ Now that we have the `german_cities_largest` table, we can address requirements 
 
 german_cities_totals |>
   ggplot(aes(x = pop_2015, y = state, fill = name)) +
-  geom_col(color = "white", size = 0.2) +
+  geom_col(color = "white", linewidth = 0.2) +
   scale_fill_grey(end = 0.7, start = 0.1) +
   geom_text(
     data = german_cities_largest,

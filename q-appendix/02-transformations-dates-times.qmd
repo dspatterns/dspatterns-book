@@ -245,6 +245,7 @@ c(
 ```{r}
 #| label: fig-plot-nycweather-start-end
 #| fig.cap: "A revised plot that takes the first and last 100 rows of ~~nycweather~~. Very evenly spaced."
+#| warning: true
 
 nycweather_start_end <-
   dplyr::bind_rows(

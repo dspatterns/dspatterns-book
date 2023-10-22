@@ -521,7 +521,7 @@ Let's try something a little more ambitious with our next density plot: faceting
 ```{r}
 #| label: fig-dmd-density-facets
 #| fig.cap: "Faceted density plots using `dmd` data."
-#| warning: false
+#| warning: true
 
 ggplot(dmd_mutated) +
   geom_density(
@@ -629,7 +629,7 @@ For the last ridgeline plot, the `nycweather` dataset will be used. In this case
 ```{r}
 #| label: fig-nycweather-ggridges
 #| fig.cap: "A ridgeline plot based on the `nycweather` dataset."
-#| warning: false
+#| warning: true
 
 nycweather |>
   filter(!is.na(temp)) |>
