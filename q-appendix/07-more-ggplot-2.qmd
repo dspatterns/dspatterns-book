@@ -108,7 +108,7 @@ nyc_highlow_temps |>
   ggplot() +
   geom_segment(
     aes(x = 0, xend = value, y = month, yend = month),
-    color = "gray85", size = 1.5
+    color = "gray85", linewidth = 1.5
   ) +
   geom_point(aes(x = value, y = month, color = side), show.legend = FALSE) +
   scale_color_manual(values = c("blue", "red")) +
@@ -521,6 +521,7 @@ Let's try something a little more ambitious with our next density plot: faceting
 ```{r}
 #| label: fig-dmd-density-facets
 #| fig.cap: "Faceted density plots using `dmd` data."
+#| warning: false
 
 ggplot(dmd_mutated) +
   geom_density(
@@ -628,6 +629,7 @@ For the last ridgeline plot, the `nycweather` dataset will be used. In this case
 ```{r}
 #| label: fig-nycweather-ggridges
 #| fig.cap: "A ridgeline plot based on the `nycweather` dataset."
+#| warning: false
 
 nycweather |>
   filter(!is.na(temp)) |>
