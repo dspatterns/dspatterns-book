@@ -55,23 +55,13 @@ Place your cursor in the console again (where you last typed `x` and `[4]` print
 Mind your use of quotes carefully with packages.
 
 -   To *install* a package, you put the name of the package in quotes as in `install.packages("name_of_package")`.
--   To *use* an already installed package, you must load it first, as in `library(name_of_package)`, leaving the name of the package bare. You only need to do this once per RStudio session.
--   If you want the *citation* for a package (and you should give credit where credit is due), ask R as in `citation("name_of_package")`.
-
-``` {{r}}
-install.packages("dplyr", dependencies = TRUE)
-library(dplyr)
-```
-
-```{r}
-citation("ggplot2")
-```
+-   To *use* an already installed package, you must load it first, as in `library(name_of_package)`. You only need to do this once per **RStudio** session.
 
 Two good rules of thumb when working with packages in R:
 
-1.  Install packages once per workstation/machine. Always use the console to `install.packages()`.
+1. Install packages once per workstation/machine. Always use the console when using `install.packages()`.
 
-2.  Load packages once per work session. Each `library()` call typically goes on its own line when we put our code in an R script or **Quarto** document.
+2. Load packages once per work session. Each `library()` call typically goes on its own line when we put our code in an R script or **Quarto** document.
 
 You can download all of these at once, too:
 
@@ -98,13 +88,15 @@ R is **case-sensitive**, so `?dplyr` works but `?Dplyr` will not. Likewise, a va
 
 Open a new R script in RStudio by going to `File --> New File --> R Script`. For this first foray into R, we'll give you the code, so sit back and relax---feel free to copy and paste our code in with some small tweaks.
 
-First load the packages:
+First we'll load the packages:
 
 ``` {{r}}
 library(babynames)  # contains the actual data
 library(dplyr)      # for manipulating data
 library(ggplot2)    # for plotting data
 ```
+
+and in the next section, we'll begin using some functions.
 
 ## Functions
 

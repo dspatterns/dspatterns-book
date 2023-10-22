@@ -26,11 +26,11 @@ book:
     - "---"
     - part: "Onboarding Patterns"
       chapters:
-        - m-onboarding/patterns.qmd
-        - m-onboarding/chapters.qmd
-        - m-onboarding/book.qmd
-        - m-onboarding/authors.qmd
-        - m-onboarding/tools.qmd
+        - m-onboarding/01-patterns.qmd
+        - m-onboarding/02-chapter-pattern.qmd
+        - m-onboarding/03-about-book.qmd
+        - m-onboarding/04-about-authors.qmd
+        - m-onboarding/05-prerequisites.qmd
     - "---"
     - n-primer-coding/01-quick-start.qmd
     - "---"

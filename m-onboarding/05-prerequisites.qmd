@@ -7,6 +7,7 @@ In this book, we'll be using R and the **RStudio IDE**. You'll need to download 
 R is the name of the programming language itself, based off of S from Bell Labs, which users access through a command-line interpreter (`>`). Here is a bit of R code:
 
 ```{r}
+#| code-line-numbers: false
 5 * 2
 ```
 
@@ -14,7 +15,7 @@ If you want to learn more about the history of R as a programming language, we r
 
 > "We have named our language R—in part to acknowledge the influence of S and in part to celebrate our own efforts. Despite what has been a nearly all-consuming effort, we have managed to remain on the best of terms and retain our interest in computers and computing"
 >
-> — Ihaka & Gentleman (1996) see @ihaka1996r, p. 2
+> — @ihaka1996r
 
 **What is the RStudio IDE?**
 
