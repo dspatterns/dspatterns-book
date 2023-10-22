@@ -70,6 +70,7 @@ A quick check for whether the slicing worked can involve using **gt**'s `gt_prev
 
 ```{r}
 #| label: all-revenue-gt-preview
+#| html-table-processing: none
 
 gt_preview(all_rev_jan_segment)
 ```
