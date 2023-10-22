@@ -71,7 +71,7 @@ nyc_highlow_temps <-
 nyc_highlow_temps
 ```
 
-Now that the `nyc_highlow_temps` table is ready to use, let's make a lollipop plot! This type of plot will use one of the value types in `nyc_highlow_temps`: `"max_temp"`. The combination of **ggplot** geoms to use involves the `geom_segment()` and `geom_point()` functions. Order is important here, if the statements are reversed then the line segments will partially overlap the points. The choice which columns are passed to the `x` and `y` aesthetics determines whether this will be a horizontal or a vertical lollipop plot. Let's opt for a plot of the horizontal variety and map `value` to `x` and `month` to `y` in `geom_point()`. There are four required aesthetics for `geom_segment()`: `x`, `xend`, `y`, and `yend.` Have a look at the code here for how the lollipop plot is generated and, @fig-lollipop-max for the result.
+Now that the `nyc_highlow_temps` table is ready to use, let's make a lollipop plot! This type of plot will use one of the value types in `nyc_highlow_temps`: `"max_temp"`. The combination of **ggplot** geoms to use involves the `geom_segment()` and `geom_point()` functions. Order is important here, if the statements are reversed then the line segments will partially overlap the points. The choice which columns are passed to the `x` and `y` aesthetics determines whether this will be a horizontal or a vertical lollipop plot. Let's opt for a plot of the horizontal variety and map `value` to `x` and `month` to `y` in `geom_point()`. There are four required aesthetics for `geom_segment()`: `x`, `xend`, `y`, and `yend`.
 
 `r dspatterns::code_hints(
 "Creating a basic lollipop plot with data from ~~nyc_highlow_temps~~."
@@ -87,9 +87,9 @@ nyc_highlow_temps |>
   geom_point(aes(x = value, y = month), color = "red")
 ```
 
-Our lollipop plot looks pretty good! Depending on whether you are personally taken to it, you might use it in your own plotting work and improve upon what's shown in @fig-lollipop-max. 
+Our lollipop plot looks pretty good! Depending on whether you are personally taken to it, you might use it in your own plotting work and improve upon what's shown above. 
 
-Let's try making another lollipop plot, this time with positive and negative values that will have an effect on the color of the points. We start this off by creating the side column though a `mutate()` statement. We can either have `"negative"` or `"positive"` and those values are factor values. An extra aesthetic is now given to `geom_point()`'s `aes()` statement (`color = side`). We then manually set the colors of the points using `scale_color_manual()` with values of `"blue"` and then `"red"` (representing cold and warm temps). Here's the code for this and the lollipop plot itself is in @fig-lollipop-min.
+Let's try making another lollipop plot, this time with positive and negative values that will have an effect on the color of the points. We start this off by creating the side column though a `mutate()` statement. We can either have `"negative"` or `"positive"` and those values are factor values. An extra aesthetic is now given to `geom_point()`'s `aes()` statement (`color = side`). We then manually set the colors of the points using `scale_color_manual()` with values of `"blue"` and then `"red"` (representing cold and warm temps).
 
 `r dspatterns::code_hints(
 "Creating a more sophisticated lollipop plot using specific colors on the points (blue and red, for below and above zero degrees Celsius)."
@@ -139,7 +139,7 @@ nyc_highlow_temps |>
   scale_color_manual(values = c("red", "blue", "green", "yellow"))
 ```
 
-We can see from the plot, this Cleveland dot plot, that all the dots are arranged properly on the horizontal lines. In other words, the plot looks technically correct and makes perfect sense (July was statistically the warmest month in New York in 2010). Of course, in our second iteration of this plot, things will look a lot better. We'll use better colors, a theme, a number of theme options, better scales and labels, the works. Is it all worth it? Take a look at the plot in @fig-cleveland-plot-final, I think you'll find the extra lines of **ggplot** code to be worthwhile.
+We can see from the plot, this Cleveland dot plot, that all the dots are arranged properly on the horizontal lines. In other words, the plot looks technically correct and makes perfect sense (July was statistically the warmest month in New York in 2010). Of course, in our second iteration of this plot, things will look a lot better. We'll use better colors, a theme, a number of theme options, better scales and labels, the works. Is it all worth it? Take a look at the plot below, I think you'll find the extra lines of **ggplot** code to be worthwhile.
 
 `r dspatterns::code_hints(
 "A Cleveland dot plot with more meaningful colors for the points, and, extra touches to make the plot look really nice."
@@ -216,7 +216,7 @@ imdb |>
   geom_point()
 ```
 
-Our scatter plot in @fig-imdb-plot-linear-y shows us a few things. Wildly successful movies have pretty good IMDB ratings. For those movies earning above \$400M, the score is usually not lower than `7`. Also, for the most part, movies with an IMDB rating less than `5` didn't earn more than \$100M. For thousands of movies though, there's no strong connection between the IMDB rating and earnings.
+Our scatter plot shows us a few things. Wildly successful movies have pretty good IMDB ratings. For those movies earning above \$400M, the score is usually not lower than `7`. Also, for the most part, movies with an IMDB rating less than `5` didn't earn more than \$100M. For thousands of movies though, there's no strong connection between the IMDB rating and earnings.
 
 In terms of plot quality, there's an awful lot of overplotting. Not only that, but many of the movies' gross earnings are in the same narrow region while some very high earners pushed the *y* axis upper limit far above this narrow band. A common strategy for alleviating this is to redefine a plot scale to suit the distribution of data. In this case, we'll transform the *y*-axis scale to a log scale. First, let's transform the data by applying the same filtering operation as before and by transforming the `year` variable to a factor (where the order of levels is descending by `year`). In doing this, we obtain the `imdb_filtered` dataset:
 
@@ -247,9 +247,8 @@ imdb_filtered |>
   scale_color_grey() +
   scale_y_log10()
 ```
-(ref:imdb-plot-log-y) A scatter plot that uses a log scale in the *y* axis.
 
-The data points in the scatter plot of @fig-imdb-plot-log-y now have a bit more vertical spread. It's surprising to see that some movies grossed less than \$10,000 but that's entertainment. A plot legend appeared, which is good, but we're going to axe it in the end anyway (and we know how). Thanks to less overplotting, we now can see two big clusters of points, distinguished by their earnings (generally, one cluster has earnings less than \$10M, and the other more than that).
+The data points in the scatter plot now have a bit more vertical spread. It's surprising to see that some movies grossed less than \$10,000 but that's entertainment. A plot legend appeared, which is good, but we're going to axe it in the end anyway (and we know how). Thanks to less overplotting, we now can see two big clusters of points, distinguished by their earnings (generally, one cluster has earnings less than \$10M, and the other more than that).
 
 It would be interesting to annotate the plot with two dividing lines. One would be the median of IMDB ratings, the other the median of gross earnings at the box office. This is, of course, a snap in R because statistics it can do well. We only need to use the base R `median()` function on a vector of gross values and a vector of score values. The following code listing demonstrates how this is done.
 
@@ -266,7 +265,7 @@ median_rating
 
 The median_earnings value is `28600343`, or $28,600,343 (commas are helpful). Half of all movies in the `imdb_filtered` dataset made more than that, the other half made less. The median rating is `6.5`. Because we now have these values, we can annotate our next plot with median lines. For the dividing line representing median earnings, the strategy is to use a combination of `geom_hline()` for the horizontal, dashed line and `annotate()` for the text label. The other dividing line, for median IMDB rating, will use `geom_vline()` for a vertical, dashed line; the text label (rotated 90º) will be generated with a separate `annotate()` statement.
 
-Something else we'll do is add some jitter. What it does is slightly move all datapoints, reducing some of the overplotting. We can make that possible with the `position = "jitter"` option of `geom_point()`. The code for the finalized plot is presented next and the plot itself is in @fig-imdb-final-plot.
+Something else we'll do is add some jitter. What it does is slightly move all datapoints, reducing some of the overplotting. We can make that possible with the `position = "jitter"` option of `geom_point()`. The code for the finalized plot is presented next:
 
 `r dspatterns::code_hints(
 "The final plot of the filtered ~~imdb~~ dataset, with customized axes and annotated median value lines."
@@ -320,7 +319,7 @@ imdb_filtered |>
   )
 ```
 
-The scatter plot is of @fig-imdb-final-plot reveals that there is a large variation of earnings across the movies available in the dataset. Ratings above `8` or below `4` are comparatively rare. We get a picture of what movies generally earn and how they are rated by providing the median annotations. Although there is still a lot of overplotting, it's hard to say that newer movies are more successful than older ones (both in earnings and IMDB ratings). The next section on plotting distributions may better reveal trends across intervening years, using boxplots, histograms, and density plots.
+The scatter plot reveals that there is a large variation of earnings across the movies available in the dataset. Ratings above `8` or below `4` are comparatively rare. We get a picture of what movies generally earn and how they are rated by providing the median annotations. Although there is still a lot of overplotting, it's hard to say that newer movies are more successful than older ones (both in earnings and IMDB ratings). The next section on plotting distributions may better reveal trends across intervening years, using boxplots, histograms, and density plots.
 
 ## Plotting Distributions
 
@@ -350,7 +349,7 @@ ggplot(pitchfork) +
   geom_histogram(aes(x = score))
 ```
 
-The histogram in @fig-pitchfork-histogram is pretty interesting! Histograms are great as exploratory tools and they don't really have to look great. That is, the default histogram appearance is just fine for what it is. Getting back to the data in the plot, it looks as though review scores at just below the `7.5` mark are the most frequent. Some albums have gotten `0` scores. I've personally seen them in the past and since Pitchfork ratings are single-reviewer scores (unlike the IMDB scores which are an average of potentially thousands of users' scores) this makes sense. We can also see that, at the other end, perfect scores happen with some regularity (though it's much rarer to see `10.0` review scores for albums on initial release; re-releases and retrospective reviews are the sources for most 10s).
+The histogram is pretty interesting! Histograms are great as exploratory tools and they don't really have to look great. That is, the default histogram appearance is just fine for what it is. Getting back to the data in the plot, it looks as though review scores at just below the `7.5` mark are the most frequent. Some albums have gotten `0` scores. I've personally seen them in the past and since Pitchfork ratings are single-reviewer scores (unlike the IMDB scores which are an average of potentially thousands of users' scores) this makes sense. We can also see that, at the other end, perfect scores happen with some regularity (though it's much rarer to see `10.0` review scores for albums on initial release; re-releases and retrospective reviews are the sources for most 10s).
 
 When making a histogram with the defaults, **ggplot** issues a warning that reads `"stat_bin() using 'bins = 30'. Pick better value with 'binwidth'."`. Alright then! Let's pick our own value, and let's make it `1`:
 
@@ -365,7 +364,7 @@ ggplot(pitchfork) +
   geom_histogram(aes(x = score), binwidth = 1)
 ```
 
-The histogram in @fig-pitchfork-histogram-binwidth is now coarser. Given that each bin has a width of `1`. Given that score can be any value in the inclusive range of `0` to `10`, there are 10 bins, right? Nope, there are 11 (they can be counted on the plot). Each bin, with a width of `1` (that's certain) is centered on the values from `0` to `10` and that makes for 11 bins. For most EDA-based histogram plots this is probably not going to matter (but I thought you should know).
+The histogram is now coarser. Given that each bin has a width of `1`. Given that score can be any value in the inclusive range of `0` to `10`, there are 10 bins, right? Nope, there are 11 (they can be counted on the plot). Each bin, with a width of `1` (that's certain) is centered on the values from `0` to `10` and that makes for 11 bins. For most EDA-based histogram plots this is probably not going to matter (but I thought you should know).
 
 Let's move on and ask a question: is the distribution of review scores different by the year of the review? One way to look into this is by using a faceted plot of histograms. We can add `facet_wrap(vars(year))` to our plotting code to get our facets:
 
@@ -382,11 +381,11 @@ ggplot(pitchfork) +
   facet_wrap(vars(year))
 ```
 
-From the facets of histograms shown in @fig-pitchfork-histogram-facets, we see that it took until 2003 for reviews to ramp up to 1000 a year (this is verifiable with `pitchfork |> group_by(year) |> count()` instead of eyeballing the plot). In 2003 and 2004 we can see slightly more favorable reviews in the `'8'` bin compared to the `'7'` bin. Though, there is a long tail of low scores in those early years of Pitchfork.
+From the facets of histograms shown, we see that it took until 2003 for reviews to ramp up to 1000 a year (this is verifiable with `pitchfork |> group_by(year) |> count()` instead of eyeballing the plot). In 2003 and 2004 we can see slightly more favorable reviews in the `'8'` bin compared to the `'7'` bin. Though, there is a long tail of low scores in those early years of Pitchfork.
 
 ### Box Plots
 
-Histograms are nice, but how about box plots? Will they tell me more? Let's find out with `geom_boxplot()`. And let's turn that `year` variable into a factor; we need it for the `x` aesthetic. With four lines of **ggplot** code, we get the plot shown in @fig-pitchfork-boxplot.
+Histograms are nice, but how about box plots? Will they tell me more? Let's find out with `geom_boxplot()`. And let's turn that `year` variable into a factor; we need it for the `x` aesthetic. With four lines of **ggplot** code, we get the following plot:
 
 `r dspatterns::code_hints(
 "Using the ~~year~~ as a categorical variable in a boxplot of Pitchfork album ratings can reveal how ratings tended to change over the years."
@@ -401,9 +400,9 @@ pitchfork |>
   geom_boxplot(aes(x = year, y = score))
 ```
 
-The box plot of @fig-pitchfork-boxplot gives us summary statistics! The boxes contain the interquartile range (IQR) and encompasses the 25th percentile (bottom), the median or 50th percentile (middle line), and the 75th percentile (top). The whiskers are the vertical lines protruding from the boxes. They are set to extend to the farthest away data point that is within 1.5 times the IQR (again, the height of the box). The dots are the outliers: real data points that lie outside the top and bottom whiskers. From this box plot, we can easily see that the median review score has consistently been a little less than `7.5`. Super low scores are far less common; zeros are just not a thing anymore. In more recent years, scores around `5.0` are considered outliers.
+The box plot gives us summary statistics! The boxes contain the interquartile range (IQR) and encompasses the 25th percentile (bottom), the median or 50th percentile (middle line), and the 75th percentile (top). The whiskers are the vertical lines protruding from the boxes. They are set to extend to the farthest away data point that is within 1.5 times the IQR (again, the height of the box). The dots are the outliers: real data points that lie outside the top and bottom whiskers. From this box plot, we can easily see that the median review score has consistently been a little less than `7.5`. Super low scores are far less common; zeros are just not a thing anymore. In more recent years, scores around `5.0` are considered outliers.
 
-Some people don't like that box plots hide the underlying data. This is a very valid argument because the summary statistics that constitute a box plot can potentially be the same for very different distributions of the data. So, let's split the difference and overlay our data points on the boxplot. To do this, add a `geom_point()` statement after `geom_boxplot()`. Some tips: remove the interfering boxplot outliers with `outlier.shape = NA` in `geom_boxplot()`, jitter the data points with `position = "jitter"` in `geom_point()`, use a small data point size and low `alpha` value if there are a lot of points (as there are in `pitchfork`). Here is the code for this and @fig-pitchfork-boxplot-points provides the plot.
+Some people don't like that box plots hide the underlying data. This is a very valid argument because the summary statistics that constitute a box plot can potentially be the same for very different distributions of the data. So, let's split the difference and overlay our data points on the boxplot. To do this, add a `geom_point()` statement after `geom_boxplot()`. Some tips: remove the interfering boxplot outliers with `outlier.shape = NA` in `geom_boxplot()`, jitter the data points with `position = "jitter"` in `geom_point()`, use a small data point size and low `alpha` value if there are a lot of points (as there are in `pitchfork`).
 
 `r dspatterns::code_hints(
 "A box plot with jittered data points can show us the quantity and distribution of ratings along with the summary statistics."
@@ -447,7 +446,7 @@ pitchfork |>
   scale_fill_viridis_d(alpha = 0.5, option = "E")
 ```
 
-The violin plot of @fig-pitchfork-violin-plot reveals similar information compared with the box plot and jittered data points. We see that very low scores are pretty much absent in the more recent years. We also see a greater propensity for scores just above `7.5` in the most recent years. The violins from 1999 to 2009 are relatively thin compared to those in later years, suggesting that higher scores (especially above `5`) are the norm.
+The violin plot reveals similar information compared with the box plot and jittered data points. We see that very low scores are pretty much absent in the more recent years. We also see a greater propensity for scores just above `7.5` in the most recent years. The violins from 1999 to 2009 are relatively thin compared to those in later years, suggesting that higher scores (especially above `5`) are the norm.
 
 Of special note in the code for creating this plot is the use of the `scale_fill_viridis_d()` function, with option `"E"` chosen. This is a color palette that is perceptually uniform in both color and when converted to black-and-white. The `"E"` option (known as 'cividis') is especially well-suited for viewers with common forms of color blindness. Using `alpha = 0.5` was a necessary measure to ensure the that quartile lines were visible when darker colors were applied to the violin shapes.
 
@@ -464,7 +463,7 @@ The `dmd` dataset will be used to in our explorations of density plots. There ar
 glimpse(dmd)
 ```
 
-Let's create a density plot in the simplest manner possible: using `geom_density()` and accepting all the defaults. The `carats` variable in `dmd` is mapped to the `x` aesthetic in the next code listing and the resulting density plot is shown as @fig-dmd-density-plot.
+Let's create a density plot in the simplest manner possible: using `geom_density()` and accepting all the defaults. The `carats` variable in `dmd` is mapped to the `x` aesthetic in the next bit of code.
 
 `r dspatterns::code_hints(
 "Creating a simple density plot, mapping ~~carats~~ from the ~~dmd~~ dataset to ~~x~~."
@@ -477,9 +476,9 @@ ggplot(dmd, aes(x = carats)) +
   geom_density()
 ```
 
-The plot of @fig-dmd-density-plot uses a default kernel bandwidth of `1`. Depending on the situation, accepting the default value may not capture the variation in a way that is acceptable.
+The plot uses a default kernel bandwidth of `1`. Depending on the situation, accepting the default value may not capture the variation in a way that is acceptable.
 
-Again, the larger the bandwidth, the more smoothing there is. The bandwidth can be set with the `adjust` parameter, which has a default value of `1`. In the following code listing, several layers of `geom_density()` plots are made and the adjust value is progressively lowered (i.e., resulting in less smoothing, more inclination toward movement). It's operating on the same `dmd` dataset but the difference in the curves can be rather striking (@fig-dmd-density-bandwidths).
+Again, the larger the bandwidth, the more smoothing there is. The bandwidth can be set with the `adjust` parameter, which has a default value of `1`. In the following code listing, several layers of `geom_density()` plots are made and the adjust value is progressively lowered (i.e., resulting in less smoothing, more inclination toward movement). It's operating on the same `dmd` dataset but the difference in the curves can be rather striking.
 
 `r dspatterns::code_hints(
 "The ~~geom_density()~~ function has a default bandwidth but modifying it with the ~~adjust~~ parameter has a strong effect on the plotted density curve."
@@ -513,7 +512,7 @@ dmd_mutated <-
 dmd_mutated
 ```
 
-Let's try something a little more ambitious with our next density plot: faceting. The `dmd_mutated` dataset is introduced to `geom_density()`, mapping `dollars_carat` to `x` and `cut` to both `fill` and `color.` After that, we'll use `facet_grid()` to make a grid of facets. The rows will differ in `color`, and the columns will differ in `clarity`. As we've done before to make the plot presentable, we'll apply a theme, add titles, and clean up the plot axes. The code is below and the plot itself is available as @fig-dmd-density-facets.
+Let's try something a little more ambitious with our next density plot: faceting. The `dmd_mutated` dataset is introduced to `geom_density()`, mapping `dollars_carat` to `x` and `cut` to both `fill` and `color.` After that, we'll use `facet_grid()` to make a grid of facets. The rows will differ in `color`, and the columns will differ in `clarity`. As we've done before to make the plot presentable, we'll apply a theme, add titles, and clean up the plot axes.
 
 `r dspatterns::code_hints(
 "With ~~dmd_mutated~~, a set of faceted density plots (through ~~facet_grid()~~) is generated to compare distributions of diamond value by mass."
@@ -548,7 +547,7 @@ ggplot(dmd_mutated) +
   )
 ```
 
-The grid of faceted density plots as shown in @fig-dmd-density-facets shows us that the rarest diamonds, those with the best `color`, `cut`, and `clarity`, can more often fetch higher prices on a per carat basis (the top-right facet).
+The grid of faceted density plots shows us that the rarest diamonds, those with the best `color`, `cut`, and `clarity`, can more often fetch higher prices on a per carat basis (the top-right facet).
 
 ### Ridgeline Plots
 
@@ -585,7 +584,7 @@ ggplot(imdb, aes(x = score, y = year, group = year)) +
   )
 ```
 
-The IMDB ratings plot of @fig-imdb-ggridges allows us to easily compare the shapes of lot of density plots by up and down scanning. These types of plots are also a pleasure to look at. Because they are so great, let's make a companion ridgeline plot that uses the `pitchfork` dataset in the same manner. The code shown below is virtually the same as that of the previous code listing, save for differences in colors and labels.
+The IMDB ratings plot allows us to easily compare the shapes of lot of density plots by up and down scanning. These types of plots are also a pleasure to look at. Because they are so great, let's make a companion ridgeline plot that uses the `pitchfork` dataset in the same manner. The code shown below is virtually the same as that of the previous code listing, save for differences in colors and labels.
 
 `r dspatterns::code_hints(
 "The comparable ridgeline density plot with 15 years of Pitchfork album reviews makes for a great companion piece to the IMDB plot."
@@ -618,7 +617,7 @@ pitchfork |>
   )
 ```
 
-From the ridgeline plot of @fig-pitchfork-ggridges, it's quite easy to compare density curves across the years of reviews. Even comparisons between `2015` and `2000` seem to be easier than at least one of the alternative views of the data (e.g., faceted density plots).
+From the ridgeline plot, it's quite easy to compare density curves across the years of reviews. Even comparisons between `2015` and `2000` seem to be easier than at least one of the alternative views of the data (e.g., faceted density plots).
 
 For the last ridgeline plot, the `nycweather` dataset will be used. In this case, all of the temperature data is converted to degrees Fahrenheit (with a **dplyr** `mutate()` statement) and passed to the `geom_density_ridges_gradient()` function. The fill color uses the 'cividis' color scale that was used previously (through `scale_fill_viridis_c()`, option `"E"`). As in all the previous code listings with ridgeline plots, the `theme_ridges()` function is used.
 
@@ -656,7 +655,7 @@ nycweather |>
   )
 ```
 
-The ridgeline plot of @fig-nycweather-ggridges clearly conveys the distributions of temperatures for each month of `2010`. The gradient used in each fill is pleasing to the eye and is highly interpretable. The other comparable plot that uses this data (the Cleveland dot plot in @fig-cleveland-plot-final) has much less information than this plot contains, and the ridgeline variation simply presents so much better.
+The ridgeline plot clearly conveys the distributions of temperatures for each month of `2010`. The gradient used in each fill is pleasing to the eye and is highly interpretable. The other comparable plot that uses this data (the Cleveland dot plot) has much less information than this plot contains, and the ridgeline variation simply presents so much better.
 
 ## Summary
 

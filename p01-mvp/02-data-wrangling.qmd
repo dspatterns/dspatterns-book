@@ -672,7 +672,7 @@ dmd_mod <-
 
 In the code listing, we are using `ifelse()` within the third `mutate()` statement to check for the dual condition of both `cut` and `clarity` being equal to `"The Best"`. Those diamonds for which the statement is true will have a `quality` label that is `"Top Drawer"`. Otherwise, all other diamonds will get a label of `"The Rest"`.
 
-Once we have modified `dmd` and assigned the results to a new object called `dmd_mod`, we can make a different type of plot that uses the newly-created variables of `price_class` and `quality`. Faceting will be done on the `price` vs. `carats` plot, using the new variables in the `facet_wrap()` statement to create a 2-by-2 plot that compares data points by two quality categories and two price categories (@fig-dmd-modified-dplyr-ggplot).
+Once we have modified `dmd` and assigned the results to a new object called `dmd_mod`, we can make a different type of plot that uses the newly-created variables of `price_class` and `quality`. Faceting will be done on the `price` vs. `carats` plot, using the new variables in the `facet_wrap()` statement to create a 2-by-2 plot that compares data points by two quality categories and two price categories.
 
 `r dspatterns::code_hints(
 "Modifying ~~dmd~~ to add three new columns, and, plotting ~~dmd_mod~~ with the new variables.",
