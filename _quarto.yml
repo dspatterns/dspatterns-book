@@ -12,6 +12,7 @@ book:
   sidebar:
     style: docked
     background: light
+  bread-crumbs: false
   search: true
   # description: |
   #   A Data Science Pattern Language: Designing Projects with R will get you up
