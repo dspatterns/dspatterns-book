@@ -54,7 +54,7 @@ We find that right away it's hard to read a tibble, even for summarized data. Si
 ```{r}
 ggplot(
   users_daily_playtime,
-  mapping = aes(x = login_date, y = playtime_day)
+  aes(x = login_date, y = playtime_day)
 ) +
   geom_line()
 ```
@@ -195,7 +195,7 @@ We can plot this using **ggplot**. This won't be a line plot since our `mean_rev
 ```{r}
 ggplot(
   users_daily_summary_by_acquisition_month,
-  mapping = aes(x = month, y = mean_rev_iap_day, color = acquisition)
+  aes(x = month, y = mean_rev_iap_day, color = acquisition)
 ) +
   geom_point()
 ```
@@ -204,3 +204,38 @@ From the plot we can see that users introduced to the game via the `"apple"` cam
 
 ## Share
 
+The look of the previous plot was good enough to let us understand and even explain the key findings to others. However, if you want to share the plot it could be improved so that those key findings are clearly communicated.
+
+Let's have the following features in the revised **ggplot** plot:
+
+- a title and a subtitle, explaining the purpose and meaning of the plot
+- a caption that shows where the plot can be later found (for further inspection)
+- removal of the redundant *x*-axis label (it's obvious we are looking at months)
+- an improved *y*-axis label and values formatted as currency values
+- points sized by the number of users in the grouping
+- a somewhat more minimal theme
+
+We can make this all possible. The `labs()` function makes it easy to set the `title`, the `subtitle`, and the `caption`. Here we make the title describe what's in the plot in general terms (`Comparison of IAP Spend by Campaign Type in 2015"`) and the subtitle will have more specific information (`"Aggregate of IAP spend per day (on active days) by campaign type."`). You could even add in some statements that summarize the key findings in the `subtitle`. By using `x = NULL` in `labs()`, we effectively remove the *x*-axis label (which is not really needed here). The *y*-axis label is also given text that is specific and informative. With the `\n` used in the `y` argument, we can add in a line break since the label text is quite long.
+
+The number of users per group is available in the `users_daily_summary_by_acquisition_month` table and we can visualize these values by including the `n_users` variable in the `size` aesthetic. A legend will be added to help readers get a sense of how many users occupy each group. Speaking of legends, we have one for the `acquisition` variable. If we're not happy with the naming of the groups (since they'll appear in the legend), we could use `mutate()` with an `ifelse()` statement and rename specific groups. Here, we've elected to rename `"other_campaign"` to `"other"` so that less room is taken up by the legend.
+
+```{r}
+ggplot(
+  users_daily_summary_by_acquisition_month |>
+    mutate(acquisition = ifelse(
+      acquisition == "other_campaign", "other", acquisition)
+    ),
+  aes(x = month, y = mean_rev_iap_day, color = acquisition, size = n_users)
+) +
+  geom_point() +
+  scale_y_continuous(labels = scales::dollar_format()) +
+  labs(
+    title = "Comparison of IAP Spend by Campaign Type in 2015",
+    subtitle = "Aggregate of IAP spend per day (on active days) by campaign type.",
+    caption = "Plot available in the weekly report as 'iap_by_acquisition_month'.",
+    x = NULL, y = "Monthly Averaged Mean Daily\nRevenue from IAP Spend"
+  ) +
+  theme_minimal()
+```
+
+We did quite a few things to make the plot better to share with others. Because this plot contains more information encoded in its aesthetics, it makes it easier to explain to other people during presentations or meetings. Further to this, the plot would be easier to understand even if the author is not available to explain it.
