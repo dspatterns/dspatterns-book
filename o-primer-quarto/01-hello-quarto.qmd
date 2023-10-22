@@ -67,7 +67,7 @@ tribble(
 
 The prose portion of **Quarto** (i.e., *not* the R code) is the default text entry type. The R code is run inside code cells, which are marked off areas (with three backticks: ```) in the document. The schematic below shows what an R code cell looks like and what controls are available in **Quarto**.
 
-![](../appendix-figures/82-starting-with-r/figure-rmarkdown-annotation.png){#fig:rmarkdown-annotation}
+![](../appendix-figures/82-starting-with-r/figure-rmarkdown-annotation.png)
 
 Aside from reproducibility, the finished **Quarto** document can be rendered to a self-contained HTML file, to a Word document, to a various presentation types including Powerpoint, or to a PDF file. There are lots of ways to customize what the rendered document will look like (e.g., hiding code for non-technical audiences, adding HTML display elements, etc.), so, the analysis can double as a deliverable report. This will undoubtedly save you time. If ever the input data should change, the report could be run again and updated, usually with minimal (if any) modification. That's one of the features of reproducible reporting.
   
@@ -130,7 +130,7 @@ Inside the IDE, this just looks like plaintext with some highlighting applied wh
 
 That will produce an HTML document with the same name as the **Quarto** document (in the directory where the .qmd file was saved) and the process opens a preview window with the HTML report.
 
-![The rendered HTML document based on the **Quarto** document. The preview window provides a way to easily look over the output initiated by a *Render*.](../appendix-figures/82-starting-with-r/figure-rmarkdown-html-output.png){#fig:rmarkdown-html-output}
+![The rendered HTML document based on the **Quarto** document. The preview window provides a way to easily look over the output initiated by a *Render*.](../appendix-figures/82-starting-with-r/figure-rmarkdown-html-output.png)
 
 It's here where you can see that the Markdown elements become things like bold and italicized text. That rendered text appears above and below the code and the outputs, just as it was in the **Quarto** document. It's also here where its more apparent that **Quarto** is indeed useful for working with data and also for creating reports.
 
@@ -480,7 +480,7 @@ If you find yourself with an `.qmd` where you want to set `error=TRUE` or `eval=
 knitr::knit_exit()
 ```
 
-The rest is scrap work.
+The rest of this document is not rendered.
 ````
 
 ### Controlling your entire document
