@@ -352,8 +352,8 @@ c(
 #| label: fig-plot-new-labs
 #| fig.cap: "Replacement of default labels in the plot axis and legend titles with `labs()`."
 
-ggplot(dmd, mapping = aes(x = carats, y = price)) +
-  geom_point(mapping = aes(shape = clarity)) +
+ggplot(dmd, aes(x = carats, y = price)) +
+  geom_point(aes(shape = clarity)) +
   labs(
     x = "Weight of the Diamond (carats)",
     y = "Price (USD)", 
@@ -374,8 +374,8 @@ c(
 #| label: fig-plot-labs-titles
 #| fig.cap: "Replacement of default labels and the addition of a `title`, `subtitle`, and a `caption`. All with `labs()`."
 
-ggplot(dmd, mapping = aes(x = carats, y = price)) +
-  geom_point(mapping = aes(shape = clarity)) +
+ggplot(dmd, aes(x = carats, y = price)) +
+  geom_point(aes(shape = clarity)) +
   labs(
     title = "The Relationship Between Diamond Weight on Price",
     subtitle = "Quality of diamond clarity is indicated by shape",
@@ -583,8 +583,8 @@ All of these datasets consist of tables and are easily accessible in R by their 
 
 8. The `geom_point()` function requires two aesthetics to absolutely be defined (either directly within `geom_point()` or within the `ggplot()` function). What are their names?
 
-9. What would the plot look like if you were to use the plotting code: `ggplot(data = dmd, mapping = aes(x = carats, y = price)) +`
-`geom_point(mapping = aes(size = price))`?
+9. What would the plot look like if you were to use the plotting code: `ggplot(data = dmd, aes(x = carats, y = price)) +`
+`geom_point(aes(size = price))`?
 
 10. When faceting with `facet_wrap()` or `facet_grid()`, what is the function that we need to wrap the data's column names in?
 
@@ -594,7 +594,7 @@ All of these datasets consist of tables and are easily accessible in R by their 
 
 13. What single **ggplot** function can we use to relabel legend titles and to provide a plot title?
 
-14. Suppose we were to write the following plotting code: `ggplot(data = dmd, mapping = aes(x = carats, y = price)) + geom_point(mapping = aes(color = depth)) + labs(color = "Depth") + labs(title = "Price vs. Carats")`. Is it okay to use two `labs()` statements like that?
+14. Suppose we were to write the following plotting code: `ggplot(data = dmd, aes(x = carats, y = price)) + geom_point(aes(color = depth)) + labs(color = "Depth") + labs(title = "Price vs. Carats")`. Is it okay to use two `labs()` statements like that?
 
 15. How would you rewrite the plotting code in *Q14* so that the shape of each data point is an open (non-filled) diamond?
 
