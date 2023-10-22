@@ -290,35 +290,35 @@ It's good to have a playground for experimenting with regexes and for that, the 
 regexplain_gadget()
 ```
 
-By default, the function provides sample text to match on, but we can provide our own text string as well. *Figure \@ref(fig:regexplain-gadget)* provides a visual on how the gadget looks and it points out its main features.
+By default, the function provides sample text to match on, but we can provide our own text string as well. The following figure provides a visual on how the gadget looks and it points out its main features.
 
-![The *RegExplain* Gadget as it appears in the **RStudio** Viewer. By interactively typing our regex into the field labeled `RegEx`, we can see what it matches on in the large text field below.](img/regexplain-gadget.png){#fig:regexplain-gadget}
+![The *RegExplain* Gadget as it appears in the **RStudio** Viewer. By interactively typing our regex into the field labeled `RegEx`, we can see what it matches on in the large text field below.](img/regexplain-gadget.png)
 
 When you first look at regular expression (or regex) patterns, they appear a bit daunting because of all the tokens that go into them (letters, numerals, and punctuation) are used in a terse manner. And it's indeed true that it does take some time (and much practice) to get the hang of constructing these patterns. However, it's a skill that will eventually pay off, allowing us to do really powerful things with text.
 
 ### Regex Basics: Matching Characters and Using Escapes
 
-Let's start by doing some simple matching on `"The quick brown fox jumps over the lazy dog."` and learn how the regex engine is parsing that string with our supplied patterns. Using the regex pattern `"quick"`, will match the word `quick` in the text. This makes sense, in that this is how matching traditionally works. Single letters will also result in a match and, usually, multiple matches. Using the pattern `"o"` (the lowercase letter `O`) results in all four `o` characters being matched in the sentence. There are two instances of the word `the` in our example string. They're not quite the same though. The first instance has a capital `T` and the second has a lowercase `t`. By default, regex engines are case sensitive (and this can be changed, take a closer look at *Figure \@ref(fig:regexplain-gadget)*). That means that the pattern of the will only match on the second instance of that word. *Figure \@ref(fig:regex-examples-1)* shows how matches are made with simple regex patterns.
+Let's start by doing some simple matching on `"The quick brown fox jumps over the lazy dog."` and learn how the regex engine is parsing that string with our supplied patterns. Using the regex pattern `"quick"`, will match the word `quick` in the text. This makes sense, in that this is how matching traditionally works. Single letters will also result in a match and, usually, multiple matches. Using the pattern `"o"` (the lowercase letter `O`) results in all four `o` characters being matched in the sentence. There are two instances of the word `the` in our example string. They're not quite the same though. The first instance has a capital `T` and the second has a lowercase `t`. By default, regex engines are case sensitive (and this can be changed). That means that the pattern of the will only match on the second instance of that word. The next figure shows how matches are made with simple regex patterns.
 
-![Matching a simple regex pattern to the text and getting the first match.](img/regex-examples-01.png){#fig:regex-examples-1}
+![Matching a simple regex pattern to the text and getting the first match.](img/regex-examples-01.png)
 
 To understand this all a bit more clearly, we can try to think like a parser. With the pattern `"quick"`, we move letter-by-letter, left-to-right through the text, looking for a `q` since that's the first element of the regex pattern. Once that first `q` is located from the scan, we (as the pretend parser) lock onto that and check if the next token in the pattern matches the next character in the text. This phase of searching and comparing will continue until which point there either is a break in this matching process, or, there is a full match. In the first case, we abort this mode of comparison and move on with our letter-by-letter scan as if nothing happened before. In the second case of the full match, we declare that there is a match and then report exactly where the match occurred.
 
-The dot character (otherwise known as a period, or `.`) is a special token in regex patterns. It matches every character, and that includes spaces as well. Let's look at a few ways we can use the dot with the regex patterns `"...."`, `"....s"`, and `"o."` (*Figure \@ref(fig:regex-examples-2)*).
+The dot character (otherwise known as a period, or `.`) is a special token in regex patterns. It matches every character, and that includes spaces as well. Let's look at a few ways we can use the dot with the regex patterns `"...."`, `"....s"`, and `"o."`.
 
-![Using regex patterns with the dot, which unconditionally matches every character. In every case here, the first match is shown.](img/regex-examples-02.png){#fig:regex-examples-2}
+![Using regex patterns with the dot, which unconditionally matches every character. In every case here, the first match is shown.](img/regex-examples-02.png)
 
-We can see from *Figure \@ref(fig:regex-examples-2)* that the dot acts as a wildcard, matching every character. Four dots as the pattern, `"...."`, matches the first word (`"The"`) and the following space character. The pattern `"....s"` needs four of any character and then an `s` character (this matches `"jumps"`). Finally, the pattern `"o."` will make its first match on any first appearance of an `o` and any character. In the example sentence, this matches the `ow` in `"brown"`.
+We can see from the above that the dot acts as a wildcard, matching every character. Four dots as the pattern, `"...."`, matches the first word (`"The"`) and the following space character. The pattern `"....s"` needs four of any character and then an `s` character (this matches `"jumps"`). Finally, the pattern `"o."` will make its first match on any first appearance of an `o` and any character. In the example sentence, this matches the `ow` in `"brown"`.
 
 What if you wanted the dot to match just a period? Because the period or dot character has special meaning in regex patterns, we have to escape it to match on the literal `.` character. We do this by adding two backslash characters, so, we would use the pattern `"\\."` to match a period. We call this practice *escaping* because we are essentially escaping from the code meaning of these metacharacters (and moving to the alternative of using these characters as string literals).
 
 Characters that Need Escaping: It's not just the dot that needs escaping in regular expressions as there are, in total, 12 characters with special meaning. They are the dot (or period) `.`, the caret `^`, the dollar sign `$`, the asterisk `*`, the plus sign `+`, the question mark `?`, the pipe symbol `|`, the opening and closing parentheses `(` and `)`, the opening square bracket `[`, the opening curly brace `{`, and, the backslash itself `\`. We'll discover what special meanings these characters have in regex expressions but it's good to have all of these specials collected here for future reference.
 
-The examples in *Figure \@ref(fig:regex-examples-3)* can show us the difference between using the patterns `".."`, `".\\."`, and `"\\.\\."` with our sample sentence.
+The next few examples can show us the difference between using the patterns `".."`, `".\\."`, and `"\\.\\."` with our sample sentence.
 
-![Using regex patterns with the escaped form of the dot results in matches involving the period character.](img/regex-examples-03.png){#fig:regex-examples-3}
+![Using regex patterns with the escaped form of the dot results in matches involving the period character.](img/regex-examples-03.png)
 
-The first pattern in *Figure \@ref(fig:regex-examples-3)* isn't too surprising considering what we now know about the dot character's supreme matching abilities. The second pattern, `".\\.,"` uses the dot (matching all) followed by its escaped form (matching a period); this will match the last two characters in the sentence (that ends with a period). The last pattern, `"\\.\\.,"` just serves to remind us that matching on two literal period characters won't result in a match at all since there's only one period in the entire sentence (a trick question! but educational nonetheless).
+The first pattern isn't too surprising considering what we now know about the dot character's supreme matching abilities. The second pattern, `".\\.,"` uses the dot (matching all) followed by its escaped form (matching a period); this will match the last two characters in the sentence (that ends with a period). The last pattern, `"\\.\\.,"` just serves to remind us that matching on two literal period characters won't result in a match at all since there's only one period in the entire sentence (a trick question! but educational nonetheless).
 
 To test these matches in R, we can use either the `str_match()` or `str_match_all()` functions from the **stringr** package. The `str_match()` function returns us the first match of the pattern from the input string. Its variant `str_match_all()` returns all matches from the input text. The following provides an example of how this works in practice.
 
@@ -351,11 +351,11 @@ Turns out there are four matches from the `".o."` pattern. They are provided in 
 
 ### Character Sets and Character Classes
 
-We can match on specific characters using a character set. The allowed characters are put inside square brackets. As an example, suppose we want to match on the word `"license"` and its alternative spelling of `"licence"` in a large body of text. We could use the regex `"licen[cs]e"`, which accepts either the letter `c` or `s` as the second-to-last letter in the word. It's important to understand here that everything in the square brackets only counts for a single character match. This may be easier to understand with a few examples using some sample text (*Figure \@ref(fig:regex-examples-4)*).
+We can match on specific characters using a character set. The allowed characters are put inside square brackets. As an example, suppose we want to match on the word `"license"` and its alternative spelling of `"licence"` in a large body of text. We could use the regex `"licen[cs]e"`, which accepts either the letter `c` or `s` as the second-to-last letter in the word. It's important to understand here that everything in the square brackets only counts for a single character match. This may be easier to understand with a few examples using some sample text.
 
-![Using regex patterns with character sets to match similar words. The pattern in the first example will match two words (even though only the first match is shown).](img/regex-examples-04.png){#fig:regex-examples-4}
+![Using regex patterns with character sets to match similar words. The pattern in the first example will match two words (even though only the first match is shown).](img/regex-examples-04.png)
 
-Each of the regex patterns in *Figure \@ref(fig:regex-examples-4)* are depicted with the character sets matching on a single character. The `b[ae]tter` pattern will match `"better"` and `"batter"`. Throughout these examples, we've been sticking to just showing the first match and, here, `"better"` is that first match. How about the regex `"b[oa]t?"` It will match the text `"bot"` and `"bat"`. The first of those isn't present but the second one is (in the word `"batter"`).
+Each of the regex patterns in the above figure are depicted with the character sets matching on a single character. The `b[ae]tter` pattern will match `"better"` and `"batter"`. Throughout these examples, we've been sticking to just showing the first match and, here, `"better"` is that first match. How about the regex `"b[oa]t?"` It will match the text `"bot"` and `"bat"`. The first of those isn't present but the second one is (in the word `"batter"`).
 
 We can specify ranges of characters inside of a character set with a hyphen between like characters. Want to match all lowercase letters? Use `a-z`. All uppercase? That's `A-Z`. We can even use a range of numbers; using `0-9` will match any number. Furthermore, we can mix and match single characters with ranges. Here's a list of character sets and their interpretations:
 
@@ -375,9 +375,9 @@ Within the square brackets of a character set, most metacharacters don't need to
 
 While character classes are quite useful when defining a regular expression, their content can be quite verbose. Thankfully, there exists a series of shorthand character classes. The use of `\\d` in a regex is the same as the character class [0-9]. We can interpret that shorthand character class as standing in for any numerical digit. The shorthand character class represented by `\\w` contains the ASCII range of word characters as well as all digits and the underscore character; the comparable character class is `[A-Za-z0-9_]`. The `\\s` shorthand character class is inclusive of whitespace characters. This will usually match space characters, tabs, and line breaks.
 
-Figure *Figure \@ref(fig:regex-examples-5)* presents a number of regex examples that all use a short phrase concerning quantities of fruit. It combines a number of new things we learned about character classes.
+The next figure presents a number of regex examples that all use a short phrase concerning quantities of fruit. It combines a number of new things we learned about character classes.
 
-![Using regex patterns with character classes to match on classes of characters.](img/regex-examples-05.png){#fig:regex-examples-5}
+![Using regex patterns with character classes to match on classes of characters.](img/regex-examples-05.png)
 
 As can be seen, these character classes work equally well both inside and outside of the square bracket notation that defines character sets. Negation of character classes like `\\w` can either be constructed by using `[^\\w]` or by using the capitalized form (which are `\\W`, `\\D`, and `\\S` for word characters, digits, and space characters).
 
@@ -451,9 +451,9 @@ If the unbounded range on the right seems too unconstrained, we can limit repeti
 
 Repetition with the `*` and `+` will find the longest match possible. In other words, these regexes are greedy. An example here will this concept a little bit clearer. With the text `"I'm in the mood for some food"` and the regex pattern `"mo.*d"`, we might expect that the match will be `"mood"`. However, the pattern is also valid for the longer match of `"mood for some food"`. But what if we wanted the shortest possible match of `"mood"`? Then we are asking for laziness instead of greediness (or an ungreedy match). We can accomplish this by using a question mark (`?`) after the quantifier (the `*` or `+`, as in `*?` or `+?`). With that, the regex pattern `"m.*?d"` will match just mood. In other words, the use of `?` after `*` or `+` will result in the shortest match.
 
-*Figure \@ref(fig:regex-examples-6)* provides a few examples of how repetition with `*`, `*?`, and `{n}` is used with the 'A bit of butter makes better batter' phrase.
+The following figure provides a few examples of how repetition with `*`, `*?`, and `{n}` is used with the 'A bit of butter makes better batter' phrase.
 
-![The difference between `*` and `*?` during repetition means the difference between greedy and lazy matching. Repetition with `\\w{5}` is exact, matching 5 word characters.](img/regex-examples-06.png){#fig:regex-examples-6}
+![The difference between `*` and `*?` during repetition means the difference between greedy and lazy matching. Repetition with `\\w{5}` is exact, matching 5 word characters.](img/regex-examples-06.png)
 
 Repetition is a very useful feature because we don't have to repeat regex tokens and we furthermore have fine control over how much repetition is required in a matching expression.
 

@@ -421,9 +421,9 @@ ggplot(data = german_cities_bayern, aes(y = name, x = pop_2015)) +
   geom_bar(stat = "identity")
 ```
 
-The resulting plot of @fig-barplot-bayern-1 makes sense and is technically correct: the lengths of the bars do correspond to the city populations. However, it's also a bit disappointing as a visualization because the cities are arranged in reverse alphabetical order (moving from top to bottom), which is arbitrary with regard to population and doesn't give us an easy way to determine rank. This is where the usefulness of factors enters the picture. We can exploit factor levels to enforce the ordering of variables in **ggplot**. To do all this, we'll use a few functions from **forcats** to modify factor levels and serve our visualization needs.
+The resulting plot makes sense and is technically correct: the lengths of the bars do correspond to the city populations. However, it's also a bit disappointing as a visualization because the cities are arranged in reverse alphabetical order (moving from top to bottom), which is arbitrary with regard to population and doesn't give us an easy way to determine rank. This is where the usefulness of factors enters the picture. We can exploit factor levels to enforce the ordering of variables in **ggplot**. To do all this, we'll use a few functions from **forcats** to modify factor levels and serve our visualization needs.
 
-The `fct_reorder()` function works wonders when you want to have the order of factor levels correspond to the order of a different variable. With the bar plot of cities (@fig-barplot-bayern-1) it was lamentable that the order of the bars did nothing to communicate the rank of cities by their population. Now, we can do something about it with **forcats**' `fct_reorder()`. The following code listing uses an indexing assignment approach (in contrast to the `mutate()` approach used earlier) to reorder the levels of the name variable on the basis of the city population (the `pop_2015` variable).
+The `fct_reorder()` function works wonders when you want to have the order of factor levels correspond to the order of a different variable. With the bar plot of cities it was lamentable that the order of the bars did nothing to communicate the rank of cities by their population. Now, we can do something about it with **forcats**' `fct_reorder()`. The following code listing uses an indexing assignment approach (in contrast to the `mutate()` approach used earlier) to reorder the levels of the name variable on the basis of the city population (the `pop_2015` variable).
 	
 `r dspatterns::code_hints(
 "Using the ~~fct_reorder()~~ function to reorder the factor levels of the name variable to match the ordering of the ~~pop_2015~~ variable."
@@ -435,7 +435,7 @@ german_cities_bayern$name <-
 levels(german_cities_bayern$name)
 ```
 
-We checked our work by using the `levels()` function for manual inspection of the levels. We now get an ordering that is no longer alphanumeric. This is success! We'll really see it, though, when the bar plot is regenerated. We can re-run the plotting code and it'll give us a radically improved plot (@fig-barplot-bayern-2).
+We checked our work by using the `levels()` function for manual inspection of the levels. We now get an ordering that is no longer alphanumeric. This is success! We'll really see it, though, when the bar plot is regenerated. We can re-run the plotting code and it'll give us a radically improved plot.
 
 `r dspatterns::code_hints(
 "Regenerating the barplot of the most populous German cities in the state of Bayern (this is version 2)."
@@ -448,7 +448,7 @@ ggplot(data = german_cities_bayern, aes(y = name, x = pop_2015)) +
   geom_bar(stat = "identity")
 ```
 
-Having the bars arranged in this way really helps. We can tell, in an instant, that Ingolstadt has a greater population than Würzburg. What if you wanted the bars in the reverse order? In that case, the `fct_rev()` function is what's needed. Let's use the function, inspect the factor levels with `levels()`, and re-plot as before (@fig-barplot-bayern-3).
+Having the bars arranged in this way really helps. We can tell, in an instant, that Ingolstadt has a greater population than Würzburg. What if you wanted the bars in the reverse order? In that case, the `fct_rev()` function is what's needed. Let's use the function, inspect the factor levels with `levels()`, and re-plot as before.
 
 `r dspatterns::code_hints(
 "Reversing the order of factor levels in the ~~name~~ variable with the ~~fct_rev()~~ function."
@@ -486,7 +486,7 @@ german_cities_bayern$name <-
 levels(german_cities_bayern$name)
 ```
 
-Again, we need to plot this data to really believe that this use of `fct_recode()` will change the plot labels (@fig-barplot-bayern-4).
+Again, we need to plot this data to really believe that this use of `fct_recode()` will change the plot labels.
 
 `r dspatterns::code_hints(
 "Regenerating the barplot of the most populous German cities in the state of Bayern (this is version 4)."
@@ -501,7 +501,7 @@ ggplot(data = german_cities_bayern, aes(y = name, x = pop_2015)) +
 
 ### Plotting Data with More Advanced Treatments of Factors
 
-Let's take the same dataset, `german_cities`, and get a bar plot that indicates how many cities are in each state. The use of `geom_bar()` is now different than what was used earlier. This time we will use the `stat = "count"` option but, since that's the default for `geom_bar()`, we'll just omit that altogether. Have a look at the **ggplot** code and the resulting plot in @fig-barplot-count.
+Let's take the same dataset, `german_cities`, and get a bar plot that indicates how many cities are in each state. The use of `geom_bar()` is now different than what was used earlier. This time we will use the `stat = "count"` option but, since that's the default for `geom_bar()`, we'll just omit that altogether. Have a look at the **ggplot** code and the resulting plot.
 
 `r dspatterns::code_hints(
 "Creating a bar plot that is based on counts of cities in each state, which is mapped to the ~~y~~ aesthetic."
@@ -515,7 +515,7 @@ german_cities |>
   geom_bar()
 ```
 
-The plot in @fig-barplot-count is, just like that of @fig-barplot-bayern-1, unsatisfactory as a visualization since the bars (corresponding to counts of cities in each state) are not ordered by their lengths. The **forcats** package offers a very useful function that assigns frequency values to factor levels: `fct_infreq()`. Let's use `fct_infreq()` in a `mutate()` statement along with `fct_rev()` as a way to reverse the levels, just as we've done before. In the next code listing the dataset is mutated with those factor adjustments and the table is then introduced to `ggplot()` via the `|>`. The much-improved plot is shown in @fig-fct-infreq.
+The plot is somewhat unsatisfactory as a visualization since the bars (corresponding to counts of cities in each state) are not ordered by their lengths. The **forcats** package offers a very useful function that assigns frequency values to factor levels: `fct_infreq()`. Let's use `fct_infreq()` in a `mutate()` statement along with `fct_rev()` as a way to reverse the levels, just as we've done before. In the next code listing the dataset is mutated with those factor adjustments and the table is then introduced to `ggplot()` via the `|>`.
 
 `r dspatterns::code_hints(
 "Improving on the city count bar plot through use of the ~~fct_infreq()~~ and ~~fct_rev()~~ functions."
@@ -530,7 +530,7 @@ german_cities |>
   geom_bar()
 ```
 
-The plot shown in @fig-fct-infreq is a great improvement over the previous one in @fig-barplot-count, proving yet again that factors, and the careful manipulation of them, are useful for controlling plot presentation.
+This plot is a great improvement over the previous one, proving yet again that factors, and the careful manipulation of them, are useful for controlling plot presentation.
 
 Regarding the reordering of factor levels, there are two other **forcats** functions you should know about. One is the `fct_inorder()` function. Using that on a factor will assign levels based on the order in which values first appear. This function could be handy should you have a table arranged just so, and you wanted to preserve the order of factor values in a plot.
 

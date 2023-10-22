@@ -285,7 +285,7 @@ ggplot(data = winni_tidy) +
   geom_point(aes(x = iso_date, y = temp))
 ```
 
-This plot is much changed from the previous one. This plot is now usable, since the temperature value of `9999` has now been classified as an `NA` value (and `NA` values aren't plotted, of course). Let's make things interesting and facet the plot by the hour of day. We have that flexibility now since there is an `hour` column. We do this in **ggplot** with the `facet_wrap()` function, and the result is a plot with four facets (@fig-winni-tidy-ggplot-3).
+This plot is much changed from the previous one. This plot is now usable, since the temperature value of `9999` has now been classified as an `NA` value (and `NA` values aren't plotted, of course). Let's make things interesting and facet the plot by the hour of day. We have that flexibility now since there is an `hour` column. We do this in **ggplot** with the `facet_wrap()` function, and the result is a plot with four facets.
 
 `r dspatterns::code_hints(
 "Faceting the temperatures in winni_tidy by the time of day.",
@@ -301,7 +301,7 @@ ggplot(data = winni_tidy) +
   facet_wrap(vars(hour), labeller = label_both)
 ```
 
-The plot of @fig-winni-tidy-ggplot-3 couldn't be generated without our tidying transformations. Actually, none of these plots could be made with the same number of data points we have here. The data were effectively divided across four columns, and, we didn't have a date-time column. But now, we have the freedom to further transform the tidy data (e.g., filtering the data, converting temperature values to degrees Fahrenheit, etc.) and plot again with ease.
+This plot couldn't be generated without our tidying transformations. Actually, none of these plots could be made with the same number of data points we have here. The data were effectively divided across four columns, and, we didn't have a date-time column. But now, we have the freedom to further transform the tidy data (e.g., filtering the data, converting temperature values to degrees Fahrenheit, etc.) and plot again with ease.
 
 ## Summary
 

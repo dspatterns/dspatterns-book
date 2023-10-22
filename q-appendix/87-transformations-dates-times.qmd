@@ -232,9 +232,9 @@ ggplot(data = nycweather) +
 
 ![](img/plot_nycweather_asis.png){#fig-plot-nycweather-asis}
 
-There are a few problems with the plot shown in @fig-plot-nycweather-asis. The first is that the *x* axis is severely messed up (essentially an overprinting of all the character-based date-times). The second problem is that the plot took a very long time to produce (try it!). There are a lot of data points (around 13,000) and this high amount of data is usually not necessary for this type of plot. Finally, though it's not obvious but incredibly important nonetheless, the data are evenly spaced in the *x* direction. This occurs for any character-based inputs to `x` or `y` in **ggplot**. Essentially, the time values in their present form have no meaning to **ggplot**.
+There are a few problems with this plot. The first is that the *x* axis is severely messed up (essentially an overprinting of all the character-based date-times). The second problem is that the plot took a very long time to produce (try it!). There are a lot of data points (around 13,000) and this high amount of data is usually not necessary for this type of plot. Finally, though it's not obvious but incredibly important nonetheless, the data are evenly spaced in the *x* direction. This occurs for any character-based inputs to `x` or `y` in **ggplot**. Essentially, the time values in their present form have no meaning to **ggplot**.
 
-Just to drive that last point home, let's take the beginning and end of the dataset (i.e., temperatures in early January and also the temperatures in late December) and plot again in the same way. If the time data is meaningful (it's not), we should expect to see a large gap in the data points, with only the extremities showing data points. The code for this experiment is provided next and the resulting plot is given as @fig-plot-nycweather-start-end.
+Just to drive that last point home, let's take the beginning and end of the dataset (i.e., temperatures in early January and also the temperatures in late December) and plot again in the same way. If the time data is meaningful (it's not), we should expect to see a large gap in the data points, with only the extremities showing data points. The code for this experiment is provided next:
 
 `r dspatterns::code_hints(
 "Plotting the beginning and end of ~~nycweather~~.",
@@ -292,9 +292,7 @@ nycweather_a_samp <-
 nycweather_a_samp
 ```
 
-The resulting table is now less than 1000 rows.
-
-The plot will use the same **ggplot** code, simply replacing the data value with `nycweather_a_samp`. We then get the plot shown in @fig-plot-with-sampled-data.
+The resulting table is now less than 1000 rows. The next plot will use the same **ggplot** code as before but we'll replace the data value with `nycweather_a_samp`:
 
 `r dspatterns::code_hints(
 "Plotting a sample of the revised dataset."
@@ -439,7 +437,7 @@ ggplot(data = nycweather_d) +
 
 We added a few extra **ggplot** statements to further prettify the plot. With `scale_x_date()`, it's possible and relatively painless to specify the date breaks (how often date labels appear) and the minor breaks (how often vertical guidelines appear, without any text labels). With a single use of `theme_minimal()` the look of the plot is radically altered to something that is... minimal. There are other `theme_...()` functions you might also try, like `theme_bw()`, `theme_light()`, `theme_dark()`, `theme_classic()`, and `theme_linedraw()`. We use `theme()` to make a few tweaks to the legend: removing its title, and positioning it to the top left. Finally, we used `labs()` to add informative `title` and `subtitle` elements, and, to modify the x- and y-axis labels.
 
-The finalized plot of @fig-plot-daily-min-max-lines is something that could be useful as a data product, like a figure in a report or a presentation. It clearly shows us the trend of daily minimum and maximum temperatures for New York in 2010. If the plot were seen in isolation, we wouldn't have to guess what the plot is showing us. The text in the title and subtitle explains what's being shown. The *y*-axis label tells us that the temperature units are in degrees Celsius. The manual coloring of the plot lines (red for high temperatures, blue for low temperatures) was a nice aesthetic choice that aligns with our expectations for representative colors.
+The finalized plot is something that could be useful as a data product, like a figure in a report or a presentation. It clearly shows us the trend of daily minimum and maximum temperatures for New York in 2010. If the plot were seen in isolation, we wouldn't have to guess what the plot is showing us. The text in the title and subtitle explains what's being shown. The *y*-axis label tells us that the temperature units are in degrees Celsius. The manual coloring of the plot lines (red for high temperatures, blue for low temperatures) was a nice aesthetic choice that aligns with our expectations for representative colors.
 
 When should we be more focused on aesthetics? Well, with exploratory plots we likely don't need to spend time on making such plots aesthetically pleasing. In that mode, we are primarily trying to understand the data; we'd like to iterate from data transformation to plot quickly to develop insight into the data. For presentation-type plots, we absolutely should make the effort to ensure that their purpose is clear, all labels are precise, and that they align with what is being communicated.
 
