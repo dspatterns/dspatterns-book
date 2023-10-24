@@ -10,6 +10,8 @@ Alison taught people within different organizations when part of the RStudio Edu
 
 :::{.rich}
 
-is awesome :) I'll fill this in more later.
+Rich looked at R briefly in 2010 and waited *two years* to start using it. But once he did, he really liked it! It was around 2013 when he got bitten by the package-development bug and, since then, he's been on a tear when it comes to making useful packages for R users. Rich was blown away by the wealth of great packages available and was then inspired to make his own unique contributions. He aimed toward making really useful packages and, after some false starts, Rich never really gave up on his R dreams. Given all that, goal achieved!
+
+Rich enjoys interacting with people from different organizations and showing them what could be done in R. He's given a ton o' talks and a good number of workshops as well. Now at Posit PBC, Rich has combined his package development work with all sorts of outreach activities. He focuses a lot on helping people use R tools to do work better and faster.
 
 :::
