@@ -71,7 +71,7 @@ The prose portion of **Quarto** (i.e., *not* the R code) is the default text ent
 
 Aside from reproducibility, the finished **Quarto** document can be rendered to a self-contained HTML file, to a Word document, to a various presentation types including Powerpoint, or to a PDF file. There are lots of ways to customize what the rendered document will look like (e.g., hiding code for non-technical audiences, adding HTML display elements, etc.), so, the analysis can double as a deliverable report. This will undoubtedly save you time. If ever the input data should change, the report could be run again and updated, usually with minimal (if any) modification. That's one of the features of reproducible reporting.
   
-Let's walk through a simple example of how to use **Quarto** in RStudio. You probably don't know any R at this point and that's perfectly fine. The point of this example is to show some of the mechanics of using the interface to run code and generate an HTML report. The main things we'll do in this **Quarto** walkthrough are to fill in the YAML front matter (these are basic rendering instructions), add in two R code cells (displaying a data summary and showing a plot), and adding Markdown text with basic explanations.
+Let's walk through a simple example of how to use **Quarto** in **RStudio**. You probably don't know any R at this point and that's perfectly fine. The point of this example is to show some of the mechanics of using the interface to run code and generate an HTML report. The main things we'll do in this **Quarto** walkthrough are to fill in the YAML front matter (these are basic rendering instructions), add in two R code cells (displaying a data summary and showing a plot), and adding Markdown text with basic explanations.
 
 <hr>
 
@@ -88,7 +88,7 @@ Let's walk through a simple example of how to use **Quarto** in RStudio. You pro
 
 ![](../appendix-figures/82-starting-with-r/column-rmarkdown_walkthrough_3.png)
 
-**STEP 3**. We should delete everything in this default document except for the useful YAML Front Matter (i.e., the text enclosed by three hyphens). Then save the document as an .qmd file. Saving is necessary before rendering and is generally considered a good practice (though RStudio will always keep your unsaved documents across sessions).
+**STEP 3**. We should delete everything in this default document except for the useful YAML Front Matter (i.e., the text enclosed by three hyphens). Then save the document as an .qmd file. Saving is necessary before rendering and is generally considered a good practice (though **RStudio** will always keep your unsaved documents across sessions).
   
 <hr>
 
@@ -136,9 +136,9 @@ It's here where you can see that the Markdown elements become things like bold a
 
 ### More about Quarto
 
-Quarto is open-source software that helps you develop your code and ideas in one reproducible document. It is designed for anyone who uses code to work with data. You can use Quarto at any stage of an analysis project, any time you want to develop code and ideas alongside each other.
+**Quarto** is open-source software that helps you develop your code and ideas in one reproducible document. It is designed for anyone who uses code to work with data. You can use **Quarto** at any stage of an analysis project, any time you want to develop code and ideas alongside each other.
 
-Start a Quarto project if you want to:
+Start a **Quarto** project if you want to:
 
 ::: {layout="[60,-5,35]"}
 
@@ -155,7 +155,7 @@ Start a Quarto project if you want to:
 
 ::: column
 
-Every Quarto project starts with a Quarto file that has the extension `.qmd`.\
+Every **Quarto** project starts with a **Quarto** file that has the extension `.qmd`.\
 \
 This particular one analyzes children's early words, but every `.qmd` includes the same three basic elements inside:\
 
@@ -172,7 +172,7 @@ You can use all three elements to develop your code and ideas in one reproducibl
 
 ### How do I create a `.qmd` file?
 
-Here is the plain text version of the same `.qmd` document, which you can copy and paste into a new document:
+Here is a plain text version of a `.qmd` document, which you can copy and paste into a new document:
 
 ```{verbatim, file="fragments/doc.qmd"}
 ```
@@ -183,7 +183,7 @@ In the rest of this primer, we'll focus on using **Quarto** to create `.qmd` doc
 
 ## Developing Code
 
-The code inside your Quarto documents will often start small, then grow as you work.  It is totally natural to use your `.qmd` as a scratchpad to develop code. Many users find that using `.qmd` files helps them 'code while thinking'. 
+The code inside your **Quarto** documents will often start small, then grow as you work.  It is totally natural to use your `.qmd` as a scratchpad to develop code. Many users find that using `.qmd` files helps them 'code while thinking'. 
 
 Also, `.qmd` files are designed to be used interactively in **RStudio**. You can use **RStudio** to test your code one code cell at a time, which we'll show now.
 
@@ -193,7 +193,7 @@ Also, `.qmd` files are designed to be used interactively in **RStudio**. You can
 
 If you take everything from the `.qmd` given above and create a new `.qmd` in **RStudio**, you can experiment with running the code. For every gray code cell, you'll notice a green arrow on the right: ![](img/run-button.png)
 
-When you click the *run* button, the code is evaluated and the output will appear. If you run the second code cell after the first, it also works! This is because RStudio is running your code cells in your global environment, so it finds any objects already assigned.
+When you click the *run* button, the code is evaluated and the output will appear. If you run the second code cell after the first, it also works! This is because **RStudio** is running your code cells in your global environment, so it finds any objects already assigned.
 
 Results like plots and tables are appear inline in your document. The cool thing about this is that your source `.qmd` file won't change on the basis of the output.
 
@@ -221,7 +221,7 @@ Now let's add a new code cell. You can insert code cells in any of three ways:
 In **RStudio**, you can remove the inline preview for a code cell. So, instead of the output appearing right below a code cell, the output will appear in the Viewer pane. 
 \
 \
-This can be done as a global setting in RStudio by going to **Tools > Global Options > R Markdown**. On that options page, un-check the box that says *Show output inline for all R Markdown documents*. Don't worry if you're using **Quarto**, this setting applies for those such as well. 
+This can be done as a global setting in **RStudio** by going to **Tools > Global Options > R Markdown**. On that options page, un-check the box that says *Show output inline for all R Markdown documents*. Don't worry if you're using **Quarto**, this setting applies for those such as well. 
 \
 \
 Hit the "Apply" button for this setting to take effect.
@@ -239,7 +239,7 @@ In this section, we showed you how to develop **Quarto** documents in **RStudio*
 
 ## Rendering
 
-Quarto is designed to keep your source code separate from your output. Why? Because you will want to save your source code as a readable record of what you did. The source code can then be used to "play back" that record and (re-)produce the output. To be reproducible though, you have to first produce something---let's render this `.qmd` to produce an output file.
+**Quarto** is designed to keep your source code separate from your output. Why? Because you will want to save your source code as a readable record of what you did. The source code can then be used to "play back" that record and (re-)produce the output. To be reproducible though, you have to first produce something---let's render this `.qmd` to produce an output file.
 
 ### Knitting the source file
 
@@ -275,7 +275,7 @@ NOTE: You may also use keyboard shortcuts to knit:
 
 ::: column
 
-When we render that *Early Words* `.qmd`, Quarto generates a new file that now contains four elements: 
+When we render that *Early Words* `.qmd` file, **Quarto** generates a *new* file that now contains four elements: 
 
 1. Metadata at the top (we see the title)
 
@@ -308,7 +308,7 @@ format: html
 ---
 ```
 
-Output formats are one of the most versatile features of Quarto---you can use them to build web pages like the one shown above. Going further, you can create Word documents, PDFs, multi-page websites, slides, and even write books.
+Output formats are one of the most versatile features of **Quarto**---you can use them to build web pages like the one shown above. Going further, you can create Word documents, PDFs, multi-page websites, slides, and even write books.
 
 :::
 
@@ -334,7 +334,7 @@ All narrative text in your `.qmd` file can be formatted to add **bold**, *italic
 
 ## How it works
 
-Thus far, we've shown how you can use Quarto with RStudio to interactively develop code inside an `.qmd` document. Next, we showed how you can also take the same `.qmd` document and knit it to make a single output file, like a simple HTML page. So, you have learned how to fill up an `.qmd` file with your good ideas, code, and data. How does it all actually work?
+Thus far, we've shown how you can use **Quarto** with **RStudio** to interactively develop code inside an `.qmd` document. Next, we showed how you can also take the same `.qmd` document and knit it to make a single output file, like a simple HTML page. So, you have learned how to fill up an `.qmd` file with your good ideas, code, and data. How does it all actually work?
 
 ```{r echo=FALSE, out.width="100%"}
 knitr::include_graphics("img/quarto-how.png")
@@ -345,10 +345,10 @@ knitr::include_graphics("img/quarto-how.png")
 ::: {layout="[60,-5,35]"}
 
 ::: column
-When you click the "Render" button, **Quarto** detects your first code cell using the R engine, then feeds the `.qmd` file to an R package called **knitr** (<https://yihui.org/knitr/>) as the code execution engine. 
+When you click the *Render* button, **Quarto** detects your first code cell using the R engine, then feeds the `.qmd` file to an R package called **knitr** (<https://yihui.org/knitr/>) as the code execution engine. 
 \
 \
-The **knitr** package executes all of the code cells. Quarto creates a new markdown (`.md`) document, which then includes your good ideas plus your code *and* its **knitr**-generated output (figures, results, tables, etc.). 
+The **knitr** package executes all of the code cells. **Quarto** creates a new markdown (`.md`) document, which then includes your good ideas plus your code *and* its **knitr**-generated output (figures, results, tables, etc.). 
 :::
 
 ![](img/knitr.png)
@@ -372,7 +372,7 @@ execute:
 ---
 ```
 
-This is documented on the Quarto website (<https://quarto.org/docs/computations/execution-options.html#intermediates>).
+This is documented on the **Quarto** website (<https://quarto.org/docs/computations/execution-options.html#intermediates>).
 
 ### Pandoc
 
@@ -395,9 +395,9 @@ If you choose a `format` in your YAML, this is passed to Pandoc to convert the `
 
 ### Rendering from the command line
 
-This may all sound complicated, but **Quarto** and RStudio makes this simpler for you by wrapping it all up with the "Render" button.
+This may all sound complicated, but **Quarto** and **RStudio** makes this simpler for you by wrapping it all up with the "Render" button.
 
-If you don't use RStudio, or if you simply prefer using the command line, you can also render a `.qmd` file from the R console using the **quarto** package.
+If you don't use **RStudio**, or if you simply prefer using the command line, you can also render a `.qmd` file from the R console using the **quarto** package.
 
 ```{r eval=FALSE}
 library(quarto)
@@ -468,7 +468,7 @@ Each of these options takes `TRUE` or `FALSE` (no quotes) as its input value, wi
 
 ### Controlling how code is executed
 
-Two additional code cell options help you control how your code is executed *when you knit*. Note that these do not affect how your code cell run interactively in RStudio.
+Two additional code cell options help you control how your code is executed *when you knit*. Note that these do not affect how your code cell run interactively in **RStudio**.
 
 * `error = TRUE` allows the knitting process to keep going if the code cell produces an error.
 * `eval = FALSE` skips executing code in a code cell, often used for code cells where the code calls functions like `install.packages()` or `View()`, which should not be run when you knit.
