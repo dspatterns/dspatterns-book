@@ -539,9 +539,7 @@ The author makes the graph, saves it as a file, and then copy and pastes it into
 
 ### Figure placement
 
-By default, plots show up immediately after the code that prints them. 
-
-For example, the following line plot created with the **ggplot** package will be inserted when you knit.
+By default, plots show up immediately after the code that prints them. For example, the following line plot created with the **ggplot** package will be inserted when you knit.
 
 ```{r}
 ggplot(words, aes(x = age, y = produces, color = lemma)) + 
@@ -577,22 +575,3 @@ It can often be hard to get your figures to show up in the right size and place 
 - `out.width = '50%'` allows you resize a plot (here, shrunk to half its original size; for full width, set to `'100%'`)
 
 - `fig.asp = 0.618` to control the ratio of height to width (this is the golden ratio, but any number will do: < 1 will be more wide than tall) 
-
-A neat trick you can use by combining these options is to place two figures side-by-side:
-
-````
-```{r out.width='40%', fig.show='hold'}`r ''`
-plot1
-plot2
-```
-````
-
-```{r out.width='40%', fig.show='hold', fig.align='default'}
-line
-rose
-```
-
-### Figure captions and alt text
-
-- `fig.cap = "Oh caption, my caption!"` produces a figure caption; this will change the figure from inline to "floating".
-- `fig.alt = "Informative alt text"` produces alt text for a figure, meant for screen readers.
