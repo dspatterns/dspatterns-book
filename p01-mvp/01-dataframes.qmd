@@ -114,17 +114,9 @@ Sometimes you may want to see just a small portion of your input data. We can us
 
 ```{r}
 #| label: gt-preview
-#| class-output: "html sourceCode"
-#| results: hide
+#| html-table-processing: none
 
 gt_preview(bakers)
-```
-```{r}
-#| label: gt-preview-output
-#| class-output: "html sourceCode"
-#| echo: false
-
-as_raw_html(gt_preview(bakers))
 ```
 
 What you get by default is the first five rows and the last row of the `bakers` dataset. We can see that what's not shown are rows 6 to 119 (it's shown as `6..119` in the table *stub*).
@@ -133,17 +125,9 @@ If you wanted to show the first and last 10 rows of the `bakers` dataset, that's
 
 ```{r}
 #| label: gt-preview-more-rows
-#| class-output: "html sourceCode"
-#| results: hide
+#| html-table-processing: none
 
 gt_preview(bakers, top_n = 10, bottom_n = 10)
-```
-```{r}
-#| label: gt-preview-more-rows-output
-#| class-output: "html sourceCode"
-#| echo: false
-
-as_raw_html(gt_preview(bakers, top_n = 10, bottom_n = 10))
 ```
 
 It's a relatively simple function that `gt_preview()`, but it comes in handy if you want a nicer display of the head and tail of a dataset.
