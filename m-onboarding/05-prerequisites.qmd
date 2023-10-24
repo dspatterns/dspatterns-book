@@ -107,7 +107,7 @@ This is an integrated development environment (IDE) that makes it easy to do wor
 	
 **RStudio** has a customizable, four-pane workspace. It has a collection of useful features that help with R coding such as syntax highlighting, autocomplete, file and project management, and much more.
 
-![The **RStudio IDE** environment with an **Quarto** file in focus in top-left (the source pane) and the R console occupying the bottom-left.](img/rstudio-desktop-environment.png){#fig:rstudio-desktop-env}
+![The **RStudio IDE** environment with an **Quarto** file in focus in top-left (the source pane) and the R console occupying the bottom-left.](img/rstudio-desktop-environment.png)
 
 The diagram shown in above provides a reference to a cross section of the buttons available in the initial view. The most important takeaways from this first look at **RStudio** are:
 
