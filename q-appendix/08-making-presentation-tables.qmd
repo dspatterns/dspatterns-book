@@ -1,5 +1,5 @@
 ---
-title: "Making Presentation Tables with **gt**"
+title: "Making Presentation Tables with **DT** and **gt**"
 ---
 
 ```{r setup, include=FALSE, echo=FALSE}
@@ -155,7 +155,7 @@ These buttons are fully functional: when pressed they either initiate a file dow
 
 ## Creating **gt** Tables
 
-When you need a smaller, non-interactive HTML table that has a ton of possibilities for stylin', then consider using the **gt** package. The interface is very high-level and declarative, where you can provide general instructions versus very specific (though, that's possible too). There are lots of formatting options, with fine control for number, values in scientific notation, values with uncertainties, ranges, percentages, currency, and dates/times. This package also lets you add footnotes without the common and unnecessary problem of manually ordering them in the footer section of the table. The main workflow involves preprocessing your table data (be it a tibble or a data frame) into a form that resembles the final presentation table. You then decide how to compose your **gt** table with the elements and formatting you need for the task at hand. Finally, the table is rendered by printing it at the console, including it in an **Quarto** document, or exporting to a file using the `gtsave()` function.
+When you need a smaller table that has a ton of possibilities for styling, then consider using the **gt** package. The interface is very high-level and declarative, where you can provide general instructions versus very specific (though, that's possible too). There are lots of formatting options, with fine control for number, values in scientific notation, values with uncertainties, ranges, percentages, currency, and dates/times. This package also lets you add footnotes without the common and unnecessary problem of manually ordering them in the footer section of the table. The main workflow involves preprocessing your table data (be it a tibble or a data frame) into a form that resembles the final presentation table. You then decide how to compose your **gt** table with the elements and formatting you need for the task at hand. Finally, the table is rendered by printing it at the console, including it in an **Quarto** document, or exporting to a file using the `gtsave()` function.
 
 The **gt** package ships with a number of datasets and for our first set of examples, we'll use the `exibble` dataset. This tibble contains only eight rows with `numeric`-, `character`-, and `factor`-type columns. It's great for experimentation because it's small enough to see the whole thing when rendered to HTML. Let's see how `exibble` looks by feeding it to **gt**'s `gt()` function.
 
@@ -400,7 +400,7 @@ oceaniapops_3
 
 The `fmt_number()` function has a lot of options for formatting numbers exactly how you want them to appear. By default, it formats larger decimal numbers with commas for the separator mark and periods for the decimal mark (e.g., 32,432.86). This can be changed by using the sep_mark and dec_mark arguments. Setting `sep_mark = "."` and `dec_mark = ","` will result in the previous example being formatted as `32.432,86`. Another (easier) way to do this is to set the `locale` argument of `fmt_number()`. If the numbers in a **gt** table are intended for a Danish audience, for example, you could set `locale = "da"` and not have to worry about the sep_mark and dec_mark arguments (they are overridden by the `locale` setting). For more information on locales and how they are expressed and handled in **gt**, you can use the `info_locales()` function. It provides a table with locale names and previews of formatted numbers across all 712 locales supported in **gt**.
 
-While the updated presentation table looks great, you may find at times that the columns are too close together. This can be remedied with the `cols_width()` function. It allows for the precise definition of column widths. It uses a formula-based interface where column names in `vars()` or selection helpers go on the left of the `~`, and pixel values (best wrapped in `px()`) go on the right-hand side. The stub? It can be accessed with the number `1`. In the next code listing, the stub column is sized to `250` pixels and all other columns are `125` pixels wide. In addition to sizing the columns, a header is added to the table (with a title and a subtitle). Using the `md()` function, we can even supply Markdown text to either of the title or subtitle.
+While the updated presentation table looks great, you may find at times that the columns are too close together. This can be remedied with the `cols_width()` function. It allows for the precise definition of column widths. It uses a formula-based interface where column names in `c()` or selection helpers go on the left of the `~`, and pixel values (best wrapped in `px()`) go on the right-hand side. The stub? It can be accessed with `stub()` or the number `1`. In the next code listing, the stub column is sized to `250` pixels and all other columns are `125` pixels wide. In addition to sizing the columns, a header is added to the table (with a title and a subtitle). Using the `md()` function, we can even supply Markdown text to either of the title or subtitle.
 
 `r dspatterns::code_hints(
 "The column widths can be finely adjusted with ~~cols_width()~~, and, a heading is always a good idea."
@@ -409,7 +409,7 @@ While the updated presentation table looks great, you may find at times that the
 oceaniapops_4 <- 
   oceaniapops_3 |>
   cols_width(
-    1 ~ px(250),
+    stub() ~ px(250),
     everything() ~ px(125)
   ) |>
   tab_header(
@@ -512,10 +512,10 @@ The end result? It's really a great-looking presentation table. It'll look good 
 
 - Large presentation tables can be generated using the **DT** package, where the `datatable()` function generates the HTML table.
 - **DT** tables are highly interactive, and these interactive elements can be added/removed though named extensions, and the `options` list.
-- Presentation tables made with the **gt** package are non-interactive but smaller tables look great given all the styling options available in the package.
+- Smaller presentation tables are best made with the **gt** package, and they will look great given all the styling options available in the package.
 - Tables made with **gt** start with the `gt()` function, and then you would use the `tab_*()` functions for creating or modifying table parts.
 - Data cells in a **gt** table can be formatted to an exacting specification with the `fmt_*()` family of functions (e.g., `fmt_number()`, `fmt_currency()`, `fmt_percent()`, `fmt_date()`, etc.).
 - Footnotes in gt tables can be made with `tab_footnote()`, source notes are generated with `tab_source_note()`; using either for the first time adds a table footer.
 - A title and subtitle in a **gt** table can be added with the `tab_header()` function.
-- The `tab_style()` function in gt uses a location helper function (just as  `tab_footnote()` does) and a stylizing helper function (`cell_fill()`, `cell_text()`, or `cell_borders()`).
+- The `tab_style()` function in **gt** uses a location helper function (just as  `tab_footnote()` does) and a stylizing helper function (`cell_fill()`, `cell_text()`, or `cell_borders()`).
 - Summary rows can be added to a **gt** table by using `summary_rows()` or `grand_summary_rows()`.
