@@ -38,7 +38,7 @@ If executing the chunk above in an **Quarto** document (with CTRL + ENTER), the 
 
 ![A **DT** table using the default options as it appears in an **Quarto** document.](img/tables-01-figure-dt_pitchfork_1.png)
 
-When the **Quarto** document is rendered to an HTML document through knitting (easily done by clicking the *Knit* button on the top toolbar), the **DT** table looks a whole lot nicer. Before taking the screenshot, I sorted the rows in a descending manner by clicking on the up/down arrow button next to the score label. This is one of the great things that **DT** offers without any extra configuration.
+When the **Quarto** document is rendered to an HTML document through knitting (easily done by clicking the *Knit* button on the top toolbar), the **DT** table looks a whole lot nicer. Before taking the screenshot, I sorted the rows in a descending manner by clicking on the up/down arrow button next to the `"score"` label. This is one of the great things that **DT** offers without any extra configuration.
 
 ![A **DT** table using the default options as it appears in a browser (or the **Quarto** *Preview* window.](img/tables-02-figure-dt_pitchfork_1b.png)
 
@@ -236,7 +236,7 @@ gt_tbl_3
 
 Footnotes also live inside the footer part of the table and their footnote marks are attached to cell data. Put another way, there are two components to a footnote: (1) a footnote mark that is attached to the targeted cell text, and (2) the footnote text (that starts with the corresponding footnote mark) that is placed in the table's footer area. 
 
-Footnotes are added with the `tab_footnote()` function. The helper function `cells_body()` can be used with the location argument to specify which data cells should be the target of the footnote. The `cells_body()` helper has the two arguments: `columns` and `rows.` For each of these, we can either supply (1) a vector of column names or row names, (2) a vector of column/row indices, (3) bare column names wrapped in `vars()` or row labels within `c()`, or (4) a select helper function (e.g., `starts_with()`, `ends_with()`, `contains()`, `matches()`, `one_of()`, `everything()`, etc.). For `rows` specifically, we can use a conditional statement with column names as variables (e.g., `size > 15000`).
+Footnotes are added with the `tab_footnote()` function. The helper function `cells_body()` can be used with the location argument to specify which data cells should be the target of the footnote. The `cells_body()` helper has the two arguments: `columns` and `rows.` For each of these, we can either supply (1) a vector of column names or row names, (2) a vector of column/row indices, (3) bare column names wrapped in `c()` or row labels within `c()`, or (4) a select helper function (e.g., `starts_with()`, `ends_with()`, `contains()`, `matches()`, `one_of()`, `everything()`, etc.). For `rows` specifically, we can use a conditional statement with column names as variables (e.g., `size > 15000`).
 
 What follows is a simple example of how a footnote can be added to a table cell. Let's add a footnote to the cell with the word `"coconut"`. We don't have any row names in this table (we'll see how those can be generated in a later example); however, we can easily see that the target cell in row `3` of the `char` column. The following code provides a way to create a footnote for that table cell.
 
@@ -248,7 +248,7 @@ gt_tbl_4 <-
   gt_tbl_3 |>
   tab_footnote(
     footnote = "This coconut contains a tape and half a necklace.",
-    locations = cells_body(columns = vars(char), rows = 3)
+    locations = cells_body(columns = char, rows = 3)
   )
 
 gt_tbl_4
@@ -266,7 +266,7 @@ gt_tbl_5 <-
   gt_tbl_4 |>
   tab_footnote(
     footnote = "This column contains alphabetical fruit.",
-    locations = cells_column_labels(columns = vars(char))
+    locations = cells_column_labels(columns = char)
   )
 
 gt_tbl_5
@@ -369,7 +369,7 @@ oceaniapops_2 <-
   oceaniapops_1 |>
   tab_spanner(
     label = "Total Population",
-    columns = vars(`1995`, `2005`, `2015`)
+    columns = c(`1995`, `2005`, `2015`)
   )
 
 oceaniapops_2
