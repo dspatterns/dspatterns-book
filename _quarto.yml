@@ -5,7 +5,7 @@ project:
 book:
   twitter-card: true
   title: "A Data Science Pattern Language"
-  author: "Alison Presmanes Hill and Richard Iannone"
+  author: "Richard Iannone and Alison Presmanes Hill"
   repo-actions:
     - source
   repo-url: "https://github.com/dspatterns/dspatterns-book"
