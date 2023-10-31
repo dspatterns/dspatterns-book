@@ -40,6 +40,8 @@ bakers
 There's no shortage of ways to preview a tabular dataset. We can even use the **gt** package (loaded with `library(gt)`) to give us an HTML-based preview of `bakers`. For that, we use the `gt_preview()` function. Here's how that looks:
 
 ```{r}
+#| html-table-processing: none
+#| 
 gt_preview(bakers)
 ```
 
